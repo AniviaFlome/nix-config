@@ -1,1 +1,2 @@
-My Nixos Config
+#+title: NixOS Config
+#+author: AniviaFlome
