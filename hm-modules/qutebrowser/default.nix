@@ -21,6 +21,8 @@
       g = "https://www.google.com/search?hl=en&q={}";
       aw = "https://wiki.archlinux.org/?search={}";
       nw = "https://wiki.nixos.org/index.php?search={}";
+      np = "https://search.nixos.org/packages?q={}";
+      hm = "https://home-manager-options.extranix.com/?query={}&release=master";
     };
     greasemonkey = [
       (pkgs.fetchurl {

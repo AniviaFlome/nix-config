@@ -27,5 +27,6 @@
     ../../modules/system/nh.nix
     ../../modules/theme/cursor.nix
     ../../modules/theme/plymouth.nix
+    ../../modules/security/apparmor.nix
   ];
 }
