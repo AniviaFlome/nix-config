@@ -79,6 +79,7 @@
   xwaylandvideobridge
   youtube-music
   yt-dlp
+  ytfzf
   zathura
   zoxide
   ];

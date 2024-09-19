@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./cookie.nix ];
+  #imports = [ ./cookie.nix ];
 
   programs.qutebrowser = {
     enable = true;

@@ -1,7 +1,11 @@
 { config, pkgs, ... }:
 
-{
-  home.packages = with pkgs; [
-    (pkgs.writeShellScriptBin "winboot" (builtins.readFile ./winboot.sh))
+let
+  scripts = [
+    "winboot"
   ];
+in
+
+{
+  home.packages = with pkgs; map (script: writeShellScriptBin script (builtins.readFile ./${script}.sh)) scripts;
 }
