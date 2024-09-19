@@ -14,5 +14,6 @@
     ../../hm-modules/zathura.nix
     ../../hm-modules/plasma.nix
     ../../hm-modules/theme.nix
+    ../../hm-modules/scripts/default.nix
   ];
 }
