@@ -60,6 +60,7 @@
   rsync
   rofi-wayland
   ryujinx
+  sbctl
   smartmontools
   songrec
   starship

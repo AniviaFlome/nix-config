@@ -16,9 +16,11 @@
     nixvim.url = "github:nix-community/nixvim";
     # Ags
     ags.url = "github:Aylur/ags";
+    # Lanzaboote
+    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.1";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nix-flatpak, catppuccin, nixvim, ...}
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nix-flatpak, catppuccin, nixvim, lanzaboote, ...}
   @ inputs: let
     inherit (self) outputs;
     system = "x86_64-linux";
@@ -34,6 +36,7 @@
           ./hosts/nixos/configuration.nix
           nix-flatpak.nixosModules.nix-flatpak
           catppuccin.nixosModules.catppuccin
+          lanzaboote.nixosModules.lanzaboote
         ];
     };
 
