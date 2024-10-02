@@ -2,85 +2,95 @@
 
 {
   environment.systemPackages = with pkgs; [
-  ani-cli
-  appimage-run
-  bat
-  bitwarden-desktop
-  bleachbit
-  btrfs-progs
-  bubblewrap
-  cascadia-code
-  crow-translate
-  curl
-  davinci-resolve
-  efibootmgr
-  eza
-  fastfetch
-  fira-code
-  flameshot
-  fluent-reader
-  fzf
-  gdu
-  gimp
-  git
-  gnome-connections
-  gparted
-  grsync
-  handbrake
-  heroic
-  home-manager
-  htop
-  jetbrains-mono
-  kdePackages.kdeconnect-kde
-  kdePackages.partitionmanager
-  kitty
-  krita
-  lazygit
-  libimobiledevice
-  libreoffice-still
-  lutris
-  man
-  mangohud
-  noto-fonts
-  noto-fonts-cjk
-  motrix
-  mpv
-  neovim
-  nh
-  ntfs3g
-  obs-studio
-  osu-lazer-bin
-  prismlauncher
-  protontricks
-  qbittorrent
-  qutebrowser
-  ranger
-  rclone
-  riseup-vpn
-  rsync
-  rofi-wayland
-  ryujinx
-  sbctl
-  smartmontools
-  songrec
-  starship
-  strawberry
-  telegram-desktop
-  tldr
-  unrar
-  unzip
-  ventoy-full
-  vscodium
-  wget
-  wine-staging
-  winetricks
-  wl-clipboard
-  xdg-utils
-  xwaylandvideobridge
-  youtube-music
-  yt-dlp
-  ytfzf
-  zathura
-  zoxide
+ani-cli
+appimage-run
+aseprite
+bat
+bitwarden-desktop
+bleachbit
+btrfs-progs
+bubblewrap
+calibre
+cascadia-code
+crow-translate
+curl
+davinci-resolve
+distrobox
+efibootmgr
+eza
+fastfetch
+fira-code
+flameshot
+fluent-reader
+fzf
+gdu
+gimp
+git
+gparted
+grsync
+handbrake
+heroic
+home-manager
+htop
+jetbrains-mono
+kdePackages.kdeconnect-kde
+kdePackages.partitionmanager
+kitty
+krita
+lazygit
+libimobiledevice
+libreoffice-still
+lutris
+man
+mangohud
+nodejs_22
+noto-fonts
+noto-fonts-cjk
+motrix
+mpv
+neovim
+ntfs3g
+obs-studio
+osu-lazer-bin
+prismlauncher
+protontricks
+python312Packages.pip
+qbittorrent
+qutebrowser
+ranger
+rclone
+riseup-vpn
+rsync
+rofi-wayland
+rpcs3
+rustdesk
+ryujinx
+sbctl
+smartmontools
+songrec
+starship
+strawberry
+telegram-desktop
+tldr
+tor-browser
+unrar
+unzip
+ventoy-full
+vesktop
+vscodium
+wget
+wine-staging
+winetricks
+wl-clipboard
+wmctrl
+xdg-ninja
+xdg-utils
+xivlauncher
+xwaylandvideobridge
+youtube-music
+yt-dlp
+ytfzf
+zathura
+zoxide
   ];
 }

@@ -10,14 +10,11 @@
         enable = true;
         compositor = "kwin";
       };
-      settings = {
-        CursorTheme = {
-          Cursor = "catppuccin-mocha-mauve-cursors";
-        };
-        InputMethod = {
-          name = "none";
-        };
-      };
+    };
+    defaultSession = "plasma";
+    autoLogin = {
+        enable = true;
+        user = "aniviaflome";
     };
   };
 }

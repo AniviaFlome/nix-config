@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ...}:
 
 {
   home.packages = with pkgs; [
@@ -22,5 +22,8 @@
   programs.ags = {
     enable = true;
     configDir = ./ags;
+    extraPackages = with pkgs; [
+      accountsservice
+    ];
   };
 }

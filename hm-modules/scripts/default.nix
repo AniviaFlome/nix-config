@@ -2,6 +2,7 @@
 
 let
   scripts = [
+    "hyscript"
     "winboot"
   ];
 in

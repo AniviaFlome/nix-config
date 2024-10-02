@@ -15,5 +15,9 @@
     ../../hm-modules/plasma.nix
     ../../hm-modules/theme.nix
     ../../hm-modules/scripts/default.nix
+    ../../hm-modules/hyprland/default.nix
+    ../../hm-modules/ags/default.nix
+    ../../hm-modules/xdg-ninja.nix
+    ../../hm-modules/vscodium.nix
   ];
 }

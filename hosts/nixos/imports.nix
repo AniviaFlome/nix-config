@@ -26,7 +26,8 @@
     ../../modules/virtualization/waydroid.nix
     ../../modules/system/nh.nix
     ../../modules/theme/cursor.nix
-    ../../modules/theme/plymouth.nix
     ../../modules/security/apparmor.nix
+    ../../modules/gaming/sunshine.nix
+    ../../modules/theme/console.nix
   ];
 }

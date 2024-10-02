@@ -3,7 +3,7 @@
   services.flatpak = {
     enable = true;
     uninstallUnmanaged = true;
-    update.onActivation = true;
+    update.onActivation = false;
   };
 
   services.flatpak.remotes = [{
@@ -23,13 +23,11 @@
     "io.github.zen_browser.zen"
     "io.gitlab.librewolf-community"
     "io.github.antimicrox.antimicrox"
-    "io.mrarm.mcpelauncher"
     "io.github.dvlv.boxbuddyrs"
     "io.github.giantpinkrobots.flatsweep"
     "io.github.thetumultuousunicornofdarkness.cpu-x"
     "net.davidotek.pupgui2"
     "org.libretro.RetroArch"
-    "dev.vencord.Vesktop"
     "fr.romainvigier.MetadataCleaner"
     "io.github.giantpinkrobots.varia"
     "com.github.dynobo.normcap"
