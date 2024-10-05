@@ -19,5 +19,6 @@
     ../../hm-modules/ags/default.nix
     ../../hm-modules/xdg-ninja.nix
     ../../hm-modules/vscodium.nix
+    ../../hm-modules/obs-studio.nix
   ];
 }

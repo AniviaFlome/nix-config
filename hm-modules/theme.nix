@@ -1,6 +1,12 @@
-{ pkgs, ... }:
+{ catppuccin, pkgs, ... }:
 
 {
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+    accent = "mauve";
+  };
+
   gtk = {
     enable = true;
     theme = {

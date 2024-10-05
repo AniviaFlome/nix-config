@@ -8,6 +8,8 @@
       catppuccin.catppuccin-vsc
       catppuccin.catppuccin-vsc-icons
       formulahendry.code-runner
+      continue.continue
+      jnoortheen.nix-ide
     ];
   };
 }

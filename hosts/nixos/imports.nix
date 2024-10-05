@@ -29,5 +29,6 @@
     ../../modules/security/apparmor.nix
     ../../modules/gaming/sunshine.nix
     ../../modules/theme/console.nix
+    ../../modules/theme/catppuccin.nix
   ];
 }
