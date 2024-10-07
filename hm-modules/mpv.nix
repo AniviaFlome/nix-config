@@ -6,9 +6,12 @@
     catppuccin = {
       enable = true;
     };
-    scripts = with pkgs; [
-      mpvScripts.mpris
-      mpvScripts.mpvacious
+    scripts = with pkgs.mpvScripts; [
+      mpris
+      mpvacious
     ];
+    config = {
+      hr-seek = "yes";
+    };
   };
 }
