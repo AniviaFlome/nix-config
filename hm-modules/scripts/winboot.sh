@@ -13,7 +13,7 @@ if [ -x "$EFIBOOTMGR" ]; then
     # Set the next boot device to the Windows boot loader
     sudo efibootmgr -n $WIN_BOOT_NUM
     # Reboot the system
-    reboot
+    sudo reboot
   else
     echo "Windows boot loader not found."
     exit 1

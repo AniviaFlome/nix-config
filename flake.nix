@@ -18,9 +18,6 @@
     ags.url = "github:Aylur/ags";
     # Lanzaboote
     lanzaboote.url = "github:nix-community/lanzaboote/v0.4.1";
-    # Umu
-    umu.url = "git+https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging\/nix&submodules=1";
-    umu.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nix-flatpak, catppuccin, nixvim, lanzaboote, ...}
