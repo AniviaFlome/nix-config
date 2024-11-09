@@ -10,8 +10,6 @@
       cd="z";
     };
     shellInit = "
-      starship init fish | source
-      zoxide init fish | source
     ";
   };
 }

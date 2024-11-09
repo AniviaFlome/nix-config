@@ -34,12 +34,16 @@
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit inputs outputs pkgs-stable;};
+      specialArgs = {
+        username = "aniviaflome";
+        inherit inputs outputs pkgs-stable;
+      };
         modules = [
           ./hosts/nixos/configuration.nix
           nix-flatpak.nixosModules.nix-flatpak
           catppuccin.nixosModules.catppuccin
           lanzaboote.nixosModules.lanzaboote
+          inputs.home-manager.nixosModules.home-manager
         ];
     };
 
@@ -50,7 +54,6 @@
         ./hosts/nixos/home.nix
         catppuccin.homeManagerModules.catppuccin
         inputs.nixvim.homeManagerModules.nixvim
-        inputs.ags.homeManagerModules.default
       ];
     };
   };

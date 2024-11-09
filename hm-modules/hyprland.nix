@@ -1,4 +1,4 @@
-{ inputs, pkgs, ...}:
+{ inputs, pkgs, ... }:
 
 let
   yt = pkgs.writeShellScript "yt" ''
@@ -9,10 +9,9 @@ let
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
-  screenshot = "flameshot gui";
-in
+  screenshot = import ./scripts/screenshot.nix pkgs;
+in {
 
-{
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
@@ -50,7 +49,6 @@ in
       input = {
         kb_layout = "hu,us";
         follow_mouse = 1;
-        accel_profile = "flat";
         touchpad = {
           natural_scroll = "yes";
           disable_while_typing = true;
@@ -112,6 +110,8 @@ in
           ",Print,         exec, ${screenshot}"
           "SHIFT,Print,    exec, ${screenshot} --full"
           "SUPER, Return, exec, xterm" # xterm is a symlink, not actually xterm
+          "SUPER, W, exec, firefox"
+          "SUPER, E, exec, wezterm -e lf"
 
           # youtube
           ", XF86Launch1,  exec, ${yt}"
@@ -121,7 +121,6 @@ in
           "ALT, Q, killactive"
           "SUPER, F, togglefloating"
           "SUPER, G, fullscreen"
-          "SUPER, O, fakefullscreen"
           "SUPER, P, togglesplit"
 
           (mvfocus "k" "u")
