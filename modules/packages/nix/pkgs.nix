@@ -61,6 +61,7 @@ neovim
 ntfs3g
 obs-studio
 osu-lazer-bin
+pacman
 pipx
 prismlauncher
 protontricks
@@ -80,6 +81,7 @@ rpcs3
 rustdesk
 ryujinx
 sbctl
+skypeforlinux
 smartmontools
 songrec
 starship
@@ -107,6 +109,7 @@ xwaylandvideobridge
 youtube-music
 yt-dlp
 ytfzf
+zapret
 zathura
 zoxide
   ];
