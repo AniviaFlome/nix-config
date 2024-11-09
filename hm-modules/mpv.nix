@@ -12,7 +12,6 @@
     ];
     config = {
       hr-seek = "yes";
-      keep-open = "yes";
     };
   };
 }
