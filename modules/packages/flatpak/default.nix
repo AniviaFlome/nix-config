@@ -20,6 +20,8 @@
 "io.github.giantpinkrobots.flatsweep"
 "com.stremio.Stremio"
 "dev.goats.xivlauncher"
+"com.rustdesk.RustDesk"
+"fr.romainvigier.MetadataCleaner"
   ];
 
   services.flatpak.overrides = {
