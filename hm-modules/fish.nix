@@ -1,7 +1,6 @@
 {
   programs.fish = {
     enable = true;
-    catppuccin.enable = true;
     interactiveShellInit = ''
       set -U fish_greeting
     '';

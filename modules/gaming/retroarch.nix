@@ -1,12 +1,14 @@
 { pkgs, ... }:
 
-{
-  environment.systemPackages = with pkgs; [
-  (retroarch.override {
-    cores = with libretro; [
+let
+  retroarchWithCores = (pkgs.retroarch.withCores (cores: with cores; [
 melonds
 ppsspp
-    ];
-  })
+  ]));
+in
+
+{
+  environment.systemPackages = [
+    retroarchWithCores
   ];
 }

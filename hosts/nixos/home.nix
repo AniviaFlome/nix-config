@@ -1,7 +1,7 @@
-{ inputs, lib, config, pkgs, username, ...}: {
-  imports = [
-    ./hm-imports.nix
-  ];
+{ inputs, lib, config, pkgs, username, ...}:
+
+{
+  imports = [ ./hm-imports.nix ];
 
   nixpkgs = {
     config = {
@@ -12,12 +12,7 @@
 
   home = {
     username = "${username}";
-    homeDirectory = "/home/aniviaflome";
-  };
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    TERMINAL = "kitty";
+    homeDirectory = "/home/${username}";
   };
 
   programs.home-manager.enable = true;

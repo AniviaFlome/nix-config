@@ -1,8 +1,6 @@
 {
-  # Nix helper
   programs.nh = {
     enable = true;
-    flake = "/home/aniviaflome/nix-config";
     clean = {
       enable = true;
       dates = "weekly";

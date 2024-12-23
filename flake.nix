@@ -1,5 +1,5 @@
 {
-  description = "My nixos configuration";
+  description = "My Nixos configuration";
 
   inputs = {
     # Nixpkgs
@@ -21,6 +21,9 @@
     # Umu
     umu.url = "git+https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging\/nix&submodules=1";
     umu.inputs.nixpkgs.follows = "nixpkgs";
+    # Spicetify-nix
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nix-flatpak, catppuccin, nixvim, lanzaboote, ...}
@@ -49,11 +52,15 @@
 
     homeConfigurations.nixos = inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.${system};
-      extraSpecialArgs = { inherit inputs outputs;};
+      extraSpecialArgs = {
+        username = "aniviaflome";
+        inherit inputs outputs;
+      };
       modules = [
         ./hosts/nixos/home.nix
         catppuccin.homeManagerModules.catppuccin
         inputs.nixvim.homeManagerModules.nixvim
+        inputs.spicetify-nix.homeManagerModules.default
       ];
     };
   };

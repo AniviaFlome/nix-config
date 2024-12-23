@@ -8,5 +8,5 @@
     };
   };
 
-  users.users.${username}.extraGroups = ["podman"];
+  users.users.${username}.extraGroups = [ "podman" ];
 }
