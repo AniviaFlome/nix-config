@@ -1,7 +1,8 @@
-{ pkgs, lanzaboote, ... }:
+{ pkgs, inputs, ... }:
 
 {
-  # Bootloader.
+  imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
+
   boot = {
     loader = {
       systemd-boot.enable = false;

@@ -1,4 +1,4 @@
-{username, ... }:
+{ username, ... }:
 
 {
   programs.gamemode.enable = true;

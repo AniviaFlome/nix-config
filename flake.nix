@@ -4,7 +4,7 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     # Home manager
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -12,21 +12,28 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     # Catppuccin
     catppuccin.url = "github:catppuccin/nix";
-    # Nixvim
-    nixvim.url = "github:nix-community/nixvim";
-    # Ags
-    ags.url = "github:Aylur/ags";
     # Lanzaboote
-    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.1";
-    # Umu
-    umu.url = "git+https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging\/nix&submodules=1";
-    umu.inputs.nixpkgs.follows = "nixpkgs";
+    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
     # Spicetify-nix
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
+    # Plasma-manager
+    plasma-manager.url = "github:nix-community/plasma-manager";
+    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
+    plasma-manager.inputs.home-manager.follows = "home-manager";
+    # Hyprpanel
+    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    hyprpanel.inputs.nixpkgs.follows = "nixpkgs";
+    # Sops-nix
+    sops-nix.url = "github:Mic92/sops-nix";
+    # Nix-mineral
+    nix-mineral.url = "github:cynicsketch/nix-mineral";
+    nix-mineral.flake = false;
+    # Nvf
+    nvf.url = "github:notashelf/nvf";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nix-flatpak, catppuccin, nixvim, lanzaboote, ...}
+  outputs = { self, nixpkgs, nixpkgs-stable, ... }
   @ inputs: let
     inherit (self) outputs;
     system = "x86_64-linux";
@@ -43,9 +50,6 @@
       };
         modules = [
           ./hosts/nixos/configuration.nix
-          nix-flatpak.nixosModules.nix-flatpak
-          catppuccin.nixosModules.catppuccin
-          lanzaboote.nixosModules.lanzaboote
           inputs.home-manager.nixosModules.home-manager
         ];
     };
@@ -58,9 +62,6 @@
       };
       modules = [
         ./hosts/nixos/home.nix
-        catppuccin.homeManagerModules.catppuccin
-        inputs.nixvim.homeManagerModules.nixvim
-        inputs.spicetify-nix.homeManagerModules.default
       ];
     };
   };

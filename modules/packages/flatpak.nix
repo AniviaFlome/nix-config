@@ -1,27 +1,26 @@
+{ inputs, ... }:
+
 {
-  # Nix-flatpak
+  imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
+
   services.flatpak = {
     enable = true;
     uninstallUnmanaged = true;
     update.onActivation = false;
+    remotes = [
+      { name = "flathub"; location = "https://dl.flathub.org/repo/flathub.flatpakrepo"; }
+    ];
+    packages = map (id: { appId = id; origin = "flathub"; }) [
+      "app.zen_browser.zen"
+      "com.github.tchx84.Flatseal"
+      "com.heroicgameslauncher.hgl"
+      "com.pokemmo.PokeMMO"
+      "io.github.giantpinkrobots.flatsweep"
+      "com.stremio.Stremio"
+      "com.rustdesk.RustDesk"
+      "fr.romainvigier.MetadataCleaner"
+    ]
+    ++ [ { flatpakref = "https://sober.vinegarhq.org/sober.flatpakref"; sha256 = "1pj8y1xhiwgbnhrr3yr3ybpfis9slrl73i0b1lc9q89vhip6ym2l"; } ];
   };
-
-  services.flatpak.remotes = [{
-    name = "flathub"; location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
-  }];
-
-  services.flatpak.packages = [
-    { appId = "com.adamcake.Bolt"; origin = "flathub";  }
-"com.adamcake.Bolt"
-"com.github.tchx84.Flatseal"
-"com.jeffser.Alpaca"
-"com.pokemmo.PokeMMO"
-"io.github.zen_browser.zen"
-"io.github.giantpinkrobots.flatsweep"
-"com.stremio.Stremio"
-"dev.goats.xivlauncher"
-"com.rustdesk.RustDesk"
-"fr.romainvigier.MetadataCleaner"
-  ];
 }
 

@@ -1,6 +1,9 @@
-{ inputs, pkgs, spicetify-nix, ... }:
+{ inputs, pkgs, ... }:
 
 {
+
+  imports = [ inputs.spicetify-nix.homeManagerModules.default ];
+
   programs.spicetify =
    let
      spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
@@ -9,7 +12,6 @@
      enable = true;
      enabledExtensions = with spicePkgs.extensions; [  # Special characters are sanitized out of extension names
        adblock
-       beautifulLyrics
        betterGenres
        hidePodcasts
      ];

@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   programs.fish = {
     enable = true;
@@ -9,6 +11,7 @@
       cd="z";
     };
     shellInit = "
+       ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
     ";
   };
 }

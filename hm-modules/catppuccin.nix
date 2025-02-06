@@ -1,10 +1,13 @@
-{ catppuccin, ... }:
+{ inputs, ... }:
 
 {
+  imports = [ inputs.catppuccin.homeManagerModules.catppuccin ];
+
   catppuccin = {
     enable = true;
     flavor = "mocha";
     accent = "mauve";
+    bat.enable = true;
     fish.enable = true;
     kitty.enable = true;
     mpv.enable = true;

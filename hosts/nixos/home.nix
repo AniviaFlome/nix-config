@@ -1,12 +1,14 @@
 { inputs, lib, config, pkgs, username, ...}:
 
 {
-  imports = [ ./hm-imports.nix ];
+   imports = [
+    ./hm-imports.nix
+   ];
 
   nixpkgs = {
     config = {
       allowUnfree = true;
-      allowUnfreePredicate = _: true;  # Workaround for https://github.com/nix-community/home-manager/issues/2942
+      allowUnfreePredicate = _: true;
     };
   };
 

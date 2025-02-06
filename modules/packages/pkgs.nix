@@ -2,6 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
+android-tools
 ani-cli
 antimicrox
 atuin
@@ -32,7 +33,6 @@ gparted
 grsync
 gpu-screen-recorder-gtk
 handbrake
-heroic
 home-manager
 htop
 kdePackages.kdeconnect-kde
@@ -44,6 +44,8 @@ lazygit
 libimobiledevice
 libreoffice-still
 livecaptions
+localsend
+ludusavi
 lutris
 man
 mangayomi
@@ -58,7 +60,6 @@ nixfmt-rfc-style
 nodejs_22
 normcap
 ntfs3g
-nuclear
 obs-studio
 osu-lazer-bin
 pacman
@@ -81,29 +82,33 @@ rpcs3
 sbctl
 smartmontools
 songrec
+spotdl
 spotify
 starship
 strawberry
+syncthing
 telegram-desktop
 textpieces
-thunderbird-bin
+thunderbird
 tldr
 tor-browser
+umu-launcher
 unrar
 unzip
 upscayl
 varia
 ventoy-full
 vesktop
+vlc
 vscodium
 wget
 wine-staging
 winetricks
 wl-clipboard
-wmctrl
 xdg-ninja
 xdg-utils
 xwaylandvideobridge
+youtube-music
 yt-dlp
 ytfzf
 zapret

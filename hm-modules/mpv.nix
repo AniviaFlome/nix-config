@@ -10,6 +10,8 @@
     config = {
       hr-seek = "yes";
       keep-open = "yes";
+      #screenshot-dir = "${XDG_PICTURES_DIR}/mpv";
+      screenshot-format = "png";
     };
   };
 }
