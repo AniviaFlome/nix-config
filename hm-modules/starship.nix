@@ -1,5 +1,3 @@
-{ catppuccin, ... }:
-
 {
   programs.starship = {
     enable = true;

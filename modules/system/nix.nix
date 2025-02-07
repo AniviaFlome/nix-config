@@ -1,6 +1,8 @@
 {
-   nix = {
+  nix = {
+    optimise.automatic = true;
     settings = {
+      auto-optimise-store = false;
       substituters = [
         "https://nix-community.cachix.org"
         "https://hyprland.cachix.org"

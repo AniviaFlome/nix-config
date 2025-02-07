@@ -10,5 +10,4 @@ noto-fonts
 noto-fonts-cjk-sans
 noto-fonts-emoji
   ];
-  environment.systemPackages = with pkgs; [jetbrains-mono]; # Kitty needs this
 }

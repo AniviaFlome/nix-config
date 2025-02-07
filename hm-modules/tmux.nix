@@ -1,4 +1,4 @@
-{ catppuccin, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   programs.tmux = {

@@ -1,12 +1,6 @@
-{ catppuccin, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  catppuccin = {
-    enable = true;
-    flavor = "mocha";
-    accent = "mauve";
-  };
-
   gtk = {
     enable = true;
     theme = {
@@ -18,7 +12,7 @@
       name = "catppuccin-mocha-mauve-standard";
     };
     cursorTheme = {
-      #package = pkgs.catppuccin-cursors.mochaMauve;
+      package = with pkgs; catppuccin-cursors.mochaMauve;
       name = "catppuccin-mocha-mauve-cursors";
     };
   };

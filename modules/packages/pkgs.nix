@@ -13,13 +13,11 @@ boxbuddy
 btrfs-progs
 bubblewrap
 calibre
-cascadia-code
 cpu-x
 crow-translate
 curl
 distrobox
 efibootmgr
-element-web
 easyeffects
 eza
 fastfetch
@@ -41,7 +39,6 @@ kdiskmark
 kitty
 krita
 lazygit
-libimobiledevice
 libreoffice-still
 livecaptions
 localsend
@@ -96,7 +93,6 @@ umu-launcher
 unrar
 unzip
 upscayl
-varia
 ventoy-full
 vesktop
 vlc
@@ -105,13 +101,11 @@ wget
 wine-staging
 winetricks
 wl-clipboard
-xdg-ninja
 xdg-utils
 xwaylandvideobridge
 youtube-music
 yt-dlp
 ytfzf
-zapret
 zathura
 zoxide
   ];

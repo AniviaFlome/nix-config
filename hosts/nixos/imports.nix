@@ -8,7 +8,6 @@
 ../../modules/gaming/steam.nix
 ../../modules/gaming/sunshine.nix
 # Packages
-../../modules/packages/cache.nix
 ../../modules/packages/flatpak.nix
 ../../modules/packages/fonts.nix
 ../../modules/packages/pkgs-stable.nix
@@ -38,6 +37,7 @@
 ../../modules/system/locale.nix
 ../../modules/system/networking.nix
 ../../modules/system/nh.nix
+../../modules/system/nix.nix
 ../../modules/system/nix-ld.nix
 ../../modules/system/nix-mineral.nix
 ../../modules/system/pipewire.nix

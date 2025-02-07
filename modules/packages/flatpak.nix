@@ -19,6 +19,7 @@
       "com.stremio.Stremio"
       "com.rustdesk.RustDesk"
       "fr.romainvigier.MetadataCleaner"
+      "io.github.giantpinkrobots.varia"
     ]
     ++ [ { flatpakref = "https://sober.vinegarhq.org/sober.flatpakref"; sha256 = "1pj8y1xhiwgbnhrr3yr3ybpfis9slrl73i0b1lc9q89vhip6ym2l"; } ];
   };

@@ -1,4 +1,4 @@
-{ catppuccin, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   programs.mpv = {
@@ -10,7 +10,7 @@
     config = {
       hr-seek = "yes";
       keep-open = "yes";
-      #screenshot-dir = "${XDG_PICTURES_DIR}/mpv";
+      screenshot-dir = "${config.xdg.userDirs.pictures}";
       screenshot-format = "png";
     };
   };
