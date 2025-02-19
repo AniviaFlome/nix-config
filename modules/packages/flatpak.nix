@@ -6,7 +6,7 @@
   services.flatpak = {
     enable = true;
     uninstallUnmanaged = true;
-    update.onActivation = false;
+    update.onActivation = true;
     remotes = [
       { name = "flathub"; location = "https://dl.flathub.org/repo/flathub.flatpakrepo"; }
     ];

@@ -4,6 +4,7 @@
   imports = [
 # Gaming
 ../../modules/gaming/gamemode.nix
+../../modules/gaming/gamescope.nix
 ../../modules/gaming/retroarch.nix
 ../../modules/gaming/steam.nix
 ../../modules/gaming/sunshine.nix
@@ -23,7 +24,6 @@
 ../../modules/programs/syncthing.nix
 ../../modules/programs/virt-manager.nix
 ../../modules/programs/xorg.nix
-../../modules/programs/waydroid.nix
 ../../modules/programs/zapret.nix
 # Security
 ../../modules/security/fail2ban.nix

@@ -31,34 +31,40 @@
     nix-mineral.flake = false;
     # Nvf
     nvf.url = "github:notashelf/nvf";
+    # Ags
+    ags.url = "github:Aylur/ags/v1";
+    ags.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, ... }
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, ... }
   @ inputs: let
     inherit (self) outputs;
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
     pkgs-stable = nixpkgs-stable.legacyPackages.${system};
     lib = nixpkgs.lib;
+    username = "aniviaflome";
   in {
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = {
-        username = "aniviaflome";
-        inherit inputs outputs pkgs-stable;
+        inherit inputs outputs pkgs-stable username;
       };
         modules = [
           ./hosts/nixos/configuration.nix
-          inputs.home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            backupFileExtension = "backup";
+          }
         ];
     };
 
     homeConfigurations.nixos = inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.${system};
       extraSpecialArgs = {
-        username = "aniviaflome";
-        inherit inputs outputs;
+        inherit inputs outputs pkgs-stable username;
       };
       modules = [
         ./hosts/nixos/home.nix
@@ -66,4 +72,3 @@
     };
   };
 }
-
