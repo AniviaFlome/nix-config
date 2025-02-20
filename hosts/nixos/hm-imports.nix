@@ -2,8 +2,8 @@
   imports = [
 ../../hm-modules/atuin.nix
 ../../hm-modules/catppuccin.nix
+../../hm-modules/distrobox/default.nix
 ../../hm-modules/fastfetch/default.nix
-../../hm-modules/distrobox.nix
 ../../hm-modules/fish.nix
 ../../hm-modules/git.nix
 ../../hm-modules/hyprland/default.nix

@@ -1,0 +1,4 @@
+atuin
+fastfetch
+starship
+zoxide

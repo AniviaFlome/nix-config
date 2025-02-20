@@ -4,6 +4,7 @@ let symlinks = [
     ".bashrc"
     ".zshrc"
     ".config/fish"
+    ".config/git"
     ".config/nix"
     ".config/starship.toml"
 ]
