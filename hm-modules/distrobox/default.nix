@@ -10,7 +10,7 @@
   mkBox = {
     name,
     image,
-    exec ? "bash",
+    exec ? "fish",
     packages ? [],
     copr_repos ? [],
   }: let
@@ -23,10 +23,8 @@
         uninstall = "/bin/paru -Rns --noconfirm";
         setup = pkgs.writeShellScriptBin "paru-setup" ''
           if ! command -v paru >/dev/null; then
-            echo "Updating package databases..."
             sudo pacman -Sy --noconfirm
             sudo pacman -S --noconfirm --needed base-devel
-            echo "Installing paru..."
             tmpdir="$(mktemp -d)"
             git clone https://aur.archlinux.org/paru-bin.git "$tmpdir"
             cd "$tmpdir"
@@ -36,37 +34,41 @@
         '';
       } else if name == "debian" then {
         check = "dpkg -s";
-        install = "LC_ALL=C sudo apt install -y";
-        uninstall = "LC_ALL=C sudo apt remove -y";
+        install = "sudo apt install -y";
+        uninstall = "sudo apt remove -y";
         setup = pkgs.writeShellScriptBin "apt-setup" ''
-
         '';
       } else if name == "fedora" then {
         check = "rpm -q";
         install = "sudo dnf install -y";
         uninstall = "sudo dnf remove -y";
         setup = pkgs.writeShellScriptBin "dnf-setup" ''
-          # Install dnf-plugins-core if missing
           if ! rpm -q dnf-plugins-core >/dev/null 2>&1; then
             sudo dnf install -y dnf-plugins-core
           fi
 
-          # Enable specified COPR repositories
+          enabled_repos=$(dnf copr list | awk '{print $1}' | tr '/' ':')
           for repo in ${concatStringsSep " " copr_repos}; do
-            if ! dnf copr list | grep -q "^$repo"; then
-              echo "Enabling COPR repository: $repo"
-              sudo dnf copr enable -y "$repo"
+            repo=$(echo "$repo" | xargs)
+            repo_id=$(echo "$repo" | tr '/' ':')
+            # Check if repo is already enabled by searching in the enabled_repos variable
+            if echo "$enabled_repos" | grep -qw "$repo_id"; then
+              continue
             else
-              echo "COPR repository $repo is already enabled."
+              sudo dnf copr enable -y "$repo" 2>&1 | tee -a enable_repo.log
             fi
           done
 
           # Remove all other COPR repositories not in copr_repos
           copr_repos_str="${concatStringsSep " " copr_repos}"
           dnf copr list | awk '{print $1}' | grep -v -w -f <(echo "$copr_repos_str" | tr ' ' '\n') | while read -r repo; do
-            # echo "Removing COPR repository: $repo"
             sudo dnf copr remove -y "$repo"
           done
+
+          # Add RPM Fusion Free and Non-Free repositories together if not already installed
+          if ! rpm -q rpmfusion-free-release rpmfusion-nonfree-release >/dev/null 2>&1; then
+            sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+          fi
         '';
       } else {
         check = "echo 'Unknown distribution' >&2";
@@ -88,12 +90,6 @@
       ++ (map (p: "${p}/bin") (filter (p: typeOf p == "set") packages));
 
     db-exec = pkgs.writeShellScript "db-exec" ''
-      export LANG=en_US.UTF-8
-      export LC_ALL=en_US.UTF-8
-
-      export XDG_DATA_DIRS="/usr/share:/usr/local/share"
-      export PATH="${concatStringsSep ":" path}"
-
       # echo "=== Distrobox environment debug ==="
       # echo "Container name: ${name}"
       # echo "Package file: ${homeDir}/nix-config/hm-modules/distrobox/pkgs/${name}-pkgs.txt"
@@ -117,8 +113,6 @@
         if [ -n "$packages_to_install" ]; then
           # echo "Installing packages: $packages_to_install"
           ${pkgMgr.install} $packages_to_install || echo "Failed to install some packages"
-        else
-          echo "No new packages to install."
         fi
 
         if [ -f "$STATE_FILE" ]; then
@@ -160,7 +154,7 @@ in
     (mkBox {
       name = "fedora";
       image = "registry.fedoraproject.org/fedora-toolbox:rawhide";
-      copr_repos = [ "atim/starship" ];
+      copr_repos = [ "atim/starship" "relativesure/all-packages" ];
     })
     (mkBox {
       name = "arch";

@@ -7,9 +7,9 @@ in
 {
   imports = [
     ./dunst.nix
-#     ./hyprpanel.nix
     ./hyprpaper.nix
 #     ./rofi.nix
+   ./waybar/default.nix
   ];
 
   wayland.windowManager.hyprland = {
@@ -24,7 +24,8 @@ in
       "$browser" = "firefox";
 
       exec-once = [
-        "ags -b hypr"
+        "dunst"
+        "hyprpaper"
       ];
 
       monitor = [
@@ -86,9 +87,9 @@ in
         "noblur,title:^()$,class:^()$"
       ];
 
-#       plugins = [
-#         inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
-#       ];
+      plugins = [
+
+      ];
 
       bind = [
         "$mainMod, return, exec, $terminal"
@@ -170,5 +171,7 @@ in
     };
   };
 
-  home.packages = with pkgs; [ hyprpicker ];
+  home.packages = with pkgs; [
+    hyprpicker
+  ];
 }

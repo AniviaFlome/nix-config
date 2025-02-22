@@ -21,9 +21,6 @@
     plasma-manager.url = "github:nix-community/plasma-manager";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.inputs.home-manager.follows = "home-manager";
-    # Hyprpanel
-    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
-    hyprpanel.inputs.nixpkgs.follows = "nixpkgs";
     # Sops-nix
     sops-nix.url = "github:Mic92/sops-nix";
     # Nix-mineral
@@ -31,9 +28,6 @@
     nix-mineral.flake = false;
     # Nvf
     nvf.url = "github:notashelf/nvf";
-    # Ags
-    ags.url = "github:Aylur/ags/v1";
-    ags.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, home-manager, ... }
@@ -56,7 +50,6 @@
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            backupFileExtension = "backup";
           }
         ];
     };

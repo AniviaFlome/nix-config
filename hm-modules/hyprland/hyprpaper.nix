@@ -1,10 +1,10 @@
 {
   services.hyprpaper = {
-    enable = true;
+    enable = false;
     settings = {
       splash = false;
       preload = [ "/mnt/hdd/Wallpaper/an.png" ];
-      wallpaper = [ "DP-1,/mnt/hdd/Wallpaper/an.png" ];
+      wallpaper = [ ", /mnt/hdd/Wallpaper/an.png" ];
     };
   };
 }
