@@ -9,6 +9,7 @@ atuin
 bat
 bleachbit
 brave
+btrfs-assistant
 btrfs-progs
 bubblewrap
 calibre
@@ -25,6 +26,7 @@ fzf
 gdu
 gimp
 git
+gowall
 gparted
 grsync
 gpu-screen-recorder-gtk
@@ -59,7 +61,6 @@ obs-studio
 osu-lazer-bin
 prismlauncher
 protontricks
-protonup-qt
 protonup-ng
 python3
 qbittorrent

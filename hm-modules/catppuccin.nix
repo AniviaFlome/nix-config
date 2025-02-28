@@ -8,6 +8,7 @@
     flavor = "mocha";
     accent = "mauve";
     bat.enable = true;
+    brave.enable = true;
     fish.enable = true;
     kitty.enable = true;
     mpv.enable = true;

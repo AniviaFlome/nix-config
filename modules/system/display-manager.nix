@@ -1,3 +1,5 @@
+{ username, ... }:
+
 {
   services.displayManager = {
     sddm = {
@@ -10,8 +12,8 @@
     };
     defaultSession = "plasma";
     autoLogin = {
-        enable = true;
-        user = "aniviaflome";
+        enable = false;
+        user = "${username}";
     };
   };
 }

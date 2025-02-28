@@ -28,6 +28,8 @@
     nix-mineral.flake = false;
     # Nvf
     nvf.url = "github:notashelf/nvf";
+    # Zen-browser
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, home-manager, ... }
@@ -39,12 +41,12 @@
     lib = nixpkgs.lib;
     username = "aniviaflome";
   in {
-    # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#your-hostname'
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs outputs pkgs-stable username;
-      };
+
+    nixosConfigurations = {
+      nixos = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs outputs pkgs-stable username system;
+        };
         modules = [
           ./hosts/nixos/configuration.nix
           home-manager.nixosModules.home-manager {
@@ -52,16 +54,31 @@
             home-manager.useUserPackages = true;
           }
         ];
+      };
+      liveiso = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs outputs pkgs-stable username system;
+        };
+        modules = [
+          ./hosts/nixos/configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+          }
+        ];
+      };
     };
 
-    homeConfigurations.nixos = inputs.home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.${system};
-      extraSpecialArgs = {
-        inherit inputs outputs pkgs-stable username;
+    homeConfigurations = {
+      ${username} = inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.${system};
+        extraSpecialArgs = {
+          inherit inputs outputs pkgs-stable username system;
+        };
+        modules = [
+          ./hosts/nixos/home.nix
+        ];
       };
-      modules = [
-        ./hosts/nixos/home.nix
-      ];
     };
   };
 }

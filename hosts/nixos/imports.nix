@@ -23,6 +23,7 @@
 ../../modules/programs/virt-manager.nix
 ../../modules/programs/xorg.nix
 ../../modules/programs/zapret.nix
+../../modules/programs/zen-browser.nix
 # Security
 ../../modules/security/fail2ban.nix
 ../../modules/security/firewall.nix

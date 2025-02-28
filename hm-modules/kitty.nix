@@ -21,5 +21,6 @@
       initial_window_width = "90c";
       initial_window_height = "24c";
     };
+    themeFile = "Catppuccin-Mocha";
   };
 }

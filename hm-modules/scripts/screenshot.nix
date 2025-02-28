@@ -1,10 +1,14 @@
-pkgs: let
+{ pkgs, ... }:
+
+let
   notify-send = "${pkgs.libnotify}/bin/notify-send";
   slurp = "${pkgs.slurp}/bin/slurp";
   wayshot = "${pkgs.wayshot}/bin/wayshot";
   swappy = "${pkgs.swappy}/bin/swappy";
   wl-copy = "${pkgs.wl-clipboard}/bin/wl-copy";
 in
+
+{
   pkgs.writeShellScript "screenshot" ''
     SCREENSHOTS="$HOME/Pictures/Screenshots"
     NOW=$(date +%Y-%m-%d_%H-%M-%S)
@@ -37,3 +41,4 @@ in
         *) ;;
     esac
   ''
+}

@@ -6,10 +6,11 @@ in
 
 {
   imports = [
-    ./dunst.nix
-    ./hyprpaper.nix
-#     ./rofi.nix
-   ./waybar/default.nix
+#     ./dunst/default.nix
+     ./hypridle.nix
+     ./hyprlock.nix
+     ./rofi/default.nix
+     ./waybar.nix
   ];
 
   wayland.windowManager.hyprland = {
@@ -21,15 +22,40 @@ in
       "$terminal" = "kitty";
       "$file" = "dolphin";
       "$menu" = "rofi -show drun";
-      "$browser" = "firefox";
+      "$browser" = "flatpak run app.zen_browser.zen";
 
       exec-once = [
-        "dunst"
         "hyprpaper"
+        "waybar"
+        "[workspace 10 silent] prismlauncher --launch 'Script AniviaTai(1)'"
       ];
 
       monitor = [
         ",preferred,auto,auto"
+      ];
+
+      workspace = {
+
+      };
+
+      env = [
+            "XDG_CURRENT_DESKTOP,Hyprland"
+            "XDG_SESSION_DESKTOP,Hyprland"
+            "XDG_SESSION_TYPE,wayland"
+            "GDK_BACKEND,wayland,x11,*"
+            "NIXOS_OZONE_WL,1"
+            "ELECTRON_OZONE_PLATFORM_HINT,auto"
+            "MOZ_ENABLE_WAYLAND,1"
+            "OZONE_PLATFORM,wayland"
+            "EGL_PLATFORM,wayland"
+            "CLUTTER_BACKEND,wayland"
+            "SDL_VIDEODRIVER,wayland"
+            "QT_QPA_PLATFORM,wayland;xcb"
+            "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+            "QT_QPA_PLATFORMTHEME,qt6ct"
+            "QT_AUTO_SCREEN_SCALE_FACTOR,1"
+            "WLR_RENDERER_ALLOW_SOFTWARE,1"
+            "NIXPKGS_ALLOW_UNFREE,1"
       ];
 
       input = {

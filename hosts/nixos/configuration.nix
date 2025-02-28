@@ -4,6 +4,7 @@
   imports =
     [
       ./hardware-configuration.nix
+      ./hardware-custom.nix
       ./imports.nix
     ];
 
@@ -11,7 +12,7 @@
 
   users.users.${username} = {
     isNormalUser = true;
-    description = "AniviaFlome";
+    description = "${username}";
     extraGroups = [ "wheel" ];
   };
 

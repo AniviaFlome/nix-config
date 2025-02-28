@@ -16,10 +16,11 @@
 ../../hm-modules/scripts/default.nix
 ../../hm-modules/spicetify.nix
 ../../hm-modules/starship.nix
-# ../../hm-modules/theme.nix
+../../hm-modules/theme.nix
 ../../hm-modules/tmux.nix
 ../../hm-modules/variables.nix
 ../../hm-modules/vscodium.nix
+../../hm-modules/zen-browser/default.nix
 ../../hm-modules/zoxide.nix
   ];
 }

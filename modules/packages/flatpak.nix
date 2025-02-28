@@ -11,7 +11,6 @@
       { name = "flathub"; location = "https://dl.flathub.org/repo/flathub.flatpakrepo"; }
     ];
     packages = map (id: { appId = id; origin = "flathub"; }) [
-      "app.zen_browser.zen"
       "com.github.tchx84.Flatseal"
       "com.heroicgameslauncher.hgl"
       "com.pokemmo.PokeMMO"
