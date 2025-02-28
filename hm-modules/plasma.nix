@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
-  imports = [ <plasma-manager/modules> ];
+  imports = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
 
   home.packages = with pkgs; [
     (catppuccin-kde.override {
@@ -52,15 +52,6 @@
       kwin = {
         "Close Window" = "Meta+C";
         "Maximize Window" = "Meta+F";
-      };
-    };
-
-    configFile = {
-      "baloofilerc"."Basic Settings"."Indexing-Enabled" = false;
-      "kwinrc"."org.kde.kdecoration2"."ButtonsOnLeft" = "SF";
-      "kwinrc"."Desktops"."Number" = {
-        value = 8;
-        immutable = true;
       };
     };
   };
