@@ -6,11 +6,16 @@
    ];
 
   nixpkgs = {
+    overlays = [ inputs.nur.overlay ];
     config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
     };
   };
+
+  xdg.configFile."/nixpkgs/config.nix".text = ''
+    allowUnfree = true;
+  '';
 
   home = {
     username = "${username}";
@@ -21,6 +26,5 @@
 
   systemd.user.startServices = "sd-switch";
 
-  # DO NOT CHANGE THIS
   home.stateVersion = "23.05";
 }

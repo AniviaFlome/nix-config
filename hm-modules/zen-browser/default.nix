@@ -1,21 +1,19 @@
-{ pkgs, inputs, username, system, ... }:
-
-let
-  zen-browser = pkgs.lib.makeOverridable (_: inputs.zen-browser.packages."${system}".default);
-in
+{ pkgs, system, inputs, username, ... }:
 
 {
-  imports = [
-    ./bookmarks.nix
-    ./search-engines.nix
-    ./settings.nix
-  ];
+  imports = [ inputs.zen-browser.homeModules.beta ];
 
-  programs.firefox = {
+  programs.zen-browser = {
     enable = true;
-    package = zen-browser {};
     profiles.${username} = {
       search.force = true;
+
+      bookmarks = import ./bookmarks.nix;
+      search.engines = import ./search-engines.nix { inherit pkgs; };
+      settings = import ./settings.nix;
+      userChrome = builtins.readFile ./userChrome.css;
+      userContent = builtins.readFile ./userContent.css;
+      extensions = import ./extensions.nix { inherit inputs system; };
     };
   };
 }

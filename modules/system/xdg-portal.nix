@@ -3,7 +3,7 @@
 {
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs;[
+    extraPortals = with pkgs; [
       xdg-desktop-portal
       xdg-desktop-portal-gtk
     ];

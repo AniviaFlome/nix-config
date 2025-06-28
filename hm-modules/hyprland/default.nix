@@ -1,16 +1,8 @@
-{ pkgs, inputs, ... }:
-
-let
-  screenshot = import ./scripts/screenshot.nix pkgs;
-in
+{ pkgs, inputs, file, menu, terminal, ... }:
 
 {
   imports = [
-#     ./dunst/default.nix
-     ./hypridle.nix
-     ./hyprlock.nix
-     ./rofi/default.nix
-     ./waybar.nix
+
   ];
 
   wayland.windowManager.hyprland = {
@@ -19,15 +11,9 @@ in
 
     settings = {
       "$mainMod" = "SUPER";
-      "$terminal" = "kitty";
-      "$file" = "dolphin";
-      "$menu" = "rofi -show drun";
-      "$browser" = "flatpak run app.zen_browser.zen";
 
       exec-once = [
-        "hyprpaper"
-        "waybar"
-        "[workspace 10 silent] prismlauncher --launch 'Script AniviaTai(1)'"
+        "qs -c caelestia &"
       ];
 
       monitor = [
@@ -39,23 +25,23 @@ in
       };
 
       env = [
-            "XDG_CURRENT_DESKTOP,Hyprland"
-            "XDG_SESSION_DESKTOP,Hyprland"
-            "XDG_SESSION_TYPE,wayland"
-            "GDK_BACKEND,wayland,x11,*"
-            "NIXOS_OZONE_WL,1"
-            "ELECTRON_OZONE_PLATFORM_HINT,auto"
-            "MOZ_ENABLE_WAYLAND,1"
-            "OZONE_PLATFORM,wayland"
-            "EGL_PLATFORM,wayland"
-            "CLUTTER_BACKEND,wayland"
-            "SDL_VIDEODRIVER,wayland"
-            "QT_QPA_PLATFORM,wayland;xcb"
-            "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-            "QT_QPA_PLATFORMTHEME,qt6ct"
-            "QT_AUTO_SCREEN_SCALE_FACTOR,1"
-            "WLR_RENDERER_ALLOW_SOFTWARE,1"
-            "NIXPKGS_ALLOW_UNFREE,1"
+        "XDG_CURRENT_DESKTOP,Hyprland"
+        "XDG_SESSION_DESKTOP,Hyprland"
+        "XDG_SESSION_TYPE,wayland"
+        "GDK_BACKEND,wayland,x11,*"
+        "NIXOS_OZONE_WL,1"
+        "ELECTRON_OZONE_PLATFORM_HINT,auto"
+        "MOZ_ENABLE_WAYLAND,1"
+        "OZONE_PLATFORM,wayland"
+        "EGL_PLATFORM,wayland"
+        "CLUTTER_BACKEND,wayland"
+        "SDL_VIDEODRIVER,wayland"
+        "QT_QPA_PLATFORMTHEME,qt6ct"
+        "QT_QPA_PLATFORM,wayland;xcb"
+        "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+        "QT_QPA_PLATFORMTHEME,qt6ct"
+        "QT_AUTO_SCREEN_SCALE_FACTOR,1"
+        "WLR_RENDERER_ALLOW_SOFTWARE,1"
       ];
 
       input = {
@@ -118,11 +104,11 @@ in
       ];
 
       bind = [
-        "$mainMod, return, exec, $terminal"
+        "$mainMod, return, exec, ${terminal}"
         "$mainMod, C, killactive,"
-        "$mainMod, Q, exec, $terminal"
-        "$mainMod, E, exec, $file"
-        "$mainMod, G, exec, $menu"
+        "$mainMod, Q, exec, ${terminal}"
+        "$mainMod, E, exec, ${file}"
+        "$mainMod, SPACE, exec, ${menu}"
         "$mainMod, V, togglefloating,"
         "$mainMod, F, fullscreen,"
         "$mainMod, P, pseudo,"
@@ -136,11 +122,6 @@ in
         "$mainMod, F10, exec, playerctl previous"
         "$mainMod, F11, exec, playerctl next"
         "$mainMod, F12, exec, playerctl stop"
-
-
-        # Screenshot bindings
-        "$mainMod ALT, S, exec, grim - | tee ~/pictures/sc/screenshot-$(date +'%Y-%m-%d_%H-%M-%S').png | wl-copy"
-        "$mainMod SHIFT, S, exec, grim -g \"$(slurp)\" - | tee ~/pictures/sc/screenshot-$(date +'%Y-%m-%d_%H-%M-%S').png | wl-copy"
 
         # Focus movement with vim keys
         "$mainMod, h, movefocus, l"
@@ -199,5 +180,6 @@ in
 
   home.packages = with pkgs; [
     hyprpicker
+    hyprland-qt-support
   ];
 }

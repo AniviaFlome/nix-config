@@ -12,7 +12,7 @@
     };
     defaultSession = "plasma";
     autoLogin = {
-        enable = false;
+        enable = true;
         user = "${username}";
     };
   };

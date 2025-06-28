@@ -10,9 +10,10 @@
       nspr
     ];
     jdks = [
-      zulu8
-      zulu17
-      zulu
+      temurin-jre-bin
+      temurin-jre-bin-24
+      temurin-jre-bin-17
+      temurin-jre-bin-8
     ];
   })
   ];

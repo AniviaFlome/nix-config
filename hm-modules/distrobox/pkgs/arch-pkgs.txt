@@ -1,4 +1,6 @@
 atuin
 fastfetch
+python-pipx
 starship
+youtube-local-git
 zoxide

@@ -9,4 +9,8 @@
       kdePackages.xdg-desktop-portal-kde
     ];
   };
+
+  environment.systemPackages = with pkgs; [
+    kdePackages.wallpaper-engine-plugin
+  ];
 }

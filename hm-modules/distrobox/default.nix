@@ -3,7 +3,7 @@
 
   box = pkgs.writers.writeNu "box" {
     makeWrapperArgs = with pkgs; [
-      "--prefix PATH : ${pkgs.lib.makeBinPath [distrobox]}"
+      "--prefix PATH : ${pkgs.lib.makeBinPath [ distrobox ]}"
     ];
   } (builtins.readFile ./distrobox.nu);
 
@@ -20,7 +20,7 @@
       if name == "arch" then {
         check = "/bin/paru -Qq";
         install = "/bin/paru -S --noconfirm --needed";
-        uninstall = "/bin/paru -Rns --noconfirm";
+        uninstall = "/bin/paru -Rs --noconfirm";
         setup = pkgs.writeShellScriptBin "paru-setup" ''
           if ! command -v paru >/dev/null; then
             sudo pacman -Sy --noconfirm
@@ -55,7 +55,7 @@
             if echo "$enabled_repos" | grep -qw "$repo_id"; then
               continue
             else
-              sudo dnf copr enable -y "$repo" 2>&1 | tee -a enable_repo.log
+              sudo dnf copr enable -y "$repo" 2>&1
             fi
           done
 
@@ -125,6 +125,7 @@
           done < "$STATE_FILE"
         fi
 
+        mkdir -p "$(dirname "$STATE_FILE")"
         cp "$PKG_FILE" "$STATE_FILE"
       else
         echo "No package file found at $PKG_FILE"
@@ -145,8 +146,9 @@ in
 
 {
   home.packages = with pkgs; [
-    nushell
     distrobox
+    nushell
+
     (mkBox {
       name = "debian";
       image = "quay.io/toolbx-images/debian-toolbox:latest";

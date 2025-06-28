@@ -6,6 +6,11 @@
     scripts = with pkgs.mpvScripts; [
       mpris
       mpvacious
+      sponsorblock
+      occivink.seekTo
+      quality-menu
+      mpv-playlistmanager
+      modernx
     ];
     config = {
       hr-seek = "yes";

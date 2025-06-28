@@ -2,7 +2,8 @@
   nix = {
     optimise.automatic = true;
     settings = {
-      auto-optimise-store = false;
+      auto-optimise-store = true;
+      cores = 1;
       substituters = [
         "https://nix-community.cachix.org"
         "https://hyprland.cachix.org"
@@ -17,4 +18,6 @@
       ];
     };
   };
+
+  nixpkgs.config.allowUnfree = true;
 }

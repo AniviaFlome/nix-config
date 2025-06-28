@@ -10,9 +10,11 @@
 ../../hm-modules/hyprland/default.nix
 ../../hm-modules/kitty.nix
 ../../hm-modules/mpv.nix
+../../hm-modules/niri/default.nix
 ../../hm-modules/nvf.nix
 ../../hm-modules/nh.nix
 ../../hm-modules/plasma.nix
+../../hm-modules/qutebrowser.nix
 ../../hm-modules/scripts/default.nix
 ../../hm-modules/spicetify.nix
 ../../hm-modules/starship.nix
