@@ -1,4 +1,4 @@
-name: "Build iso"
+name: "Build NixOS Image"
 on:
   workflow_dispatch:
     inputs:
@@ -22,7 +22,7 @@ jobs:
         nix_path: nixpkgs=channel:nixos-unstable
 
     - name: Build NixOS Image
-      run: nix build .#nixosConfigurations.${{ env.LIVEISO }}
+      run: nix build .#nixosConfigurations.${{ env.LIVEISO }}.config.system.build.isoImage
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
