@@ -34,7 +34,7 @@
 ../../modules/system/bootloader.nix
 ../../modules/system/display-manager.nix
 ../../modules/system/locale.nix
-../../modules/system/networking.nix
+../../modules/system/network.nix
 ../../modules/system/nh.nix
 ../../modules/system/nix.nix
 ../../modules/system/nix-ld.nix
