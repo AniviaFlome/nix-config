@@ -20,7 +20,7 @@ jobs:
     - uses: cachix/install-nix-action@v18
 
     - name: Build ISO
-    - run: nix build .#${{ env.ARTIFACT_FINAL_NAME }}
+    - run: nix build .#${{ env.LIVEISO }}
     - run: tree result
     - uses: actions/upload-artifact@v4
       with:
