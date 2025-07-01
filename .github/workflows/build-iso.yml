@@ -22,7 +22,7 @@ jobs:
         nix_path: nixpkgs=channel:nixos-unstable
 
     - name: Build NixOS Image
-      run: nix build .#${{ env.LIVEISO }}
+      run: nix build .#nixosConfigurations.${{ env.LIVEISO }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
