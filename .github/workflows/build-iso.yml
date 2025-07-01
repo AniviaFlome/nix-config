@@ -20,7 +20,9 @@ jobs:
     - uses: cachix/install-nix-action@v31
       with:
         nix_path: nixpkgs=channel:nixos-unstable
-    - run: nix build .#${{ env.LIVEISO }}
+
+    - name: Build NixOS Image
+        run: nix build .#${{ env.LIVEISO }}
 
     - name: Upload Artifact
     - uses: actions/upload-artifact@v4
