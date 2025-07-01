@@ -23,7 +23,6 @@
 ../../modules/programs/prism-launcher.nix
 ../../modules/programs/syncthing.nix
 ../../modules/programs/virtualization.nix
-../../modules/programs/xorg.nix
 ../../modules/programs/zapret.nix
 ../../modules/programs/zen-browser.nix
 # Security
@@ -34,7 +33,6 @@
 ../../modules/system/autoupdate.nix
 ../../modules/system/bootloader.nix
 ../../modules/system/display-manager.nix
-../../modules/system/libinput.nix
 ../../modules/system/locale.nix
 ../../modules/system/networking.nix
 ../../modules/system/nh.nix
@@ -45,6 +43,7 @@
 ../../modules/system/shell.nix
 ../../modules/system/sops-nix.nix
 ../../modules/system/xdg-portal.nix
+../../modules/system/xorg.nix
 # Theme
 ../../modules/theme/catppuccin.nix
   ];

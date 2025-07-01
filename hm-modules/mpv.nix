@@ -11,6 +11,7 @@
       quality-menu
       mpv-playlistmanager
       modernx
+      webtorrent-mpv-hook
     ];
     config = {
       hr-seek = "yes";

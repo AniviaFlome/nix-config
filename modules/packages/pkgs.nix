@@ -2,10 +2,12 @@
 
 {
   environment.systemPackages = with pkgs; [
+abaddon
 ani-cli
 antimicrox
 atuin
 bat
+better-control
 bleachbit
 btrfs-progs
 bubblewrap
@@ -13,6 +15,7 @@ calibre
 cpu-x
 crow-translate
 curl
+discordo
 efibootmgr
 easyeffects
 eza
@@ -39,6 +42,7 @@ kdePackages.xwaylandvideobridge
 kdiskmark
 kitty
 krita
+komikku
 lazygit
 libreoffice-still
 links2

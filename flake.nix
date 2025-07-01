@@ -11,6 +11,7 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     catppuccin.url = "github:catppuccin/nix";
     lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
+    inputs.determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -72,6 +73,7 @@
         modules = [
           ./hosts/nixos/configuration.nix
           nur.modules.nixos.default
+          determinate.nixosModules.default
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
