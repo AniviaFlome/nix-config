@@ -25,7 +25,7 @@ jobs:
       run: nix build .#${{ env.LIVEISO }}
 
     - name: Upload Artifact
-    - uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4
       with:
         name: NixOS-${{ github.event.inputs.iso }}
         path: result/sd-image
