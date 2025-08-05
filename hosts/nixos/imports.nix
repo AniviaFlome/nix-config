@@ -15,9 +15,9 @@
 ../../modules/programs/adb.nix
 ../../modules/programs/cups.nix
 ../../modules/programs/docker.nix
-../../modules/programs/hyprland.nix
 ../../modules/programs/kde-connect.nix
 ../../modules/programs/kde-plasma.nix
+# ../../modules/programs/lsfg-vk.nix
 ../../modules/programs/niri.nix
 ../../modules/programs/podman.nix
 ../../modules/programs/prism-launcher.nix

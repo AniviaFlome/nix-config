@@ -7,7 +7,6 @@
 ../../hm-modules/fastfetch/default.nix
 ../../hm-modules/fish.nix
 ../../hm-modules/git.nix
-../../hm-modules/hyprland/default.nix
 ../../hm-modules/kitty.nix
 ../../hm-modules/mpv.nix
 ../../hm-modules/niri/default.nix

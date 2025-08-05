@@ -9,11 +9,15 @@
       search.force = true;
 
       bookmarks = import ./bookmarks.nix;
-      search.engines = import ./search-engines.nix { inherit pkgs; };
+      extensions = import ./extensions.nix { inherit inputs system; };
       settings = import ./settings.nix;
       userChrome = builtins.readFile ./userChrome.css;
       userContent = builtins.readFile ./userContent.css;
-      extensions = import ./extensions.nix { inherit inputs system; };
+      search = {
+        engines = import ./search-engines.nix { inherit pkgs; };
+        default = "ddg";
+        privateDefault = "ddg";
+      };
     };
   };
 }

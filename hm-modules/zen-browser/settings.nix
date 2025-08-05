@@ -7,6 +7,7 @@
   "browser.eme.ui.firstContentShown" = true;
   "browser.search.separatePrivateDefault" = false;
   "browser.search.suggest.enabled" = true;
+  "browser.search.region" = "US";
   "browser.translations.automaticallyPopup" = false;
   "browser.urlbar.placeholderName" = "DuckDuckGo";
   "browser.urlbar.placeholderName.private" = "DuckDuckGo";
@@ -25,7 +26,6 @@
   "security.pki.crlite_mode" = 2;
   "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
   "ui.key.menuAccessKeyFocuses" = false;
-  "zen.theme.accent-color" = "#d4bbff";
   "zen.theme.color-prefs.use-workspace-colors" = false;
   "zen.view.show-newtab-button-top" = false;
   "zen.view.use-single-toolbar" = false;

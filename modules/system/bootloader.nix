@@ -13,7 +13,7 @@
       pkiBundle = "/var/lib/sbctl";
     };
     kernelPackages = pkgs.linuxPackages_zen;
-#     kernelParams = [ "video=1920x1080" ];
+      kernelParams = [ "video=1920x1080" ];
   };
 
   environment.systemPackages = with pkgs; [ sbctl ];

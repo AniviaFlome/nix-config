@@ -1,4 +1,4 @@
-name: "Build ISO"
+name: "Build NixOS Image"
 on:
   workflow_dispatch:
     inputs:
@@ -7,31 +7,25 @@ on:
         required: true
         description: "Which iso you want to build?"
         options:
-          - "Minimal"
           - "Normal"
+          - "Minimal"
 env:
-  LIVEISO: ${{ github.event.inputs.iso == 'Minimal' && 'liveiso-minimal' || 'liveiso' }}
+  LIVEISO: ${{ github.event.inputs.iso == 'Normal' && 'liveiso' || github.event.inputs.iso == 'Minimal' && 'liveiso-minimal' }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: cachix/install-nix-action@v18
+    - uses: actions/checkout@v4
+    - uses: cachix/install-nix-action@v31
       with:
-        extra_nix_config: |
-          allowUnfree = true;
+        nix_path: nixpkgs=channel:nixos-unstable
 
-    - name: Build ISO
-      run: |
-        ARTIFACT_NAME="liveiso"
-        if [ "${{ github.event.inputs.iso }}" == "Minimal" ]; then
-          ARTIFACT_NAME="liveiso-minimal"
-        fi
-        echo "artifact_name=$ARTIFACT_NAME" >> "$GITHUB_OUTPUT"
-    - run: nix build .#${{ env.ARTIFACT_FINAL_NAME }}
-    - run: tree result
-    - uses: actions/upload-artifact@v4
+    - name: Build NixOS Image
+      run: nix build .#nixosConfigurations.${{ env.LIVEISO }}.config.system.build.isoImage
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
       with:
         name: NixOS-${{ github.event.inputs.iso }}
         path: result/sd-image

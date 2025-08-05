@@ -6,12 +6,11 @@
     settings = {
       colors.webpage.darkmode.enabled = true;
       colors.webpage.preferred_color_scheme = "dark";
-
     };
     keyBindings = {
       normal = {
         "td" = "config-cycle colors.webpage.darkmode.enabled";
-        "m" = "spawn mpv {url} --force-window=immediate";
+        "nm" = "spawn mpv {url} --force-window=immediate";
       };
     };
     searchEngines = {

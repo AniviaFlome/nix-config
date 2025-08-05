@@ -1,6 +1,6 @@
 atuin
 fastfetch
 python-pipx
+reflector
 starship
-youtube-local-git
 zoxide
