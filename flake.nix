@@ -11,6 +11,7 @@
     catppuccin.url = "github:catppuccin/nix";
     lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
     niri.url = "github:sodiboo/niri-flake";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,7 +43,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nur, ... }
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nur, nixos-hardware, ... }
   @ inputs: let
     inherit (self) outputs;
     system = "x86_64-linux";
@@ -50,52 +51,35 @@
     pkgs-stable = nixpkgs-stable.legacyPackages.${system};
     lib = nixpkgs.lib;
     username = "aniviaflome";
-    browser = "zen-browser";
-    file = "dolphin";
-    menu = "rofi -show drun -theme /home/aniviaflome/.config/rofi/launchers/type-5/style-3.rasi";
-    music = "spotify";
-    screenshot = builtins.toPath ./scripts/screenshot.nix;
-    terminal = "kitty";
-    wallpaper = builtins.toPath ./hm-modules/wallpaper/wallpaper.png;
   in {
 
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          username = "aniviaflome";
-          inherit inputs outputs pkgs-stable system;
+          inherit inputs outputs pkgs-stable system username;
         };
         modules = [
           ./hosts/nixos/configuration.nix
           nur.modules.nixos.default
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-          }
+          nixos-hardware.nixosModules.asus-fa507nv
         ];
       };
       liveiso = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs outputs pkgs-stable system username;
+          inherit inputs outputs pkgs pkgs-stable system username;
         };
         modules = [
           ./hosts/liveiso/configuration.nix
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-          }
+          home-manager.nixosModules.home-manager
         ];
       };
       liveiso-minimal = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs outputs pkgs-stable system username;
+          inherit inputs outputs pkgs pkgs-stable system username;
         };
         modules = [
           ./hosts/liveiso-minimal/configuration.nix
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-          }
+          home-manager.nixosModules.home-manager
         ];
       };
     };
@@ -104,7 +88,7 @@
       ${username} = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
         extraSpecialArgs = {
-          inherit inputs outputs pkgs-stable system username browser file menu music screenshot terminal wallpaper;
+          inherit inputs outputs pkgs pkgs-stable system username;
         };
         modules = [
           ./hosts/nixos/home.nix

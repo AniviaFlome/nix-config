@@ -12,7 +12,7 @@
       enable = true;
       pkiBundle = "/var/lib/sbctl";
     };
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_latest;
       kernelParams = [ "video=1920x1080" ];
   };
 

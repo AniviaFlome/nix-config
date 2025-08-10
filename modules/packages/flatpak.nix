@@ -44,11 +44,11 @@
       };
       "com.usebottles.bottles".Context = {
         filesystems = [
-          "xdg-data/Steam:rw"
-          "/home/aniviaflome/Games:rw"
-          "/mnt/hdd/Games:rw"
-          "/mnt/hdd/Native:rw"
-          "/mnt/hdd2/Games:rw"
+          "xdg-data/Steam:ro"
+          "/home/aniviaflome/Games:ro"
+          "/mnt/hdd/Games:ro"
+          "/mnt/hdd/Native:ro"
+          "/mnt/hdd2/Games:ro"
         ];
       };
     };

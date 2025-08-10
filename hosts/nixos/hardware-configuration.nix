@@ -8,43 +8,31 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/edbe3c61-2242-4f64-af73-e7c22023eb29";
+    { device = "/dev/disk/by-uuid/1ffa722c-0a7a-45e9-bb95-e716bf36c7b2";
       fsType = "btrfs";
-      options = [ "subvol=@" "compress=zstd" "noatime" ];
+      options = [ "subvol=@" ];
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/edbe3c61-2242-4f64-af73-e7c22023eb29";
+    { device = "/dev/disk/by-uuid/1ffa722c-0a7a-45e9-bb95-e716bf36c7b2";
       fsType = "btrfs";
-      options = [ "subvol=@home" "compress=zstd" "noatime" ];
+      options = [ "subvol=@home" ];
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/edbe3c61-2242-4f64-af73-e7c22023eb29";
+    { device = "/dev/disk/by-uuid/1ffa722c-0a7a-45e9-bb95-e716bf36c7b2";
       fsType = "btrfs";
-      options = [ "subvol=@nix" "compress=zstd" "noatime" ];
-    };
-
-  fileSystems."/var" =
-    { device = "/dev/disk/by-uuid/edbe3c61-2242-4f64-af73-e7c22023eb29";
-      fsType = "btrfs";
-      options = [ "subvol=@var" "compress=zstd" "noatime" ];
-    };
-
-  fileSystems."/persist" =
-    { device = "/dev/disk/by-uuid/edbe3c61-2242-4f64-af73-e7c22023eb29";
-      fsType = "btrfs";
-      options = [ "subvol=@persist" "compress=zstd" "noatime" ];
+      options = [ "subvol=@nix" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/6D9E-AA0E";
+    { device = "/dev/disk/by-uuid/12CE-A600";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
@@ -56,7 +44,8 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp6s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp4s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

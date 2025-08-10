@@ -2,7 +2,7 @@
 
 {
   virtualisation.docker = {
-    enable = true;
+    enable = false;
   };
 
   users.users.${username}.extraGroups = [ "docker" ];

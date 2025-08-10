@@ -3,9 +3,7 @@
     optimise.automatic = true;
     settings = {
       auto-optimise-store = true;
-      cores = 1;
       substituters = [
-        "https://aseipp-nix-cache.freetls.fastly.net"
         "https://nix-community.cachix.org"
         "https://hyprland.cachix.org"
         "https://nix-gaming.cachix.org"

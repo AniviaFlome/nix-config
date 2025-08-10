@@ -105,29 +105,23 @@
                 "applications:vesktop.desktop"
                 "applications:kitty.desktop"
               ];
-#               forceStripes = false;
-#               interactiveMute = false;
-#               wheelEnabled = false;
             };
           }
           "org.kde.plasma.panelspacer"
           {
             systemTray.items = {
               shown = [
+                "org.kde.plasma.battery"
               ];
               hidden = [
                 "org.kde.kdeconnect"
-                "org.kde.plasma.battery"
                 "org.kde.plasma.brightness"
-                "org.kde.plasma.cameraindicator"
                 "org.kde.plasma.clipboard"
                 "org.kde.plasma.devicenotifier"
                 "org.kde.plasma.keyboardlayout"
                 "org.kde.plasma.manage-inputmethod"
                 "org.kde.plasma.mediacontroller"
                 "org.kde.plasma.notifications"
-                "org.kde.plasma.printmanager"
-                "org.kde.plasma.networkmanagement"
                 "JavaEmbeddedFrame"
               ];
             };

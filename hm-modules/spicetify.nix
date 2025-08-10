@@ -1,7 +1,6 @@
 { inputs, pkgs, ... }:
 
 {
-
   imports = [ inputs.spicetify-nix.homeManagerModules.default ];
 
   programs.spicetify =
@@ -10,7 +9,7 @@
    in
    {
      enable = true;
-     enabledExtensions = with spicePkgs.extensions; [  # Special characters are sanitized out of extension names
+     enabledExtensions = with spicePkgs.extensions; [
        adblock
        betterGenres
        hidePodcasts

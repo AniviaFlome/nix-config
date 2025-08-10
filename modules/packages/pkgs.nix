@@ -2,7 +2,6 @@
 
 {
   environment.systemPackages = with pkgs; [
-abaddon
 ani-cli
 antimicrox
 atuin
@@ -16,7 +15,6 @@ calibre
 cpu-x
 crow-translate
 curl
-discordo
 efibootmgr
 easyeffects
 eza
@@ -34,7 +32,6 @@ heroic
 home-manager
 htop
 input-remapper
-jellyfin-media-player
 jq
 kdePackages.kdeconnect-kde
 kdePackages.partitionmanager
@@ -56,6 +53,7 @@ maigret
 man
 mangayomi
 mangohud
+micro
 motrix
 mousam
 mpv
@@ -67,7 +65,6 @@ ntfs3g
 obs-studio
 osu-lazer-bin
 packwiz
-palemoon-bin
 prismlauncher
 protontricks
 python3

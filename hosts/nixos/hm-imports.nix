@@ -13,7 +13,7 @@
 ../../hm-modules/nvf.nix
 ../../hm-modules/nh.nix
 ../../hm-modules/plasma.nix
-../../hm-modules/qutebrowser.nix
+# ../../hm-modules/qutebrowser.nix
 ../../hm-modules/scripts/default.nix
 ../../hm-modules/spicetify.nix
 ../../hm-modules/starship.nix

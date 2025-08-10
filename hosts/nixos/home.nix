@@ -9,13 +9,11 @@
     overlays = [ inputs.nur.overlay ];
     config = {
       allowUnfree = true;
-      allowUnfreePredicate = _: true;
+      allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+        "spicetify-Comfy"
+      ];
     };
   };
-
-  xdg.configFile."/nixpkgs/config.nix".text = ''
-    allowUnfree = true;
-  '';
 
   home = {
     username = "${username}";

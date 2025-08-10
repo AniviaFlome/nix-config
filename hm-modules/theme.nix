@@ -14,7 +14,7 @@ in
     x11.enable = true;
     package = pkgs.catppuccin-cursors.mochaMauve;
     name = "catppuccin-mocha-mauve-cursors";
-    size = 18;
+    size = 24;
   };
 
   gtk = {
@@ -26,7 +26,13 @@ in
     cursorTheme = {
       package = pkgs.catppuccin-cursors.mochaMauve;
       name = "catppuccin-mocha-mauve-cursors";
-      size = 18;
+      size = 24;
     };
   };
+
+  home.packages = with pkgs; [
+    adwaita-icon-theme
+    gnome-icon-theme
+    hicolor-icon-theme
+  ];
 }

@@ -2,7 +2,7 @@
 
 {
   virtualisation.podman = {
-    enable = true;
+    enable = false;
     defaultNetwork.settings = {
       dns_enabled = true;
     };
