@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     sops-nix.url = "github:Mic92/sops-nix";
     nvf.url = "github:notashelf/nvf";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
@@ -41,9 +41,13 @@
       url = "github:pabloaul/lsfg-vk-flake/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    winapps = {
+      url = "github:winapps-org/winapps";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nur, nixos-hardware, ... }
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nur, nixos-hardware, winapps, ... }
   @ inputs: let
     inherit (self) outputs;
     system = "x86_64-linux";
@@ -56,7 +60,7 @@
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs outputs pkgs-stable system username;
+          inherit inputs outputs pkgs-stable system username winapps;
         };
         modules = [
           ./hosts/nixos/configuration.nix
@@ -88,7 +92,7 @@
       ${username} = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
         extraSpecialArgs = {
-          inherit inputs outputs pkgs pkgs-stable system username;
+          inherit inputs outputs pkgs-stable system username;
         };
         modules = [
           ./hosts/nixos/home.nix

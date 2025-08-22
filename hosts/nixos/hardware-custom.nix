@@ -3,8 +3,7 @@
 {
   zramSwap = {
     enable = true;
-    memoryPercent = 50;
-    memoryMax = 8589934592;
+    memoryPercent = 100;
   };
 
   hardware.graphics.enable = true;
@@ -13,8 +12,8 @@
 
   hardware.nvidia = {
     modesetting.enable = true; # Modesetting is required.
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
+    powerManagement.enable = true;
+    powerManagement.finegrained = true;
     open = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;

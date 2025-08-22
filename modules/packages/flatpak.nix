@@ -7,7 +7,7 @@
     enable = true;
     uninstallUnmanaged = true;
     update = {
-      onActivation = false;
+      onActivation = true;
       auto = {
         enable = true;
         onCalendar = "weekly";
@@ -32,6 +32,9 @@
     overrides = {
       global = {
         Context = {
+          filesystems = [
+            "xdg-run/discord-ipc-0"
+          ];
           sockets = [
             "wayland"
             "!x11"
@@ -44,11 +47,16 @@
       };
       "com.usebottles.bottles".Context = {
         filesystems = [
-          "xdg-data/Steam:ro"
-          "/home/aniviaflome/Games:ro"
-          "/mnt/hdd/Games:ro"
-          "/mnt/hdd/Native:ro"
-          "/mnt/hdd2/Games:ro"
+          "xdg-data/Steam:rw"
+          "/home/aniviaflome/Games:rw"
+          "/mnt/hdd/Games:rw"
+          "/mnt/hdd/Native:rw"
+          "/mnt/hdd2/Games:rw"
+        ];
+      };
+      "org.vinegarhq.Sober".Context = {
+        devices = [
+          "input"
         ];
       };
     };

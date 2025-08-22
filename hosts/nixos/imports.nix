@@ -14,7 +14,6 @@
 # Programs
 ../../modules/programs/adb.nix
 ../../modules/programs/cups.nix
-../../modules/programs/docker.nix
 ../../modules/programs/kde-connect.nix
 ../../modules/programs/kde-plasma.nix
 # ../../modules/programs/lsfg-vk.nix
@@ -23,6 +22,7 @@
 ../../modules/programs/prism-launcher.nix
 #../../modules/programs/syncthing.nix
 ../../modules/programs/virtualization.nix
+../../modules/programs/waydroid.nix
 ../../modules/programs/zapret.nix
 ../../modules/programs/zen-browser.nix
 # Security

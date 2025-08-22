@@ -2,7 +2,7 @@
 
 {
   imports = [
-
+    ./caelestia.nix
   ];
 
   wayland.windowManager.hyprland = {
@@ -13,7 +13,7 @@
       "$mainMod" = "SUPER";
 
       exec-once = [
-        "qs -c caelestia &"
+        "caelestia-shell -d"
       ];
 
       monitor = [

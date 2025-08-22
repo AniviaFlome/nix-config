@@ -3,7 +3,7 @@
 {
   networking = {
     networkmanager.enable = true;
-    nameservers =  ["9.9.9.9" ];
+    nameservers =  [ "9.9.9.9" ];
   };
   users.users.${username}.extraGroups = [ "networkmanager" ];
 

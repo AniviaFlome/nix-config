@@ -6,8 +6,6 @@
   programs.zen-browser = {
     enable = true;
     profiles.${username} = {
-      search.force = true;
-
       bookmarks = import ./bookmarks.nix;
       extensions = import ./extensions.nix { inherit inputs system; };
       settings = import ./settings.nix;
@@ -15,6 +13,7 @@
       userContent = builtins.readFile ./userContent.css;
       search = {
         engines = import ./search-engines.nix { inherit pkgs; };
+        force = true;
         default = "ddg";
         privateDefault = "ddg";
       };

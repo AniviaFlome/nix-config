@@ -6,12 +6,12 @@
    ];
 
   nixpkgs = {
-    overlays = [ inputs.nur.overlay ];
+    overlays = [
+      inputs.nur.overlays.default
+      inputs.firefox-addons.overlays.default
+    ];
     config = {
       allowUnfree = true;
-      allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-        "spicetify-Comfy"
-      ];
     };
   };
 

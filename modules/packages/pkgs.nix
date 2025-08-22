@@ -33,7 +33,10 @@ home-manager
 htop
 input-remapper
 jq
-kdePackages.kdeconnect-kde
+kdePackages.dolphin
+kdePackages.dolphin-plugins
+kdePackages.gwenview
+kdePackages.okular
 kdePackages.partitionmanager
 kdePackages.qt6ct
 kdePackages.xwaylandvideobridge
@@ -49,10 +52,10 @@ livecaptions
 localsend
 ludusavi
 lutris
-maigret
 man
 mangayomi
 mangohud
+mat2
 micro
 motrix
 mousam
@@ -82,7 +85,7 @@ qbittorrent
 qtscrcpy
 rclone
 rsync
-ryujinx
+ryubing
 scrcpy
 songrec
 spotify

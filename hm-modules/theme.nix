@@ -19,6 +19,7 @@ in
 
   gtk = {
     enable = true;
+    gtk2.force = true;
     theme = {
       package = catppuccin-gtk-override;
       name = "catppuccin-mocha-mauve-standard";
