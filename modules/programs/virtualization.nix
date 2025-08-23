@@ -1,4 +1,4 @@
-{ pkgs-stable, username, system, winapps, ... }:
+{ pkgs-stable, username, ... }:
 
 {
   virtualisation = {
@@ -16,16 +16,14 @@
   services.spice-vdagentd.enable = true;
   programs.virt-manager.enable = true;
 
-  environment.systemPackages = [
-    pkgs-stable.virt-viewer
-    pkgs-stable.spice
-    pkgs-stable.spice-gtk
-    pkgs-stable.spice-protocol
-    pkgs-stable.virtio-win
-    pkgs-stable.win-spice
-    pkgs-stable.quickemu
-    pkgs-stable.quickgui
-    winapps.packages."${system}".winapps
-    winapps.packages."${system}".winapps-launcher
+  environment.systemPackages = with pkgs-stable; [
+    virt-viewer
+    spice
+    spice-gtk
+    spice-protocol
+    virtio-win
+    win-spice
+    quickemu
+    quickgui
   ];
 }

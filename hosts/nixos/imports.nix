@@ -1,5 +1,7 @@
 {
   imports = [
+# Compose
+../../modules/compose/winapps.nix
 # Gaming
 ../../modules/gaming/gamescope.nix
 ../../modules/gaming/gamemode.nix

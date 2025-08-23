@@ -83,6 +83,7 @@ python313Packages.toml
 python313Packages.watchdog
 qbittorrent
 qtscrcpy
+qwen-code
 rclone
 rsync
 ryubing
