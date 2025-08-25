@@ -3,7 +3,7 @@
     configs = {
       root = {
         SUBVOLUME = "/";
-        TIMELINE_CREATE = true;
+        TIMELINE_CREATE = false;
         TIMELINE_CLEANUP = true;;
         TIMELINE_LIMIT_HOURLY = 10;
         TIMELINE_LIMIT_DAILY = 10;
@@ -13,7 +13,7 @@
       };
       home = {
         SUBVOLUME = "/home";
-        TIMELINE_CREATE = true;
+        TIMELINE_CREATE = false;
         TIMELINE_CLEANUP = true;
         TIMELINE_LIMIT_HOURLY = 10;
         TIMELINE_LIMIT_DAILY = 10;

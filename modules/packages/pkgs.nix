@@ -31,6 +31,7 @@ handbrake
 heroic
 home-manager
 htop
+hugo
 input-remapper
 jq
 kdePackages.dolphin

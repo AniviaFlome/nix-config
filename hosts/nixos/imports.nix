@@ -22,7 +22,7 @@
 ../../modules/programs/niri.nix
 ../../modules/programs/podman.nix
 ../../modules/programs/prism-launcher.nix
-#../../modules/programs/syncthing.nix
+../../modules/programs/syncthing.nix
 ../../modules/programs/virtualization.nix
 ../../modules/programs/waydroid.nix
 ../../modules/programs/zapret.nix
@@ -43,7 +43,7 @@
 ../../modules/system/nix-mineral.nix
 ../../modules/system/pipewire.nix
 ../../modules/system/shell.nix
-#../../modules/system/sops-nix.nix
+../../modules/system/sops-nix.nix
 ../../modules/system/xdg-portal.nix
 ../../modules/system/xorg.nix
 # Theme

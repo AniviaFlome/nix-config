@@ -1,20 +1,20 @@
-{ pkgs, inputs, config, ... }:
+{ pkgs, inputs, config, username, ... }:
 
 {
   imports = [ inputs.sops-nix.nixosModules.sops ];
 
   sops = {
-    defaultSopsFile = ../.././secrets/secrets.yaml;
+    defaultSopsFile = ../../secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
-    secrets = {
-      ssh-key = {};
-      syncthing = {};
+    
+    age = {
+      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      keyFile = "/home/${username}/.config/sops/age/keys.txt";
+      generateKey = true;
     };
 
-    age = {
-      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key"];
-      keyFile = "/home/user/.config/sops/age/keys.txt";
-      generateKey = true;
+    secrets = {
+      "syncthing-password" = { };
     };
   };
 

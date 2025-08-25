@@ -11,9 +11,8 @@
   };
 
   home.sessionVariables = {
-    EDITOR = "micro";
+    EDITOR = "nano";
     NIXPKGS_ALLOW_UNFREE = "1";
-    MANUAL = "micro";
     _JAVA_OPTIONS= "-Dawt.useSystemAAFontSettings=lcd";
   };
 }

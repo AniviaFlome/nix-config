@@ -1,16 +1,18 @@
-{ config, username, ... }:
-
-let
-  key = config.sops.secrets.syncthing.path;
-in
+{ config, pkgs, username, ... }:
 
 {
   services.syncthing = {
     enable = true;
-    openDefaultPorts = true;
-    settings.gui = {
-      user = "${username}";
-      password = "$(cat ${key})";
+    user = "${username}";
+    group = "users";
+    dataDir = "/home/${username}/Syncthing";
+    settings = {
+      gui = {
+        user = "${username}";
+        passwordFile = config.sops.secrets."syncthing-password".path;
+      };
     };
   };
+
+  environment.systemPackages = with pkgs; [ syncthing ];
 }
