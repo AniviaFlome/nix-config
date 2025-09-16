@@ -1,10 +1,9 @@
 {
   imports = [
-# Compose
-../../modules/compose/winapps.nix
 # Gaming
 ../../modules/gaming/gamescope.nix
 ../../modules/gaming/gamemode.nix
+../../modules/gaming/prism-launcher.nix
 ../../modules/gaming/retroarch.nix
 ../../modules/gaming/steam.nix
 ../../modules/gaming/sunshine.nix
@@ -18,11 +17,11 @@
 ../../modules/programs/cups.nix
 ../../modules/programs/kde-connect.nix
 ../../modules/programs/kde-plasma.nix
-# ../../modules/programs/lsfg-vk.nix
+../../modules/programs/lsfg-vk.nix
 ../../modules/programs/niri.nix
+../../modules/programs/oom.nix
 ../../modules/programs/podman.nix
-../../modules/programs/prism-launcher.nix
-../../modules/programs/syncthing.nix
+# ../../modules/programs/snapper.nix
 ../../modules/programs/virtualization.nix
 ../../modules/programs/waydroid.nix
 ../../modules/programs/zapret.nix
@@ -30,6 +29,9 @@
 # Security
 ../../modules/security/fail2ban.nix
 ../../modules/security/firewall.nix
+# Server
+../../modules/server/n8n.nix
+# ../../modules/server/syncthing.nix
 # System
 ../../modules/system/appimage.nix
 ../../modules/system/autoupdate.nix
@@ -44,6 +46,8 @@
 ../../modules/system/pipewire.nix
 ../../modules/system/shell.nix
 ../../modules/system/sops-nix.nix
+../../modules/system/sudo-rs.nix
+../../modules/system/systemd.nix
 ../../modules/system/xdg-portal.nix
 ../../modules/system/xorg.nix
 # Theme

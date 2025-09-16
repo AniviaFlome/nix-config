@@ -9,7 +9,9 @@ bat
 bat-extras.core
 better-control
 bleachbit
+brave
 btrfs-progs
+bolt-launcher
 bubblewrap
 calibre
 cpu-x
@@ -25,6 +27,7 @@ fzf
 gdu
 gearlever
 git
+glib
 gparted
 gpu-screen-recorder-gtk
 handbrake
@@ -46,7 +49,7 @@ kitty
 krita
 komikku
 lazygit
-legendary-heroic
+legendary-gl
 libreoffice-still
 links2
 livecaptions
@@ -99,9 +102,8 @@ textpieces
 thunderbird
 tldr
 umu-launcher
-unrar
-unzip
 upscayl
+uutils-coreutils
 vesktop
 vlc
 vscodium

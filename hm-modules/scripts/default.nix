@@ -2,7 +2,6 @@
 
 let
   scripts = [
-    "hyprland-monitor"
     "hyscript"
     "winboot"
     "qute-pip"

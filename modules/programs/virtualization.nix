@@ -4,10 +4,17 @@
   virtualisation = {
     libvirtd = {
       enable = true;
+      package = with pkgs-stable; libvirt;
       qemu = {
-        swtpm.enable = true;
-        ovmf.enable = true;
-        ovmf.packages = with pkgs-stable; [ OVMFFull.fd ];
+        package = with pkgs-stable; qemu;
+        swtpm = {
+          enable = false;
+          package = with pkgs-stable; swtpm;
+        };
+        ovmf = {
+          enable = false;
+          packages = with pkgs-stable; [ OVMFFull.fd ];
+        };
       };
     };
     spiceUSBRedirection.enable = true;
@@ -15,15 +22,4 @@
   users.users.${username}.extraGroups = [ "libvirtd" ];
   services.spice-vdagentd.enable = true;
   programs.virt-manager.enable = true;
-
-  environment.systemPackages = with pkgs-stable; [
-    virt-viewer
-    spice
-    spice-gtk
-    spice-protocol
-    virtio-win
-    win-spice
-    quickemu
-    quickgui
-  ];
 }

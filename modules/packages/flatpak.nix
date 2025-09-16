@@ -28,6 +28,7 @@
       "io.github.giantpinkrobots.varia"
       "io.github.Soundux"
       "org.vinegarhq.Sober"
+      "sh.fhs.ksre"
     ];
     overrides = {
       global = {

@@ -1,27 +1,32 @@
 {
   imports = [
-../../hm-modules/atuin.nix
-../../hm-modules/bash.nix
-../../hm-modules/catppuccin.nix
-../../hm-modules/distrobox/default.nix
-../../hm-modules/fastfetch/default.nix
-../../hm-modules/fish.nix
-../../hm-modules/git.nix
-../../hm-modules/kitty.nix
-../../hm-modules/mpv.nix
-../../hm-modules/niri/default.nix
-../../hm-modules/nvf.nix
-../../hm-modules/nh.nix
-../../hm-modules/plasma.nix
-../../hm-modules/qutebrowser.nix
+# Desktop
+../../hm-modules/desktop/niri/default.nix
+../../hm-modules/desktop/plasma.nix
+# Misc
+../../hm-modules/misc/variables.nix
+# Programs
+../../hm-modules/programs/atuin.nix
+../../hm-modules/programs/bash.nix
+../../hm-modules/programs/distrobox/default.nix
+../../hm-modules/programs/fastfetch/default.nix
+../../hm-modules/programs/fish.nix
+../../hm-modules/programs/git.nix
+../../hm-modules/programs/kitty.nix
+../../hm-modules/programs/mpv.nix
+../../hm-modules/programs/nvf.nix
+../../hm-modules/programs/nh.nix
+../../hm-modules/programs/qutebrowser.nix
+../../hm-modules/programs/spicetify.nix
+../../hm-modules/programs/starship.nix
+../../hm-modules/programs/tmux.nix
+../../hm-modules/programs/vscodium.nix
+../../hm-modules/programs/zen-browser/default.nix
+../../hm-modules/programs/zoxide.nix
+# Scripts
 ../../hm-modules/scripts/default.nix
-../../hm-modules/spicetify.nix
-../../hm-modules/starship.nix
-../../hm-modules/theme.nix
-../../hm-modules/tmux.nix
-../../hm-modules/variables.nix
-../../hm-modules/vscodium.nix
-../../hm-modules/zen-browser/default.nix
-../../hm-modules/zoxide.nix
+# Theme
+../../hm-modules/theme/catppuccin.nix
+../../hm-modules/theme/default.nix
   ];
 }
