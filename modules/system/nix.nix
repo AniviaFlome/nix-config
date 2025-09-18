@@ -1,6 +1,11 @@
+{ config, ... }:
+
 {
   nix = {
     optimise.automatic = true;
+    extraOptions = ''
+      !include ${config.sops.secrets."nix-access-token-github".path}
+    '';
     settings = {
       auto-optimise-store = true;
       substituters = [

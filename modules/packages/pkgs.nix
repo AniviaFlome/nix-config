@@ -103,7 +103,6 @@ thunderbird
 tldr
 umu-launcher
 upscayl
-uutils-coreutils
 vesktop
 vlc
 vscodium

@@ -21,21 +21,22 @@
 ../../modules/programs/niri.nix
 ../../modules/programs/oom.nix
 ../../modules/programs/podman.nix
-# ../../modules/programs/snapper.nix
+../../modules/programs/snapper.nix
 ../../modules/programs/virtualization.nix
 ../../modules/programs/waydroid.nix
-../../modules/programs/zapret.nix
+# ../../modules/programs/zapret.nix
 ../../modules/programs/zen-browser.nix
 # Security
 ../../modules/security/fail2ban.nix
 ../../modules/security/firewall.nix
 # Server
 ../../modules/server/n8n.nix
-# ../../modules/server/syncthing.nix
+../../modules/server/syncthing.nix
 # System
 ../../modules/system/appimage.nix
 ../../modules/system/autoupdate.nix
 ../../modules/system/bootloader.nix
+../../modules/system/cachy.nix
 ../../modules/system/display-manager.nix
 ../../modules/system/locale.nix
 ../../modules/system/network.nix
@@ -47,7 +48,7 @@
 ../../modules/system/shell.nix
 ../../modules/system/sops-nix.nix
 ../../modules/system/sudo-rs.nix
-../../modules/system/systemd.nix
+../../modules/system/uutils.nix
 ../../modules/system/xdg-portal.nix
 ../../modules/system/xorg.nix
 # Theme

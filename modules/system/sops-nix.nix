@@ -15,6 +15,7 @@
 
     secrets = {
       "syncthing-password" = { };
+      "nix-access-token-github" = { };
     };
   };
 
