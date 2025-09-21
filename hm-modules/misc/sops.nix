@@ -6,10 +6,10 @@
   sops = {
     defaultSopsFile = ../../secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
-    
+
     age = {
       sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-      keyFile = "/var/lib/sops-nix/keys.txt";
+      keyFile = "/home/${username}/.config/sops/age/keys.txt";
       generateKey = true;
     };
 

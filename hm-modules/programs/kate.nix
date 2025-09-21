@@ -7,8 +7,8 @@
     enable = true;
     editor = {
       brackets= {
-        automaticallyAddClosing = false;
-        highlightMatching = false;
+        automaticallyAddClosing = true;
+        highlightMatching = true;
       };
       font = {
         family = "${ide-font}";
