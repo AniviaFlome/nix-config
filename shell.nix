@@ -5,6 +5,6 @@ pkgs.mkShell {
     just
   ];
   shellHook = ''
-    echo "Welcome to my nix-config!"
+    echo -e "\e[38;5;183mWelcome to my nix-config!\e[0m"
   '';
 }
