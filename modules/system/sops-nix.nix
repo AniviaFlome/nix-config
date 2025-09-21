@@ -1,4 +1,4 @@
-{ pkgs, inputs, config, username, ... }:
+{ pkgs, inputs, config, ... }:
 
 {
   imports = [ inputs.sops-nix.nixosModules.sops ];
@@ -9,15 +9,17 @@
     
     age = {
       sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-      keyFile = "/home/${username}/.config/sops/age/keys.txt";
+      keyFile = "/var/lib/sops-nix/key.txt";
       generateKey = true;
     };
 
     secrets = {
       "syncthing-password" = { };
-      "nix-access-token-github" = { };
     };
   };
 
-  environment.systemPackages = with pkgs; [ sops ];
+  environment.systemPackages = with pkgs; [
+    age
+    sops
+  ];
 }

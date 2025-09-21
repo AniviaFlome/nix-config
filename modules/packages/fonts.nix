@@ -2,11 +2,10 @@
 
 {
   fonts.packages = with pkgs; [
-cascadia-code
-fira-code
-fira-code-symbols
-jetbrains-mono
-noto-fonts
+nerd-fonts.fira-code
+nerd-fonts.caskaydia-mono
+nerd-fonts.jetbrains-mono
+nerd-fonts.noto
 noto-fonts-cjk-sans
 noto-fonts-emoji
   ];

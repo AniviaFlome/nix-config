@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, imports, ... }:
 
 let
   catppuccin-gtk-override = pkgs.catppuccin-gtk.override {
@@ -9,6 +9,10 @@ let
 in
 
 {
+  imports = [
+    ./catppuccin.nix
+  ];
+
   home.pointerCursor = {
     gtk.enable = true;
     x11.enable = true;

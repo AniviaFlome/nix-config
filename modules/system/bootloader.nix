@@ -13,7 +13,10 @@
       pkiBundle = "/var/lib/sbctl";
     };
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelParams = [ "video=1920x1080" ];
+    kernelParams = [
+      "video=1920x1080"
+      "rcutree.enable_rcu_lazy=1"
+    ];
   };
 
   environment.systemPackages = with pkgs; [ sbctl ];

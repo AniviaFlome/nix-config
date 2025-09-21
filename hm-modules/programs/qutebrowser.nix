@@ -10,7 +10,7 @@
     keyBindings = {
       normal = {
         "td" = "config-cycle colors.webpage.darkmode.enabled";
-        "nm" = "spawn mpv {url} --force-window=immediate";
+        "nm" = "spawn umpv {url} --force-window=immediate";
       };
     };
     searchEngines = {

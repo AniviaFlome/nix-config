@@ -1,11 +1,10 @@
-{ pkgs, ... }:
+{ ide-font, ... }:
 
 {
   programs.kitty = {
     enable = true;
     font = {
-      package = with pkgs; jetbrains-mono;
-      name = "Jetbrains Mono";
+      name = "${ide-font}";
     };
     settings = {
       confirm_os_window_close = -1;

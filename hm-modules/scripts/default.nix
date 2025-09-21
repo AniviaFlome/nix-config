@@ -4,7 +4,6 @@ let
   scripts = [
     "hyscript"
     "winboot"
-    "qute-pip"
   ];
 in
 

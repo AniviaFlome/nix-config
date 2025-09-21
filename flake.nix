@@ -12,7 +12,11 @@
     lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
     niri.url = "github:sodiboo/niri-flake";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    cachy-tweaks.url = "github:AniviaFlome/cachy-tweaks-flake";
+    nixcord.url = "github:kaylorben/nixcord";
+    cachy-tweaks = {
+      url = "github:AniviaFlome/cachy-tweaks-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+     };
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";

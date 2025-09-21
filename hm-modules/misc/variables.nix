@@ -4,6 +4,7 @@
   _module.args = {
     browser = "zen-browser";
     file = "dolphin";
+    ide-font = "Cascadia Code";
     music = "spotify";
     terminal = "kitty";
     wallpaper = builtins.toPath ../theme/wallpaper/wallpaper.png;
