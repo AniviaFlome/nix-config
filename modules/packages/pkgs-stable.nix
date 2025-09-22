@@ -1,6 +1,6 @@
-{ pkgs-stable, ... }: {
+{ pkgs, ... }: {
 
-  environment.systemPackages = with pkgs-stable; [
+  environment.systemPackages = with pkgs.stable; [
 gimp
 grsync
 normcap

@@ -1,6 +1,6 @@
 keys:
   - &users:
-        -  &aniviaflome age1fcsznz5k5qzgu2km7fn62xvl0jsws4p3ed6008rq0gkvefpnaa8qrl3cdx
+        -  &aniviaflome age1mw2ac4djr7s37kp3tgj92zxxe3svyw09q8pvy5ve8tchkdn2vqaqnw7qv4
   - &hosts:
         -  &nixos age1475tk86qd0gtqvve5dxn60fh70rqzm30cemrrgsx58nuk3lmqejqtmmsxf
 creation_rules:

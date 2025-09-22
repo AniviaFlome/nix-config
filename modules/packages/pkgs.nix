@@ -37,6 +37,7 @@ htop
 hugo
 input-remapper
 jq
+just
 kdePackages.dolphin
 kdePackages.dolphin-plugins
 kdePackages.gwenview

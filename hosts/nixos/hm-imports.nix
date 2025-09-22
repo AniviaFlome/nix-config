@@ -4,6 +4,8 @@
 ../../hm-modules/desktop/niri/default.nix
 ../../hm-modules/desktop/plasma.nix
 # Misc
+../../hm-modules/misc/nix.nix
+../../hm-modules/misc/sops-nix.nix
 ../../hm-modules/misc/variables.nix
 # Programs
 ../../hm-modules/programs/atuin.nix
@@ -14,6 +16,7 @@
 ../../hm-modules/programs/git.nix
 ../../hm-modules/programs/kate.nix
 ../../hm-modules/programs/kitty.nix
+../../hm-modules/programs/micro.nix
 ../../hm-modules/programs/mpv.nix
 ../../hm-modules/programs/nvf.nix
 ../../hm-modules/programs/nh.nix

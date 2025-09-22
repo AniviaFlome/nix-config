@@ -54,13 +54,9 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    winapps = {
-      url = "github:winapps-org/winapps";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nur, nixos-hardware, winapps, ... }
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nur, nixos-hardware, ... }
   @ inputs: let
     inherit (self) outputs;
     system = "x86_64-linux";
@@ -73,7 +69,7 @@
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs outputs pkgs-stable system username winapps;
+          inherit inputs outputs pkgs-stable system username;
         };
         modules = [
           ./hosts/nixos/configuration.nix

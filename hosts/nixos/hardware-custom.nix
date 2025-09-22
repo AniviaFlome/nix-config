@@ -1,4 +1,4 @@
-{ config, lib, pkgs-stable, modulesPath, username, ... }:
+{ config, lib, pkgs, modulesPath, username, ... }:
 
 {
   zramSwap = {
@@ -24,5 +24,5 @@
     users = [ "${username}" ];
   };
 
-  environment.systemPackages = with pkgs-stable; [ polychromatic ];
+  environment.systemPackages = with pkgs.stable; [ polychromatic ];
 }

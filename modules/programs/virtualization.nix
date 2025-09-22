@@ -1,19 +1,19 @@
-{ pkgs-stable, username, ... }:
+{ pkgs, username, ... }:
 
 {
   virtualisation = {
     libvirtd = {
       enable = true;
-      package = with pkgs-stable; libvirt;
+      package = with pkgs.stable; libvirt;
       qemu = {
-        package = with pkgs-stable; qemu;
+        package = with pkgs.stable; qemu;
         swtpm = {
           enable = false;
-          package = with pkgs-stable; swtpm;
+          package = with pkgs.stable; swtpm;
         };
         ovmf = {
           enable = false;
-          packages = with pkgs-stable; [ OVMFFull.fd ];
+          packages = with pkgs.stable; [ OVMFFull.fd ];
         };
       };
     };
