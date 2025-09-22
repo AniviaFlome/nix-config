@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-stable.url = "https://flakehub.com/f/NixOS/nixpkgs/*.tar.gz";
     sops-nix.url = "github:Mic92/sops-nix";
     nvf.url = "github:notashelf/nvf";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
@@ -13,6 +13,7 @@
     niri.url = "github:sodiboo/niri-flake";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixcord.url = "github:kaylorben/nixcord";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     cachy-tweaks = {
       url = "github:AniviaFlome/cachy-tweaks-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -56,7 +57,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nur, nixos-hardware, ... }
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nur, nixos-hardware, determinate, ... }
   @ inputs: let
     inherit (self) outputs;
     system = "x86_64-linux";
@@ -75,6 +76,7 @@
           ./hosts/nixos/configuration.nix
           nur.modules.nixos.default
           nixos-hardware.nixosModules.asus-fa507nv
+          determinate.nixosModules.default
         ];
       };
       liveiso = nixpkgs.lib.nixosSystem {

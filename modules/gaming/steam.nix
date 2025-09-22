@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   programs.steam = {
@@ -8,4 +8,6 @@
     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
     protontricks.enable = true;
   };
+
+  environment.systemPackages = with pkgs; [ protonup-ng ];
 }

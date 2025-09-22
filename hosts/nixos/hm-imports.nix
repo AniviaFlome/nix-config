@@ -21,6 +21,7 @@
 ../../hm-modules/programs/nvf.nix
 ../../hm-modules/programs/nh.nix
 ../../hm-modules/programs/qutebrowser.nix
+../../hm-modules/programs/protonup.nix
 ../../hm-modules/programs/spicetify.nix
 ../../hm-modules/programs/starship.nix
 ../../hm-modules/programs/tmux.nix

@@ -56,7 +56,6 @@ links2
 livecaptions
 localsend
 ludusavi
-lutris
 man
 mangayomi
 mangohud

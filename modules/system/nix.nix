@@ -24,6 +24,7 @@
      experimental-features = nix-command flakes
      builders-use-substitutes = true
      !include ${config.sops.secrets."nix-access-token".path}
+     eval-cores = 2
     '';
   };
 
