@@ -45,5 +45,5 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  isoImage.squashfsCompression = "gzip -Xcompression-level 1";
+  isoImage.squashfsCompression = "xz -Xdict-size 100%";
 }
