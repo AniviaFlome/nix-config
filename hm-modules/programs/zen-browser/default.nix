@@ -7,7 +7,7 @@
     enable = true;
     profiles.${username} = {
       bookmarks = import ./bookmarks.nix;
-      extensions = import ./extensions.nix { inherit inputs system; };
+      extensions = import ./extensions.nix { inherit inputs pkgs; };
       settings = import ./settings.nix;
       userChrome = builtins.readFile ./userChrome.css;
       userContent = builtins.readFile ./userContent.css;

@@ -12,6 +12,8 @@
   "browser.urlbar.placeholderName" = "DuckDuckGo";
   "browser.urlbar.placeholderName.private" = "DuckDuckGo";
   "dom.enable_web_task_scheduling" = true;
+  "dom.webgpu.enabled" = true;
+  "extensions.autoDisableScopes" = 0;
   "general.autoScroll" = true;
   "identity.fxaccounts.enabled" = true;
   "layout.css.grid-template-masonry-value.enabled" = true;

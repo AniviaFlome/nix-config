@@ -6,11 +6,9 @@ age-gen:
     nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt
 
 iso-normal:
-  rm -rf result
   nix build .#nixosConfigurations.liveiso.config.system.build.isoImage
 
 iso-minimal:
-  rm -rf result
   nix build .#nixosConfigurations.liveiso-minimal.config.system.build.isoImage
 
 rekey:

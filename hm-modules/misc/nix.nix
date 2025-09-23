@@ -5,7 +5,7 @@
     package = with pkgs; nix;
     extraOptions = "
       !include ${config.sops.secrets."nix-access-token".path}
-	";
+	  ";
   };
 
   nixpkgs = {

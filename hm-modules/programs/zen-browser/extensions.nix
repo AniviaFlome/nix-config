@@ -1,13 +1,13 @@
-{ inputs, system, ... }:
+{ inputs, pkgs, ... }:
 
 {
-  packages = with inputs.firefox-addons.packages."${system}"; [
+  packages = with pkgs.firefox-addons; [
     augmented-steam
     buster-captcha-solver
     clearurls
     darkreader
     jump-cutter
-#     languagetool
+    languagetool
     proton-pass
     protondb-for-steam
     return-youtube-dislikes
@@ -19,4 +19,10 @@
     violentmonkey
     ublock-origin
   ];
+  
+  force = true;
+
+  settings."addon@darkreader.org".settings = {
+    syncSettings = true;
+  };
 }

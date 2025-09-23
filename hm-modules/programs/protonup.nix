@@ -2,6 +2,6 @@
 
 {
  home.activation.protonup = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-  ${lib.getExe pkgs.protonup-ng} -y || true
+   ${lib.getExe pkgs.protonup-ng} -y || true
  '';
 }
