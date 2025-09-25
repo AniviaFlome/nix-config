@@ -1,4 +1,4 @@
-{ pkgs, inputs, file, terminal, wallpaper, ... }:
+{ pkgs, inputs, wallpaper, ... }:
 
 {
   imports = [ inputs.plasma-manager.homeModules.plasma-manager ];
@@ -38,12 +38,12 @@
     hotkeys.commands."launch-terminal" = {
       name = "Launch Terminal";
       key = "Meta+T";
-      command = "${terminal}";
+      command = "$TERMINAL";
     };
     hotkeys.commands."launch-file-manager" = {
       name = "Launch File Manager";
       key = "Meta+E";
-      command = "${file}";
+      command = "$FILE";
     };
 
     shortcuts = {
@@ -103,7 +103,7 @@
                 "applications:org.kde.dolphin.desktop"
                 "applications:spotify.desktop"
                 "applications:vesktop.desktop"
-                "applications:kitty.desktop"
+                "applications:$TERMINAL.desktop"
               ];
             };
           }

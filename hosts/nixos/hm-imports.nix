@@ -22,11 +22,12 @@
 ../../hm-modules/programs/nh.nix
 ../../hm-modules/programs/qutebrowser.nix
 ../../hm-modules/programs/protonup.nix
+../../hm-modules/programs/ripgrep.nix
 ../../hm-modules/programs/spicetify.nix
 ../../hm-modules/programs/starship.nix
 ../../hm-modules/programs/tmux.nix
 ../../hm-modules/programs/vesktop.nix
-../../hm-modules/programs/vscodium.nix
+../../hm-modules/programs/vscode.nix
 ../../hm-modules/programs/zen-browser/default.nix
 ../../hm-modules/programs/zoxide.nix
 # Scripts

@@ -1,4 +1,4 @@
-{ pkgs, ide-font, ... }:
+{ pkgs, ... }:
 
 {
   programs.vscode = {
@@ -12,7 +12,7 @@
         jnoortheen.nix-ide
       ];
       userSettings = {
-        "editor.fontFamily" = "'${ide-font}', 'monospace', monospace";
+        "editor.fontFamily" = "'$IDE_FONT', 'monospace', monospace";
         "workbench.colorTheme" =  "Catppuccin Mocha";
         "workbench.iconTheme" = "catppuccin-mocha";
       };

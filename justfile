@@ -19,4 +19,4 @@ rekey:
     git add -u && (git commit -m "chore: rekey" || true) && git push
 
 sync USER HOST PATH:
-    rsync -av --filter=':- .gitignore' -e "ssh -l {{USER}} -oport=22" . {{USER}}@{{HOST}}:{{PATH}}/nix-secrets
+    rsync -av --filter=':- .gitignore' -e "ssh -l {{USER}} -oport=22" . {{USER}}@{{HOST}}:{{PATH}}/secrets

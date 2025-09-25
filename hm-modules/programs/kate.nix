@@ -1,4 +1,4 @@
-{ inputs, ide-font, ... }:
+{ inputs, ... }:
 
 {
   imports = [ inputs.plasma-manager.homeModules.plasma-manager ];
@@ -11,7 +11,7 @@
         highlightMatching = true;
       };
       font = {
-        family = "${ide-font}";
+        family = "$IDE_FONT}";
         pointSize = 12;
       };
     };
