@@ -89,6 +89,7 @@ qbittorrent
 qtscrcpy
 qwen-code
 rclone
+ripgrep
 rsync
 ryubing
 scrcpy

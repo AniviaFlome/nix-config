@@ -21,6 +21,10 @@
     rsync
   ];
 
+  environment.shellAliases = {
+    nixos-wizard = "nix run github:km-clay/nixos-wizard";
+  };
+
   services.displayManager = lib.mkForce {
     sddm = {
       enable = true;

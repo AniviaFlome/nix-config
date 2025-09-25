@@ -28,15 +28,15 @@
     '';
   };
 
-  nixpkgs.config.allowUnfree = true;
-
-  # Set up overlays to make stable packages available with unfree enabled
-  nixpkgs.overlays = [
-    (final: prev: {
-      stable = import inputs.nixpkgs-stable {
-        inherit (final) system;
-        config.allowUnfree = true;
-      };
-    })
-  ];
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [
+      (final: prev: {
+        stable = import inputs.nixpkgs-stable {
+          inherit (final) system;
+        };
+      })
+      inputs.nur.overlays.default
+    ];
+  };
 }
