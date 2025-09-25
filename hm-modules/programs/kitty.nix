@@ -1,8 +1,10 @@
+{ ide-font, ... }:
+
 {
   programs.kitty = {
     enable = true;
     font = {
-      name = "$IDE_FONT";
+      name = "${ide-font}";
     };
     settings = {
       confirm_os_window_close = -1;

@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, wallpaper, ... }:
 
 {
   imports = [ inputs.plasma-manager.homeModules.plasma-manager ];

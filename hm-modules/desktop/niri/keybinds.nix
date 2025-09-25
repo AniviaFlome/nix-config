@@ -1,11 +1,11 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, file, terminal, ... }:
 
  {
     programs.niri.settings.binds = with config.lib.niri.actions;
  {
     "Mod+C".action = close-window;
-    "Mod+E".action.spawn = "$FILE";
-    "Mod+T".action.spawn = "$TERMINAL";
+    "Mod+E".action.spawn = "${file}";
+    "Mod+T".action.spawn = "${terminal}";
     "Mod+G".action = toggle-overview;
     "Mod+Space".action.spawn = [ "noctalia-shell" "ipc" "call" "launcher" "toggle" ];
 
