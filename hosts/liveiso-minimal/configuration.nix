@@ -19,10 +19,6 @@
     rsync
   ];
 
-  environment.shellAliases = {
-    nixos-wizard = "nix run github:km-clay/nixos-wizard";
-  };
-
   boot.kernelParams = [
     "video=1920x1080"
   ];
