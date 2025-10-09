@@ -1,4 +1,4 @@
-{ pkgs, inputs, wallpaper, ... }:
+{ pkgs, inputs, file, terminal, wallpaper, ... }:
 
 {
   imports = [ inputs.plasma-manager.homeModules.plasma-manager ];
@@ -13,6 +13,10 @@
 
   programs.plasma = {
     enable = true;
+
+    desktop = {
+      mouseActions.middleClick = null;
+    };
 
     workspace = {
       enableMiddleClickPaste = false;
@@ -38,12 +42,12 @@
     hotkeys.commands."launch-terminal" = {
       name = "Launch Terminal";
       key = "Meta+T";
-      command = "$TERMINAL";
+      command = "${terminal}";
     };
     hotkeys.commands."launch-file-manager" = {
       name = "Launch File Manager";
       key = "Meta+E";
-      command = "$FILE";
+      command = "${file}";
     };
 
     shortcuts = {
@@ -103,7 +107,7 @@
                 "applications:org.kde.dolphin.desktop"
                 "applications:spotify.desktop"
                 "applications:vesktop.desktop"
-                "applications:$TERMINAL.desktop"
+                "applications:${terminal}.desktop"
               ];
             };
           }
@@ -121,7 +125,6 @@
                 "org.kde.plasma.keyboardlayout"
                 "org.kde.plasma.manage-inputmethod"
                 "org.kde.plasma.mediacontroller"
-                "org.kde.plasma.notifications"
                 "JavaEmbeddedFrame"
               ];
             };

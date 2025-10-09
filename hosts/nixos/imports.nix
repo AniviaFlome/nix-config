@@ -20,6 +20,7 @@
 ../../modules/programs/lsfg-vk.nix
 ../../modules/programs/niri.nix
 ../../modules/programs/oom.nix
+../../modules/programs/docker.nix
 ../../modules/programs/podman.nix
 ../../modules/programs/snapper.nix
 ../../modules/programs/virtualization.nix
@@ -32,6 +33,8 @@
 # Server
 ../../modules/server/n8n.nix
 ../../modules/server/syncthing.nix
+../../modules/server/winboat.nix
+../../modules/server/wordpress.nix
 # System
 ../../modules/system/appimage.nix
 ../../modules/system/autoupdate.nix

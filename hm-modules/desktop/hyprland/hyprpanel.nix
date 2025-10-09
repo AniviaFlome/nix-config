@@ -46,18 +46,28 @@
       menus = {
         dashboard = {
           shortcuts = {
-            left.shortcut1.tooltip = "Launch Browser";
-            left.shortcut1.command = "${browser}";
-            left.shortcut1.icon = "";
-            left.shortcut2.tooltip = "Launch Music Player";
-            left.shortcut2.command = "${music}";
-            left.shortcut2.icon = "󰝚";
-            left.shortcut3.tooltip = "Search";
-            left.shortcut3.command = "${menu}";
-            left.shortcut3.icon = "";
-            left.shortcut4.tooltip = "Launch Vesktop";
-            left.shortcut4.command = "vesktop";
-            left.shortcut4.icon = "";
+            left = {
+              shortcut1 = {
+                tooltip = "Launch Browser";
+                command = "${browser}";
+                icon = "";
+              };
+              shortcut2 = {
+                tooltip = "Launch Music Player";
+                command = "${music}";
+                icon = "󰝚";
+              };
+              shortcut3 = {
+                tooltip = "Search";
+                command = "${menu}";
+                icon = "";
+              };
+              shortcut4 = {
+                tooltip = "Launch Vesktop";
+                command = "vesktop";
+                icon = "";
+              };
+            };
           };
           directories.enabled = false;
           stats.enable_gpu = true;

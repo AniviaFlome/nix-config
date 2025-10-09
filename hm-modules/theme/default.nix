@@ -1,4 +1,4 @@
-{ pkgs, config, imports, ... }:
+{ pkgs, ... }:
 
 let
   catppuccin-gtk-override = pkgs.catppuccin-gtk.override {

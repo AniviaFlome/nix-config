@@ -2,6 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
+android-translation-layer
 ani-cli
 antimicrox
 atuin
@@ -17,6 +18,7 @@ calibre
 cpu-x
 crow-translate
 curl
+deadnix
 efibootmgr
 easyeffects
 eza
@@ -70,6 +72,7 @@ nixd
 nixfmt-rfc-style
 ntfs3g
 obs-studio
+obsidian
 osu-lazer-bin
 packwiz
 prismlauncher
@@ -89,6 +92,7 @@ qbittorrent
 qtscrcpy
 qwen-code
 rclone
+riseup-vpn
 rsync
 ryubing
 scrcpy
@@ -96,6 +100,7 @@ songrec
 spotify
 spotify-player
 starship
+statix
 syncthing
 telegram-desktop
 textpieces
@@ -117,6 +122,7 @@ youtube-tui
 yt-dlp
 zathura
 zip
+zoom-us
 zoxide
   ];
 }

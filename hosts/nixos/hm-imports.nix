@@ -18,7 +18,7 @@
 ../../hm-modules/programs/kitty.nix
 ../../hm-modules/programs/micro.nix
 ../../hm-modules/programs/mpv.nix
-../../hm-modules/programs/nvf.nix
+../../hm-modules/programs/neovim.nix
 ../../hm-modules/programs/nh.nix
 ../../hm-modules/programs/qutebrowser.nix
 ../../hm-modules/programs/protonup.nix

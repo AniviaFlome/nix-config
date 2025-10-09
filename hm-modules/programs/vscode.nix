@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, ide-font, ... }:
 
 {
   programs.vscode = {
@@ -8,11 +8,12 @@
       extensions = with pkgs.vscode-extensions; [
         catppuccin.catppuccin-vsc
         catppuccin.catppuccin-vsc-icons
+        esbenp.prettier-vscode
         formulahendry.code-runner
         jnoortheen.nix-ide
       ];
       userSettings = {
-        "editor.fontFamily" = "'$IDE_FONT', 'monospace', monospace";
+        "editor.fontFamily" = "'${ide-font}', 'monospace', monospace";
         "workbench.colorTheme" =  "Catppuccin Mocha";
         "workbench.iconTheme" = "catppuccin-mocha";
       };

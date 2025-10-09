@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   packages = with pkgs.firefox-addons; [

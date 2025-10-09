@@ -11,10 +11,6 @@
           enable = false;
           package = with pkgs.stable; swtpm;
         };
-        ovmf = {
-          enable = false;
-          packages = with pkgs.stable; [ OVMFFull.fd ];
-        };
       };
     };
     spiceUSBRedirection.enable = true;

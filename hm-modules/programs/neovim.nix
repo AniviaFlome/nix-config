@@ -11,14 +11,24 @@
         telescope.enable = true;
         autocomplete.nvim-cmp.enable = true;
         lsp.enable = true;
+        undoFile.enable = true;
+        spellcheck =  {
+          enable = true;
+          languages = [
+            "en"
+            "tr"
+          ];
+        };
         theme = {
           enable = true;
           name = "catppuccin";
           style = "mocha";
         };
         languages = {
+          enableFormat = true;
           enableTreesitter = true;
           nix.enable = true;
+          markdown.enable = true;
         };
       };
     };

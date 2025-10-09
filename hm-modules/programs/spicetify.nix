@@ -13,6 +13,8 @@
        adblock
        betterGenres
        hidePodcasts
+       wikify
+       volumePercentage
      ];
       enabledCustomApps= with spicePkgs.apps; [
         marketplace

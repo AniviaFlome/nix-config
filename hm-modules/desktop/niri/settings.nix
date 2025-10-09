@@ -1,5 +1,3 @@
-{ config, pkgs, inputs, ... }:
-
 {
   programs.niri = {
     settings = {

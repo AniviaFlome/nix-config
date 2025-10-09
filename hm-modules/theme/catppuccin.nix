@@ -4,7 +4,7 @@
   imports = [ inputs.catppuccin.homeModules.catppuccin ];
 
   catppuccin = {
-    enable = false;
+    enable = true;
     flavor = "mocha";
     accent = "mauve";
 
@@ -12,6 +12,7 @@
     bat.enable = true;
     fish.enable = true;
     kitty.enable = true;
+    kvantum.enable = false;
     lazygit.enable = true;
     lsd.enable = true;
     mangohud.enable = true;

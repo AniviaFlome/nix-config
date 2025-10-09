@@ -21,6 +21,10 @@
         callTimer.enable = true;
         clearURLs.enable = true;
         crashHandler.enable = true;
+        customIdle = {
+          enable = true;
+          idleTimeout = 0.0;
+        };
         experiments.enable = true;
         expressionCloner.enable = true;
         fakeNitro.enable = true;

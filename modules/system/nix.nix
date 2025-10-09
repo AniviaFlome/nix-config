@@ -1,4 +1,4 @@
-{ config, inputs, self, pkgs-stable, ... }:
+{ config, inputs, ... }:
 
 {
   nix = {

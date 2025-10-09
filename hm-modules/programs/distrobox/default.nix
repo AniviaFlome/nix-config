@@ -1,5 +1,5 @@
 { pkgs, config, ... }: let
-  inherit (builtins) concatStringsSep filter typeOf readFile;
+  inherit (builtins) concatStringsSep;
 
   box = pkgs.writers.writeNu "box" {
     makeWrapperArgs = with pkgs; [
@@ -11,7 +11,6 @@
     name,
     image,
     exec ? "fish",
-    packages ? [],
     copr_repos ? [],
   }: let
     homeDir = config.home.homeDirectory;
@@ -73,21 +72,6 @@
       } else {
         check = "echo 'Unknown distribution' >&2";
       };
-
-    distropkgs = concatStringsSep " " (filter
-      (p: typeOf p == "string")
-      (packages ++ ["wl-clipboard" "git"]));
-
-    path =
-      [
-        "/bin"
-        "/sbin"
-        "/usr/bin"
-        "/usr/sbin"
-        "/usr/local/bin"
-        "$HOME/.local/bin"
-      ]
-      ++ (map (p: "${p}/bin") (filter (p: typeOf p == "set") packages));
 
     db-exec = pkgs.writeShellScript "db-exec" ''
       # echo "=== Distrobox environment debug ==="

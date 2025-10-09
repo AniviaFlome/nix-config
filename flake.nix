@@ -13,7 +13,12 @@
     niri.url = "github:sodiboo/niri-flake";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixcord.url = "github:kaylorben/nixcord";
+    xlibre-overlay.url = "git+https://codeberg.org/takagemacoed/xlibre-overlay";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    winboat = {
+      url = "github:TibixDev/winboat";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     cachy-tweaks = {
       url = "github:AniviaFlome/cachy-tweaks-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -59,7 +64,7 @@
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
     pkgs-stable = nixpkgs-stable.legacyPackages.${system};
-    lib = nixpkgs.lib;
+    inherit (nixpkgs);
     username = "aniviaflome";
   in {
 

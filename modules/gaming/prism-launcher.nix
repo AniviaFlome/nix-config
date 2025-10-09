@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -11,7 +11,7 @@
     ];
     jdks = [
       temurin-jre-bin
-      temurin-jre-bin-24
+      temurin-jre-bin-25
       temurin-jre-bin-17
       temurin-jre-bin-8
     ];

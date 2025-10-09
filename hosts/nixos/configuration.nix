@@ -1,12 +1,11 @@
 { username, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./hardware-custom.nix
-      ./imports.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./hardware-custom.nix
+    ./imports.nix
+  ];
 
   networking.hostName = "nixos";
 
