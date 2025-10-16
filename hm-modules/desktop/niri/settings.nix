@@ -51,14 +51,7 @@
       };
 
       environment = {
-        CLUTTER_BACKEND = "wayland";
-        GDK_BACKEND = "wayland";
-        MOZ_ENABLE_WAYLAND = "1";
-        QT_QPA_PLATFORM = "wayland";
-        ELECTRON_OZONE_PLATFORM_HINT = "wayland";
-        SDL_VIDEODRIVER = "wayland";
-        PROTON_ENABLE_WAYLAND = "1";
-        PROTON_USE_NTSYNC= "1";
+        QT_QPA_PLATFORMTHEME = "qt6ct";
       };
     };
   };

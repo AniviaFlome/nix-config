@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # basic stats checker script mostly adapted from statusbar, may need changes to work on your system
 
-CPU_TEMP=$(sensors | ${pkgs.awk} '
+CPU_TEMP=$(sensors | awk '
     /^Tdie|^Package id|^Core 0|^CPU|^temp1/ {
         gsub(/[+°C]/, "");
         for (i=1; i<=NF; i++) {
@@ -24,7 +24,7 @@ DISK2=$(df -h / | awk 'NR==2 {print $4}')
 
 [[ -n $(amixer get Capture | awk '/\[on\]/') ]] && MIC="on" || MIC="off"
 
-UPDATE=$(stat -c %y /var/lib/pacman/local | awk '{print $1}')
+UPDATE=$(stat -c %y /nix/var/nix/profiles/system | awk '{print $1}')
 KERNEL=$(uname -r)
 
 echo -e "Stats $CPU_USE

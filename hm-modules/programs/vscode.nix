@@ -1,11 +1,12 @@
-{ pkgs, ide-font, ... }:
+{ pkgs, ide-font, lib, ... }:
 
 {
   programs.vscode = {
     enable = true;
     package = with pkgs; vscodium;
     profiles.default = {
-      extensions = with pkgs.vscode-extensions; [
+      extensions = with pkgs.vscode-extensions; lib.mkForce [
+        alefragnani.project-manager
         catppuccin.catppuccin-vsc
         catppuccin.catppuccin-vsc-icons
         esbenp.prettier-vscode

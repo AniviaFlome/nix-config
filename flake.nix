@@ -13,7 +13,6 @@
     niri.url = "github:sodiboo/niri-flake";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixcord.url = "github:kaylorben/nixcord";
-    xlibre-overlay.url = "git+https://codeberg.org/takagemacoed/xlibre-overlay";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     winboat = {
       url = "github:TibixDev/winboat";
@@ -30,6 +29,10 @@
     nix-mineral = {
       url = "github:cynicsketch/nix-mineral";
       flake = false;
+    };
+    nixpak = {
+      url = "github:nixpak/nixpak";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
@@ -48,17 +51,13 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    lsfg-vk = {
-      url = "github:pabloaul/lsfg-vk-flake/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nur, nixos-hardware, determinate, ... }
+  outputs = { self, nixpkgs, nixpkgs-stable, nur, nixos-hardware, determinate, nixpak, ... }
   @ inputs: let
     inherit (self) outputs;
     system = "x86_64-linux";
@@ -71,7 +70,7 @@
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs outputs pkgs-stable system username;
+          inherit inputs outputs pkgs-stable system username nixpak;
         };
         modules = [
           ./hosts/nixos/configuration.nix
@@ -86,7 +85,6 @@
         };
         modules = [
           ./hosts/liveiso/configuration.nix
-          home-manager.nixosModules.home-manager
         ];
       };
       liveiso-minimal = nixpkgs.lib.nixosSystem {
@@ -95,7 +93,6 @@
         };
         modules = [
           ./hosts/liveiso-minimal/configuration.nix
-          home-manager.nixosModules.home-manager
         ];
       };
     };

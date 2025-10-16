@@ -19,12 +19,20 @@
     neovim
     parted
     rsync
+    (catppuccin-sddm.override {
+      flavor = "mocha";
+      accent = "mauve";
+      font  = "Noto Sans";
+      fontSize = "9";
+      loginBackground = false;
+    })
   ];
 
   services.displayManager = lib.mkForce {
     sddm = {
       enable = true;
       autoNumlock = true;
+      theme = "catppuccin-mocha-mauve";
       wayland = {
         enable = false;
         compositor = "kwin";

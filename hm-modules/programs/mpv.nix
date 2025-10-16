@@ -5,9 +5,10 @@
     enable = true;
     scripts = with pkgs.mpvScripts; [
       autosubsync-mpv
+      chapterskip
       mpris
       mpvacious
-      sponsorblock
+      sponsorblock-minimal
       occivink.seekTo
       quality-menu
       mpv-cheatsheet
@@ -15,17 +16,21 @@
       modernz
       reload
       webtorrent-mpv-hook
-      youtube-upnext
+      youtube-chat
     ];
     bindings = {
-      "l" = "script-binding sponsorblock/set_segment";
-      "Shift+l" = "script-binding sponsorblock/set_segment";
+
     };
     scriptOpts = {
       modernz = {
-        seekbarfg_color= "#CBA6F7";
+        seekbarfg_color = "#CBA6F7";
+        seekbarbg_color = "#272836";
+        seekbar_cache_color = "#6C7086";
         jump_amount = "3";
         jump_softrepeat = "no";
+      };
+      chapterskip = {
+        skip = "opening;ending;more;categories;previews-new";
       };
     };
     config = {

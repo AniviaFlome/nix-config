@@ -20,7 +20,7 @@
         marketplace
         newReleases
     ];
-     theme = spicePkgs.themes.comfy;
-     colorScheme = "rose-pine";
-   };
+    theme = spicePkgs.themes.comfy;
+    colorScheme = "rose-pine";
+  };
 }

@@ -6,6 +6,7 @@
 # Misc
 ../../hm-modules/misc/nix.nix
 ../../hm-modules/misc/sops-nix.nix
+../../hm-modules/misc/mime.nix
 ../../hm-modules/misc/variables.nix
 # Programs
 ../../hm-modules/programs/atuin.nix
@@ -21,7 +22,6 @@
 ../../hm-modules/programs/neovim.nix
 ../../hm-modules/programs/nh.nix
 ../../hm-modules/programs/qutebrowser.nix
-../../hm-modules/programs/protonup.nix
 ../../hm-modules/programs/ripgrep.nix
 ../../hm-modules/programs/spicetify.nix
 ../../hm-modules/programs/starship.nix

@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# Find the location of efibootmgr
-EFIBOOTMGR=$(which efibootmgr)
-
 # Check if efibootmgr is installed
 if [ -x "$EFIBOOTMGR" ]; then
   # Get the boot number of the Windows boot loader

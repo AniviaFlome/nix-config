@@ -12,7 +12,7 @@
 
   hardware.nvidia = {
     modesetting.enable = true; # Modesetting is required.
-    powerManagement.enable = true;
+    powerManagement.enable = true; # Needed for sleep.
     powerManagement.finegrained = true;
     open = true;
     nvidiaSettings = true;

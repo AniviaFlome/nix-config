@@ -1,4 +1,4 @@
-{ pkgs, inputs, file, terminal, wallpaper, ... }:
+{ pkgs, inputs, file, terminal, wallpaper, browser, ... }:
 
 {
   imports = [ inputs.plasma-manager.homeModules.plasma-manager ];
@@ -13,6 +13,16 @@
 
   programs.plasma = {
     enable = true;
+
+    startup.startupScript = {
+      vesktop = { text = "vesktop --start-minimized"; };
+      steam = { text = "steam -silent"; };
+    };
+    
+    configFile.kdeglobals.General = {
+      TerminalApplication = "${terminal}";
+      TerminalService = "${terminal}.desktop";
+    };
 
     desktop = {
       mouseActions.middleClick = null;
@@ -52,6 +62,7 @@
 
     shortcuts = {
       kwin = {
+        "Toggle Tiles Editor" = " ";
         "Window Close" = "Meta+C";
         "Window Maximize" = "Meta+F";
       };
@@ -103,7 +114,7 @@
           {
             iconTasks = {
               launchers = [
-                "applications:zen-beta.desktop"
+                "applications:${browser}.desktop"
                 "applications:org.kde.dolphin.desktop"
                 "applications:spotify.desktop"
                 "applications:vesktop.desktop"

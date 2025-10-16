@@ -23,6 +23,7 @@ efibootmgr
 easyeffects
 eza
 fastfetch
+ffmpeg_8-full
 flameshot
 fluent-reader
 fzf
@@ -32,7 +33,6 @@ git
 glib
 gparted
 gpu-screen-recorder-gtk
-handbrake
 heroic
 home-manager
 htop

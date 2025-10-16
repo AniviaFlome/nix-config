@@ -1,4 +1,4 @@
-{ pkgs, username, ... }:
+{ inputs, pkgs, system, username, ... }:
 
 {
   virtualisation = {
@@ -18,4 +18,9 @@
   users.users.${username}.extraGroups = [ "libvirtd" ];
   services.spice-vdagentd.enable = true;
   programs.virt-manager.enable = true;
+
+  environment.systemPackages = [
+    inputs.winboat.packages.${system}.winboat
+    pkgs.freerdp
+  ];
 }

@@ -16,8 +16,7 @@
 ../../modules/programs/adb.nix
 ../../modules/programs/cups.nix
 ../../modules/programs/kde-connect.nix
-../../modules/programs/kde-plasma.nix
-../../modules/programs/lsfg-vk.nix
+../../modules/programs/plasma.nix
 ../../modules/programs/niri.nix
 ../../modules/programs/oom.nix
 ../../modules/programs/docker.nix
@@ -33,7 +32,6 @@
 # Server
 ../../modules/server/n8n.nix
 ../../modules/server/syncthing.nix
-../../modules/server/winboat.nix
 ../../modules/server/wordpress.nix
 # System
 ../../modules/system/appimage.nix
@@ -49,6 +47,7 @@
 ../../modules/system/nix-mineral.nix
 ../../modules/system/pipewire.nix
 ../../modules/system/shell.nix
+../../modules/system/secrets.nix
 ../../modules/system/sops-nix.nix
 ../../modules/system/sudo-rs.nix
 ../../modules/system/uutils.nix

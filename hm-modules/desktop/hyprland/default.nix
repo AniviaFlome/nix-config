@@ -14,6 +14,9 @@
 
       exec-once = [
         "caelestia-shell -d"
+        "steam -silent"
+        "vesktop --start-minimized"
+        "${pkgs.kdePackages.kwallet-pam}/bin/pam_kwallet_init"
       ];
 
       monitor = [
