@@ -21,6 +21,7 @@
 ../../hm-modules/programs/mpv.nix
 ../../hm-modules/programs/neovim.nix
 ../../hm-modules/programs/nh.nix
+../../hm-modules/programs/nyaa.nix
 ../../hm-modules/programs/qutebrowser.nix
 ../../hm-modules/programs/ripgrep.nix
 ../../hm-modules/programs/spicetify.nix

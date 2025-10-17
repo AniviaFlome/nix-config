@@ -5,6 +5,7 @@
 android-translation-layer
 ani-cli
 antimicrox
+anup
 atuin
 bat
 bat-extras.core
@@ -71,6 +72,7 @@ nicotine-plus
 nixd
 nixfmt-rfc-style
 ntfs3g
+nyaa
 obs-studio
 obsidian
 osu-lazer-bin

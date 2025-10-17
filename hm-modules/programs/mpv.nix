@@ -4,10 +4,12 @@
   programs.mpv = {
     enable = true;
     scripts = with pkgs.mpvScripts; [
+      autosub
       autosubsync-mpv
       chapterskip
       mpris
       mpvacious
+      skipsilence
       sponsorblock-minimal
       occivink.seekTo
       quality-menu
@@ -22,6 +24,9 @@
 
     };
     scriptOpts = {
+      chapterskip = {
+        skip = "opening;ending;more;categories;previews-new";
+      };
       modernz = {
         seekbarfg_color = "#CBA6F7";
         seekbarbg_color = "#272836";
@@ -29,8 +34,8 @@
         jump_amount = "3";
         jump_softrepeat = "no";
       };
-      chapterskip = {
-        skip = "opening;ending;more;categories;previews-new";
+      webtorrent = {
+        path = "memory";
       };
     };
     config = {
