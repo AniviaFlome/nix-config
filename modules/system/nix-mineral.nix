@@ -1,7 +1,5 @@
 { inputs, ... }:
 
 {
-  imports = [
-    "${inputs.nix-mineral}/nix-mineral.nix"
-  ];
+  imports = [ "${inputs.nix-mineral}/nix-mineral.nix" ];
 }

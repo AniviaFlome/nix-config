@@ -11,8 +11,8 @@
     tty.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [ 
-    catppuccin-cursors.mochaMauve 
+  environment.systemPackages = with pkgs; [
+    catppuccin-cursors.mochaMauve
     catppuccin-qt5ct
   ];
 }

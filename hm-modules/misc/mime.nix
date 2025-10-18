@@ -1,9 +1,22 @@
-{ pkgs, lib, audio, browser, editor, file, image, mail, office, terminal, video, ... }:
+{
+  pkgs,
+  lib,
+  audio,
+  browser,
+  editor,
+  file,
+  image,
+  mail,
+  office,
+  terminal,
+  video,
+  ...
+}:
 
 with lib;
 let
   defaultApps = {
-    text = [ "${editor}.desktop" ];
+    text = [ "$dev.zed.Zed.desktop" ];
     image = [ "${image}.desktop" ];
     audio = [ "${audio}.desktop" ];
     video = [ "${audio}.desktop" ];
@@ -18,7 +31,44 @@ let
   };
 
   mimeMap = {
-    text = [ "text/plain" ];
+    text = [
+      "text/cache-manifest"
+      "text/css"
+      "text/enriched"
+      "text/javascript"
+      "text/markdown"
+      "text/org"
+      "text/plain"
+      "text/richtext"
+      "text/rust"
+      "text/vnd.kde.kcrash-report"
+      "text/x-authors"
+      "text/x-c++hdr"
+      "text/x-c++src"
+      "text/x-changelog"
+      "text/x-chdr"
+      "text/x-copying"
+      "text/x-credits"
+      "text/x-csharp"
+      "text/x-csrc"
+      "text/x-dbus-service"
+      "text/x-go"
+      "text/x-haskell"
+      "text/x-install"
+      "text/x-iptables"
+      "text/x-java"
+      "text/x-katefilelist"
+      "text/x-kotlin"
+      "text/x-log"
+      "text/x-lua"
+      "text/x-makefile"
+      "text/x-meson"
+      "text/x-nfo"
+      "text/x-python"
+      "text/x-python3"
+      "text/x-qml"
+      "text/x-readme"
+    ];
     image = [
       "image/bmp"
       "image/gif"
@@ -84,8 +134,8 @@ let
     listToAttrs (
       flatten (mapAttrsToList (key: map (type: attrsets.nameValuePair type defaultApps."${key}")) mimeMap)
     );
-in
 
+in
 {
   xdg.configFile."mimeapps.list".force = true;
   xdg.mimeApps = {

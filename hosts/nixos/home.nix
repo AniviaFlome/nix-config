@@ -1,9 +1,7 @@
-{ username, ...}:
+{ username, ... }:
 
 {
-   imports = [
-    ./hm-imports.nix
-   ];
+  imports = [ ./hm-imports.nix ];
 
   home = {
     username = "${username}";

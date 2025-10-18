@@ -2,10 +2,10 @@
 
 {
   environment.systemPackages = with pkgs.stable; [
-gimp
-grsync
-normcap
-pokerth
-rpcs3
+    gimp
+    grsync
+    normcap
+    pokerth
+    rpcs3
   ];
 }

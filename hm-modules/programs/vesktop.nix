@@ -1,9 +1,7 @@
 { inputs, ... }:
 
 {
-  imports = [
-    inputs.nixcord.homeModules.nixcord
-  ];
+  imports = [ inputs.nixcord.homeModules.nixcord ];
 
   programs.nixcord = {
     enable = true;
@@ -12,7 +10,7 @@
     config = {
       useQuickCss = true;
       themeLinks = [
-       "https://catppuccin.github.io/discord/dist/catppuccin-mocha-mauve.theme.css"
+        "https://catppuccin.github.io/discord/dist/catppuccin-mocha-mauve.theme.css"
       ];
       plugins = {
         alwaysTrust.enable = true;

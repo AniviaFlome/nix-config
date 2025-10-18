@@ -24,6 +24,9 @@
     thunderbird.enable = true;
     tmux.enable = true;
     vesktop.enable = true;
+    vscode.profiles.default.enable = true;
+    vscode.profiles.default.icons.enable = true;
+    zed.enable = true;
     zathura.enable = true;
   };
 }

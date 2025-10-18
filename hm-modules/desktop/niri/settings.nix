@@ -18,9 +18,9 @@
             color = "#505050";
           };
         };
-         focus-ring = {
-           enable = false;
-         };
+        focus-ring = {
+          enable = false;
+        };
         gaps = 10;
         struts = {
           left = 12;
@@ -46,7 +46,10 @@
           scale = 1.25;
           focus-at-startup = true;
           variable-refresh-rate = "on-demand";
-          position = { x = 0; y = 0; };
+          position = {
+            x = 0;
+            y = 0;
+          };
         };
       };
 

@@ -3,7 +3,7 @@
     enable = true;
     allowedTCPPorts = [
 
-     ];
+    ];
     allowedUDPPorts = [
 
     ];

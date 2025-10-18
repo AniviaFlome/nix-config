@@ -1,4 +1,10 @@
-{ inputs, browser, menu, music, ... }:
+{
+  inputs,
+  browser,
+  menu,
+  music,
+  ...
+}:
 
 {
   imports = [ inputs.hyprpanel.homeManagerModules.hyprpanel ];
@@ -14,9 +20,16 @@
     layout = {
       "bar.layouts" = {
         "0" = {
-          left = [ "dashboard" "workspaces" ];
+          left = [
+            "dashboard"
+            "workspaces"
+          ];
           middle = [ "media" ];
-          right = [ "volume" "systray" "notifications" ];
+          right = [
+            "volume"
+            "systray"
+            "notifications"
+          ];
         };
       };
     };

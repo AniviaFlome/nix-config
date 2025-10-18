@@ -5,7 +5,9 @@
 
   programs.quickshell = {
     enable = true;
-    package = inputs.caelestia-shell.packages.${system}.default.override { withCli = true; };
+    package = inputs.caelestia-shell.packages.${system}.default.override {
+      withCli = true;
+    };
     systemd.enable = false;
   };
 }

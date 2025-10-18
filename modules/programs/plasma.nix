@@ -9,14 +9,10 @@
     okular
   ];
 
-  environment.systemPackages = with pkgs.kdePackages; [
-    wallpaper-engine-plugin
-  ];
+  environment.systemPackages = with pkgs.kdePackages; [ wallpaper-engine-plugin ];
 
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs;[
-      kdePackages.xdg-desktop-portal-kde
-    ];
+    extraPortals = with pkgs; [ kdePackages.xdg-desktop-portal-kde ];
   };
 }

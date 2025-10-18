@@ -12,7 +12,7 @@
         autocomplete.nvim-cmp.enable = true;
         lsp.enable = true;
         undoFile.enable = true;
-        spellcheck =  {
+        spellcheck = {
           enable = true;
           languages = [
             "en"

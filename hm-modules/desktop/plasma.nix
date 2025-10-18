@@ -1,4 +1,12 @@
-{ pkgs, inputs, file, terminal, wallpaper, browser, ... }:
+{
+  pkgs,
+  inputs,
+  file,
+  terminal,
+  wallpaper,
+  browser,
+  ...
+}:
 
 {
   imports = [ inputs.plasma-manager.homeModules.plasma-manager ];
@@ -15,10 +23,14 @@
     enable = true;
 
     startup.startupScript = {
-      vesktop = { text = "vesktop --start-minimized"; };
-      steam = { text = "steam -silent"; };
+      vesktop = {
+        text = "vesktop --start-minimized";
+      };
+      steam = {
+        text = "steam -silent";
+      };
     };
-    
+
     configFile.kdeglobals.General = {
       TerminalApplication = "${terminal}";
       TerminalService = "${terminal}.desktop";
@@ -30,7 +42,7 @@
 
     workspace = {
       enableMiddleClickPaste = false;
-      colorScheme =  "CatppuccinMochaMauve";
+      colorScheme = "CatppuccinMochaMauve";
       lookAndFeel = "Catppuccin-Mocha-Mauve";
       theme = "default";
       clickItemTo = "select";
@@ -90,7 +102,7 @@
       lockOnResume = true;
       timeout = 300;
       appearance = {
-      wallpaper = "${wallpaper}";
+        wallpaper = "${wallpaper}";
       };
     };
 
@@ -125,9 +137,7 @@
           "org.kde.plasma.panelspacer"
           {
             systemTray.items = {
-              shown = [
-                "org.kde.plasma.battery"
-              ];
+              shown = [ "org.kde.plasma.battery" ];
               hidden = [
                 "org.kde.kdeconnect"
                 "org.kde.plasma.brightness"

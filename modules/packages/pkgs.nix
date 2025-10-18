@@ -2,129 +2,130 @@
 
 {
   environment.systemPackages = with pkgs; [
-android-translation-layer
-ani-cli
-antimicrox
-anup
-atuin
-bat
-bat-extras.core
-better-control
-bleachbit
-brave
-btrfs-progs
-bolt-launcher
-bubblewrap
-calibre
-cpu-x
-crow-translate
-curl
-deadnix
-efibootmgr
-easyeffects
-eza
-fastfetch
-ffmpeg_8-full
-flameshot
-fluent-reader
-fzf
-gdu
-gearlever
-git
-glib
-gparted
-gpu-screen-recorder-gtk
-heroic
-home-manager
-htop
-hugo
-input-remapper
-jq
-just
-kdePackages.dolphin
-kdePackages.dolphin-plugins
-kdePackages.gwenview
-kdePackages.okular
-kdePackages.partitionmanager
-kdePackages.qt6ct
-kdePackages.xwaylandvideobridge
-kdiskmark
-kitty
-krita
-komikku
-lazygit
-legendary-gl
-libreoffice-still
-links2
-livecaptions
-localsend
-ludusavi
-man
-mangayomi
-mangohud
-mat2
-micro
-motrix
-mousam
-mpv
-neovim
-nicotine-plus
-nixd
-nixfmt-rfc-style
-ntfs3g
-nyaa
-obs-studio
-obsidian
-osu-lazer-bin
-packwiz
-prismlauncher
-protontricks
-python3
-python313Packages.pygobject3
-python313Packages.ijson
-python313Packages.numpy
-python313Packages.pillow
-python313Packages.psutil
-python313Packages.pywayland
-python313Packages.requests
-python313Packages.setproctitle
-python313Packages.toml
-python313Packages.watchdog
-qbittorrent
-qtscrcpy
-qwen-code
-rclone
-riseup-vpn
-rsync
-ryubing
-scrcpy
-songrec
-spotify
-spotify-player
-starship
-statix
-syncthing
-telegram-desktop
-textpieces
-thunderbird
-tldr
-umu-launcher
-upscayl
-vesktop
-vlc
-vscodium
-wget
-wine-staging
-winetricks
-wl-clipboard
-xclip
-xdg-utils
-youtube-music
-youtube-tui
-yt-dlp
-zathura
-zip
-zoom-us
-zoxide
+    android-translation-layer
+    ani-cli
+    antimicrox
+    anup
+    atuin
+    bat
+    bat-extras.core
+    better-control
+    bleachbit
+    brave
+    btrfs-progs
+    bolt-launcher
+    bubblewrap
+    calibre
+    cpu-x
+    crow-translate
+    curl
+    deadnix
+    efibootmgr
+    easyeffects
+    eza
+    fastfetch
+    ffmpeg_8-full
+    flameshot
+    fluent-reader
+    fzf
+    gdu
+    gearlever
+    git
+    glib
+    gparted
+    gpu-screen-recorder-gtk
+    heroic
+    home-manager
+    htop
+    hugo
+    input-remapper
+    jq
+    just
+    kdePackages.dolphin
+    kdePackages.dolphin-plugins
+    kdePackages.gwenview
+    kdePackages.okular
+    kdePackages.partitionmanager
+    kdePackages.qt6ct
+    kdePackages.xwaylandvideobridge
+    kdiskmark
+    kitty
+    krita
+    komikku
+    lazygit
+    legendary-gl
+    libreoffice-still
+    links2
+    livecaptions
+    localsend
+    ludusavi
+    man
+    mangayomi
+    mangohud
+    mat2
+    micro
+    motrix
+    mousam
+    mpv
+    neovim
+    nicotine-plus
+    nixd
+    nixfmt-rfc-style
+    ntfs3g
+    nyaa
+    obs-studio
+    obsidian
+    osu-lazer-bin
+    packwiz
+    prismlauncher
+    protontricks
+    python3
+    python313Packages.pygobject3
+    python313Packages.ijson
+    python313Packages.numpy
+    python313Packages.pillow
+    python313Packages.psutil
+    python313Packages.pywayland
+    python313Packages.requests
+    python313Packages.setproctitle
+    python313Packages.toml
+    python313Packages.watchdog
+    qbittorrent
+    qtscrcpy
+    qwen-code
+    rclone
+    riseup-vpn
+    rsync
+    ryubing
+    scrcpy
+    songrec
+    spotify
+    spotify-player
+    starship
+    statix
+    syncthing
+    telegram-desktop
+    textpieces
+    thunderbird
+    tldr
+    treefmt
+    umu-launcher
+    upscayl
+    vesktop
+    vlc
+    vscodium
+    wget
+    wine-staging
+    winetricks
+    wl-clipboard
+    xclip
+    xdg-utils
+    youtube-music
+    youtube-tui
+    yt-dlp
+    zathura
+    zip
+    zoom-us
+    zoxide
   ];
 }

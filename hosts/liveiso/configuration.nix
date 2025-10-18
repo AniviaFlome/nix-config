@@ -1,4 +1,9 @@
-{ pkgs, lib, modulesPath, ... }:
+{
+  pkgs,
+  lib,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [
@@ -22,7 +27,7 @@
     (catppuccin-sddm.override {
       flavor = "mocha";
       accent = "mauve";
-      font  = "Noto Sans";
+      font = "Noto Sans";
       fontSize = "9";
       loginBackground = false;
     })
@@ -40,18 +45,36 @@
     };
     defaultSession = "plasmax11";
     autoLogin = {
-        enable = true;
-        user = "nixos";
+      enable = true;
+      user = "nixos";
     };
   };
 
-  boot.kernelParams = [
-    "video=1920x1080"
+  boot.kernelParams = [ "video=1920x1080" ];
+
+  console.colors = [
+    "1e1e2e"
+    "f38ba8"
+    "a6e3a1"
+    "f9e2af"
+    "89b4fa"
+    "f5c2e7"
+    "94e2d5"
+    "bac2de"
+    "585b70"
+    "f38ba8"
+    "a6e3a1"
+    "f9e2af"
+    "89b4fa"
+    "f5c2e7"
+    "94e2d5"
+    "a6adc8"
   ];
 
-  console.colors = [ "1e1e2e" "f38ba8" "a6e3a1" "f9e2af" "89b4fa" "f5c2e7" "94e2d5" "bac2de" "585b70" "f38ba8" "a6e3a1" "f9e2af" "89b4fa" "f5c2e7" "94e2d5" "a6adc8" ];
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   isoImage.squashfsCompression = "xz -Xdict-size 100%";
 }

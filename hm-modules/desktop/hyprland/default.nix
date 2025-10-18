@@ -1,9 +1,12 @@
-{ pkgs, file, terminal, ... }:
+{
+  pkgs,
+  file,
+  terminal,
+  ...
+}:
 
 {
-  imports = [
-    ./caelestia.nix
-  ];
+  imports = [ ./caelestia.nix ];
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -19,13 +22,9 @@
         "${pkgs.kdePackages.kwallet-pam}/bin/pam_kwallet_init"
       ];
 
-      monitor = [
-        ",preferred,auto,auto"
-      ];
+      monitor = [ ",preferred,auto,auto" ];
 
-      workspace = {
-
-      };
+      workspace = { };
 
       env = [
         "XDG_CURRENT_DESKTOP,Hyprland"
@@ -85,9 +84,7 @@
 
       windowrule = [ ];
 
-      windowrulev2 = [
-        "noblur,title:^()$,class:^()$"
-      ];
+      windowrulev2 = [ "noblur,title:^()$,class:^()$" ];
 
       plugins = [
 

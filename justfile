@@ -8,6 +8,9 @@ age-gen:
 clear:
   nix shell nixpkgs#statix nixpkgs#deadnix -c statix check; deadnix
 
+format:
+  nix fmt
+
 garbage:
   sudo nix-collect-garbage
 

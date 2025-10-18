@@ -19,7 +19,7 @@
     violentmonkey
     ublock-origin
   ];
-  
+
   force = true;
 
   settings."addon@darkreader.org".settings = {

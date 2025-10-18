@@ -6,12 +6,10 @@ let
     accents = [ "mauve" ];
     size = "standard";
   };
-in
 
+in
 {
-  imports = [
-    ./catppuccin.nix
-  ];
+  imports = [ ./catppuccin.nix ];
 
   home.pointerCursor = {
     gtk.enable = true;

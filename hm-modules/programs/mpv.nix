@@ -20,9 +20,7 @@
       webtorrent-mpv-hook
       youtube-chat
     ];
-    bindings = {
-
-    };
+    bindings = { };
     scriptOpts = {
       chapterskip = {
         skip = "opening;ending;more;categories;previews-new";

@@ -1,4 +1,10 @@
-{ inputs, pkgs, system, username, ... }:
+{
+  inputs,
+  pkgs,
+  system,
+  username,
+  ...
+}:
 
 {
   virtualisation = {

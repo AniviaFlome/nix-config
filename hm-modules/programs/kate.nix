@@ -6,7 +6,7 @@
   programs.kate = {
     enable = true;
     editor = {
-      brackets= {
+      brackets = {
         automaticallyAddClosing = true;
         highlightMatching = true;
       };

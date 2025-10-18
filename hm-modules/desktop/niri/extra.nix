@@ -1,9 +1,12 @@
-{ pkgs, inputs, system, ... }:
+{
+  pkgs,
+  inputs,
+  system,
+  ...
+}:
 
 {
-  home.packages = with pkgs; [
-    niriswitcher
-  ];
+  home.packages = with pkgs; [ niriswitcher ];
 
   programs.quickshell = {
     enable = true;

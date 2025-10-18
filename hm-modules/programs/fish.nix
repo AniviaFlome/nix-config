@@ -13,8 +13,6 @@
       man = "batman";
       cat = "bat";
     };
-    shellInit = "
-       ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
-    ";
+    shellInit = "\n       ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source\n    ";
   };
 }

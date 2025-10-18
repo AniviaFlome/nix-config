@@ -14,28 +14,35 @@
       };
     };
     remotes = [
-      { name = "flathub"; location = "https://dl.flathub.org/repo/flathub.flatpakrepo"; }
+      {
+        name = "flathub";
+        location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
+      }
     ];
-    packages = map (id: { appId = id; origin = "flathub"; }) [
-      "com.github.tchx84.Flatseal"
-      "com.usebottles.bottles"
-      "com.pokemmo.PokeMMO"
-      "com.pot_app.pot"
-      "com.stremio.Stremio"
-      "com.rustdesk.RustDesk"
-      "io.github.astralvixen.geforce-infinity"
-      "io.github.giantpinkrobots.flatsweep"
-      "io.github.giantpinkrobots.varia"
-      "io.github.Soundux"
-      "org.vinegarhq.Sober"
-      "sh.fhs.ksre"
-    ];
+    packages =
+      map
+        (id: {
+          appId = id;
+          origin = "flathub";
+        })
+        [
+          "com.github.tchx84.Flatseal"
+          "com.usebottles.bottles"
+          "com.pokemmo.PokeMMO"
+          "com.pot_app.pot"
+          "com.stremio.Stremio"
+          "com.rustdesk.RustDesk"
+          "io.github.astralvixen.geforce-infinity"
+          "io.github.giantpinkrobots.flatsweep"
+          "io.github.giantpinkrobots.varia"
+          "io.github.Soundux"
+          "org.vinegarhq.Sober"
+          "sh.fhs.ksre"
+        ];
     overrides = {
       global = {
         Context = {
-          filesystems = [
-            "xdg-run/discord-ipc-0"
-          ];
+          filesystems = [ "xdg-run/discord-ipc-0" ];
           sockets = [
             "wayland"
             "!x11"
@@ -56,11 +63,8 @@
         ];
       };
       "org.vinegarhq.Sober".Context = {
-        devices = [
-          "input"
-        ];
+        devices = [ "input" ];
       };
     };
   };
 }
-
