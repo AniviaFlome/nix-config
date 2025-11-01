@@ -11,8 +11,7 @@
     # Programs
     ../../hm-modules/programs/atuin.nix
     ../../hm-modules/programs/bash.nix
-    ../../hm-modules/programs/distrobox/test.nix
-    # ../../hm-modules/programs/distrobox/default.nix
+    ../../hm-modules/programs/distrobox/default.nix
     ../../hm-modules/programs/fastfetch/default.nix
     ../../hm-modules/programs/fish.nix
     ../../hm-modules/programs/git.nix
