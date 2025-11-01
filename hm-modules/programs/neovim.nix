@@ -1,10 +1,12 @@
-{ inputs, ... }:
-
+{
+  inputs,
+  ...
+}:
 {
   imports = [ inputs.nvf.homeManagerModules.default ];
 
   programs.nvf = {
-    enable = true;
+    enable = false;
     settings = {
       vim = {
         statusline.lualine.enable = true;
@@ -18,11 +20,6 @@
             "en"
             "tr"
           ];
-        };
-        theme = {
-          enable = true;
-          name = "catppuccin";
-          style = "mocha";
         };
         languages = {
           enableFormat = true;

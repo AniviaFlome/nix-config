@@ -1,4 +1,8 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  ...
+}:
 let
   inherit (builtins) concatStringsSep;
 
@@ -133,7 +137,6 @@ let
     pkgs.writeShellScriptBin name ''
       ${box} ${name} ${image} ${db-exec} "$@"
     '';
-
 in
 {
   home.packages = with pkgs; [

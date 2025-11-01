@@ -9,7 +9,7 @@
     okular
   ];
 
-  environment.systemPackages = with pkgs.kdePackages; [ wallpaper-engine-plugin ];
+  environment.systemPackages = with pkgs.stable.kdePackages; [ wallpaper-engine-plugin ];
 
   xdg.portal = {
     enable = true;

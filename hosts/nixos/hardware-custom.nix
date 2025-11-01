@@ -4,7 +4,6 @@
   username,
   ...
 }:
-
 {
   zramSwap = {
     enable = true;

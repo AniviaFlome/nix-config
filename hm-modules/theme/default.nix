@@ -1,12 +1,13 @@
-{ pkgs, ... }:
-
+{
+  pkgs,
+  ...
+}:
 let
   catppuccin-gtk-override = pkgs.catppuccin-gtk.override {
     variant = "mocha";
     accents = [ "mauve" ];
     size = "standard";
   };
-
 in
 {
   imports = [ ./catppuccin.nix ];
@@ -14,7 +15,7 @@ in
   home.pointerCursor = {
     gtk.enable = true;
     x11.enable = true;
-    package = pkgs.catppuccin-cursors.mochaMauve;
+    package = with pkgs; catppuccin-cursors.mochaMauve;
     name = "catppuccin-mocha-mauve-cursors";
     size = 24;
   };
@@ -25,11 +26,6 @@ in
     theme = {
       package = catppuccin-gtk-override;
       name = "catppuccin-mocha-mauve-standard";
-    };
-    cursorTheme = {
-      package = pkgs.catppuccin-cursors.mochaMauve;
-      name = "catppuccin-mocha-mauve-cursors";
-      size = 24;
     };
   };
 

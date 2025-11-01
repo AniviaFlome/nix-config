@@ -4,12 +4,12 @@
   terminal,
   ...
 }:
-
 {
   imports = [ ./caelestia.nix ];
 
   wayland.windowManager.hyprland = {
     enable = true;
+    package = null;
     xwayland.enable = true;
 
     settings = {
@@ -87,7 +87,6 @@
       windowrulev2 = [ "noblur,title:^()$,class:^()$" ];
 
       plugins = [
-
       ];
 
       bind = [

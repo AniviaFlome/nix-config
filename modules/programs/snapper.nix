@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 {
   services.snapper = {
     configs = {
@@ -27,7 +26,7 @@
     cleanupInterval = "1d";
   };
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs.stable; [
     btrfs-assistant
     snapper
   ];

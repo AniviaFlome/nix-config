@@ -16,8 +16,10 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     systems.url = "github:nix-systems/default";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
-    winboat = {
-      url = "github:TibixDev/winboat";
+    tmenu.url = "github:AniviaFlome/tmenu";
+    distrobox.url = "github:AniviaFlome/distrobox-flake";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     cachy-tweaks = {
@@ -63,7 +65,6 @@
     {
       self,
       nixpkgs,
-      nixpkgs-stable,
       nur,
       nixos-hardware,
       determinate,
@@ -74,10 +75,8 @@
     }@inputs:
     let
       inherit (self) outputs;
-      inherit (nixpkgs) ;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      pkgs-stable = nixpkgs-stable.legacyPackages.${system};
       eachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f nixpkgs.legacyPackages.${system});
       treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./treefmt.nix);
       username = "aniviaflome";
@@ -94,7 +93,6 @@
             inherit
               inputs
               outputs
-              pkgs-stable
               system
               username
               nixpak
@@ -102,9 +100,9 @@
           };
           modules = [
             ./hosts/nixos/configuration.nix
-            nur.modules.nixos.default
-            nixos-hardware.nixosModules.asus-fa507nv
             determinate.nixosModules.default
+            nixos-hardware.nixosModules.asus-fa507nv
+            nur.modules.nixos.default
           ];
         };
         liveiso = nixpkgs.lib.nixosSystem {
@@ -113,7 +111,6 @@
               inputs
               outputs
               pkgs
-              pkgs-stable
               system
               username
               ;
@@ -126,7 +123,6 @@
               inputs
               outputs
               pkgs
-              pkgs-stable
               system
               username
               ;
@@ -142,7 +138,6 @@
             inherit
               inputs
               outputs
-              pkgs-stable
               system
               username
               ;

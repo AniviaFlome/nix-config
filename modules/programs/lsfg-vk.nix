@@ -1,5 +1,4 @@
 { inputs, ... }:
-
 {
   imports = [ inputs.lsfg-vk.nixosModules.default ];
 

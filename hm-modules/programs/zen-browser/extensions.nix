@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 {
   packages = with pkgs.firefox-addons; [
     augmented-steam

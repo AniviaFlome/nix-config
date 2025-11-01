@@ -1,12 +1,18 @@
-{ inputs, ... }:
-
+{
+  inputs,
+  pkgs,
+  ...
+}:
 {
   imports = [ inputs.nixcord.homeModules.nixcord ];
 
   programs.nixcord = {
-    enable = true;
+    enable = false;
     discord.enable = false;
-    vesktop.enable = true;
+    vesktop = {
+      enable = true;
+      package = with pkgs; vesktop;
+    };
     config = {
       useQuickCss = true;
       themeLinks = [

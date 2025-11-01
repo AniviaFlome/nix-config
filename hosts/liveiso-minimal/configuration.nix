@@ -4,7 +4,6 @@
   modulesPath,
   ...
 }:
-
 {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal-new-kernel.nix"
@@ -49,6 +48,19 @@
     "nix-command"
     "flakes"
   ];
+
+  nixpkgs = {
+    overlays = [
+      (final: _prev: {
+        stable = import inputs.nixpkgs-stable {
+          inherit (final) system;
+        };
+      })
+    ];
+    config = {
+      allowUnfree = true;
+    };
+  };
 
   isoImage.squashfsCompression = "xz -Xdict-size 100%";
 }

@@ -1,11 +1,13 @@
+{ config, pkgs, ... }:
+
 {
   programs.niri = {
+    package = with pkgs; niri;
     settings = {
       prefer-no-csd = true;
       hotkey-overlay = {
         skip-at-startup = true;
       };
-
       layout = {
         background-color = "transparent";
         border = {
@@ -29,13 +31,11 @@
           bottom = 4;
         };
       };
-
       input = {
         keyboard.xkb.layout = "tr";
         focus-follows-mouse.enable = true;
         warp-mouse-to-focus.enable = false;
       };
-
       outputs = {
         "eDP-1" = {
           mode = {
@@ -52,9 +52,9 @@
           };
         };
       };
-
+      screenshot-path = "${config.xdg.userDirs.pictures}/%Y-%m-%dT%H:%M:%S.png";
       environment = {
-        QT_QPA_PLATFORMTHEME = "qt6ct";
+
       };
     };
   };

@@ -1,5 +1,4 @@
 { username, ... }:
-
 {
   programs.nh = {
     enable = true;

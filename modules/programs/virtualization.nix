@@ -1,11 +1,8 @@
 {
-  inputs,
   pkgs,
-  system,
   username,
   ...
 }:
-
 {
   virtualisation = {
     libvirtd = {
@@ -25,8 +22,8 @@
   services.spice-vdagentd.enable = true;
   programs.virt-manager.enable = true;
 
-  environment.systemPackages = [
-    inputs.winboat.packages.${system}.winboat
-    pkgs.freerdp
+  environment.systemPackages = with pkgs; [
+    winboat
+    freerdp
   ];
 }

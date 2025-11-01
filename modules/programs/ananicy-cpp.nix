@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 {
   services.ananicy = {
     enable = true;

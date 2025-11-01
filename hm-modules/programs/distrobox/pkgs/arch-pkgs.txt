@@ -3,4 +3,5 @@ fastfetch
 python-pipx
 reflector
 starship
+windsurf
 zoxide

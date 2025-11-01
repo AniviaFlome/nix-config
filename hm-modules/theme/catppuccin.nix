@@ -1,5 +1,4 @@
 { inputs, ... }:
-
 {
   imports = [ inputs.catppuccin.homeModules.catppuccin ];
 
@@ -18,14 +17,17 @@
     mangohud.enable = true;
     micro.enable = true;
     mpv.enable = true;
+    nvim.enable = true;
     qutebrowser.enable = true;
     obs.enable = true;
     starship.enable = true;
     thunderbird.enable = true;
     tmux.enable = true;
     vesktop.enable = true;
-    vscode.profiles.default.enable = true;
-    vscode.profiles.default.icons.enable = true;
+    vscode.profiles.default = {
+      enable = true;
+      icons.enable = true;
+    };
     zed.enable = true;
     zathura.enable = true;
   };

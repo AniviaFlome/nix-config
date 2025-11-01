@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 {
   environment.systemPackages = with pkgs; [
     android-translation-layer
@@ -15,7 +14,6 @@
     btrfs-progs
     bolt-launcher
     bubblewrap
-    calibre
     cpu-x
     crow-translate
     curl
@@ -46,8 +44,6 @@
     kdePackages.gwenview
     kdePackages.okular
     kdePackages.partitionmanager
-    kdePackages.qt6ct
-    kdePackages.xwaylandvideobridge
     kdiskmark
     kitty
     krita
@@ -80,16 +76,6 @@
     prismlauncher
     protontricks
     python3
-    python313Packages.pygobject3
-    python313Packages.ijson
-    python313Packages.numpy
-    python313Packages.pillow
-    python313Packages.psutil
-    python313Packages.pywayland
-    python313Packages.requests
-    python313Packages.setproctitle
-    python313Packages.toml
-    python313Packages.watchdog
     qbittorrent
     qtscrcpy
     qwen-code
@@ -98,6 +84,7 @@
     rsync
     ryubing
     scrcpy
+    shellcheck
     songrec
     spotify
     spotify-player

@@ -1,22 +1,16 @@
 {
-  pkgs,
   lib,
   audio,
   browser,
-  editor,
-  file,
   image,
   mail,
   office,
-  terminal,
-  video,
   ...
 }:
-
 with lib;
 let
   defaultApps = {
-    text = [ "$dev.zed.Zed.desktop" ];
+    text = [ "dev.zed.Zed.desktop" ];
     image = [ "${image}.desktop" ];
     audio = [ "${audio}.desktop" ];
     video = [ "${audio}.desktop" ];
@@ -32,6 +26,7 @@ let
 
   mimeMap = {
     text = [
+      "application/json"
       "text/cache-manifest"
       "text/css"
       "text/enriched"
@@ -134,7 +129,6 @@ let
     listToAttrs (
       flatten (mapAttrsToList (key: map (type: attrsets.nameValuePair type defaultApps."${key}")) mimeMap)
     );
-
 in
 {
   xdg.configFile."mimeapps.list".force = true;

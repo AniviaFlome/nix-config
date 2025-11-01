@@ -4,7 +4,6 @@
   username,
   ...
 }:
-
 {
   imports = [ inputs.zen-browser.homeModules.beta ];
 

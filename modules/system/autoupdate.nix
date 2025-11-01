@@ -1,5 +1,4 @@
 { inputs, ... }:
-
 {
   system.autoUpgrade = {
     enable = true;

@@ -1,5 +1,8 @@
-{ config, inputs, ... }:
-
+{
+  config,
+  inputs,
+  ...
+}:
 {
   nix = {
     optimise.automatic = true;
@@ -28,15 +31,18 @@
     '';
   };
 
-  nixpkgs.config.allowUnfree = true;
-
   # Set up overlays to make stable packages available with unfree enabled
-  nixpkgs.overlays = [
-    (final: prev: {
-      stable = import inputs.nixpkgs-stable {
-        inherit (final) system;
-        config.allowUnfree = true;
-      };
-    })
-  ];
+  nixpkgs = {
+    overlays = [
+      inputs.nur.overlays.default
+      (final: _prev: {
+        stable = import inputs.nixpkgs-stable {
+          inherit (final) system;
+        };
+      })
+    ];
+    config = {
+      allowUnfree = true;
+    };
+  };
 }

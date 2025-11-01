@@ -5,7 +5,6 @@
   music,
   ...
 }:
-
 {
   imports = [ inputs.hyprpanel.homeManagerModules.hyprpanel ];
 

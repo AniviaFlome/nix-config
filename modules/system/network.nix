@@ -1,5 +1,4 @@
 { username, ... }:
-
 {
   networking = {
     networkmanager.enable = true;

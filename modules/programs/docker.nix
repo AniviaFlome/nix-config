@@ -1,5 +1,4 @@
 { username, ... }:
-
 {
   virtualisation.docker = {
     enable = true;

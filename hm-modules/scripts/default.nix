@@ -1,12 +1,10 @@
 { pkgs, ... }:
-
 let
   scripts = [
     "hyscript"
     "winboot"
     "stats"
   ];
-
 in
 {
   home.packages =
@@ -15,6 +13,7 @@ in
     ++ [
       alsa-utils
       bat
+      efibootmgr
       gawk
       lm_sensors
       sysstat

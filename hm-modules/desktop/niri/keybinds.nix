@@ -29,9 +29,9 @@
     ];
     "Alt+Tab".repeat = false;
 
-    "Mod+P".action = screenshot;
+    # "Mod+P".action = screenshot;
     "Mod+Shift+P".action.screenshot-screen = [ ];
-    "Mod+Ctrl+P".action = screenshot-window;
+    # "Mod+Ctrl+P".action = screenshot-window;
 
     "Mod+Left".action = focus-column-left;
     "Mod+Down".action = focus-window-down;

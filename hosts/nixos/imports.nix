@@ -9,7 +9,6 @@
     ../../modules/gaming/sunshine.nix
     # Packages
     ../../modules/packages/flatpak.nix
-    ../../modules/packages/fonts.nix
     ../../modules/packages/pkgs-stable.nix
     ../../modules/packages/pkgs.nix
     # Programs
@@ -24,7 +23,6 @@
     ../../modules/programs/snapper.nix
     ../../modules/programs/virtualization.nix
     ../../modules/programs/waydroid.nix
-    # ../../modules/programs/zapret.nix
     ../../modules/programs/zen-browser.nix
     # Security
     ../../modules/security/fail2ban.nix
@@ -36,9 +34,11 @@
     # System
     ../../modules/system/appimage.nix
     ../../modules/system/autoupdate.nix
+    ../../modules/system/bluetooth.nix
     ../../modules/system/bootloader.nix
     ../../modules/system/cachy.nix
     ../../modules/system/display-manager.nix
+    ../../modules/system/fonts.nix
     ../../modules/system/locale.nix
     ../../modules/system/network.nix
     ../../modules/system/nh.nix

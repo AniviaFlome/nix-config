@@ -5,14 +5,20 @@ age-gen:
   mkdir -p ~/.config/sops/age \
   nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt
 
+boot SYSTEM
+  nh {{SYSTEM}} boot
+
 clear:
   nix shell nixpkgs#statix nixpkgs#deadnix -c statix check; deadnix
+
+switch SYSTEM
+  nh {{SYSTEM}} switch
 
 format:
   nix fmt
 
-garbage:
-  sudo nix-collect-garbage
+garbage OPTIONS:
+  nh clean {{OPTIONS}}
 
 iso-normal:
   nix build .#nixosConfigurations.liveiso.config.system.build.isoImage

@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 let
   retroarchWithCores = pkgs.retroarch.withCores (
     cores: with cores; [
@@ -8,7 +7,6 @@ let
       np2kai
     ]
   );
-
 in
 {
   environment.systemPackages = [ retroarchWithCores ];

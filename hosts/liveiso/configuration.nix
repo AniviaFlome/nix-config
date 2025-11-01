@@ -4,7 +4,6 @@
   modulesPath,
   ...
 }:
-
 {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-graphical-calamares-plasma6.nix"
@@ -75,6 +74,19 @@
     "nix-command"
     "flakes"
   ];
+
+  nixpkgs = {
+    overlays = [
+      (final: _prev: {
+        stable = import inputs.nixpkgs-stable {
+          inherit (final) system;
+        };
+      })
+    ];
+    config = {
+      allowUnfree = true;
+    };
+  };
 
   isoImage.squashfsCompression = "xz -Xdict-size 100%";
 }

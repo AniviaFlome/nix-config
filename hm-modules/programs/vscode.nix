@@ -1,10 +1,8 @@
 {
   pkgs,
   ide-font,
-  lib,
   ...
 }:
-
 {
   programs.vscode = {
     enable = true;
@@ -12,6 +10,7 @@
     profiles.default = {
       extensions = with pkgs.vscode-extensions; [
         alefragnani.project-manager
+        editorconfig.editorconfig
         esbenp.prettier-vscode
         formulahendry.code-runner
         jnoortheen.nix-ide

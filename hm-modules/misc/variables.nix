@@ -1,12 +1,10 @@
 {
   browser,
-  editor,
   file,
   term-editor,
   terminal,
   ...
 }:
-
 {
   _module.args = {
     audio = "mpv";

@@ -1,5 +1,4 @@
 { username, ... }:
-
 {
   services.displayManager = {
     sddm = {
