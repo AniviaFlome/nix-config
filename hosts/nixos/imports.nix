@@ -1,6 +1,7 @@
 {
   imports = [
     # Gaming
+    ../../modules/gaming/archisteamfarm.nix
     ../../modules/gaming/gamescope.nix
     ../../modules/gaming/gamemode.nix
     ../../modules/gaming/prism-launcher.nix

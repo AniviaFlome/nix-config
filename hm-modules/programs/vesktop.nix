@@ -7,7 +7,7 @@
   imports = [ inputs.nixcord.homeModules.nixcord ];
 
   programs.nixcord = {
-    enable = false;
+    enable = null;
     discord.enable = false;
     vesktop = {
       enable = true;
@@ -37,7 +37,7 @@
         iLoveSpam.enable = true;
         imageZoom = {
           enable = true;
-          size = 1500.0;
+          size = 30.0;
         };
         messageLogger.enable = true;
         noF1.enable = true;

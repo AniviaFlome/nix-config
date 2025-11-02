@@ -4,7 +4,7 @@ My Nixos config
 
 # License
 
-This project is licenced under MIT No Attribution License except for these files/folders:
+This project is licenced under MIT License except for these files/folders:
 
 - `distrobox` — from [Aylur/dotfiles](https://github.com/Aylur/dotfiles)
 - `stats` — from [BreadOnPenguins/scripts](https://github.com/BreadOnPenguins/scripts)
