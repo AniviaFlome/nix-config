@@ -13,6 +13,8 @@
         image = "quay.io/toolbx/arch-toolbox:latest";
         packages = [
           "atuin"
+          "bat"
+          "eza"
           "fastfetch"
           "starship"
         ];
@@ -25,6 +27,7 @@
         image = "quay.io/fedora/fedora-toolbox:rawhide";
         packages = [
           "atuin"
+          "bat"
           "fastfetch"
           "starship"
         ];
@@ -36,9 +39,8 @@
         distro = "debian";
         image = "quay.io/toolbx/ubuntu-toolbox:latest";
         packages = [
-          "atuin"
-          "fastfetch"
-          "starship"
+          "bat"
+          "neofetch"
         ];
       };
     };

@@ -13,6 +13,7 @@
         editorconfig.editorconfig
         esbenp.prettier-vscode
         formulahendry.code-runner
+        github.copilot
         jnoortheen.nix-ide
       ];
       userSettings = {

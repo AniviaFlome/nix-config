@@ -7,7 +7,7 @@
   imports = [ inputs.nixcord.homeModules.nixcord ];
 
   programs.nixcord = {
-    enable = null;
+    enable = false;
     discord.enable = false;
     vesktop = {
       enable = true;

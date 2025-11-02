@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "https://flakehub.com/f/NixOS/nixpkgs/*.tar.gz";
+    flake-parts.url = "github:hercules-ci/flake-parts";
     sops-nix.url = "github:Mic92/sops-nix";
     nvf.url = "github:notashelf/nvf";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
@@ -62,88 +63,98 @@
   };
 
   outputs =
-    {
+    inputs@{
       self,
-      nixpkgs,
-      nur,
-      nixos-hardware,
-      determinate,
-      nixpak,
-      systems,
-      treefmt-nix,
+      flake-parts,
       ...
-    }@inputs:
-    let
-      inherit (self) outputs;
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-      eachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f nixpkgs.legacyPackages.${system});
-      treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./treefmt.nix);
-      username = "aniviaflome";
-    in
-    {
-      formatter = eachSystem (pkgs: treefmtEval.${pkgs.system}.config.build.wrapper);
-      checks = eachSystem (pkgs: {
-        formatting = treefmtEval.${pkgs.system}.config.build.check self;
-      });
+    }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        inputs.treefmt-nix.flakeModule
+      ];
 
-      nixosConfigurations = {
-        nixos = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit
-              inputs
-              outputs
-              system
-              username
-              nixpak
-              ;
-          };
-          modules = [
-            ./hosts/nixos/configuration.nix
-            determinate.nixosModules.default
-            nixos-hardware.nixosModules.asus-fa507nv
-            nur.modules.nixos.default
-          ];
-        };
-        liveiso = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit
-              inputs
-              outputs
-              pkgs
-              system
-              username
-              ;
-          };
-          modules = [ ./hosts/liveiso/configuration.nix ];
-        };
-        liveiso-minimal = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit
-              inputs
-              outputs
-              pkgs
-              system
-              username
-              ;
-          };
-          modules = [ ./hosts/liveiso-minimal/configuration.nix ];
-        };
-      };
+      systems = import inputs.systems;
 
-      homeConfigurations = {
-        ${username} = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.${system};
-          extraSpecialArgs = {
-            inherit
-              inputs
-              outputs
-              system
-              username
-              ;
+      perSystem =
+        {
+          config,
+          system,
+          pkgs,
+          ...
+        }:
+        {
+          # Treefmt configuration
+          treefmt.config = import ./treefmt.nix { inherit pkgs; };
+
+          # Formatter
+          formatter = config.treefmt.build.wrapper;
+
+          # Checks
+          checks = {
+            formatting = config.treefmt.build.check self;
           };
-          modules = [ ./hosts/nixos/home.nix ];
         };
-      };
+
+      flake =
+        let
+          inherit (self) outputs;
+          system = "x86_64-linux";
+          username = "aniviaflome";
+        in
+        {
+          nixosConfigurations = {
+            nixos = inputs.nixpkgs.lib.nixosSystem {
+              specialArgs = {
+                inherit
+                  inputs
+                  outputs
+                  system
+                  username
+                  ;
+              };
+              modules = [
+                ./hosts/nixos/configuration.nix
+                inputs.determinate.nixosModules.default
+                inputs.nixos-hardware.nixosModules.asus-fa507nv
+                inputs.nur.modules.nixos.default
+              ];
+            };
+            liveiso = inputs.nixpkgs.lib.nixosSystem {
+              specialArgs = {
+                inherit
+                  inputs
+                  outputs
+                  ;
+                pkgs = inputs.nixpkgs.legacyPackages.${system};
+              };
+              modules = [ ./hosts/liveiso/configuration.nix ];
+            };
+            liveiso-minimal = inputs.nixpkgs.lib.nixosSystem {
+              specialArgs = {
+                inherit
+                  inputs
+                  outputs
+                  ;
+                pkgs = inputs.nixpkgs.legacyPackages.${system};
+              };
+              modules = [ ./hosts/liveiso-minimal/configuration.nix ];
+            };
+          };
+
+          homeConfigurations = {
+            ${username} = inputs.home-manager.lib.homeManagerConfiguration {
+              pkgs = inputs.nixpkgs.legacyPackages.${system};
+              extraSpecialArgs = {
+                inherit
+                  inputs
+                  outputs
+                  system
+                  username
+                  ;
+              };
+              modules = [ ./hosts/nixos/home.nix ];
+            };
+          };
+        };
     };
 }
