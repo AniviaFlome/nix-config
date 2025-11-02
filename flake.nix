@@ -15,7 +15,6 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixcord.url = "github:kaylorben/nixcord";
     treefmt-nix.url = "github:numtide/treefmt-nix";
-    systems.url = "github:nix-systems/default";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     tmenu.url = "github:AniviaFlome/tmenu";
     distrobox.url = "github:AniviaFlome/distrobox-flake";
@@ -73,23 +72,22 @@
         inputs.treefmt-nix.flakeModule
       ];
 
-      systems = import inputs.systems;
+      systems = [
+        "aarch64-linux"
+        "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
 
       perSystem =
         {
           config,
-          system,
           pkgs,
           ...
         }:
         {
-          # Treefmt configuration
-          treefmt.config = import ./treefmt.nix { inherit pkgs; };
-
-          # Formatter
+          treefmt.config = import ./treefmt.nix;
           formatter = config.treefmt.build.wrapper;
-
-          # Checks
           checks = {
             formatting = config.treefmt.build.check self;
           };
@@ -119,23 +117,21 @@
                 inputs.nur.modules.nixos.default
               ];
             };
-            liveiso = inputs.nixpkgs.lib.nixosSystem {
+            liveiso = inputs.nixpkgs-stable.lib.nixosSystem {
               specialArgs = {
                 inherit
                   inputs
                   outputs
                   ;
-                pkgs = inputs.nixpkgs.legacyPackages.${system};
               };
               modules = [ ./hosts/liveiso/configuration.nix ];
             };
-            liveiso-minimal = inputs.nixpkgs.lib.nixosSystem {
+            liveiso-minimal = inputs.nixpkgs-stable.lib.nixosSystem {
               specialArgs = {
                 inherit
                   inputs
                   outputs
                   ;
-                pkgs = inputs.nixpkgs.legacyPackages.${system};
               };
               modules = [ ./hosts/liveiso-minimal/configuration.nix ];
             };
