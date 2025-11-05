@@ -1,6 +1,6 @@
 {
   inputs,
-  system,
+  pkgs,
   ...
 }:
 {
@@ -8,7 +8,7 @@
 
   programs.quickshell = {
     enable = true;
-    package = inputs.caelestia-shell.packages.${system}.default.override {
+    package = inputs.caelestia-shell.packages.${pkgs.system}.default.override {
       withCli = true;
     };
     systemd.enable = false;

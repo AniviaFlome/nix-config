@@ -7,14 +7,14 @@
   imports = [ inputs.nixcord.homeModules.nixcord ];
 
   programs.nixcord = {
-    enable = false;
+    enable = true;
     discord.enable = false;
     vesktop = {
       enable = true;
       package = with pkgs; vesktop;
     };
     config = {
-      useQuickCss = true;
+      useQuickCss = false;
       themeLinks = [
         "https://catppuccin.github.io/discord/dist/catppuccin-mocha-mauve.theme.css"
       ];

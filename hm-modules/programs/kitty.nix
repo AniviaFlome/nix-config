@@ -1,4 +1,7 @@
-{ ide-font, ... }:
+{
+  ide-font,
+  ...
+}:
 {
   programs.kitty = {
     enable = true;

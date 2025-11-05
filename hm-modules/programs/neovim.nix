@@ -6,7 +6,7 @@
   imports = [ inputs.nvf.homeManagerModules.default ];
 
   programs.nvf = {
-    enable = false;
+    enable = true;
     settings = {
       vim = {
         statusline.lualine.enable = true;

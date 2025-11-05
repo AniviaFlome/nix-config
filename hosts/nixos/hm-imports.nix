@@ -11,7 +11,7 @@
     # Programs
     ../../hm-modules/programs/atuin.nix
     ../../hm-modules/programs/bash.nix
-    ../../hm-modules/programs/distrobox.nix
+    ../../hm-modules/programs/distrobox/default.nix
     ../../hm-modules/programs/fastfetch/default.nix
     ../../hm-modules/programs/fish.nix
     ../../hm-modules/programs/git.nix
@@ -31,6 +31,7 @@
     ../../hm-modules/programs/tmenu.nix
     ../../hm-modules/programs/tmux.nix
     ../../hm-modules/programs/vesktop.nix
+    ../../hm-modules/programs/vicinae.nix
     ../../hm-modules/programs/vscode.nix
     ../../hm-modules/programs/zed.nix
     ../../hm-modules/programs/zen-browser/default.nix

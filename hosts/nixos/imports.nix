@@ -1,7 +1,6 @@
 {
   imports = [
     # Gaming
-    ../../modules/gaming/archisteamfarm.nix
     ../../modules/gaming/gamescope.nix
     ../../modules/gaming/gamemode.nix
     ../../modules/gaming/prism-launcher.nix
@@ -24,7 +23,6 @@
     ../../modules/programs/snapper.nix
     ../../modules/programs/virtualization.nix
     ../../modules/programs/waydroid.nix
-    ../../modules/programs/zen-browser.nix
     # Security
     ../../modules/security/fail2ban.nix
     ../../modules/security/firewall.nix
