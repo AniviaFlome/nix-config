@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 {
   environment.systemPackages = with pkgs; [
     android-translation-layer
@@ -6,20 +9,22 @@
     antimicrox
     anup
     atuin
+    audacity
     bat
     bat-extras.core
     better-control
     bleachbit
+    bolt-launcher
     brave
     btrfs-progs
-    bolt-launcher
     bubblewrap
+    calibre
     cpu-x
     crow-translate
     curl
     deadnix
-    efibootmgr
     easyeffects
+    efibootmgr
     eza
     fastfetch
     ffmpeg_8-full
@@ -32,6 +37,7 @@
     glib
     gparted
     gpu-screen-recorder-gtk
+    grsync
     heroic
     home-manager
     htop
@@ -47,10 +53,8 @@
     kdiskmark
     kitty
     krita
-    komikku
     lazygit
     legendary-gl
-    libreoffice-still
     links2
     livecaptions
     localsend
@@ -70,7 +74,7 @@
     ntfs3g
     nyaa
     obs-studio
-    obsidian
+    onlyoffice-desktopeditors
     osu-lazer-bin
     packwiz
     prismlauncher

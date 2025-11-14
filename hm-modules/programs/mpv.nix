@@ -7,7 +7,6 @@
   programs.mpv = {
     enable = true;
     scripts = with pkgs.mpvScripts; [
-      autosub
       autosubsync-mpv
       chapterskip
       mpris
@@ -23,7 +22,10 @@
       webtorrent-mpv-hook
       youtube-chat
     ];
-    bindings = { };
+    bindings = {
+      "C" = "script-binding quality_menu/video_formats_toggle";
+      "Alt+C" = "script-binding quality_menu/audio_formats_toggle";
+    };
     scriptOpts = {
       chapterskip = {
         skip = "opening;ending;more;categories;previews-new";
@@ -40,10 +42,17 @@
       };
     };
     config = {
+      window-maximized = "yes";
       hr-seek = "yes";
       keep-open = "yes";
-      screenshot-dir = config.xdg.userDirs.pictures;
+      hvdec = "auto";
+      vo = "gpu-next";
+      screenshot-dir = "${config.xdg.userDirs.pictures}/mpv";
       screenshot-format = "png";
     };
   };
+
+  home.packages = with pkgs; [
+    ffsubsync
+  ];
 }

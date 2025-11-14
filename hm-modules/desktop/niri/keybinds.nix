@@ -1,16 +1,18 @@
 {
   config,
   file,
+  launcher,
   terminal,
   ...
 }:
-
 {
   programs.niri.settings.binds = with config.lib.niri.actions; {
     "Mod+C".action = close-window;
-    "Mod+E".action.spawn = "${file}";
-    "Mod+T".action.spawn = "${terminal}";
+    "Mod+E".action.spawn = file;
+    "Mod+T".action.spawn = terminal;
     "Mod+G".action = toggle-overview;
+
+    "Alt+Space".action.spawn = launcher;
     "Mod+Space".action.spawn = [
       "noctalia-shell"
       "ipc"
@@ -29,9 +31,9 @@
     ];
     "Alt+Tab".repeat = false;
 
-    # "Mod+P".action = screenshot;
+    "Mod+P".action = screenshot;
     "Mod+Shift+P".action.screenshot-screen = [ ];
-    # "Mod+Ctrl+P".action = screenshot-window;
+    "Mod+Ctrl+P".action = screenshot-window;
 
     "Mod+Left".action = focus-column-left;
     "Mod+Down".action = focus-window-down;

@@ -4,7 +4,6 @@
   browser,
   image,
   mail,
-  office,
   ...
 }:
 with lib;
@@ -18,7 +17,7 @@ let
     mail = [ "${mail}.desktop" ];
     calendar = [ "${mail}.desktop" ];
     browser = [ "${browser}.desktop" ];
-    office = [ "${office}.desktop" ];
+    office = [ "onlyoffice-desktopeditors.desktop" ];
     pdf = [ "${browser}.desktop" ];
     ebook = [ "calibre.desktop" ];
     magnet = [ "qbittorrent.desktop" ];

@@ -11,6 +11,7 @@
     protondb-for-steam
     return-youtube-dislikes
     search-by-image
+    seventv
     sponsorblock
     steam-database
     stylus

@@ -4,7 +4,6 @@
   pkgs,
   ...
 }:
-
 {
   nix = {
     package = with pkgs; nix;
@@ -19,7 +18,7 @@
       inputs.firefox-addons.overlays.default
       (final: _prev: {
         stable = import inputs.nixpkgs-stable {
-          inherit (final) system;
+          inherit (final.stdenv.hostPlatform) system;
         };
       })
     ];

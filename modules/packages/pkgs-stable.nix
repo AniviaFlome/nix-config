@@ -1,8 +1,10 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 {
   environment.systemPackages = with pkgs.stable; [
-    gimp
-    grsync
+    joplin-desktop
     normcap
     pokerth
     rpcs3

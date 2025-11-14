@@ -11,35 +11,28 @@
     enable = true;
     package = null;
     xwayland.enable = true;
-
     settings = {
       "$mainMod" = "SUPER";
-
       exec-once = [
         "caelestia-shell -d"
         "steam -silent"
         "vesktop --start-minimized"
         "${pkgs.kdePackages.kwallet-pam}/bin/pam_kwallet_init"
       ];
-
       monitor = [ ",preferred,auto,auto" ];
-
       workspace = { };
-
       env = [
         "XDG_CURRENT_DESKTOP,Hyprland"
         "XDG_SESSION_DESKTOP,Hyprland"
         "XDG_SESSION_TYPE,wayland"
         "GDK_BACKEND,wayland,x11,*"
       ];
-
       input = {
         kb_layout = "tr";
         follow_mouse = 1;
         sensitivity = 0;
         accel_profile = "flat";
       };
-
       general = {
         gaps_in = 2;
         gaps_out = 5;
@@ -48,7 +41,6 @@
         "col.inactive_border" = "rgba(414868aa)";
         layout = "dwindle";
       };
-
       decoration = {
         rounding = 5;
         blur = {
@@ -64,7 +56,6 @@
           color = "rgba(1a1a1aee)";
         };
       };
-
       animations = {
         enabled = "yes";
         bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
@@ -76,19 +67,14 @@
           "workspaces, 1, 6, default"
         ];
       };
-
       dwindle = {
         pseudotile = true;
         preserve_split = true;
       };
-
       windowrule = [ ];
-
       windowrulev2 = [ "noblur,title:^()$,class:^()$" ];
-
       plugins = [
       ];
-
       bind = [
         "$mainMod, T, exec, ${terminal}"
         "$mainMod, E, exec, ${file}"

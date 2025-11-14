@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   lib,
   modulesPath,
@@ -79,7 +80,7 @@
     overlays = [
       (final: _prev: {
         stable = import inputs.nixpkgs-stable {
-          inherit (final) system;
+          inherit (final.stdenv.hostPlatform) system;
         };
       })
     ];

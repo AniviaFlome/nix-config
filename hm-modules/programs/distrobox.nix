@@ -6,12 +6,13 @@
         additional_packages = "
           atuin
           base-devel
-          eza
-          starship
           bat
+          eza
+          fastfetch
+          starship
+          windsurf
         ";
-        entry = true;
-        image = "quay.io/toolbx/arch-toolbox:latest";
+        image = "ghcr.io/greyltc-org/archlinux-aur:paru";
         nvidia = true;
         exported_apps = "
 

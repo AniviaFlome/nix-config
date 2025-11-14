@@ -28,7 +28,8 @@
       enable = true;
       icons.enable = true;
     };
-    zed.enable = true;
     zathura.enable = true;
+    zed.enable = true;
+    zellij.enable = true;
   };
 }

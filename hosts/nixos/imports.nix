@@ -1,12 +1,13 @@
 {
   imports = [
+    # Flake-Misc
+    ../../misc/variables.nix
     # Gaming
     ../../modules/gaming/gamescope.nix
     ../../modules/gaming/gamemode.nix
     ../../modules/gaming/prism-launcher.nix
     ../../modules/gaming/retroarch.nix
     ../../modules/gaming/steam.nix
-    ../../modules/gaming/sunshine.nix
     # Packages
     ../../modules/packages/flatpak.nix
     ../../modules/packages/pkgs-stable.nix
@@ -47,6 +48,7 @@
     ../../modules/system/pipewire.nix
     ../../modules/system/shell.nix
     ../../modules/system/secrets.nix
+    ../../modules/system/ssh.nix
     ../../modules/system/sops-nix.nix
     ../../modules/system/sudo-rs.nix
     ../../modules/system/uutils.nix

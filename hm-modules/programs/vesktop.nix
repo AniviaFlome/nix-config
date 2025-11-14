@@ -37,7 +37,7 @@
         iLoveSpam.enable = true;
         imageZoom = {
           enable = true;
-          size = 30.0;
+          size = 500.0;
         };
         messageLogger.enable = true;
         noF1.enable = true;

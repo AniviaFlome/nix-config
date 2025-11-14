@@ -6,21 +6,6 @@
   ...
 }:
 {
-  _module.args = {
-    audio = "mpv";
-    browser = "zen-beta";
-    editor = "zeditor";
-    term-editor = "micro";
-    file = "dolphin";
-    image = "gwenview";
-    mail = "thunderbird";
-    office = "libreoffice";
-    terminal = "kitty";
-    ide-font = "Cascadia Code";
-    wallpaper = ./. + "/../theme/wallpaper/wallpaper.png";
-    video = "mpv";
-  };
-
   home.sessionVariables = {
     XDG_UTILS_DEFAULT_BROWSER = "${browser}";
     XDG_UTILS_DEFAULT_TERMINAL = "${terminal}";

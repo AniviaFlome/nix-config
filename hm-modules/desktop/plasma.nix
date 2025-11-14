@@ -1,10 +1,11 @@
 {
-  pkgs,
-  inputs,
+  browser,
   file,
+  inputs,
+  launcher,
+  pkgs,
   terminal,
   wallpaper,
-  browser,
   ...
 }:
 {
@@ -20,7 +21,6 @@
 
   programs.plasma = {
     enable = true;
-
     startup.startupScript = {
       vesktop = {
         text = "vesktop --start-minimized";
@@ -29,25 +29,21 @@
         text = "steam -silent";
       };
     };
-
     configFile.kdeglobals.General = {
-      TerminalApplication = "${terminal}";
+      TerminalApplication = terminal;
       TerminalService = "${terminal}.desktop";
     };
-
     desktop = {
       mouseActions.middleClick = null;
     };
-
     workspace = {
       enableMiddleClickPaste = false;
       colorScheme = "CatppuccinMochaMauve";
       lookAndFeel = "Catppuccin-Mocha-Mauve";
       theme = "default";
       clickItemTo = "select";
-      wallpaper = "${wallpaper}";
+      wallpaper = wallpaper;
     };
-
     input = {
       mice = [
         {
@@ -59,18 +55,21 @@
         }
       ];
     };
-
     hotkeys.commands."launch-terminal" = {
       name = "Launch Terminal";
       key = "Meta+T";
-      command = "${terminal}";
+      command = terminal;
     };
     hotkeys.commands."launch-file-manager" = {
       name = "Launch File Manager";
       key = "Meta+E";
-      command = "${file}";
+      command = file;
     };
-
+    hotkeys.commands."launch-launcher" = {
+      name = "Launch Launcher";
+      key = "Alt+Space";
+      command = launcher;
+    };
     shortcuts = {
       kwin = {
         "Toggle Tiles Editor" = " ";
@@ -78,7 +77,6 @@
         "Window Maximize" = "Meta+F";
       };
     };
-
     kwin = {
       edgeBarrier = 0;
       effects = {
@@ -95,16 +93,14 @@
         rows = 2;
       };
     };
-
     kscreenlocker = {
       autoLock = true;
       lockOnResume = true;
       timeout = 300;
       appearance = {
-        wallpaper = "${wallpaper}";
+        inherit wallpaper;
       };
     };
-
     powerdevil = {
       battery = {
         dimDisplay = {
@@ -113,7 +109,6 @@
         };
       };
     };
-
     panels = [
       {
         location = "bottom";
