@@ -1,6 +1,10 @@
 {
   config,
+  font,
+  font-fixed,
   inputs,
+  lib,
+  pkgs,
   terminal,
   wallpaper,
   ...
@@ -33,32 +37,41 @@
       };
       bar = {
         backgroundOpacity = 1;
-        density = "compact";
+        density = "default";
         exclusive = true;
         floating = false;
         marginHorizontal = 0.25;
         marginVertical = 0.25;
         monitors = [ ];
         outerCorners = true;
-        position = "right";
+        position = "top";
         showCapsule = false;
         widgets = {
           left = [
             {
-              id = "SidePanelToggle";
-              useDistroLogo = false;
+              id = "SystemMonitor";
+              showCpuTemp = true;
+              showCpuUsage = true;
+              showMemoryUsage = true;
             }
             { id = "WiFi"; }
             { id = "Bluetooth"; }
+            {
+              id = "MediaMini";
+              labelMode = "name";
+              hideUnoccupied = true;
+            }
           ];
           center = [
             {
               id = "Workspace";
-              hideUnoccupied = false;
               labelMode = "none";
+              hideUnoccupied = false;
             }
           ];
           right = [
+            { id = "Tray"; }
+            { id = "Volume"; }
             {
               id = "Battery";
               alwaysShowPercentage = true;
@@ -70,6 +83,9 @@
               formatVertical = "HH mm";
               useMonospacedFont = true;
               usePrimaryColor = true;
+            }
+            {
+              id = "ControlCenter";
             }
           ];
         };
@@ -134,7 +150,7 @@
       };
       general = {
         animationDisabled = false;
-        animationSpeed = 1.5;
+        animationSpeed = 1.75;
         avatarImage = null;
         compactLockScreen = false;
         dimDesktop = true;
@@ -187,9 +203,9 @@
         videoSource = "portal";
       };
       ui = {
-        fontDefault = "Roboto";
+        fontDefault = font;
         fontDefaultScale = 1;
-        fontFixed = "DejaVu Sans Mono";
+        fontFixed = font-fixed;
         fontFixedScale = 1;
         panelsAttachedToBar = true;
         settingsPanelAttachToBar = false;
@@ -199,8 +215,17 @@
         enabled = true;
         defaultWallpaper = wallpaper;
         directory = dirOf wallpaper;
-        transitionType = "random";
+        fillMode = "crop";
       };
     };
   };
+
+  home.sessionVariables = {
+    QML2_IMPORT_PATH = lib.makeSearchPath "lib/qt6/qml" [ pkgs.kdePackages.kirigami ];
+    QML_IMPORT_PATH = lib.makeSearchPath "lib/qt6/qml" [ pkgs.kdePackages.kirigami ];
+  };
+
+  home.packages = with pkgs; [
+    app2unit
+  ];
 }

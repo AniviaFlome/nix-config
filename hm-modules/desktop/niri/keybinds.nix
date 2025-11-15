@@ -24,16 +24,9 @@
     "Mod+F".action = maximize-column;
     "Mod+V".action = toggle-window-floating;
 
-    "Alt+Tab".action.spawn = [
-      "niriswitcherctl"
-      "show"
-      "--window"
-    ];
-    "Alt+Tab".repeat = false;
-
-    "Mod+P".action = screenshot;
+    "Mod+P".action.screenshot = [ ];
     "Mod+Shift+P".action.screenshot-screen = [ ];
-    "Mod+Ctrl+P".action = screenshot-window;
+    "Mod+Ctrl+P".action.screenshot-window = [ ];
 
     "Mod+Left".action = focus-column-left;
     "Mod+Down".action = focus-window-down;
@@ -43,6 +36,17 @@
     "Mod+D".action = focus-column-right;
     "Mod+S".action = focus-window-down;
     "Mod+W".action = focus-window-up;
+
+    "Mod+WheelScrollDown".action = focus-column-right;
+    "Mod+WheelScrollUp".action = focus-column-left;
+    "Mod+Shift+WheelScrollDown" = {
+      action = focus-workspace-down;
+      cooldown-ms = 150;
+    };
+    "Mod+Shift+WheelScrollUp" = {
+      action = focus-workspace-up;
+      cooldown-ms = 150;
+    };
 
     "Mod+1".action.focus-workspace = 1;
     "Mod+2".action.focus-workspace = 2;

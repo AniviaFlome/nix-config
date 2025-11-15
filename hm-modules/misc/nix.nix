@@ -21,6 +21,7 @@
           inherit (final.stdenv.hostPlatform) system;
         };
       })
+      (import ../../overlays/qt6ct)
     ];
     config = {
       allowUnfree = true;

@@ -15,6 +15,7 @@
     # Programs
     ../../modules/programs/adb.nix
     ../../modules/programs/cups.nix
+    ../../modules/programs/cups.nix
     ../../modules/programs/kde-connect.nix
     ../../modules/programs/plasma.nix
     ../../modules/programs/niri.nix
@@ -28,8 +29,6 @@
     ../../modules/security/fail2ban.nix
     ../../modules/security/firewall.nix
     # Server
-    ../../modules/server/n8n.nix
-    ../../modules/server/syncthing.nix
     ../../modules/server/wordpress.nix
     # System
     ../../modules/system/appimage.nix

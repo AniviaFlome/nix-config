@@ -19,6 +19,7 @@
     btrfs-progs
     bubblewrap
     calibre
+    comma
     cpu-x
     crow-translate
     curl

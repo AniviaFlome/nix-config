@@ -15,30 +15,48 @@
         background-color = "transparent";
         border = {
           enable = true;
-          width = 4;
-          active = {
-            color = "cba6f7";
-          };
-          inactive = {
-            color = "#505050";
-          };
+          width = 2;
+          active.color = "cba6f7";
+          inactive.color = "#505050";
         };
         focus-ring = {
-          enable = false;
+          enable = true;
+          width = 2;
+          active.color = "cba6f7";
+          inactive.color = "#505050";
         };
-        gaps = 10;
+        gaps = 6;
         struts = {
-          left = 12;
-          right = 12;
+          left = 6;
+          right = 6;
           top = 4;
           bottom = 4;
         };
       };
       input = {
-        keyboard.xkb.layout = "tr";
-        focus-follows-mouse.enable = true;
-        warp-mouse-to-focus.enable = false;
+        keyboard = {
+          xkb.layout = "tr";
+          numlock = true;
+        };
+        touchpad = {
+          natural-scroll = false;
+          dwt = true;
+        };
+        focus-follows-mouse = {
+          enable = true;
+          max-scroll-amount = "0%";
+        };
+        warp-mouse-to-focus = {
+          enable = false;
+          mode = "center-xy";
+        };
       };
+      window-rules = [
+        {
+          matches = [ { title = "^Picture-in-Picture$"; } ];
+          open-floating = true;
+        }
+      ];
       outputs = {
         "eDP-1" = {
           mode = {

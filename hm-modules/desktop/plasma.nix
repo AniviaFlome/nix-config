@@ -32,6 +32,7 @@
     configFile.kdeglobals.General = {
       TerminalApplication = terminal;
       TerminalService = "${terminal}.desktop";
+      ColorScheme = "qt6ct";
     };
     desktop = {
       mouseActions.middleClick = null;
@@ -42,7 +43,7 @@
       lookAndFeel = "Catppuccin-Mocha-Mauve";
       theme = "default";
       clickItemTo = "select";
-      wallpaper = wallpaper;
+      inherit wallpaper;
     };
     input = {
       mice = [
@@ -72,7 +73,6 @@
     };
     shortcuts = {
       kwin = {
-        "Toggle Tiles Editor" = " ";
         "Window Close" = "Meta+C";
         "Window Maximize" = "Meta+F";
       };

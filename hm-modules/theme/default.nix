@@ -10,7 +10,9 @@ let
   };
 in
 {
-  imports = [ ./catppuccin.nix ];
+  imports = [
+    ./catppuccin.nix
+  ];
 
   home.pointerCursor = {
     gtk.enable = true;
@@ -23,10 +25,17 @@ in
   gtk = {
     enable = true;
     gtk2.force = true;
+    colorScheme = "dark";
     theme = {
       package = catppuccin-gtk-override;
       name = "catppuccin-mocha-mauve-standard";
     };
+  };
+
+  qt = {
+    enable = true;
+    style.name = "kde";
+    platformTheme.name = "kde";
   };
 
   home.packages = with pkgs; [

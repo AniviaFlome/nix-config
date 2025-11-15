@@ -5,6 +5,9 @@
     editor = "zeditor";
     term-editor = "micro";
     file = "dolphin";
+    font = "Noto Sans";
+    font-fixed = "Hack";
+    font-size = "10";
     image = "gwenview";
     launcher = "vicinae open";
     mail = "thunderbird";
