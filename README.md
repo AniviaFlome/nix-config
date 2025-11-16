@@ -4,7 +4,7 @@ My Nixos config
 
 ### Todo:
 
-- Fix steam autostart in plasma and niri
+- Fix steam autostart in plasma
 - Fix overriding keybinds in plasma
 - Find a way to specify pkgs in homeConfigurations without relying on hosts
 - Find a way of sandboxing some apps

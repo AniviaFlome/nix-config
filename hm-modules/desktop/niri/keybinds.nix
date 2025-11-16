@@ -2,6 +2,7 @@
   config,
   file,
   launcher,
+  lib,
   terminal,
   ...
 }:
@@ -12,8 +13,8 @@
     "Mod+T".action.spawn = terminal;
     "Mod+G".action = toggle-overview;
 
-    "Alt+Space".action.spawn = launcher;
-    "Mod+Space".action.spawn = [
+    "Mod+Space".action.spawn = lib.splitString " " launcher;
+    "Alt+Space".action.spawn = [
       "noctalia-shell"
       "ipc"
       "call"

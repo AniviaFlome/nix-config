@@ -15,13 +15,13 @@
         background-color = "transparent";
         border = {
           enable = true;
-          width = 2;
+          width = 4;
           active.color = "cba6f7";
           inactive.color = "#505050";
         };
         focus-ring = {
-          enable = true;
-          width = 2;
+          enable = false;
+          width = 4;
           active.color = "cba6f7";
           inactive.color = "#505050";
         };
@@ -51,6 +51,9 @@
           mode = "center-xy";
         };
       };
+      gestures = {
+        hot-corners.enable = false;
+      };
       window-rules = [
         {
           matches = [ { title = "^Picture-in-Picture$"; } ];
@@ -75,7 +78,10 @@
       };
       screenshot-path = "${config.xdg.userDirs.pictures}/%Y-%m-%dT%H:%M:%S.png";
       environment = {
-
+        XDG_CURRENT_DESKTOP = "niri";
+        XDG_SESSION_TYPE = "wayland";
+        QT_QPA_PLATFORM = "wayland";
+        MOZ_ENABLE_WAYLAND = "1";
       };
     };
   };

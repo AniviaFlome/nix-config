@@ -1,7 +1,3 @@
-{ username, ... }:
 {
-  security.pam.services.${username}.kwallet = {
-    enable = true;
-    forceRun = true;
-  };
+  services.gnome.gnome-keyring.enable = true;
 }

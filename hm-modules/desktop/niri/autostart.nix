@@ -1,9 +1,7 @@
-{ pkgs, ... }:
 {
   programs.niri.settings = {
     spawn-at-startup = [
       { command = [ "noctalia-shell" ]; }
-      { command = [ "niriswitcher" ]; }
       {
         command = [
           "steam"
@@ -16,7 +14,6 @@
           "--start-minimized"
         ];
       }
-      { command = [ "${pkgs.kdePackages.kwallet-pam}/bin/pam_kwallet_init" ]; }
     ];
   };
 }

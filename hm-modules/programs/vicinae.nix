@@ -6,7 +6,12 @@
       autoStart = true;
     };
     settings = {
-      theme.name = "catppuccin-mocha";
+      theme = {
+        name = "catppuccin-mocha";
+        iconTheme = "Catppuccin Mocha Mauve";
+      };
+      closeOnFocusLoss = true;
+      faviconService = "google";
     };
   };
 

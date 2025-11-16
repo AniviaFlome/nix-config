@@ -33,6 +33,7 @@
     # System
     ../../modules/system/appimage.nix
     ../../modules/system/autoupdate.nix
+    ../../modules/system/battery.nix
     ../../modules/system/bluetooth.nix
     ../../modules/system/bootloader.nix
     ../../modules/system/cachy.nix

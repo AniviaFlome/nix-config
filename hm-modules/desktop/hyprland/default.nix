@@ -23,9 +23,9 @@
       workspace = { };
       env = [
         "XDG_CURRENT_DESKTOP,Hyprland"
-        "XDG_SESSION_DESKTOP,Hyprland"
         "XDG_SESSION_TYPE,wayland"
-        "GDK_BACKEND,wayland,x11,*"
+        "QT_QPA_PLATFORM,wayland"
+        "MOZ_ENABLE_WAYLAND,1"
       ];
       input = {
         kb_layout = "tr";

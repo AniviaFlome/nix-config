@@ -68,7 +68,7 @@
     };
     hotkeys.commands."launch-launcher" = {
       name = "Launch Launcher";
-      key = "Alt+Space";
+      key = "Meta+Space";
       command = launcher;
     };
     shortcuts = {
@@ -107,6 +107,11 @@
           enable = true;
           idleTimeout = 180;
         };
+      };
+    };
+    session = {
+      sessionRestore = {
+        restoreOpenApplicationsOnLogin = "whenSessionWasManuallySaved";
       };
     };
     panels = [

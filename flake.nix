@@ -16,10 +16,6 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     systems.url = "github:nix-systems/default";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
-    hyprqt6engine = {
-      url = "github:hyprwm/hyprqt6engine";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     millennium = {
       url = "git+https://github.com/SteamClientHomebrew/Millennium";
       inputs.nixpkgs.follows = "nixpkgs";

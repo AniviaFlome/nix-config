@@ -24,7 +24,7 @@
         position = "center";
         sortByMostUsed = true;
         terminalCommand = terminal;
-        useApp2Unit = false;
+        useApp2Unit = true;
       };
       audio = {
         cavaFrameRate = 60;
@@ -70,11 +70,25 @@
             }
           ];
           right = [
-            { id = "Tray"; }
-            { id = "Volume"; }
+            {
+              id = "Tray";
+              blacklist = [
+                "JavaEmbeddedFrame"
+              ];
+              colorizeIcons = true;
+            }
+            {
+              id = "NotificationHistory";
+              hideWhenZero = true;
+              showUnreadBadge = false;
+            }
+            {
+              id = "Volume";
+              displayMode = "onhover";
+            }
             {
               id = "Battery";
-              alwaysShowPercentage = true;
+              displayMode = "on-hover";
               warningThreshold = 20;
             }
             {
@@ -227,5 +241,8 @@
 
   home.packages = with pkgs; [
     app2unit
+    cava
+    cliphist
+    wlsunset
   ];
 }
