@@ -2,7 +2,6 @@
   lib,
   audio,
   browser,
-  image,
   mail,
   ...
 }:
@@ -10,7 +9,7 @@ with lib;
 let
   defaultApps = {
     text = [ "dev.zed.Zed.desktop" ];
-    image = [ "${image}.desktop" ];
+    image = [ "org.kde.gwenview.desktop" ];
     audio = [ "${audio}.desktop" ];
     video = [ "${audio}.desktop" ];
     directory = [ "org.kde.dolphin.desktop" ];

@@ -9,9 +9,10 @@
 {
   programs.niri.settings.binds = with config.lib.niri.actions; {
     "Mod+C".action = close-window;
+    "Mod+G".action = toggle-overview;
     "Mod+E".action.spawn = file;
     "Mod+T".action.spawn = terminal;
-    "Mod+G".action = toggle-overview;
+    "Mod+B".action.spawn = "power-profiles-switch";
 
     "Mod+Space".action.spawn = lib.splitString " " launcher;
     "Alt+Space".action.spawn = [
@@ -35,8 +36,8 @@
     "Mod+Right".action = focus-column-right;
     "Mod+A".action = focus-column-left;
     "Mod+D".action = focus-column-right;
-    "Mod+S".action = focus-window-down;
-    "Mod+W".action = focus-window-up;
+    "Mod+S".action = focus-workspace-down;
+    "Mod+W".action = focus-workspace-up;
 
     "Mod+WheelScrollDown".action = focus-column-right;
     "Mod+WheelScrollUp".action = focus-column-left;

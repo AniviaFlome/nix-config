@@ -23,7 +23,7 @@
   programs.virt-manager.enable = true;
 
   environment.systemPackages = with pkgs; [
-    winboat
+    # winboat
     freerdp
   ];
 }

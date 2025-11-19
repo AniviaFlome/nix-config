@@ -1,16 +1,19 @@
 {
+  wallpaper,
+  ...
+}:
+{
   programs.hyprlock = {
     enable = true;
     settings = {
       general = {
         hide_cursor = false;
       };
-
       background = [
         {
           monitor = "";
           color = "rgb(36, 39, 58)";
-          # path = "${../../../../themes/wallpapers/dark-forest.jpg}";
+          path = wallpaper;
 
           new_optimizations = true;
           blur_size = 3;
@@ -48,8 +51,7 @@
       label = [
         {
           monitor = "";
-          # text = "cmd[update:1000] echo \"<b><big> $(date +\"%H:%M:%S\") </big></b>\"";
-          text = "$TIME";
+          text = "cmd[update:1000] echo \"<b><big> $(date +\"%H:%M:%S\") </big></b>\"";
           font_size = 64;
           font_family = "JetBrains Mono Nerd Font 10";
           color = "rgb(198, 160, 246)";

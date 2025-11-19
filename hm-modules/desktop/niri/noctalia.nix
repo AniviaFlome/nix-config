@@ -3,7 +3,6 @@
   font,
   font-fixed,
   inputs,
-  lib,
   pkgs,
   terminal,
   wallpaper,
@@ -233,11 +232,10 @@
       };
     };
   };
-
-  home.sessionVariables = {
-    QML2_IMPORT_PATH = lib.makeSearchPath "lib/qt6/qml" [ pkgs.kdePackages.kirigami ];
-    QML_IMPORT_PATH = lib.makeSearchPath "lib/qt6/qml" [ pkgs.kdePackages.kirigami ];
-  };
+  #  home.sessionVariables = {
+  #    QML2_IMPORT_PATH = lib.makeSearchPath "lib/qt6/qml" [ pkgs.kdePackages.kirigami ];
+  #    QML_IMPORT_PATH = lib.makeSearchPath "lib/qt6/qml" [ pkgs.kdePackages.kirigami ];
+  #  };
 
   home.packages = with pkgs; [
     app2unit

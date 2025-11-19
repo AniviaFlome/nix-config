@@ -1,9 +1,14 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 let
   scripts = [
     "hyscript"
-    "winboot"
+    "nix-pkgs"
+    "power-profiles-switch"
     "stats"
+    "winboot"
   ];
 in
 {
@@ -14,8 +19,11 @@ in
       alsa-utils
       bat
       efibootmgr
+      fzf
       gawk
+      libnotify
       lm_sensors
+      nix-search-tv
       sysstat
     ];
 }

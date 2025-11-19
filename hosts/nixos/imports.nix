@@ -14,14 +14,13 @@
     ../../modules/packages/pkgs.nix
     # Programs
     ../../modules/programs/adb.nix
-    ../../modules/programs/cups.nix
-    ../../modules/programs/cups.nix
     ../../modules/programs/kde-connect.nix
     ../../modules/programs/plasma.nix
     ../../modules/programs/niri.nix
     ../../modules/programs/oom.nix
     ../../modules/programs/docker.nix
     ../../modules/programs/podman.nix
+    ../../modules/programs/printing.nix
     ../../modules/programs/snapper.nix
     ../../modules/programs/virtualization.nix
     ../../modules/programs/waydroid.nix

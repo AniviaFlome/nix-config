@@ -36,6 +36,7 @@
     gearlever
     git
     glib
+    google-antigravity
     gparted
     gpu-screen-recorder-gtk
     grsync
@@ -51,6 +52,7 @@
     kdePackages.gwenview
     kdePackages.okular
     kdePackages.partitionmanager
+    kdePackages.polkit-kde-agent-1
     kdiskmark
     kitty
     krita
@@ -97,6 +99,7 @@
     statix
     syncthing
     telegram-desktop
+    television
     textpieces
     thunderbird
     tldr

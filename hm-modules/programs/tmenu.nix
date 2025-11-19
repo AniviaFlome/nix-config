@@ -7,31 +7,28 @@
 
   programs.tmenu = {
     enable = true;
-
-    display = {
-      centered = true;
-      width = 60;
-      height = 10;
-      title = "Tmenu";
-      figlet = {
-        enable = true;
-        font = "standard";
+    settings = {
+      display = {
+        centered = true;
+        width = 60;
+        height = 10;
+        title = "Tmenu";
+        figlet = true;
+        figlet_font = "standard";
+        theme = "catppuccin-mocha";
       };
-      theme = {
-        name = "catppuccin-mocha";
+      menu = {
+        Nix = "submenu:Nix";
+        System = "submenu:System";
+        Terminal = "alacritty";
       };
-    };
-    menuItems = {
-      "Nix" = "submenu:Nix";
-      "System" = "submenu:System";
-      "Terminal" = "alacritty";
-    };
-    submenu.Nix = {
-      "Os Switch" = "nh os switch";
-      "Home Switch" = "nh home switch";
-      "Garbage Collection" = "nh clean";
-      "Search Nixpkgs" = "nh search";
-      "Update flake" = "nh update";
+      "submenu.Nix" = {
+        "Os Switch" = "nh os switch";
+        "Home Switch" = "nh home switch";
+        "Garbage Collection" = "nh clean";
+        "Search Nixpkgs" = "nh search";
+        "Update flake" = "nh update";
+      };
     };
   };
 }

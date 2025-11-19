@@ -24,7 +24,6 @@
       };
       statix = {
         priority = 3;
-        options = [ "--config ./statix.toml" ];
       };
       shfmt = {
         priority = 4;

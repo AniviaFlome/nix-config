@@ -16,8 +16,8 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     systems.url = "github:nix-systems/default";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
-    millennium = {
-      url = "git+https://github.com/SteamClientHomebrew/Millennium";
+    antigravity-nix = {
+      url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     tmenu = {
@@ -76,10 +76,7 @@
     let
       inherit (self) outputs;
       systems = [
-        "aarch64-linux"
         "x86_64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
       ];
       variables = (import ./misc/variables.nix)._module.args;
       inherit (variables) username;

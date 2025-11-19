@@ -17,7 +17,6 @@
         "caelestia-shell -d"
         "steam -silent"
         "vesktop --start-minimized"
-        "${pkgs.kdePackages.kwallet-pam}/bin/pam_kwallet_init"
       ];
       monitor = [ ",preferred,auto,auto" ];
       workspace = { };
