@@ -31,114 +31,114 @@ msg_error() { echo -e "${RED}✗${NC} $1" >&2; }
 # Confirm + Diff + Apply (default = YES, colored, backup dir, 14 backups)
 # ============================================================================
 confirm_and_apply() {
-    local original="$1"
-    local temp="$2"
+  local original="$1"
+  local temp="$2"
 
-    # Empty check
-    if [ ! -s "$temp" ]; then
-        msg_error "Generated file is EMPTY. Aborting."
-        rm -f "$temp"
-        exit 1
-    fi
+  # Empty check
+  if [ ! -s "$temp" ]; then
+    msg_error "Generated file is EMPTY. Aborting."
+    rm -f "$temp"
+    exit 1
+  fi
 
-    # Syntax check with debug
-    local parse_log failed
-    parse_log="$(mktemp)"
-    if ! nix-instantiate --parse "$temp" >"$parse_log" 2>&1; then
-        msg_error "Resulting file is NOT valid Nix syntax. Aborting."
-        echo "nix-instantiate error:" >&2
-        sed -n '1,25p' "$parse_log" >&2 || true
-        failed="${temp}.failed.nix"
-        mv "$temp" "$failed"
-        echo "Broken file kept at: $failed" >&2
-        rm -f "$parse_log"
-        exit 1
-    fi
+  # Syntax check with debug
+  local parse_log failed
+  parse_log="$(mktemp)"
+  if ! nix-instantiate --parse "$temp" >"$parse_log" 2>&1; then
+    msg_error "Resulting file is NOT valid Nix syntax. Aborting."
+    echo "nix-instantiate error:" >&2
+    sed -n '1,25p' "$parse_log" >&2 || true
+    failed="${temp}.failed.nix"
+    mv "$temp" "$failed"
+    echo "Broken file kept at: $failed" >&2
     rm -f "$parse_log"
+    exit 1
+  fi
+  rm -f "$parse_log"
 
-    echo -e "${YELLOW}--- DIFF ---${NC}"
-    # Avoid pipefail killing us when diff returns 1 (files differ)
-    ( diff -u "$original" "$temp" | awk -v g="$GREEN" -v r="$RED" -v n="$NC" '
+  echo -e "${YELLOW}--- DIFF ---${NC}"
+  # Avoid pipefail killing us when diff returns 1 (files differ)
+  (diff -u "$original" "$temp" | awk -v g="$GREEN" -v r="$RED" -v n="$NC" '
         /^@@/     { print $0; next }
         /^\+\+\+/ { print $0; next }
         /^---/    { print $0; next }
         /^\+/     { print g $0 n; next }
         /^-/      { print r $0 n; next }
         { print }
-    ' ) || true
-    echo -e "${YELLOW}-------------${NC}"
+    ') || true
+  echo -e "${YELLOW}-------------${NC}"
 
-    read -rp "Apply changes? [Y/n] " answer
-    if [[ -z "${answer:-}" || "$answer" =~ ^[Yy]$ ]]; then
-        mkdir -p "$BACKUP_DIR"
+  read -rp "Apply changes? [Y/n] " answer
+  if [[ -z ${answer:-} || $answer =~ ^[Yy]$ ]]; then
+    mkdir -p "$BACKUP_DIR"
 
-        # Human-readable timestamp, e.g. 2025-11-19_19-49-12
-        local timestamp backup_name backup_path base
-        timestamp="$(date +%Y-%m-%d_%H-%M-%S)"
-        base="$(basename "$original")"
-        backup_name="${base}.${timestamp}.backup"
-        backup_path="$BACKUP_DIR/$backup_name"
+    # Human-readable timestamp, e.g. 2025-11-19_19-49-12
+    local timestamp backup_name backup_path base
+    timestamp="$(date +%Y-%m-%d_%H-%M-%S)"
+    base="$(basename "$original")"
+    backup_name="${base}.${timestamp}.backup"
+    backup_path="$BACKUP_DIR/$backup_name"
 
-        # Save backup
-        cp "$original" "$backup_path"
+    # Save backup
+    cp "$original" "$backup_path"
 
-        # Enforce backup retention per file (keep newest MAX_BACKUPS)
-        if [ -n "${MAX_BACKUPS:-}" ]; then
-            mapfile -t backups < <(ls -1t "$BACKUP_DIR"/"${base}".*.backup 2>/dev/null || true)
-            if [ "${#backups[@]}" -gt "$MAX_BACKUPS" ]; then
-                for ((i=MAX_BACKUPS; i<${#backups[@]}; i++)); do
-                    rm -f "${backups[$i]}"
-                done
-            fi
-        fi
-
-        mv "$temp" "$original"
-        msg_info "Changes applied. Backup saved at: $backup_path"
-    else
-        msg_warn "Aborted. No changes applied."
-        rm -f "$temp"
-        exit 0
+    # Enforce backup retention per file (keep newest MAX_BACKUPS)
+    if [ -n "${MAX_BACKUPS:-}" ]; then
+      mapfile -t backups < <(ls -1t "$BACKUP_DIR"/"${base}".*.backup 2>/dev/null || true)
+      if [ "${#backups[@]}" -gt "$MAX_BACKUPS" ]; then
+        for ((i = MAX_BACKUPS; i < ${#backups[@]}; i++)); do
+          rm -f "${backups[$i]}"
+        done
+      fi
     fi
+
+    mv "$temp" "$original"
+    msg_info "Changes applied. Backup saved at: $backup_path"
+  else
+    msg_warn "Aborted. No changes applied."
+    rm -f "$temp"
+    exit 0
+  fi
 }
 
 # ============================================================================
 # Flake Root Detection + pkgs.nix discovery (recursive)
 # ============================================================================
 find_flake_root() {
-    local dir="$PWD"
-    while [ "$dir" != "/" ]; do
-        if [ -f "$dir/flake.nix" ]; then
-            echo "$dir"
-            return
-        fi
-        dir="$(dirname "$dir")"
-    done
-    msg_error "flake.nix not found in parent paths."
-    exit 1
+  local dir="$PWD"
+  while [ "$dir" != "/" ]; do
+    if [ -f "$dir/flake.nix" ]; then
+      echo "$dir"
+      return
+    fi
+    dir="$(dirname "$dir")"
+  done
+  msg_error "flake.nix not found in parent paths."
+  exit 1
 }
 
 CONFIG_DIR="$(find_flake_root)"
 
 find_single_file() {
-    local pattern="$1"
-    local matches=()
+  local pattern="$1"
+  local matches=()
 
-    while IFS= read -r f; do
-        matches+=("$f")
-    done < <(find "$CONFIG_DIR" -type f -name "$pattern")
+  while IFS= read -r f; do
+    matches+=("$f")
+  done < <(find "$CONFIG_DIR" -type f -name "$pattern")
 
-    if [ "${#matches[@]}" -eq 0 ]; then
-        echo ""
-        return
-    fi
+  if [ "${#matches[@]}" -eq 0 ]; then
+    echo ""
+    return
+  fi
 
-    if [ "${#matches[@]}" -gt 1 ]; then
-        msg_error "Multiple '$pattern' files found under flake root:"
-        printf ' - %s\n' "${matches[@]}"
-        exit 1
-    fi
+  if [ "${#matches[@]}" -gt 1 ]; then
+    msg_error "Multiple '$pattern' files found under flake root:"
+    printf ' - %s\n' "${matches[@]}"
+    exit 1
+  fi
 
-    echo "${matches[0]}"
+  echo "${matches[0]}"
 }
 
 DEFAULT_CONFIG="$(find_single_file 'pkgs.nix')"
@@ -151,35 +151,41 @@ DEFAULT_CONFIG_STABLE="$(find_single_file 'pkgs-stable.nix')"
 # Validation
 # ============================================================================
 check_dependencies() {
-    local missing=()
-    command -v fzf >/dev/null || missing+=("fzf")
-    command -v nix-search-tv >/dev/null || missing+=("nix-search-tv")
-    command -v nix-instantiate >/dev/null || missing+=("nix-instantiate")
+  local missing=()
+  command -v fzf >/dev/null || missing+=("fzf")
+  command -v nix-search-tv >/dev/null || missing+=("nix-search-tv")
+  command -v nix-instantiate >/dev/null || missing+=("nix-instantiate")
 
-    if [ ${#missing[@]} -ne 0 ]; then
-        msg_error "Missing dependencies: ${missing[*]}"
-        exit 1
-    fi
+  if [ ${#missing[@]} -ne 0 ]; then
+    msg_error "Missing dependencies: ${missing[*]}"
+    exit 1
+  fi
 }
 
 check_config_file() {
-    if [ ! -f "$1" ]; then msg_error "Config file not found: $1"; exit 1; fi
-    if [ ! -w "$1" ]; then msg_error "Config not writable: $1"; exit 1; fi
+  if [ ! -f "$1" ]; then
+    msg_error "Config file not found: $1"
+    exit 1
+  fi
+  if [ ! -w "$1" ]; then
+    msg_error "Config not writable: $1"
+    exit 1
+  fi
 }
 
 # ============================================================================
 # Parsing
 # ============================================================================
 get_package_name() {
-    # strip current PKG_PREFIX (pkgs or pkgs.stable) from attr path
-    echo "$1" | sed "s/^${PKG_PREFIX}\.//"
+  # strip current PKG_PREFIX (pkgs or pkgs.stable) from attr path
+  echo "$1" | sed "s/^${PKG_PREFIX}\.//"
 }
 
 # Extract bare package names from environment.systemPackages list
 extract_packages() {
-    local file="$1"
+  local file="$1"
 
-    awk '
+  awk '
     BEGIN { in_env=0; in_list=0 }
 
     /environment\.systemPackages/ {
@@ -230,93 +236,93 @@ extract_packages() {
 # nix-search-tv based selection (fzf)
 # ============================================================================
 select_package_to_add() {
-    local selected raw clean pkg
+  local selected raw clean pkg
 
-    # fzf UI
-    selected="$(
-        nix-search-tv print nixpkgs \
-        | fzf \
-            --prompt='Search nixpkgs package > ' \
-            --preview 'nix-search-tv preview {}' \
-            --border --reverse --ansi
-    )" || return 1
+  # fzf UI
+  selected="$(
+    nix-search-tv print nixpkgs |
+      fzf \
+        --prompt='Search nixpkgs package > ' \
+        --preview 'nix-search-tv preview {}' \
+        --border --reverse --ansi
+  )" || return 1
 
-    [ -z "$selected" ] && return 1
+  [ -z "$selected" ] && return 1
 
-    # Extract first token-like part (before tab or pipe)
-    raw="${selected%%$'\t'*}"
-    raw="${raw%%|*}"
+  # Extract first token-like part (before tab or pipe)
+  # This strips descriptions and metadata that FZF often includes after the package path.
+  raw="${selected%%$'\t'*}"
+  raw="${raw%%|*}"
 
-    # ------------------------------------------------------------------
-    # SPECIAL CASE: your system outputs "nixpkgs/ aaa"
-    # Detect "nixpkgs/<space><name>"
-    # ------------------------------------------------------------------
-    if [[ "$raw" =~ ^nixpkgs/[[:space:]]+(.+)$ ]]; then
-        pkg="${BASH_REMATCH[1]}"
-        pkg="${pkg//[[:space:]]/}"   # remove any remaining spaces
-        echo "$pkg"
-        return 0
-    fi
+  # --- Attribute Path Normalization ---
 
-    # ------------------------------------------------------------------
-    # Normal cases: nixpkgs/aaa, nixpkgs.aaa, nixpkgs/aaa.x86_64-linux…
-    # ------------------------------------------------------------------
+  # 1. Remove all spaces
+  raw="${raw//[[:space:]]/}"
 
-    # remove all spaces inside
-    raw="${raw//[[:space:]]/}"
+  # 2. Convert slashes (path format) to dots (Nix attribute format)
+  clean="${raw//\//.}"
 
-    # slashes → dots
-    clean="${raw//\//.}"
+  # 3. Strip the standard nixpkgs. prefix if present
+  clean="${clean#nixpkgs.}"
 
-    # remove nixpkgs. prefix
-    clean="${clean#nixpkgs.}"
+  pkg="$clean"
 
-    # first segment = package name
-    pkg="${clean%%.*}"
+  # --- Generic Prefix Deduplication ---
+  # This fixes issues like 'nur.nur.repos...' or 'gnome.gnome.terminal'
+  # where the top-level package set name is duplicated in the attribute path.
 
-    if [[ -z "$pkg" ]]; then
-        msg_error "Invalid selection: '$selected' → parsed empty package name"
-        return 1
-    fi
+  # Extract the first segment (e.g., 'nur' or 'gnome')
+  local first_segment="${pkg%%.*}"
 
-    echo "$pkg"
+  # Check if the remaining string immediately starts with the same segment again
+  if [[ $pkg == "$first_segment.$first_segment."* ]]; then
+    # Strip the first instance of the duplicate prefix and the trailing dot
+    pkg="${pkg#$first_segment.}"
+  fi
+
+  if [[ -z $pkg ]]; then
+    msg_error "Invalid selection: '$selected' → parsed empty package name"
+    return 1
+  fi
+
+  echo "$pkg"
 }
 
 select_package_to_remove() {
-    local file="$1"
+  local file="$1"
 
-    extract_packages "$file" \
-        | fzf \
-            --prompt='Select package to remove > ' \
-            --border --reverse --ansi
+  extract_packages "$file" |
+    fzf \
+      --prompt='Select package to remove > ' \
+      --border --reverse --ansi
 }
 
 # ============================================================================
 # Add (alphabetical, respects with pkgs / with pkgs.stable)
 # ============================================================================
 add_package() {
-    local file="$1"
-    local attr="$2"
+  local file="$1"
+  local attr="$2"
 
-    if ! grep -q "environment\.systemPackages" "$file"; then
-        msg_error "systemPackages block missing — abort."
-        exit 1
-    fi
+  if ! grep -q "environment\.systemPackages" "$file"; then
+    msg_error "systemPackages block missing — abort."
+    exit 1
+  fi
 
-    local bare
-    bare="$(get_package_name "$attr")"
+  local bare
+  bare="$(get_package_name "$attr")"
 
-    # crude duplicate guard (by bare name)
-    if grep -q "\\b$bare\\b" "$file"; then
-        msg_warn "Already exists: $bare"
-        exit 0
-    fi
+  # crude duplicate guard (by bare name)
+  if grep -q "\\b$bare\\b" "$file"; then
+    msg_warn "Already exists: $bare"
+    exit 0
+  fi
 
-    local prefItem="$PKG_PREFIX.$bare"
-    local temp
-    temp="$(mktemp)"
+  local prefItem="$PKG_PREFIX.$bare"
+  local temp
+  temp="$(mktemp)"
 
-    awk -v bare="$bare" -v prefItem="$prefItem" '
+  awk -v bare="$bare" -v prefItem="$prefItem" '
         BEGIN { in_env=0; in_list=0; inserted=0; use_bare=0 }
 
         /environment\.systemPackages/ {
@@ -385,27 +391,27 @@ add_package() {
         }
 
         { print }
-    ' "$file" > "$temp"
+    ' "$file" >"$temp"
 
-    confirm_and_apply "$file" "$temp"
+  confirm_and_apply "$file" "$temp"
 }
 
 # ============================================================================
 # Remove
 # ============================================================================
 remove_package() {
-    local file="$1"
-    local pkg="$2"
+  local file="$1"
+  local pkg="$2"
 
-    if ! grep -q "environment\.systemPackages" "$file"; then
-        msg_error "systemPackages block missing — abort."
-        exit 1
-    fi
+  if ! grep -q "environment\.systemPackages" "$file"; then
+    msg_error "systemPackages block missing — abort."
+    exit 1
+  fi
 
-    local temp
-    temp="$(mktemp)"
+  local temp
+  temp="$(mktemp)"
 
-    awk -v target="$pkg" '
+  awk -v target="$pkg" '
         BEGIN { in_env=0; in_list=0 }
 
         /environment\.systemPackages/ {
@@ -462,96 +468,117 @@ remove_package() {
         }
 
         { print }
-    ' "$file" > "$temp"
+    ' "$file" >"$temp"
 
-    confirm_and_apply "$file" "$temp"
+  confirm_and_apply "$file" "$temp"
 }
 
 # ============================================================================
 # Usage
 # ============================================================================
 show_usage() {
-    echo -e "${BOLD}nix-pkgs${NC} — Add packages easily to your config"
-    echo "Usage:"
-    echo "  nix-pkgs add    [--stable] [FILE]"
-    echo "  nix-pkgs remove [--stable] [FILE]"
+  echo -e "${BOLD}nix-pkgs${NC} — Add packages easily to your config"
+  echo "Usage:"
+  echo "  nix-pkgs add    [--stable] [FILE]"
+  echo "  nix-pkgs remove [--stable] [FILE]"
 }
 
 # ============================================================================
 # Commands
 # ============================================================================
 cmd_add() {
-    local file=""
+  local file=""
 
-    while [ $# -gt 0 ]; do
-        case "$1" in
-            -s|--stable) USE_STABLE=true; PKG_PREFIX="pkgs.stable" ;;
-            -h|--help) show_usage; exit 0 ;;
-            *) file="$1" ;;
-        esac
-        shift
-    done
+  while [ $# -gt 0 ]; do
+    case "$1" in
+    -s | --stable)
+      USE_STABLE=true
+      PKG_PREFIX="pkgs.stable"
+      ;;
+    -h | --help)
+      show_usage
+      exit 0
+      ;;
+    *) file="$1" ;;
+    esac
+    shift
+  done
 
-    if [ -z "${file:-}" ]; then
-        if [ "$USE_STABLE" = true ] && [ -n "$DEFAULT_CONFIG_STABLE" ]; then
-            file="$DEFAULT_CONFIG_STABLE"
-        else
-            file="$DEFAULT_CONFIG"
-        fi
+  if [ -z "${file:-}" ]; then
+    if [ "$USE_STABLE" = true ] && [ -n "$DEFAULT_CONFIG_STABLE" ]; then
+      file="$DEFAULT_CONFIG_STABLE"
+    else
+      file="$DEFAULT_CONFIG"
     fi
+  fi
 
-    check_dependencies
-    check_config_file "$file"
+  check_dependencies
+  check_config_file "$file"
 
-    local pkg full_attr
-    if ! pkg="$(select_package_to_add)"; then
-        msg_warn "No package selected."
-        exit 0
-    fi
+  local pkg full_attr
+  if ! pkg="$(select_package_to_add)"; then
+    msg_warn "No package selected."
+    exit 0
+  fi
 
-    full_attr="${PKG_PREFIX}.${pkg}"
-    add_package "$file" "$full_attr"
+  full_attr="${PKG_PREFIX}.${pkg}"
+  add_package "$file" "$full_attr"
 }
 
 cmd_remove() {
-    local file=""
+  local file=""
 
-    while [ $# -gt 0 ]; do
-        case "$1" in
-            -s|--stable) USE_STABLE=true; PKG_PREFIX="pkgs.stable" ;;
-            -h|--help) show_usage; exit 0 ;;
-            *) file="$1" ;;
-        esac
-        shift
-    done
+  while [ $# -gt 0 ]; do
+    case "$1" in
+    -s | --stable)
+      USE_STABLE=true
+      PKG_PREFIX="pkgs.stable"
+      ;;
+    -h | --help)
+      show_usage
+      exit 0
+      ;;
+    *) file="$1" ;;
+    esac
+    shift
+  done
 
-    if [ -z "${file:-}" ]; then
-        if [ "$USE_STABLE" = true ] && [ -n "$DEFAULT_CONFIG_STABLE" ]; then
-            file="$DEFAULT_CONFIG_STABLE"
-        else
-            file="$DEFAULT_CONFIG"
-        fi
+  if [ -z "${file:-}" ]; then
+    if [ "$USE_STABLE" = true ] && [ -n "$DEFAULT_CONFIG_STABLE" ]; then
+      file="$DEFAULT_CONFIG_STABLE"
+    else
+      file="$DEFAULT_CONFIG"
     fi
+  fi
 
-    check_dependencies
-    check_config_file "$file"
+  check_dependencies
+  check_config_file "$file"
 
-    local pkg
-    pkg="$(select_package_to_remove "$file" || true)"
-    [ -z "$pkg" ] && msg_warn "No package selected." && exit 0
+  local pkg
+  pkg="$(select_package_to_remove "$file" || true)"
+  [ -z "$pkg" ] && msg_warn "No package selected." && exit 0
 
-    remove_package "$file" "$pkg"
+  remove_package "$file" "$pkg"
 }
 
 main() {
-    [ $# -eq 0 ] && show_usage && exit 1
+  [ $# -eq 0 ] && show_usage && exit 1
 
-    case "$1" in
-        add) shift; cmd_add "$@" ;;
-        remove) shift; cmd_remove "$@" ;;
-        -h|--help) show_usage ;;
-        *) msg_error "Unknown command: $1"; exit 1 ;;
-    esac
+  case "$1" in
+  add)
+    shift
+    cmd_add "$@"
+    ;;
+  remove)
+    shift
+    cmd_remove "$@"
+    ;;
+  -h | --help) show_usage ;;
+  *)
+    msg_error "Unknown command: $1"
+    exit 1
+    ;;
+  esac
 }
 
 main "$@"

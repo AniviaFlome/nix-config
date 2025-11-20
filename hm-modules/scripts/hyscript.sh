@@ -7,9 +7,9 @@ name3="31avcisi"
 
 # Function to launch a PrismLauncher instance
 launch_instance() {
-    local instance_name="$1"
-    echo "Launching instance: $instance_name"
-    nohup prismlauncher --launch "$instance_name" > /dev/null 2>&1 &
+  local instance_name="$1"
+  echo "Launching instance: $instance_name"
+  nohup prismlauncher --launch "$instance_name" >/dev/null 2>&1 &
 }
 
 # Launch instances

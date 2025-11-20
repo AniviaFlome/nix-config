@@ -136,11 +136,13 @@ let
     );
 in
 {
-  xdg.configFile."mimeapps.list".force = true;
-  xdg.mimeApps = {
-    enable = true;
-    associations.added = associations;
-    defaultApplications = associations;
+  xdg = {
+    configFile."mimeapps.list".force = true;
+    mimeApps = {
+      enable = true;
+      associations.added = associations;
+      defaultApplications = associations;
+    };
   };
 
   home.sessionVariables = {
