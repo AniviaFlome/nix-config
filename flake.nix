@@ -78,7 +78,7 @@
       systems = [
         "x86_64-linux"
       ];
-      variables = (import ./misc/variables.nix)._module.args;
+      variables = (import ./misc/variables.nix { lib = nixpkgs.lib; })._module.args;
       inherit (variables) username;
       eachSystem = f: nixpkgs.lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
       treefmtEval = eachSystem (pkgs: inputs.treefmt-nix.lib.evalModule pkgs ./misc/treefmt.nix);

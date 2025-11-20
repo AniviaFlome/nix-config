@@ -19,15 +19,13 @@
       };
       menu = {
         Nix = "submenu:Nix";
-        System = "submenu:System";
-        Terminal = "alacritty";
       };
       "submenu.Nix" = {
         "Os Switch" = "nh os switch";
         "Home Switch" = "nh home switch";
         "Garbage Collection" = "nh clean";
-        "Search Nixpkgs" = "nh search";
-        "Update flake" = "nh update";
+        "Add Package" = "nix-pkgs add";
+        "Remove Package" = "nix-pkgs remove";
       };
     };
   };

@@ -1,25 +1,32 @@
 {
   lib,
-  audio,
-  browser,
-  mail,
+  audio-desktop,
+  browser-desktop,
+  ebook-desktop,
+  editor-desktop,
+  file-desktop,
+  image-desktop,
+  office-desktop,
+  mail-desktop,
+  torrent-desktop,
+  video-desktop,
   ...
 }:
 with lib;
 let
   defaultApps = {
-    text = [ "dev.zed.Zed.desktop" ];
-    image = [ "org.kde.gwenview.desktop" ];
-    audio = [ "${audio}.desktop" ];
-    video = [ "${audio}.desktop" ];
-    directory = [ "org.kde.dolphin.desktop" ];
-    mail = [ "${mail}.desktop" ];
-    calendar = [ "${mail}.desktop" ];
-    browser = [ "${browser}.desktop" ];
-    office = [ "onlyoffice-desktopeditors.desktop" ];
-    pdf = [ "${browser}.desktop" ];
-    ebook = [ "calibre.desktop" ];
-    magnet = [ "qbittorrent.desktop" ];
+    text = [ editor-desktop ];
+    image = [ image-desktop ];
+    audio = [ audio-desktop ];
+    video = [ video-desktop ];
+    directory = [ file-desktop ];
+    mail = [ mail-desktop ];
+    calendar = [ mail-desktop ];
+    browser = [ browser-desktop ];
+    office = [ office-desktop ];
+    pdf = [ browser-desktop ];
+    ebook = [ ebook-desktop ];
+    magnet = [ torrent-desktop ];
   };
 
   mimeMap = {

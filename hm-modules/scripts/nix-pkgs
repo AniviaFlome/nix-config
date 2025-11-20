@@ -8,7 +8,6 @@ set -euo pipefail
 PKG_PREFIX="pkgs"
 USE_STABLE=false
 
-# Backups go here, not inside nix-config
 BACKUP_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/nix-pkgs-backups"
 MAX_BACKUPS=14
 

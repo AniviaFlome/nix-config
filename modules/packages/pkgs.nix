@@ -116,7 +116,6 @@
     xclip
     xdg-utils
     youtube-music
-    youtube-tui
     yt-dlp
     zathura
     zip

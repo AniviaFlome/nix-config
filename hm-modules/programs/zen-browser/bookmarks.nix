@@ -46,8 +46,20 @@
       url = "https://mail.google.com/mail/u/2/?hl=tr#inbox";
     }
     {
+      name = "Hacettepe Bilsis";
+      url = "https://bilsis.hacettepe.edu.tr/oibs/std/index.aspx?curOp=0";
+    }
+    {
+      name = "Hacettepe Portal";
+      url = "https://portal.hacettepe.edu.tr/";
+    }
+    {
       name = "Hacettepe Mail";
       url = "https://posta.hacettepe.edu.tr";
+    }
+    {
+      name = "Hacettepe Hadi";
+      url = "https://hadi.hacettepe.edu.tr/my/";
     }
     {
       name = "Ente Auth";
@@ -76,6 +88,10 @@
     {
       name = "Backloggd";
       url = "https://backloggd.com/";
+    }
+    {
+      name = "Tetr.io";
+      url = "https://tetr.io/";
     }
     {
       name = "Minesweeper Online";

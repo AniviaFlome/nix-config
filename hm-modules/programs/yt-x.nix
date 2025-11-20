@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   pkgs,
   term-editor,
@@ -6,9 +7,7 @@
   ...
 }:
 {
-  home.packages = with pkgs; [
-    inputs.yt-x.packages."${stdenv.hostPlatform.system}".default
-  ];
+  home.packages = with pkgs; [ inputs.yt-x.packages."${stdenv.hostPlatform.system}".default ];
 
   xdg.configFile."yt-x/yt-x.conf" = {
     force = true;
@@ -48,7 +47,7 @@
       SEARCH_HISTORY: true
 
       # the number of recent videos to keep
-      NO_OF_RECENT: 30
+      NO_OF_RECENT: 5
 
       # the player to use for streaming [mpv/vlc]
       PLAYER: ${video}
@@ -64,7 +63,7 @@
       NOTIFICATION_DURATION: 5
 
       # where your downloads will be stored
-      DOWNLOAD_DIRECTORY: /home/aniviaflome/Videos/yt-x
+      DOWNLOAD_DIRECTORY: ${config.xdg.userDirs.videos}/yt-x
 
       # whether to check for updates [true/false]
       UPDATE_CHECK: false

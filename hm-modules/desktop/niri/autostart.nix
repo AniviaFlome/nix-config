@@ -5,7 +5,14 @@
 {
   programs.niri.settings = {
     spawn-at-startup = [
-      { command = [ "noctalia-shell" ]; }
+      {
+        command = [
+          "env"
+          "QT_QPA_PLATFORMTHEME="
+          "QT_STYLE_OVERRIDE="
+          "noctalia-shell"
+        ];
+      }
       {
         command = [
           "steam"
@@ -30,9 +37,7 @@
         ];
       }
       {
-        command = [
-          "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1"
-        ];
+        command = [ "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1" ];
       }
     ];
   };
