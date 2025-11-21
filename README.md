@@ -4,12 +4,13 @@ My Nixos config
 
 ### Todo:
 
-- Fix steam autostart in plasma
+- Mimelist support for dolphin
 - Fix overriding keybinds in plasma
 - Find a way to specify pkgs in homeConfigurations without relying on hosts
 - Find a way of sandboxing some apps
 - Distrobox improvements
 - AI for commit messages
+- Webapps support
 
 ## License
 

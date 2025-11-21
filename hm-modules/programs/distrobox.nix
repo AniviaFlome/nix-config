@@ -10,7 +10,6 @@
           eza
           fastfetch
           starship
-          windsurf
         ";
         image = "ghcr.io/greyltc-org/archlinux-aur:paru";
         nvidia = true;

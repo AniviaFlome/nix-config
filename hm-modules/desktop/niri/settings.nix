@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -54,7 +55,24 @@
       gestures = {
         hot-corners.enable = false;
       };
+      clipboard = {
+        disable-primary = true;
+      };
       window-rules = [
+        {
+          draw-border-with-background = false;
+          geometry-corner-radius =
+            let
+              radius = 0.0;
+            in
+            {
+              top-left = radius;
+              top-right = radius;
+              bottom-left = radius;
+              bottom-right = radius;
+            };
+          clip-to-geometry = true;
+        }
         {
           matches = [ { title = "^Picture-in-Picture$"; } ];
           open-floating = true;
@@ -65,7 +83,7 @@
           mode = {
             width = 1920;
             height = 1080;
-            refresh = 144.0;
+            refresh = 144.063;
           };
           scale = 1.25;
           focus-at-startup = true;
@@ -82,6 +100,12 @@
         XDG_SESSION_TYPE = "wayland";
         QT_QPA_PLATFORM = "wayland";
         MOZ_ENABLE_WAYLAND = "1";
+        QML2_IMPORT_PATH = lib.concatStringsSep ":" [
+          "${pkgs.quickshell}/lib/qt-6/qml"
+          "${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml"
+          "${pkgs.kdePackages.kirigami.unwrapped}/lib/qt-6/qml"
+          "${pkgs.kdePackages.qtmultimedia}/lib/qt-6/qml"
+        ];
       };
     };
   };

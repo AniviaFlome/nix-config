@@ -8,6 +8,7 @@
   "browser.search.separatePrivateDefault" = false;
   "browser.search.suggest.enabled" = true;
   "browser.search.region" = "US";
+  "browser.taskbarTabs.enabled" = true;
   "browser.translations.automaticallyPopup" = false;
   "browser.urlbar.placeholderName" = "DuckDuckGo";
   "browser.urlbar.placeholderName.private" = "DuckDuckGo";

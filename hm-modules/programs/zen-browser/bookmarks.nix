@@ -70,6 +70,10 @@
       url = "https://openani.me/";
     }
     {
+      name = "AniSub";
+      url = "https://anisub.co/";
+    }
+    {
       name = "TürkAnime";
       url = "https://www.turkanime.co/";
     }

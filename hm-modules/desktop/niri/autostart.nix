@@ -1,27 +1,18 @@
 {
   pkgs,
+  discord,
   ...
 }:
 {
   programs.niri.settings = {
     spawn-at-startup = [
       {
-        command = [
-          "env"
-          "QT_QPA_PLATFORMTHEME="
-          "QT_STYLE_OVERRIDE="
-          "noctalia-shell"
-        ];
+        command = [ "noctalia-shell" ];
       }
       {
         command = [
-          "steam"
-          "-silent"
-        ];
-      }
-      {
-        command = [
-          "vesktop"
+          "app2unit"
+          discord
           "--start-minimized"
         ];
       }

@@ -2,7 +2,11 @@
   programs.micro = {
     enable = true;
     settings = {
-      truecolor = "auto";
+      keymenu = true;
     };
+  };
+
+  home.sessionVariables = {
+    MICRO_TRUECOLOR = "1";
   };
 }

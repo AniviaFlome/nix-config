@@ -42,7 +42,7 @@
         marginHorizontal = 0.25;
         marginVertical = 0.25;
         monitors = [ ];
-        outerCorners = true;
+        outerCorners = false;
         position = "top";
         showCapsule = false;
         widgets = {
@@ -72,9 +72,10 @@
             {
               id = "Tray";
               blacklist = [
-                "JavaEmbeddedFrame"
+                "JavaEmbdedded"
               ];
-              colorizeIcons = true;
+              colorizeIcons = false;
+              drawerEnabled = false;
             }
             {
               id = "NotificationHistory";
@@ -171,13 +172,13 @@
         forceBlackScreenCorners = false;
         language = "";
         lockOnSuspend = true;
-        radiusRatio = 0.2;
+        radiusRatio = 1;
         scaleRatio = 1;
         screenRadiusRatio = 1;
         shadowDirection = "bottom_right";
         shadowOffsetX = 2;
         shadowOffsetY = 3;
-        showScreenCorners = false;
+        showScreenCorners = true;
       };
       location = {
         name = "Beytepe, Turkey";
@@ -221,7 +222,7 @@
         fontFixed = font-fixed;
         fontFixedScale = 1;
         panelsAttachedToBar = true;
-        settingsPanelAttachToBar = false;
+        settingsPanelAttachToBar = true;
         tooltipsEnabled = true;
       };
       wallpaper = {
@@ -229,7 +230,9 @@
         defaultWallpaper = wallpaper;
         directory = dirOf wallpaper;
         fillMode = "crop";
+        recursiveSearch = true;
       };
+      changelog.lastSeenVersion = "v3.2.0-dev";
     };
   };
   #  home.sessionVariables = {

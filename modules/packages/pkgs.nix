@@ -52,7 +52,6 @@
     kdePackages.gwenview
     kdePackages.okular
     kdePackages.partitionmanager
-    kdePackages.polkit-kde-agent-1
     kdiskmark
     kitty
     krita

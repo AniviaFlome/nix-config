@@ -10,6 +10,7 @@
     ../../hm-modules/misc/sops-nix.nix
     ../../hm-modules/misc/mime.nix
     ../../hm-modules/misc/variables.nix
+    ../../hm-modules/misc/xdg.nix
     # Programs
     ../../hm-modules/programs/atuin.nix
     ../../hm-modules/programs/bash.nix
@@ -23,6 +24,7 @@
     ../../hm-modules/programs/mpv.nix
     ../../hm-modules/programs/neovim.nix
     ../../hm-modules/programs/nix-index.nix
+    ../../hm-modules/programs/nix-webapps.nix
     ../../hm-modules/programs/nh.nix
     ../../hm-modules/programs/nyaa.nix
     ../../hm-modules/programs/qutebrowser.nix

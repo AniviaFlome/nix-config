@@ -4,6 +4,8 @@
     audio-desktop = "mpv.desktop";
     browser = "zen-beta";
     browser-desktop = "zen-beta.desktop";
+    discord = "vesktop";
+    discord-desktop = "vesktop.desktop";
     ebook = "calibre";
     ebook-desktop = "calibre.desktop";
     editor = "zeditor";
@@ -13,9 +15,12 @@
     file-desktop = "org.kde.dolphin.desktop";
     image = "gwenview";
     image-desktop = "org.kde.gwenview.desktop";
-    launcher = "vicinae open";
+    launcher = "vicinae toggle";
+    launcher-desktop = "vicinae.desktop";
     mail = "thunderbird";
     mail-desktop = "thunderbird.desktop";
+    music = "spotify";
+    music-desktop = "spotify.desktop";
     office = "onlyoffice-desktopeditor";
     office-desktop = "onlyoffice-desktopeditors.desktop";
     terminal = "kitty";

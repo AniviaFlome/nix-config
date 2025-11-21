@@ -51,7 +51,7 @@
     ../../modules/system/sops-nix.nix
     ../../modules/system/sudo-rs.nix
     ../../modules/system/uutils.nix
-    ../../modules/system/xdg-portal.nix
+    ../../modules/system/xdg.nix
     ../../modules/system/xorg.nix
     # Theme
     ../../modules/theme/catppuccin.nix

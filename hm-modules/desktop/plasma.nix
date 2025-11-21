@@ -1,10 +1,15 @@
 {
-  browser,
-  file,
   inputs,
-  launcher,
   pkgs,
+  browser-desktop,
+  discord,
+  discord-desktop,
+  file,
+  file-desktop,
+  launcher,
+  music-desktop,
   terminal,
+  terminal-desktop,
   wallpaper,
   ...
 }:
@@ -17,25 +22,19 @@
       accents = [ "mauve" ];
       winDecStyles = [ "classic" ];
     })
+    app2unit
   ];
 
   programs.plasma = {
     enable = true;
     startup.startupScript = {
       vesktop = {
-        text = "vesktop --start-minimized";
-      };
-      steam = {
-        text = "steam -silent";
+        text = "${discord} --start-minimized";
       };
     };
     configFile.kdeglobals.General = {
       TerminalApplication = terminal;
-      TerminalService = "${terminal}.desktop";
-      ColorScheme = "qt6ct";
-    };
-    desktop = {
-      mouseActions.middleClick = null;
+      TerminalService = terminal-desktop;
     };
     workspace = {
       enableMiddleClickPaste = false;
@@ -43,7 +42,7 @@
       lookAndFeel = "Catppuccin-Mocha-Mauve";
       theme = "default";
       clickItemTo = "select";
-      inherit wallpaper;
+      wallpaper = wallpaper;
     };
     input = {
       mice = [
@@ -98,7 +97,7 @@
       lockOnResume = true;
       timeout = 300;
       appearance = {
-        inherit wallpaper;
+        wallpaper = wallpaper;
       };
     };
     powerdevil = {
@@ -125,11 +124,11 @@
           {
             iconTasks = {
               launchers = [
-                "applications:${browser}.desktop"
-                "applications:org.kde.dolphin.desktop"
-                "applications:spotify.desktop"
-                "applications:vesktop.desktop"
-                "applications:${terminal}.desktop"
+                "applications:${browser-desktop}"
+                "applications:${file-desktop}"
+                "applications:${music-desktop}"
+                "applications:${discord-desktop}"
+                "applications:${terminal-desktop}"
               ];
             };
           }

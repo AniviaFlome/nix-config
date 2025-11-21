@@ -8,7 +8,7 @@ set -euo pipefail
 PKG_PREFIX="pkgs"
 USE_STABLE=false
 
-BACKUP_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/nix-pkgs-backups"
+BACKUP_DIR="${XDG_STATE_HOME}/nix-pkgs-backups"
 MAX_BACKUPS=14
 
 # ============================================================================
