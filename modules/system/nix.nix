@@ -29,11 +29,11 @@
     '';
   };
 
-  # Set up overlays to make stable packages available with unfree enabled
   nixpkgs = {
     overlays = [
       inputs.nur.overlays.default
       inputs.antigravity-nix.overlays.default
+      inputs.nix-bwrapper.overlays.default
       (final: _prev: {
         stable = import inputs.nixpkgs-stable {
           inherit (final.stdenv.hostPlatform) system;

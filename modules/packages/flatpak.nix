@@ -26,11 +26,11 @@
         })
         [
           "com.github.tchx84.Flatseal"
-          "com.usebottles.bottles"
           "com.pokemmo.PokeMMO"
           "com.pot_app.pot"
           "com.stremio.Stremio"
           "com.rustdesk.RustDesk"
+          "com.usebottles.bottles"
           "io.github.astralvixen.geforce-infinity"
           "io.github.giantpinkrobots.flatsweep"
           "io.github.giantpinkrobots.varia"

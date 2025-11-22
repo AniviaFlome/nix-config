@@ -9,6 +9,7 @@
     ../../modules/gaming/retroarch.nix
     ../../modules/gaming/steam.nix
     # Packages
+    ../../modules/packages/bubblewrap.nix
     ../../modules/packages/flatpak.nix
     ../../modules/packages/pkgs-stable.nix
     ../../modules/packages/pkgs.nix

@@ -30,7 +30,6 @@
     fastfetch
     ffmpeg_8-full
     flameshot
-    fluent-reader
     fzf
     gdu
     gearlever
@@ -57,7 +56,6 @@
     krita
     lazygit
     legendary-gl
-    links2
     livecaptions
     localsend
     ludusavi
@@ -84,8 +82,6 @@
     protontricks
     python3
     qbittorrent
-    qtscrcpy
-    qwen-code
     rclone
     riseup-vpn
     rsync
@@ -115,11 +111,9 @@
     wl-clipboard
     xclip
     xdg-utils
-    youtube-music
     yt-dlp
     zathura
     zip
-    zoom-us
     zoxide
   ];
 }

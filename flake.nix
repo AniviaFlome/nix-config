@@ -17,6 +17,7 @@
     systems.url = "github:nix-systems/default";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nix-webapps.url = "github:AniviaFlome/nix-webapps";
+    nix-bwrapper.url = "github:Naxdy/nix-bwrapper";
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
