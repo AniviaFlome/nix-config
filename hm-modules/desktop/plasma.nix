@@ -2,7 +2,6 @@
   inputs,
   pkgs,
   browser-desktop,
-  discord,
   discord-desktop,
   file,
   file-desktop,
@@ -28,16 +27,7 @@
   programs.plasma = {
     enable = true;
     startup.startupScript = {
-      discord = {
-        text = "${discord} -start-minimized";
-        runAlways = true;
-        priority = 8;
-      };
-      steam = {
-        text = "steam -silent";
-        runAlways = true;
-        priority = 8;
-      };
+
     };
     configFile.kdeglobals.General = {
       TerminalApplication = terminal;
