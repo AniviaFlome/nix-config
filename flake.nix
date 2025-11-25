@@ -118,7 +118,7 @@
       };
 
       homeConfigurations = {
-        ${username} = inputs.home-manager.lib.homeManagerConfiguration {
+        "${username}@nixos" = inputs.home-manager.lib.homeManagerConfiguration {
           inherit (self.nixosConfigurations.nixos) pkgs;
           extraSpecialArgs = {
             inherit inputs outputs;

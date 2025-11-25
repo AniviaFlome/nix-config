@@ -9,7 +9,7 @@
         compositor = "kwin";
       };
     };
-    defaultSession = "plasma";
+    defaultSession = "niri";
     autoLogin = {
       enable = false;
       user = "${username}";

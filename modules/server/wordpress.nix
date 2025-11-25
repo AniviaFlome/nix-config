@@ -1,1 +1,3 @@
-{ services.wordpress.sites."localhost" = { }; }
+{
+  services.wordpress.sites."localhost" = { };
+}

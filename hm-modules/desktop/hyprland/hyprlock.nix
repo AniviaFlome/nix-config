@@ -1,8 +1,4 @@
 {
-  wallpaper,
-  ...
-}:
-{
   programs.hyprlock = {
     enable = true;
     settings = {
@@ -12,9 +8,8 @@
       background = [
         {
           monitor = "";
-          color = "rgb(36, 39, 58)";
-          path = wallpaper;
-
+          color = "rgb(30, 30, 46)";
+          path = "";
           new_optimizations = true;
           blur_size = 3;
           blur_passes = 2;
@@ -25,7 +20,6 @@
           vibrancy_darkness = 0.0;
         }
       ];
-
       input-field = [
         {
           monitor = "";
@@ -47,7 +41,6 @@
           valign = "bottom";
         }
       ];
-
       label = [
         {
           monitor = "";
@@ -79,18 +72,6 @@
           halign = "center";
           valign = "bottom";
         }
-        /*
-          {
-            monitor = "";
-            text = "Enter your password to unlock.";
-            color = "rgb(198, 160, 246)";
-            font_size = 14;
-            font_family = "JetBrains Mono Nerd Font 10";
-            position = "0, 60";
-            halign = "center";
-            valign = "bottom";
-          }
-        */
       ];
     };
   };

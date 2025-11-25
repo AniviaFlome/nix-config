@@ -28,8 +28,15 @@
   programs.plasma = {
     enable = true;
     startup.startupScript = {
-      vesktop = {
-        text = "${discord} --start-minimized";
+      discord = {
+        text = "${discord} -start-minimized";
+        runAlways = true;
+        priority = 8;
+      };
+      steam = {
+        text = "steam -silent";
+        runAlways = true;
+        priority = 8;
       };
     };
     configFile.kdeglobals.General = {
@@ -42,7 +49,7 @@
       lookAndFeel = "Catppuccin-Mocha-Mauve";
       theme = "default";
       clickItemTo = "select";
-      wallpaper = wallpaper;
+      inherit wallpaper;
     };
     input = {
       mice = [
@@ -74,6 +81,7 @@
       kwin = {
         "Window Close" = "Meta+C";
         "Window Maximize" = "Meta+F";
+        "Edit Tiles" = "Meta+M";
       };
     };
     kwin = {
@@ -97,7 +105,7 @@
       lockOnResume = true;
       timeout = 300;
       appearance = {
-        wallpaper = wallpaper;
+        inherit wallpaper;
       };
     };
     powerdevil = {

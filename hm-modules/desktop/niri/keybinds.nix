@@ -9,7 +9,7 @@
 {
   programs.niri.settings.binds =
     with config.lib.niri.actions;
-    lib.mapAttrs (_: bind: bind // { repeat = false; }) {
+    lib.mapAttrs (_: bind: bind // { repeat = lib.mkDefault false; }) {
       "Mod+C".action = close-window;
       "Mod+G".action = toggle-overview;
       "Mod+E".action.spawn = file;
@@ -33,6 +33,7 @@
       ];
 
       "Mod+F".action = maximize-column;
+      "Mod+Shift+F".action = fullscreen-window;
       "Mod+V".action = toggle-window-floating;
 
       "Mod+P".action.screenshot = [ ];

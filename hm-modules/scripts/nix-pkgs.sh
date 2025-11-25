@@ -6,8 +6,12 @@ set -euo pipefail
 # ============================================================================
 
 PKG_PREFIX="pkgs"
+CONFIG_FILENAME="pkgs.nix"
+STABLE_PKG_PREFIX="pkgs.stable"
+STABLE_CONFIG_FILENAME="pkgs-stable.nix"
 USE_STABLE=false
 
+DEFAULT_DIR="${HOME}/nix-config"
 BACKUP_DIR="${XDG_STATE_HOME}/nix-pkgs-backups"
 MAX_BACKUPS=14
 
@@ -117,7 +121,11 @@ find_flake_root() {
   exit 1
 }
 
-CONFIG_DIR="$(find_flake_root)"
+if [ -n "${DEFAULT_DIR:-}" ] && [ -d "$DEFAULT_DIR" ]; then
+  CONFIG_DIR="$DEFAULT_DIR"
+else
+  CONFIG_DIR="$(find_flake_root)"
+fi
 
 find_single_file() {
   local pattern="$1"
@@ -141,11 +149,11 @@ find_single_file() {
   echo "${matches[0]}"
 }
 
-DEFAULT_CONFIG="$(find_single_file 'pkgs.nix')"
-DEFAULT_CONFIG_STABLE="$(find_single_file 'pkgs-stable.nix')"
+DEFAULT_CONFIG="$(find_single_file "$CONFIG_FILENAME")"
+DEFAULT_CONFIG_STABLE="$(find_single_file "$STABLE_CONFIG_FILENAME")"
 
-[ -z "$DEFAULT_CONFIG" ] && msg_error "No pkgs.nix found under flake root." && exit 1
-[ -z "$DEFAULT_CONFIG_STABLE" ] && msg_warn "pkgs-stable.nix not found (stable mode will only work with explicit file)."
+[ -z "$DEFAULT_CONFIG" ] && msg_error "No $CONFIG_FILENAME found under flake root." && exit 1
+[ -z "$DEFAULT_CONFIG_STABLE" ] && msg_warn "$STABLE_CONFIG_FILENAME not found (stable mode will only work with explicit file)."
 
 # ============================================================================
 # Validation
@@ -185,7 +193,7 @@ get_package_name() {
 extract_packages() {
   local file="$1"
 
-  awk '
+  awk -v stable_prefix="$STABLE_PKG_PREFIX" '
     BEGIN { in_env=0; in_list=0 }
 
     /environment\.systemPackages/ {
@@ -224,7 +232,7 @@ extract_packages() {
 
         pkg=stripped
         gsub(/^pkgs\./, "", pkg)
-        gsub(/^pkgs\.stable\./, "", pkg)
+        gsub("^" stable_prefix "\\.", "", pkg)
         gsub(/[ \t].*$/, "", pkg)
         if (pkg != "") print pkg
         next
@@ -322,12 +330,13 @@ add_package() {
   local temp
   temp="$(mktemp)"
 
-  awk -v bare="$bare" -v prefItem="$prefItem" '
+  awk -v bare="$bare" -v prefItem="$prefItem" -v stable_prefix="$STABLE_PKG_PREFIX" '
         BEGIN { in_env=0; in_list=0; inserted=0; use_bare=0 }
 
         /environment\.systemPackages/ {
             in_env=1
-            if ($0 ~ /with[ \t]+pkgs[ \t]*;/ || $0 ~ /with[ \t]+pkgs\.stable[ \t]*;/) {
+            pat_stable = "with[ \\t]+" stable_prefix "[ \\t]*;"
+            if ($0 ~ /with[ \t]+pkgs[ \t]*;/ || $0 ~ pat_stable) {
                 use_bare=1
             }
             print
@@ -338,7 +347,8 @@ add_package() {
         }
 
         in_env && !in_list && index($0, "[") == 0 {
-            if ($0 ~ /with[ \t]+pkgs[ \t]*;/ || $0 ~ /with[ \t]+pkgs\.stable[ \t]*;/) {
+            pat_stable = "with[ \\t]+" stable_prefix "[ \\t]*;"
+            if ($0 ~ /with[ \t]+pkgs[ \t]*;/ || $0 ~ pat_stable) {
                 use_bare=1
             }
             print
@@ -346,7 +356,8 @@ add_package() {
         }
 
         in_env && !in_list && index($0, "[") > 0 {
-            if ($0 ~ /with[ \t]+pkgs[ \t]*;/ || $0 ~ /with[ \t]+pkgs\.stable[ \t]*;/) {
+            pat_stable = "with[ \\t]+" stable_prefix "[ \\t]*;"
+            if ($0 ~ /with[ \t]+pkgs[ \t]*;/ || $0 ~ pat_stable) {
                 use_bare=1
             }
             in_list=1
@@ -366,7 +377,7 @@ add_package() {
             if (is_item && !inserted) {
                 cur=stripped
                 gsub(/^pkgs\./, "", cur)
-                gsub(/^pkgs\.stable\./, "", cur)
+                gsub("^" stable_prefix "\\.", "", cur)
                 gsub(/[ \t].*$/, "", cur)
                 if (bare < cur) {
                     item=(use_bare ? bare : prefItem)
@@ -411,7 +422,7 @@ remove_package() {
   local temp
   temp="$(mktemp)"
 
-  awk -v target="$pkg" '
+  awk -v target="$pkg" -v stable_prefix="$STABLE_PKG_PREFIX" '
         BEGIN { in_env=0; in_list=0 }
 
         /environment\.systemPackages/ {
@@ -446,7 +457,7 @@ remove_package() {
             if (is_item) {
                 cur=stripped
                 gsub(/^pkgs\./, "", cur)
-                gsub(/^pkgs\.stable\./, "", cur)
+                gsub("^" stable_prefix "\\.", "", cur)
                 gsub(/[ \t].*$/, "", cur)
                 if (cur == target) {
                     # skip this line
@@ -493,7 +504,7 @@ cmd_add() {
     case "$1" in
     -s | --stable)
       USE_STABLE=true
-      PKG_PREFIX="pkgs.stable"
+      PKG_PREFIX="$STABLE_PKG_PREFIX"
       ;;
     -h | --help)
       show_usage
@@ -532,7 +543,7 @@ cmd_remove() {
     case "$1" in
     -s | --stable)
       USE_STABLE=true
-      PKG_PREFIX="pkgs.stable"
+      PKG_PREFIX="$STABLE_PKG_PREFIX"
       ;;
     -h | --help)
       show_usage

@@ -1,10 +1,10 @@
 {
-  username,
+  config,
   ...
 }:
 {
   programs.nh = {
     enable = true;
-    flake = "/home/${username}/nix-config";
+    flake = "${config.home.homeDirectory}/nix-config";
   };
 }

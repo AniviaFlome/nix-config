@@ -5,6 +5,7 @@
 let
   scripts = [
     "hyscript"
+    "monitor-off"
     "nix-pkgs"
     "power-profiles-switch"
     "stats"

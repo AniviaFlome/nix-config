@@ -22,7 +22,7 @@
       ];
     };
     extraOptions = ''
-      experimental-features = nix-command flakes
+      experimental-features = nix-command flakes pipe-operators
       builders-use-substitutes = true
       !include ${config.sops.secrets."nix-access-token".path}
       eval-cores = 2

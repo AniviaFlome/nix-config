@@ -9,7 +9,7 @@
     enable = true;
     user = "${username}";
     group = "users";
-    dataDir = "/home/${username}/Syncthing";
+    dataDir = "${config.home.homeDirectory}/Syncthing";
     settings = {
       gui = {
         user = "${username}";

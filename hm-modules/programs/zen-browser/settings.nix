@@ -13,6 +13,8 @@
   "browser.urlbar.placeholderName" = "DuckDuckGo";
   "browser.urlbar.placeholderName.private" = "DuckDuckGo";
   "dom.enable_web_task_scheduling" = true;
+  "dom.security.https_only_mode" = true;
+  "dom.security.https_only_mode_ever_enabled" = true;
   "dom.webgpu.enabled" = true;
   "extensions.autoDisableScopes" = 0;
   "general.autoScroll" = true;

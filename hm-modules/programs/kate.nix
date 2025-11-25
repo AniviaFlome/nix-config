@@ -1,4 +1,5 @@
 {
+  ide-font,
   inputs,
   ...
 }:
@@ -13,7 +14,7 @@
         highlightMatching = true;
       };
       font = {
-        family = "$IDE_FONT}";
+        family = ide-font;
         pointSize = 12;
       };
     };

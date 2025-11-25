@@ -13,6 +13,7 @@
     EDITOR = term-editor;
     NIXPKGS_ALLOW_UNFREE = "1";
     PROTON_USE_NTSYNC = "1";
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
     _JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=lcd";
   };
 }

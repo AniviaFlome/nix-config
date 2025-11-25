@@ -13,6 +13,7 @@
     atuin.enable = true;
     bat.enable = true;
     fish.enable = true;
+    hyprlock.enable = false;
     kitty.enable = true;
     kvantum.enable = false;
     lazygit.enable = true;

@@ -1,4 +1,7 @@
-{ inputs, ... }:
+{
+  inputs,
+  ...
+}:
 {
   imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
 
@@ -41,7 +44,15 @@
     overrides = {
       global = {
         Context = {
-          filesystems = [ "xdg-run/discord-ipc-0" ];
+          filesystems = [
+            "xdg-run/discord-ipc-0"
+            "xdg-data/themes:ro"
+            "xdg-data/icons:ro"
+            "$HOME/.local/share/fonts:ro"
+            "/run/current-system/sw/share/themes:ro"
+            "/run/current-system/sw/share/icons:ro"
+            "/nix/store:ro"
+          ];
           sockets = [
             "wayland"
             "!x11"
@@ -49,6 +60,7 @@
           ];
         };
         Environment = {
+          GTK_THEME = "catppuccin-mocha-mauve-standard";
           XCURSOR_PATH = "/run/host/user-share/icons:/run/host/share/icons";
         };
       };
@@ -56,9 +68,6 @@
         filesystems = [
           "xdg-data/Steam:rw"
           "/home/aniviaflome/Games:rw"
-          "/mnt/hdd/Games:rw"
-          "/mnt/hdd/Native:rw"
-          "/mnt/hdd2/Games:rw"
         ];
       };
       "org.vinegarhq.Sober".Context = {

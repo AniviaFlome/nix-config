@@ -16,7 +16,7 @@
         background-color = "transparent";
         border = {
           enable = true;
-          width = 4;
+          width = 3;
           active.color = "cba6f7";
           inactive.color = "#505050";
         };
@@ -99,7 +99,9 @@
         XDG_CURRENT_DESKTOP = "niri";
         XDG_SESSION_TYPE = "wayland";
         QT_QPA_PLATFORM = "wayland";
+        QT_QPA_PLATFORMTHEME = "kde";
         MOZ_ENABLE_WAYLAND = "1";
+        NIXOS_OZONE_WL = "1";
         QML2_IMPORT_PATH = lib.concatStringsSep ":" [
           "${pkgs.quickshell}/lib/qt-6/qml"
           "${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml"

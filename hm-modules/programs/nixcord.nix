@@ -12,6 +12,11 @@
     vesktop = {
       enable = true;
       package = with pkgs; vesktop;
+      settings = {
+        discordBranch = "stable";
+        autoStartMinimized = true;
+        openAtLogin = true;
+      };
     };
     config = {
       useQuickCss = false;

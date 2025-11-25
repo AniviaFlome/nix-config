@@ -36,6 +36,7 @@
           "$XDG_DATA_HOME"
           "$HOME/.qwen"
           "$HOME/Random/dev"
+          "$HOME/nix-config"
         ];
       };
     })

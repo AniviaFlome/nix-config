@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   ...
 }:
@@ -32,6 +33,11 @@ in
     };
   };
 
+  home.file = {
+    "${config.xdg.dataHome}/themes/catppuccin-mocha-mauve-standard".source =
+      "${catppuccin-gtk-override}/share/themes/catppuccin-mocha-mauve-standard";
+  };
+
   qt = {
     enable = true;
     style.name = "kde";
@@ -42,6 +48,6 @@ in
     adwaita-icon-theme
     gnome-icon-theme
     hicolor-icon-theme
-    kdePackages.qt6ct
+
   ];
 }

@@ -16,8 +16,10 @@
 
   hardware.nvidia = {
     modesetting.enable = true; # Modesetting is required.
-    powerManagement.enable = true; # Needed for sleep.
-    powerManagement.finegrained = true;
+    powerManagement = {
+      enable = true; # Needed for sleep.
+      finegrained = true;
+    };
     open = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;

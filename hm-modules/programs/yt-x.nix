@@ -1,13 +1,17 @@
 {
   config,
   inputs,
+  lib,
   pkgs,
   term-editor,
   video,
   ...
 }:
 {
-  home.packages = with pkgs; [ inputs.yt-x.packages."${stdenv.hostPlatform.system}".default ];
+  home.packages = with pkgs; [
+    inputs.yt-x.packages."${stdenv.hostPlatform.system}".default
+    fzf
+  ];
 
   xdg.configFile."yt-x/yt-x.conf" = {
     force = true;
@@ -63,10 +67,55 @@
       NOTIFICATION_DURATION: 5
 
       # where your downloads will be stored
-      DOWNLOAD_DIRECTORY: ${config.xdg.userDirs.videos}/yt-x
+      DOWNLOAD_DIRECTORY: ${config.xdg.userDirs.videos}/Youtube
 
       # whether to check for updates [true/false]
       UPDATE_CHECK: false
     '';
   };
+
+  home.sessionVariables =
+    let
+      # Catppuccin Mocha Palette
+      colors = {
+        base = "#1e1e2e";
+        surface0 = "#313244"; # Used for selection background
+        overlay0 = "#6c7086"; # Used for borders
+        text = "#cdd6f4";
+        accent = "#cba6f7"; # Primary Accent
+      };
+      themeOpts = lib.concatStringsSep " " [
+        # Base and Text
+        "--color=bg:${colors.base}"
+        "--color=fg:${colors.text}"
+        # Selection (Active Item)
+        "--color=bg+:${colors.surface0}"
+        "--color=fg+:${colors.text}"
+        # UI Elements
+        "--color=hl:${colors.accent}" # Highlighted substrings
+        "--color=hl+:${colors.accent}" # Highlighted substrings (selected)
+        "--color=info:${colors.accent}" # Info text
+        "--color=marker:${colors.accent}" # Multi-select marker
+        "--color=prompt:${colors.accent}" # Input prompt
+        "--color=spinner:${colors.accent}" # Streaming spinner
+        "--color=pointer:${colors.accent}" # Selection pointer
+        "--color=header:${colors.accent}" # Header text
+        "--color=label:${colors.accent}" # Border label
+        # Borders
+        "--color=border:${colors.overlay0}"
+        "--color=query:${colors.text}"
+        # Layout & Styling
+        "--border='rounded'"
+        "--border-label=''"
+        "--preview-window='border-rounded'"
+        "--prompt='> '"
+        "--marker='>'"
+        "--pointer='◆'"
+        "--separator='─'"
+        "--scrollbar='│'"
+      ];
+    in
+    {
+      YT_X_FZF_OPTS = themeOpts;
+    };
 }

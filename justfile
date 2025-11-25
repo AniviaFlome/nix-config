@@ -13,7 +13,7 @@ boot SYSTEM:
 
 [doc('Check for errors in the configuration')]
 check:
-  nix shell nixpkgs#statix nixpkgs#deadnix -c statix; deadnix
+  nix shell nixpkgs#statix nixpkgs#deadnix -c statix check; deadnix
 
 [doc('Nixos rebuild switch')]
 switch SYSTEM:

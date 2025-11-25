@@ -2,16 +2,15 @@
 # basic stats checker script mostly adapted from statusbar, may need changes to work on your system
 CPU_TEMP=$(
   sensors | awk '
-    /^Tctl:/ || /^Tdie:/ || /^Package id 0:/ || /^Core 0:/ || /^CPU:/ || /^temp1:/ {
-        gsub(/[+°C]/, "");
-        for (i = 1; i <= NF; i++) {
-            if ($i ~ /^[0-9]+(\.[0-9]+)?$/) {
-                gsub(/\..*/, "", $i);  # strip decimal
-                print $i;
-                exit;
-            }
-        }
-    }'
+    /Package id 0:/ { temp=$4; goto_clean=1 }
+    /Tctl:/         { temp=$2; goto_clean=1 }
+    goto_clean {
+        gsub(/[+°C]/, "", temp);
+        gsub(/\..*/, "", temp); # strip decimal
+        print temp;
+        exit;
+    }
+  '
 )
 
 GPU_TEMP=$(sensors | awk '/^edge/ {print substr($2,2)}')

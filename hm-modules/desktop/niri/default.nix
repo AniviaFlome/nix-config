@@ -10,6 +10,7 @@
     ./noctalia.nix
     ./settings.nix
     ./keybinds.nix
+    ../hyprland/hypridle.nix
   ];
 
   home.packages = with pkgs; [

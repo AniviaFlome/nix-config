@@ -69,10 +69,10 @@
     mpv
     neovim
     nicotine-plus
+    nix-update
     nixd
     nixfmt-rfc-style
     ntfs3g
-    nur.repos.charmbracelet.crush
     nyaa
     obs-studio
     onlyoffice-desktopeditors
