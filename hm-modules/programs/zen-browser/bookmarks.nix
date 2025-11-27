@@ -90,6 +90,14 @@
       url = "https://anilist.co/";
     }
     {
+      name = "Letterboxd";
+      url = "https://letterboxd.com/";
+    }
+    {
+      name = "Trakt";
+      url = "https://trakt.tv/dashboard";
+    }
+    {
       name = "Backloggd";
       url = "https://backloggd.com/";
     }
