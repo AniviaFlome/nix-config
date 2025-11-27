@@ -58,6 +58,13 @@
       clipboard = {
         disable-primary = true;
       };
+      overview = {
+        backdrop-color = "#181825";
+      };
+      debug = {
+        honor-xdg-activation-with-invalid-serial = { };
+      };
+      screenshot-path = "${config.xdg.userDirs.pictures}/%Y-%m-%dT%H:%M:%S.png";
       window-rules = [
         {
           draw-border-with-background = false;
@@ -94,7 +101,6 @@
           };
         };
       };
-      screenshot-path = "${config.xdg.userDirs.pictures}/%Y-%m-%dT%H:%M:%S.png";
       environment = {
         XDG_CURRENT_DESKTOP = "niri";
         XDG_SESSION_TYPE = "wayland";

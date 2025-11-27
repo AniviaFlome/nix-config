@@ -5,14 +5,9 @@ set -euo pipefail
 # Configuration
 # ============================================================================
 
-PKG_PREFIX="pkgs"
-CONFIG_FILENAME="pkgs.nix"
-STABLE_PKG_PREFIX="pkgs.stable"
-STABLE_CONFIG_FILENAME="pkgs-stable.nix"
-USE_STABLE=false
-
+CONFIG_FILENAME="flatpak.nix"
 DEFAULT_DIR="${HOME}/nix-config"
-BACKUP_DIR="${XDG_STATE_HOME}/nix-pkgs-backups"
+BACKUP_DIR="${XDG_STATE_HOME}/nix-flatpak-backups"
 MAX_BACKUPS=14
 
 # ============================================================================
@@ -106,7 +101,7 @@ confirm_and_apply() {
 }
 
 # ============================================================================
-# Flake Root Detection + pkgs.nix discovery (recursive)
+# Flake Root Detection + flatpak.nix discovery (recursive)
 # ============================================================================
 find_flake_root() {
   local dir="$PWD"
@@ -150,10 +145,8 @@ find_single_file() {
 }
 
 DEFAULT_CONFIG="$(find_single_file "$CONFIG_FILENAME")"
-DEFAULT_CONFIG_STABLE="$(find_single_file "$STABLE_CONFIG_FILENAME")"
 
-[ -z "$DEFAULT_CONFIG" ] && msg_error "No $CONFIG_FILENAME found under flake root." && exit 1
-[ -z "$DEFAULT_CONFIG_STABLE" ] && msg_warn "$STABLE_CONFIG_FILENAME not found (stable mode will only work with explicit file)."
+[ -z "$DEFAULT_CONFIG" ] && msg_warn "$CONFIG_FILENAME not found."
 
 # ============================================================================
 # Validation
@@ -161,7 +154,7 @@ DEFAULT_CONFIG_STABLE="$(find_single_file "$STABLE_CONFIG_FILENAME")"
 check_dependencies() {
   local missing=()
   command -v fzf >/dev/null || missing+=("fzf")
-  command -v nix-search-tv >/dev/null || missing+=("nix-search-tv")
+  command -v flatpak >/dev/null || missing+=("flatpak")
   command -v nix-instantiate >/dev/null || missing+=("nix-instantiate")
 
   if [ ${#missing[@]} -ne 0 ]; then
@@ -184,32 +177,19 @@ check_config_file() {
 # ============================================================================
 # Parsing
 # ============================================================================
-get_package_name() {
-  # strip current PKG_PREFIX (pkgs or pkgs.stable) from attr path
-  echo "$1" | sed "s/^${PKG_PREFIX}\.//"
-}
 
-# Extract bare package names from environment.systemPackages list
-extract_packages() {
+extract_flatpak_packages() {
   local file="$1"
 
-  awk -v stable_prefix="$STABLE_PKG_PREFIX" '
-    BEGIN { in_env=0; in_list=0 }
+  awk '
+    BEGIN { in_packages=0; in_list=0 }
 
-    /environment\.systemPackages/ {
-        in_env=1
-        if (index($0, "[") > 0) {
-            in_list=1
-        }
+    /services\.flatpak\.packages/ || /packages[[:space:]]*=/ {
+        in_packages=1
         next
     }
 
-    in_env && !in_list && index($0, "[") == 0 {
-        # lines between env line and "[" (like with pkgs;)
-        next
-    }
-
-    in_env && !in_list && index($0, "[") > 0 {
+    in_packages && !in_list && index($0, "[") > 0 {
         in_list=1
         next
     }
@@ -231,9 +211,7 @@ extract_packages() {
         }
 
         pkg=stripped
-        gsub(/^pkgs\./, "", pkg)
-        gsub("^" stable_prefix "\\.", "", pkg)
-        gsub(/[ \t].*$/, "", pkg)
+        gsub(/"/, "", pkg) # Remove quotes
         if (pkg != "") print pkg
         next
     }
@@ -241,125 +219,78 @@ extract_packages() {
 }
 
 # ============================================================================
-# nix-search-tv based selection (fzf)
+# Selection
 # ============================================================================
-select_package_to_add() {
-  local selected raw clean pkg
 
-  # fzf UI
-  selected="$(
-    nix-search-tv print nixpkgs |
-      fzf \
-        --prompt='Search nixpkgs package > ' \
-        --preview 'nix-search-tv preview {}' \
-        --border --reverse --ansi
-  )" || return 1
+select_flatpak_to_add() {
+  local selected app_id
+
+  # Use flatpak search and format output for fzf
+  # Format: "Application ID | Name - Description"
+  selected="$(flatpak search "" --columns=application,name,description |
+    awk -F'\t' '{printf "%s | %s - %s\n", $1, $2, $3}' |
+    fzf --prompt='Search Flatpak > ' \
+      --border --reverse --ansi \
+      --with-nth=2.. \
+      --delimiter='\|')" || return 1
 
   [ -z "$selected" ] && return 1
 
-  # Extract first token-like part (before tab or pipe)
-  # This strips descriptions and metadata that FZF often includes after the package path.
-  raw="${selected%%$'\t'*}"
-  raw="${raw%%|*}"
+  # Extract Application ID (first column)
+  app_id="$(echo "$selected" | awk -F' | ' '{print $1}')"
 
-  # --- Attribute Path Normalization ---
+  # Trim whitespace
+  app_id="${app_id//[[:space:]]/}"
 
-  # 1. Remove all spaces
-  raw="${raw//[[:space:]]/}"
-
-  # 2. Convert slashes (path format) to dots (Nix attribute format)
-  clean="${raw//\//.}"
-
-  # 3. Strip the standard nixpkgs. prefix if present
-  clean="${clean#nixpkgs.}"
-
-  pkg="$clean"
-
-  # --- Generic Prefix Deduplication ---
-  # This fixes issues like 'nur.nur.repos...' or 'gnome.gnome.terminal'
-  # where the top-level package set name is duplicated in the attribute path.
-
-  # Extract the first segment (e.g., 'nur' or 'gnome')
-  local first_segment="${pkg%%.*}"
-
-  # Check if the remaining string immediately starts with the same segment again
-  if [[ $pkg == "$first_segment.$first_segment."* ]]; then
-    # Strip the first instance of the duplicate prefix and the trailing dot
-    pkg="${pkg#$first_segment.}"
-  fi
-
-  if [[ -z $pkg ]]; then
-    msg_error "Invalid selection: '$selected' → parsed empty package name"
+  if [[ -z $app_id ]]; then
+    msg_error "Invalid selection: '$selected' → parsed empty application ID"
     return 1
   fi
 
-  echo "$pkg"
+  echo "$app_id"
 }
 
-select_package_to_remove() {
+select_flatpak_to_remove() {
   local file="$1"
 
-  extract_packages "$file" |
+  extract_flatpak_packages "$file" |
     fzf \
-      --prompt='Select package to remove > ' \
+      --prompt='Select Flatpak to remove > ' \
       --border --reverse --ansi
 }
 
 # ============================================================================
-# Add (alphabetical, respects with pkgs / with pkgs.stable)
+# Add
 # ============================================================================
-add_package() {
-  local file="$1"
-  local attr="$2"
 
-  if ! grep -q "environment\.systemPackages" "$file"; then
-    msg_error "systemPackages block missing — abort."
+add_flatpak_package() {
+  local file="$1"
+  local app_id="$2"
+
+  if ! grep -qE "services\.flatpak\.packages|packages[[:space:]]*=" "$file"; then
+    msg_error "services.flatpak.packages block missing — abort."
     exit 1
   fi
 
-  local bare
-  bare="$(get_package_name "$attr")"
-
-  # crude duplicate guard (by bare name)
-  if grep -q "\\b$bare\\b" "$file"; then
-    msg_warn "Already exists: $bare"
+  # Check if already exists
+  if grep -q "\"$app_id\"" "$file"; then
+    msg_warn "Already exists: $app_id"
     exit 0
   fi
 
-  local prefItem="$PKG_PREFIX.$bare"
   local temp
   temp="$(mktemp)"
 
-  awk -v bare="$bare" -v prefItem="$prefItem" -v stable_prefix="$STABLE_PKG_PREFIX" '
-        BEGIN { in_env=0; in_list=0; inserted=0; use_bare=0 }
+  awk -v app_id="$app_id" '
+        BEGIN { in_packages=0; in_list=0; inserted=0 }
 
-        /environment\.systemPackages/ {
-            in_env=1
-            pat_stable = "with[ \\t]+" stable_prefix "[ \\t]*;"
-            if ($0 ~ /with[ \t]+pkgs[ \t]*;/ || $0 ~ pat_stable) {
-                use_bare=1
-            }
-            print
-            if (index($0, "[") > 0) {
-                in_list=1
-            }
-            next
-        }
-
-        in_env && !in_list && index($0, "[") == 0 {
-            pat_stable = "with[ \\t]+" stable_prefix "[ \\t]*;"
-            if ($0 ~ /with[ \t]+pkgs[ \t]*;/ || $0 ~ pat_stable) {
-                use_bare=1
-            }
+        /services\.flatpak\.packages/ || /packages[[:space:]]*=/ {
+            in_packages=1
             print
             next
         }
 
-        in_env && !in_list && index($0, "[") > 0 {
-            pat_stable = "with[ \\t]+" stable_prefix "[ \\t]*;"
-            if ($0 ~ /with[ \t]+pkgs[ \t]*;/ || $0 ~ pat_stable) {
-                use_bare=1
-            }
+        in_packages && !in_list && index($0, "[") > 0 {
             in_list=1
             print
             next
@@ -376,19 +307,15 @@ add_package() {
 
             if (is_item && !inserted) {
                 cur=stripped
-                gsub(/^pkgs\./, "", cur)
-                gsub("^" stable_prefix "\\.", "", cur)
-                gsub(/[ \t].*$/, "", cur)
-                if (bare < cur) {
-                    item=(use_bare ? bare : prefItem)
-                    print "    " item
+                gsub(/"/, "", cur)
+                if (app_id < cur) {
+                    print "          \"" app_id "\""
                     inserted=1
                 }
             }
 
             if (is_closing && !inserted) {
-                item=(use_bare ? bare : prefItem)
-                print "    " item
+                print "          \"" app_id "\""
                 inserted=1
             }
 
@@ -396,7 +323,7 @@ add_package() {
 
             if (is_closing) {
                 in_list=0
-                in_env=0
+                in_packages=0
             }
             next
         }
@@ -410,36 +337,29 @@ add_package() {
 # ============================================================================
 # Remove
 # ============================================================================
-remove_package() {
+
+remove_flatpak_package() {
   local file="$1"
   local pkg="$2"
 
-  if ! grep -q "environment\.systemPackages" "$file"; then
-    msg_error "systemPackages block missing — abort."
+  if ! grep -qE "services\.flatpak\.packages|packages[[:space:]]*=" "$file"; then
+    msg_error "services.flatpak.packages block missing — abort."
     exit 1
   fi
 
   local temp
   temp="$(mktemp)"
 
-  awk -v target="$pkg" -v stable_prefix="$STABLE_PKG_PREFIX" '
-        BEGIN { in_env=0; in_list=0 }
+  awk -v target="$pkg" '
+        BEGIN { in_packages=0; in_list=0 }
 
-        /environment\.systemPackages/ {
-            in_env=1
-            print
-            if (index($0, "[") > 0) {
-                in_list=1
-            }
-            next
-        }
-
-        in_env && !in_list && index($0, "[") == 0 {
+        /services\.flatpak\.packages/ || /packages[[:space:]]*=/ {
+            in_packages=1
             print
             next
         }
 
-        in_env && !in_list && index($0, "[") > 0 {
+        in_packages && !in_list && index($0, "[") > 0 {
             in_list=1
             print
             next
@@ -456,14 +376,12 @@ remove_package() {
 
             if (is_item) {
                 cur=stripped
-                gsub(/^pkgs\./, "", cur)
-                gsub("^" stable_prefix "\\.", "", cur)
-                gsub(/[ \t].*$/, "", cur)
+                gsub(/"/, "", cur)
                 if (cur == target) {
                     # skip this line
                     if (is_closing) {
                         in_list=0
-                        in_env=0
+                        in_packages=0
                     }
                     next
                 }
@@ -473,7 +391,7 @@ remove_package() {
 
             if (is_closing) {
                 in_list=0
-                in_env=0
+                in_packages=0
             }
             next
         }
@@ -488,10 +406,10 @@ remove_package() {
 # Usage
 # ============================================================================
 show_usage() {
-  echo -e "${BOLD}nix-pkgs${NC} — Add packages easily to your config"
+  echo -e "${BOLD}nix-flatpak${NC} — Add/Remove Flatpak packages"
   echo "Usage:"
-  echo "  nix-pkgs add    [--stable] [FILE]"
-  echo "  nix-pkgs remove [--stable] [FILE]"
+  echo "  nix-flatpak add    [FILE]"
+  echo "  nix-flatpak remove [FILE]"
 }
 
 # ============================================================================
@@ -502,10 +420,6 @@ cmd_add() {
 
   while [ $# -gt 0 ]; do
     case "$1" in
-    -s | --stable)
-      USE_STABLE=true
-      PKG_PREFIX="$STABLE_PKG_PREFIX"
-      ;;
     -h | --help)
       show_usage
       exit 0
@@ -516,24 +430,18 @@ cmd_add() {
   done
 
   if [ -z "${file:-}" ]; then
-    if [ "$USE_STABLE" = true ] && [ -n "$DEFAULT_CONFIG_STABLE" ]; then
-      file="$DEFAULT_CONFIG_STABLE"
-    else
-      file="$DEFAULT_CONFIG"
-    fi
+    file="$DEFAULT_CONFIG"
   fi
 
   check_dependencies
   check_config_file "$file"
 
-  local pkg full_attr
-  if ! pkg="$(select_package_to_add)"; then
-    msg_warn "No package selected."
+  local app_id
+  if ! app_id="$(select_flatpak_to_add)"; then
+    msg_warn "No flatpak selected."
     exit 0
   fi
-
-  full_attr="${PKG_PREFIX}.${pkg}"
-  add_package "$file" "$full_attr"
+  add_flatpak_package "$file" "$app_id"
 }
 
 cmd_remove() {
@@ -541,10 +449,6 @@ cmd_remove() {
 
   while [ $# -gt 0 ]; do
     case "$1" in
-    -s | --stable)
-      USE_STABLE=true
-      PKG_PREFIX="$STABLE_PKG_PREFIX"
-      ;;
     -h | --help)
       show_usage
       exit 0
@@ -555,21 +459,17 @@ cmd_remove() {
   done
 
   if [ -z "${file:-}" ]; then
-    if [ "$USE_STABLE" = true ] && [ -n "$DEFAULT_CONFIG_STABLE" ]; then
-      file="$DEFAULT_CONFIG_STABLE"
-    else
-      file="$DEFAULT_CONFIG"
-    fi
+    file="$DEFAULT_CONFIG"
   fi
 
   check_dependencies
   check_config_file "$file"
 
   local pkg
-  pkg="$(select_package_to_remove "$file" || true)"
+  pkg="$(select_flatpak_to_remove "$file" || true)"
   [ -z "$pkg" ] && msg_warn "No package selected." && exit 0
 
-  remove_package "$file" "$pkg"
+  remove_flatpak_package "$file" "$pkg"
 }
 
 main() {

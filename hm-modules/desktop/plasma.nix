@@ -21,7 +21,6 @@
       accents = [ "mauve" ];
       winDecStyles = [ "classic" ];
     })
-    app2unit
   ];
 
   programs.plasma = {

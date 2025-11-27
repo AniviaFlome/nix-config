@@ -7,6 +7,7 @@ let
     "hyscript"
     "monitor-off"
     "nix-pkgs"
+    "nix-flatpak"
     "power-profiles-switch"
     "stats"
     "winboot"

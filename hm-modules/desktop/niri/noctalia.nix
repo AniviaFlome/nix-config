@@ -196,8 +196,8 @@
         autoSchedule = true;
         dayTemp = "6500";
         manualSunrise = "06:30";
-        manualSunset = "18:30";
-        nightTemp = "4000";
+        manualSunset = "23:30";
+        nightTemp = "4500";
       };
       notifications = {
         enabled = true;

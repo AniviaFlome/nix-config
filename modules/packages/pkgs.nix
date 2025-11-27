@@ -94,11 +94,11 @@
     starship
     statix
     syncthing
+    tealdeer
     telegram-desktop
     television
     textpieces
     thunderbird
-    tldr
     treefmt
     umu-launcher
     upscayl
