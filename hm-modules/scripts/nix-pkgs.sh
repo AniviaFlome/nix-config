@@ -252,7 +252,9 @@ select_package_to_add() {
       fzf \
         --prompt='Search nixpkgs package > ' \
         --preview 'nix-search-tv preview {}' \
-        --border --reverse --ansi
+        --border --reverse --ansi \
+        --exact \
+        --tiebreak=begin,length
   )" || return 1
 
   [ -z "$selected" ] && return 1
@@ -302,7 +304,9 @@ select_package_to_remove() {
   extract_packages "$file" |
     fzf \
       --prompt='Select package to remove > ' \
-      --border --reverse --ansi
+      --border --reverse --ansi \
+      --exact \
+      --tiebreak=begin,length
 }
 
 # ============================================================================

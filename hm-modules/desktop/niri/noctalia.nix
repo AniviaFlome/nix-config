@@ -235,15 +235,12 @@
       changelog.lastSeenVersion = "v3.2.0-dev";
     };
   };
-  #  home.sessionVariables = {
-  #    QML2_IMPORT_PATH = lib.makeSearchPath "lib/qt6/qml" [ pkgs.kdePackages.kirigami ];
-  #    QML_IMPORT_PATH = lib.makeSearchPath "lib/qt6/qml" [ pkgs.kdePackages.kirigami ];
-  #  };
 
   home.packages = with pkgs; [
     app2unit
     cava
     cliphist
+    pavucontrol
     wlsunset
   ];
 }

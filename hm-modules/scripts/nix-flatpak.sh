@@ -231,6 +231,8 @@ select_flatpak_to_add() {
     awk -F'\t' '{printf "%s | %s - %s\n", $1, $2, $3}' |
     fzf --prompt='Search Flatpak > ' \
       --border --reverse --ansi \
+      --exact \
+      --tiebreak=begin,length \
       --with-nth=2.. \
       --delimiter='\|')" || return 1
 
@@ -256,7 +258,9 @@ select_flatpak_to_remove() {
   extract_flatpak_packages "$file" |
     fzf \
       --prompt='Select Flatpak to remove > ' \
-      --border --reverse --ansi
+      --border --reverse --ansi \
+      --exact \
+      --tiebreak=begin,length
 }
 
 # ============================================================================
