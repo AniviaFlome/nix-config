@@ -71,6 +71,8 @@
 
       # whether to check for updates [true/false]
       UPDATE_CHECK: false
+
+      WELCOME_SCREEN: false
     '';
   };
 

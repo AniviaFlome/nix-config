@@ -8,6 +8,8 @@
       arch = {
         image = "ghcr.io/greyltc-org/archlinux-aur:paru";
         nvidia = true;
+        pull = true;
+        replace = true;
         additional_packages = "
           atuin
           base-devel
@@ -17,14 +19,16 @@
           starship
         ";
         init_hooks = "
-          paru -S --needed --noconfirm
-          helium-browser-bin
+          paru -S --needed --noconfirm \
+          helium-browser-bin \
+          torrra
         ";
         exported_apps = "
           helium-browser
         ";
         exported_bins = "
           helium-browser
+          torrra
         ";
       };
     };

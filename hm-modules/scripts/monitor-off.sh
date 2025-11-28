@@ -8,5 +8,5 @@ if [[ $DESKTOP == *"niri"* ]]; then
 elif [[ $DESKTOP == *"hyprland"* ]]; then
   hyprctl dispatch dpms off
 elif [[ $DESKTOP == *"kde"* ]] || [[ $DESKTOP == *"plasma"* ]]; then
-  qdbus org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement/Actions/DpmsControl powerOff
+  qdbus6 org.kde.KWin /KWin toggleScreenOff
 fi
