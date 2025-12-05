@@ -73,9 +73,11 @@
     nixd
     nixfmt-rfc-style
     ntfs3g
+    nur.repos.lonerOrz.pear-desktop
     nyaa
     obs-studio
     onlyoffice-desktopeditors
+    openrct2
     osu-lazer-bin
     packwiz
     prismlauncher
@@ -89,6 +91,7 @@
     scrcpy
     shellcheck
     songrec
+    space-station-14-launcher
     spotify
     spotify-player
     starship

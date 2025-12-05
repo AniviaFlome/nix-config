@@ -1,4 +1,7 @@
-{ inputs, ... }:
+{
+  inputs,
+  ...
+}:
 {
   imports = [ inputs.cachy-tweaks.nixosModules.default ];
 

@@ -134,13 +134,33 @@ let
     listToAttrs (
       flatten (mapAttrsToList (key: map (type: attrsets.nameValuePair type defaultApps."${key}")) mimeMap)
     );
+
+  noCalibre =
+    let
+      mimeTypes = [
+        "application/pdf"
+        "application/vnd.oasis.opendocument.text"
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        "text/html"
+        "text/x-markdown"
+      ];
+      desktopFiles = [
+        "calibre-ebook-edit.desktop"
+        "calibre-ebook-viewer.desktop"
+        "calibre-gui.desktop"
+      ];
+    in
+    lib.zipAttrs (map (d: lib.genAttrs mimeTypes (_: d)) desktopFiles);
 in
 {
   xdg = {
     configFile."mimeapps.list".force = true;
     mimeApps = {
       enable = true;
-      associations.added = associations;
+      associations = {
+        added = associations;
+        removed = noCalibre;
+      };
       defaultApplications = associations;
     };
   };

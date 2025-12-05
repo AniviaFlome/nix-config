@@ -40,6 +40,7 @@
           "io.github.Soundux"
           "org.vinegarhq.Sober"
           "sh.fhs.ksre"
+          "tw.ddnet.ddnet"
         ];
     overrides = {
       global = {

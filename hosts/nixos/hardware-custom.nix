@@ -10,7 +10,10 @@
     memoryPercent = 100;
   };
 
-  hardware.graphics.enable = true;
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
   services.xserver.videoDrivers = [ "nvidia" ]; # Load nvidia driver for Xorg and Wayland
 
@@ -22,7 +25,7 @@
     };
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
   hardware.openrazer = {

@@ -15,7 +15,7 @@
       settings = {
         discordBranch = "stable";
         autoStartMinimized = true;
-        openAtLogin = true;
+        clickTrayToShowHide = true;
       };
     };
     config = {

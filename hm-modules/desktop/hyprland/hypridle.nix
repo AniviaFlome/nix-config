@@ -24,7 +24,7 @@
         }
         {
           timeout = 300; # Seconds
-          on-timeout = "monitor-off";
+          on-timeout = "systemctl suspend";
         }
         {
           timeout = 300; # Seconds
