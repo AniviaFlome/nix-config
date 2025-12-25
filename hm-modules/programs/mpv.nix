@@ -9,6 +9,7 @@
     scripts = with pkgs.mpvScripts; [
       autosubsync-mpv
       chapterskip
+      interSubs
       mpris
       mpvacious
       skipsilence
@@ -20,6 +21,7 @@
       modernz
       reload
       webtorrent-mpv-hook
+      whisper-subs
       youtube-chat
     ];
     bindings = {

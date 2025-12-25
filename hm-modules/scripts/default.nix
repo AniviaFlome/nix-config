@@ -9,6 +9,7 @@ let
     "nix-pkgs"
     "nix-flatpak"
     "power-profiles-switch"
+    "soundtest"
     "stats"
     "winboot"
   ];
@@ -23,6 +24,7 @@ in
       efibootmgr
       fzf
       gawk
+      gum
       libnotify
       lm_sensors
       nix-search-tv

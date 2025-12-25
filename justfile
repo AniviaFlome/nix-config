@@ -12,8 +12,12 @@ boot SYSTEM:
   nh {{SYSTEM}} boot
 
 [doc('Check for errors in the configuration')]
-check:
+code:
   nix shell nixpkgs#statix nixpkgs#deadnix -c statix check; deadnix
+
+[doc('Check for errors in the flake')]
+check:
+  nix flake check
 
 [doc('Nixos rebuild switch')]
 switch SYSTEM:

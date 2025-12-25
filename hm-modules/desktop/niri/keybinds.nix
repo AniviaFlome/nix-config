@@ -17,24 +17,15 @@
       "Mod+B".action.spawn = "power-profiles-switch";
 
       "Mod+Space".action.spawn = lib.splitString " " launcher;
-      "Alt+Space".action.spawn = [
-        "noctalia-shell"
-        "ipc"
-        "call"
-        "launcher"
-        "toggle"
-      ];
       "Mod+H".action.spawn = [
-        "noctalia-shell"
-        "ipc"
-        "call"
-        "launcher"
-        "clipboard"
+        "vicinae"
+        "vicinae://extensions/vicinae/clipboard/history"
       ];
 
       "Mod+F".action = maximize-column;
       "Mod+Shift+F".action = fullscreen-window;
       "Mod+V".action = toggle-window-floating;
+      "Mod+Q".action = toggle-column-tabbed-display;
 
       "Mod+P".action.screenshot = [ ];
       "Mod+Shift+P".action.screenshot-screen = [ ];

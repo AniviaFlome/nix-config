@@ -7,12 +7,12 @@
   virtualisation = {
     libvirtd = {
       enable = true;
-      package = with pkgs.stable; libvirt;
+      package = pkgs.libvirt;
       qemu = {
-        package = with pkgs.stable; qemu;
+        package = pkgs.qemu;
         swtpm = {
-          enable = false;
-          package = with pkgs.stable; swtpm;
+          enable = true;
+          package = pkgs.swtpm;
         };
       };
     };
@@ -21,6 +21,7 @@
   users.users.${username}.extraGroups = [ "libvirtd" ];
   services.spice-vdagentd.enable = true;
   programs.virt-manager.enable = true;
+
 
   environment.systemPackages = with pkgs; [
     winboat

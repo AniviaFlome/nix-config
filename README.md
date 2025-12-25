@@ -4,7 +4,7 @@ My Nixos config
 
 ### Todo:
 
-- None
+- Proper polkit setup on niri.
 
 ## License
 

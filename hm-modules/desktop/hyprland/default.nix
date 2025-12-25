@@ -15,8 +15,6 @@
       "$mainMod" = "SUPER";
       exec-once = [
         "caelestia-shell -d"
-        "steam -silent"
-        "vesktop --start-minimized"
       ];
       monitor = [ ",preferred,auto,auto" ];
       workspace = { };

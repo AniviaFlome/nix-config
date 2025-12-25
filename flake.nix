@@ -18,6 +18,22 @@
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nix-webapps.url = "github:AniviaFlome/nix-webapps";
     nix-bwrapper.url = "github:Naxdy/nix-bwrapper";
+    steam-config-nix = {
+      url = "github:different-name/steam-config-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    zarumet = {
+      url = "github:Immelancholy/zarumet";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixvirt = {
+      url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-repository = {
+      url = "github:AniviaFlome/nix-repository";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -73,6 +89,7 @@
     {
       self,
       nixpkgs,
+      nixvirt,
       ...
     }@inputs:
     let
@@ -121,7 +138,7 @@
         "${username}@nixos" = inputs.home-manager.lib.homeManagerConfiguration {
           inherit (self.nixosConfigurations.nixos) pkgs;
           extraSpecialArgs = {
-            inherit inputs outputs;
+            inherit inputs outputs nixvirt;
           };
           modules = [ ./hosts/nixos/home.nix ];
         };

@@ -4,17 +4,19 @@
 }:
 {
   environment.systemPackages = with pkgs; [
-    (prismlauncher.override {
+    (pkgs.prismlauncher.override {
       additionalLibs = [
         bzip2
         openssl
         nss
         nspr
       ];
+
       jdks = [
-        temurin-jre-bin-21
-        temurin-jre-bin-17
-        temurin-jre-bin-8
+        javaPackages.compiler.temurin-bin.jre-25
+        javaPackages.compiler.temurin-bin.jre-21
+        javaPackages.compiler.temurin-bin.jre-17
+        javaPackages.compiler.temurin-bin.jre-8
       ];
     })
   ];

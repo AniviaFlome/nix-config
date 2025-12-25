@@ -22,6 +22,7 @@
     ../../hm-modules/programs/kate.nix
     ../../hm-modules/programs/kitty.nix
     ../../hm-modules/programs/konsole.nix
+    ../../hm-modules/programs/ludusavi.nix
     ../../hm-modules/programs/micro.nix
     ../../hm-modules/programs/mpv.nix
     ../../hm-modules/programs/neovim.nix
@@ -37,6 +38,7 @@
     ../../hm-modules/programs/thunderbird.nix
     ../../hm-modules/programs/tmenu.nix
     ../../hm-modules/programs/vicinae.nix
+    ../../hm-modules/programs/virtualization.nix
     ../../hm-modules/programs/vscode.nix
     ../../hm-modules/programs/yt-x.nix
     ../../hm-modules/programs/zed.nix

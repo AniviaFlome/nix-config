@@ -1,5 +1,6 @@
 {
   pkgs,
+  inputs,
   ...
 }:
 {
@@ -23,6 +24,7 @@
     cpu-x
     crow-translate
     curl
+    dash
     deadnix
     easyeffects
     efibootmgr
@@ -30,6 +32,7 @@
     fastfetch
     ffmpeg_8-full
     flameshot
+    fluent-reader
     fzf
     gdu
     gearlever
@@ -43,6 +46,7 @@
     home-manager
     htop
     hugo
+    hydralauncher
     input-remapper
     jq
     just
@@ -58,22 +62,27 @@
     legendary-gl
     livecaptions
     localsend
-    ludusavi
     man
     mangayomi
     mangohud
     mat2
+    mcpelauncher-ui-qt
     micro
     motrix
     mousam
     mpv
     neovim
     nicotine-plus
+    nix-du
+    nix-init
     nix-update
     nixd
     nixfmt-rfc-style
+    nixpkgs-review
     ntfs3g
+    nur.repos.charmbracelet.crush
     nur.repos.lonerOrz.pear-desktop
+    nurl
     nyaa
     obs-studio
     onlyoffice-desktopeditors
@@ -82,16 +91,20 @@
     packwiz
     prismlauncher
     protontricks
+    pwvucontrol
     python3
     qbittorrent
     rclone
+    redeclipse
     riseup-vpn
     rsync
     ryubing
     scrcpy
+    shattered-pixel-dungeon
     shellcheck
     songrec
     space-station-14-launcher
+    spotdl
     spotify
     spotify-player
     starship

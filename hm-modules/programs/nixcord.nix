@@ -28,7 +28,6 @@
         anonymiseFileNames.enable = true;
         betterGifAltText.enable = true;
         callTimer.enable = true;
-        clearURLs.enable = true;
         crashHandler.enable = true;
         customIdle = {
           enable = true;

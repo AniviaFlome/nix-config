@@ -14,6 +14,9 @@
     lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
+      autoGenerateKeys = {
+        enable = true;
+      };
     };
     kernelPackages = pkgs.linuxPackages_zen;
     kernelParams = [

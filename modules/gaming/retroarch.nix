@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 let
   retroarchWithCores = pkgs.retroarch.withCores (
     cores: with cores; [

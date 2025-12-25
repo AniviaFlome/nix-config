@@ -77,13 +77,7 @@
   ];
 
   nixpkgs = {
-    overlays = [
-      (final: _prev: {
-        stable = import inputs.nixpkgs-stable {
-          inherit (final.stdenv.hostPlatform) system;
-        };
-      })
-    ];
+    overlays = import ../../overlays { inherit inputs; };
     config = {
       allowUnfree = true;
     };
