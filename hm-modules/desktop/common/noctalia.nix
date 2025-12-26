@@ -232,7 +232,6 @@
         fillMode = "crop";
         recursiveSearch = true;
       };
-      changelog.lastSeenVersion = "v3.2.0-dev";
     };
   };
 

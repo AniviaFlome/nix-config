@@ -1,6 +1,5 @@
 {
   pkgs,
-  inputs,
   ...
 }:
 {
@@ -121,6 +120,7 @@
     vesktop
     vlc
     vscodium
+    waha-tui
     wget
     wine-staging
     winetricks
