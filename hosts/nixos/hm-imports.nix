@@ -35,6 +35,7 @@
     ../../hm-modules/programs/ripgrep.nix
     ../../hm-modules/programs/spicetify.nix
     ../../hm-modules/programs/starship.nix
+    ../../hm-modules/programs/steam.nix
     ../../hm-modules/programs/thunderbird.nix
     ../../hm-modules/programs/tmenu.nix
     ../../hm-modules/programs/vicinae.nix

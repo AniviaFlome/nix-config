@@ -6,8 +6,7 @@ let
   scripts = [
     "hyscript"
     "monitor-off"
-    "nix-pkgs"
-    "nix-flatpak"
+    "npp"
     "power-profiles-switch"
     "soundtest"
     "stats"

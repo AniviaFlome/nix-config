@@ -22,10 +22,10 @@
 
       ["submenu.Nix"]
       "Os Switch" = "nh os switch"
-      "Add Package" = "nix-pkgs add"
+      "Add Package" = "npp n a"
       "Garbage Collection" = "nh clean"
       "Home Switch" = "nh home switch"
-      "Remove Package" = "nix-pkgs remove"
+      "Remove Package" = "npp n r"
     '';
   };
 }

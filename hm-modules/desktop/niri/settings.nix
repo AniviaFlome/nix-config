@@ -6,7 +6,7 @@
 }:
 {
   programs.niri = {
-    package = with pkgs; niri;
+    package = pkgs.niri;
     settings = {
       prefer-no-csd = true;
       hotkey-overlay = {

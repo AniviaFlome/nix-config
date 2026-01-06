@@ -12,7 +12,7 @@
         compositor = "kwin";
       };
     };
-    defaultSession = "niri";
+    defaultSession = null;
     autoLogin = {
       enable = false;
       user = "${username}";

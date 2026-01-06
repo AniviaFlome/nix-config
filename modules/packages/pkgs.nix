@@ -15,18 +15,17 @@
     better-control
     bleachbit
     bolt-launcher
-    brave
     btrfs-progs
     bubblewrap
     calibre
     comma
-    cpu-x
     crow-translate
     curl
     dash
     deadnix
     easyeffects
     efibootmgr
+    exiftool
     eza
     fastfetch
     ffmpeg_8-full
@@ -46,6 +45,7 @@
     htop
     hugo
     hydralauncher
+    hyprpicker
     input-remapper
     jq
     just
@@ -59,6 +59,7 @@
     krita
     lazygit
     legendary-gl
+    lidarr
     livecaptions
     localsend
     man
@@ -79,12 +80,13 @@
     nixfmt-rfc-style
     nixpkgs-review
     ntfs3g
-    nur.repos.charmbracelet.crush
-    nur.repos.lonerOrz.pear-desktop
+    nur.repos.Ev357.helium
     nurl
     nyaa
     obs-studio
     onlyoffice-desktopeditors
+    opencode
+    opencommit
     openrct2
     osu-lazer-bin
     packwiz
@@ -98,6 +100,7 @@
     riseup-vpn
     rsync
     ryubing
+    samira
     scrcpy
     shattered-pixel-dungeon
     shellcheck
@@ -114,19 +117,22 @@
     television
     textpieces
     thunderbird
+    torrra
     treefmt
     umu-launcher
     upscayl
-    vesktop
     vlc
     vscodium
     waha-tui
+    wdisplays
     wget
     wine-staging
     winetricks
     wl-clipboard
+    wlr-randr
     xclip
     xdg-utils
+    yazi
     yt-dlp
     zathura
     zip

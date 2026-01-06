@@ -19,19 +19,19 @@
     plugins = [
       {
         name = "bass";
-        src = with pkgs.fishPlugins; bass.src;
+        inherit (pkgs.fishPlugins.bass) src;
       }
       {
         name = "done";
-        src = with pkgs.fishPlugins; done.src;
+        inherit (pkgs.fishPlugins.done) src;
       }
       {
         name = "git";
-        src = with pkgs.fishPlugins; plugin-git.src;
+        inherit (pkgs.fishPlugins.plugin-git) src;
       }
       {
         name = "fzf-fish";
-        src = with pkgs.fishPlugins; fzf-fish.src;
+        inherit (pkgs.fishPlugins.fzf-fish) src;
       }
     ];
   };

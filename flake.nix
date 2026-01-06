@@ -18,6 +18,7 @@
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nix-webapps.url = "github:AniviaFlome/nix-webapps";
     nix-bwrapper.url = "github:Naxdy/nix-bwrapper";
+    nix-mineral.url = "github:cynicsketch/nix-mineral/";
     steam-config-nix = {
       url = "github:different-name/steam-config-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -57,10 +58,6 @@
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-mineral = {
-      url = "github:cynicsketch/nix-mineral";
-      flake = false;
     };
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
@@ -111,7 +108,7 @@
       nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs outputs;
+            inherit inputs outputs nixvirt;
           };
           modules = [
             ./hosts/nixos/configuration.nix
@@ -138,7 +135,7 @@
         "${username}@nixos" = inputs.home-manager.lib.homeManagerConfiguration {
           inherit (self.nixosConfigurations.nixos) pkgs;
           extraSpecialArgs = {
-            inherit inputs outputs nixvirt;
+            inherit inputs outputs;
           };
           modules = [ ./hosts/nixos/home.nix ];
         };

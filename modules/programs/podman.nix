@@ -7,17 +7,12 @@
   virtualisation.podman = {
     enable = true;
     dockerCompat = false;
+    autoPrune.enable = true;
     defaultNetwork.settings.dns_enabled = true;
     extraPackages = with pkgs; [
       podman-compose
     ];
   };
 
-  environment.systemPackages = with pkgs; [
-    podman-compose
-  ];
-
-  users.users.${username}.extraGroups = [
-    "podman"
-  ];
+  users.users.${username}.extraGroups = [ "podman" ];
 }

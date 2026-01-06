@@ -1,4 +1,7 @@
-{ username, ... }:
+{
+  username,
+  ...
+}:
 {
   programs.adb.enable = true;
 
