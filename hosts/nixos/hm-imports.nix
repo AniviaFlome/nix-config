@@ -39,7 +39,6 @@
     ../../hm-modules/programs/thunderbird.nix
     ../../hm-modules/programs/tmenu.nix
     ../../hm-modules/programs/vicinae.nix
-    ../../hm-modules/programs/virtualization.nix
     ../../hm-modules/programs/vscode.nix
     ../../hm-modules/programs/yt-x.nix
     ../../hm-modules/programs/zed.nix

@@ -40,6 +40,13 @@
     gparted
     gpu-screen-recorder-gtk
     grsync
+    gst_all_1.gstreamer
+    gst_all_1.gst-vaapi
+    gst_all_1.gst-libav
+    gst_all_1.gst-plugins-bad
+    gst_all_1.gst-plugins-ugly
+    gst_all_1.gst-plugins-good
+    gst_all_1.gst-plugins-base
     heroic
     home-manager
     htop
@@ -59,6 +66,8 @@
     krita
     lazygit
     legendary-gl
+    libva
+    libva-utils
     lidarr
     livecaptions
     localsend

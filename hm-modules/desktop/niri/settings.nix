@@ -34,6 +34,17 @@
           bottom = 4;
         };
       };
+      recent-windows = {
+        debounce-ms = 500;
+        highlight = {
+          active-color = "#cba6f7";
+          urgent-color = "#f38ba8";
+        };
+        previews = {
+          max-height = 480;
+          max-scale = 0.3;
+        };
+      };
       input = {
         keyboard = {
           xkb.layout = "tr";
