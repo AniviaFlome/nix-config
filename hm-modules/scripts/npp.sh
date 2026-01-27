@@ -269,51 +269,57 @@ extract_nix_packages() {
 }
 
 select_nix_package_to_add() {
-  local selected raw clean pkg
+  local selected_lines
 
-  # fzf UI
-  selected="$(
+  # fzf UI with multi-select (Tab to select, Enter to confirm)
+  selected_lines="$(
     nix-search-tv print nixpkgs |
       fzf \
-        --prompt='Search nixpkgs package > ' \
+        --prompt='Search nixpkgs package (Tab=select, Enter=confirm) > ' \
         --preview 'nix-search-tv preview {}' \
         --border --reverse --ansi \
         --exact \
+        --multi \
+        --bind 'tab:toggle+down' \
         --tiebreak=begin,length
   )" || return 1
 
-  [ -z "$selected" ] && return 1
+  [ -z "$selected_lines" ] && return 1
 
-  # Extract first token-like part (before tab or pipe)
-  raw="${selected%%$'\t'*}"
-  raw="${raw%%|*}"
+  # Process each selected line
+  while IFS= read -r selected; do
+    [ -z "$selected" ] && continue
 
-  # --- Attribute Path Normalization ---
+    local raw clean pkg
 
-  # 1. Remove all spaces
-  raw="${raw//[[:space:]]/}"
+    # Extract first token-like part (before tab or pipe)
+    raw="${selected%%$'\t'*}"
+    raw="${raw%%|*}"
 
-  # 2. Convert slashes (path format) to dots (Nix attribute format)
-  clean="${raw//\//.}"
+    # --- Attribute Path Normalization ---
 
-  # 3. Strip the standard nixpkgs. prefix if present
-  clean="${clean#nixpkgs.}"
+    # 1. Remove all spaces
+    raw="${raw//[[:space:]]/}"
 
-  pkg="$clean"
+    # 2. Convert slashes (path format) to dots (Nix attribute format)
+    clean="${raw//\//.}"
 
-  # --- Generic Prefix Deduplication ---
-  local first_segment="${pkg%%.*}"
+    # 3. Strip the standard nixpkgs. prefix if present
+    clean="${clean#nixpkgs.}"
 
-  if [[ $pkg == "$first_segment.$first_segment."* ]]; then
-    pkg="${pkg#$first_segment.}"
-  fi
+    pkg="$clean"
 
-  if [[ -z $pkg ]]; then
-    msg_error "Invalid selection: '$selected' → parsed empty package name"
-    return 1
-  fi
+    # --- Generic Prefix Deduplication ---
+    local first_segment="${pkg%%.*}"
 
-  echo "$pkg"
+    if [[ $pkg == "$first_segment.$first_segment."* ]]; then
+      pkg="${pkg#$first_segment.}"
+    fi
+
+    if [[ -n $pkg ]]; then
+      echo "$pkg"
+    fi
+  done <<< "$selected_lines"
 }
 
 select_nix_package_to_remove() {
@@ -726,9 +732,9 @@ show_usage() {
   echo -e "${BOLD}npp${NC} — Nix Package Provider"
   echo ""
   echo "Usage:"
-  echo "  npp $CMD_NIX $CMD_ADD    [-s|--stable] [FILE]   Add a nixpkgs package"
-  echo "  npp $CMD_NIX $CMD_REMOVE [-s|--stable] [FILE]   Remove a nixpkgs package"
-  echo "  npp $CMD_NIX $CMD_STABLE $CMD_ADD  [FILE]       Add a stable nixpkgs package"
+  echo "  npp $CMD_NIX $CMD_ADD    [$CMD_STABLE] [FILE]   Add nixpkgs package(s) (multi-select with Tab)"
+  echo "  npp $CMD_NIX $CMD_REMOVE [$CMD_STABLE] [FILE]   Remove a nixpkgs package"
+  echo "  npp $CMD_NIX $CMD_STABLE $CMD_ADD  [FILE]       Add stable nixpkgs package(s)"
   echo "  npp $CMD_NIX $CMD_STABLE $CMD_REMOVE [FILE]     Remove a stable nixpkgs package"
   echo ""
   echo "  npp $CMD_FLATPAK $CMD_ADD    [FILE]             Add a Flatpak package"
@@ -750,7 +756,7 @@ nix_cmd_add() {
 
   while [ $# -gt 0 ]; do
     case "$1" in
-    -s | --stable)
+    "$CMD_STABLE" | "$CMD_STABLE_FULL")
       USE_STABLE=true
       NIX_PKG_PREFIX="$NIX_STABLE_PKG_PREFIX"
       ;;
@@ -776,14 +782,18 @@ nix_cmd_add() {
   check_nix_dependencies
   check_config_file "$file"
 
-  local pkg full_attr
-  if ! pkg="$(select_nix_package_to_add)"; then
+  local packages
+  if ! packages="$(select_nix_package_to_add)"; then
     msg_warn "No package selected."
     exit 0
   fi
 
-  full_attr="${NIX_PKG_PREFIX}.${pkg}"
-  add_nix_package "$file" "$full_attr"
+  # Process each selected package
+  while IFS= read -r pkg; do
+    [ -z "$pkg" ] && continue
+    local full_attr="${NIX_PKG_PREFIX}.${pkg}"
+    add_nix_package "$file" "$full_attr"
+  done <<< "$packages"
 }
 
 nix_cmd_remove() {
@@ -791,7 +801,7 @@ nix_cmd_remove() {
 
   while [ $# -gt 0 ]; do
     case "$1" in
-    -s | --stable)
+    "$CMD_STABLE" | "$CMD_STABLE_FULL")
       USE_STABLE=true
       NIX_PKG_PREFIX="$NIX_STABLE_PKG_PREFIX"
       ;;

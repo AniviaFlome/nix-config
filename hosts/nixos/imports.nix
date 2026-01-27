@@ -5,8 +5,6 @@
     # Gaming
     ../../modules/gaming/gamescope.nix
     ../../modules/gaming/gamemode.nix
-    ../../modules/gaming/prism-launcher.nix
-    ../../modules/gaming/retroarch.nix
     ../../modules/gaming/steam.nix
     # Packages
     # ../../modules/packages/bubblewrap.nix
@@ -14,7 +12,6 @@
     ../../modules/packages/pkgs-stable.nix
     ../../modules/packages/pkgs.nix
     # Programs
-    ../../modules/programs/adb.nix
     ../../modules/programs/docker.nix
     ../../modules/programs/kde-connect.nix
     ../../modules/programs/plasma.nix
@@ -38,7 +35,9 @@
     ../../modules/system/bootloader.nix
     ../../modules/system/cachy.nix
     ../../modules/system/display-manager.nix
+    ../../modules/system/dns.nix
     ../../modules/system/fonts.nix
+    ../../modules/system/kernel.nix
     ../../modules/system/locale.nix
     ../../modules/system/network.nix
     ../../modules/system/nh.nix

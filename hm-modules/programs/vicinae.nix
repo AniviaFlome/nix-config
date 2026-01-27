@@ -6,10 +6,6 @@
       autoStart = true;
     };
     settings = {
-      theme = {
-        name = "catppuccin-mocha";
-        iconTheme = "Catppuccin Mocha Mauve";
-      };
       window = {
         csd = true;
         opacity = 0.95;

@@ -19,12 +19,12 @@
     nix-webapps.url = "github:AniviaFlome/nix-webapps";
     nix-bwrapper.url = "github:Naxdy/nix-bwrapper";
     nix-mineral.url = "github:cynicsketch/nix-mineral/";
-    steam-config-nix = {
-      url = "github:different-name/steam-config-nix";
+    disko = {
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    zarumet = {
-      url = "github:Immelancholy/zarumet";
+    steam-config-nix = {
+      url = "github:different-name/steam-config-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvirt = {
@@ -96,11 +96,13 @@
       ];
       variables = (import ./misc/variables.nix)._module.args;
       inherit (variables) username;
+      myLib = import ./lib { inherit (nixpkgs) lib; };
       eachSystem = f: nixpkgs.lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
       treefmtEval = eachSystem (pkgs: inputs.treefmt-nix.lib.evalModule pkgs ./misc/treefmt.nix);
     in
     {
       formatter = eachSystem (pkgs: treefmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.wrapper);
+
       checks = eachSystem (pkgs: {
         formatting = treefmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.check self;
       });
@@ -108,13 +110,22 @@
       nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs outputs nixvirt;
+            inherit inputs outputs nixvirt myLib;
           };
           modules = [
             ./hosts/nixos/configuration.nix
             inputs.determinate.nixosModules.default
-            inputs.nixos-hardware.nixosModules.asus-fa507nv
             inputs.nur.modules.nixos.default
+          ];
+        };
+        vps = inputs.nixpkgs-stable.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs outputs username myLib;
+          };
+          system = "x86_64-linux";
+          modules = [
+            inputs.disko.nixosModules.disko
+            ./hosts/vps/configuration.nix
           ];
         };
         liveiso = nixpkgs.lib.nixosSystem {

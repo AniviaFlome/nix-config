@@ -18,11 +18,6 @@
         '';
       };
     };
-    kernelPackages = pkgs.linuxPackages_zen;
-    kernelParams = [
-      "video=1920x1080"
-      "rcutree.enable_rcu_lazy=1"
-    ];
   };
 
   environment.systemPackages = with pkgs; [

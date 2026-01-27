@@ -4,6 +4,7 @@
 }:
 let
   scripts = [
+    # Existing scripts
     "hyscript"
     "monitor-off"
     "npp"
@@ -11,6 +12,18 @@ let
     "soundtest"
     "stats"
     "winboot"
+    # Secrets management scripts
+    "create-system-key"
+    "deploy-pub-key"
+    "ensure-system-key-exists"
+    "extract-pub-key"
+    "generate-ssh-key"
+    "list-secrets"
+    "print-secret"
+    "remove-secret"
+    "secrets-menu"
+    "set-hashed-password"
+    "set-secret"
   ];
 in
 {
@@ -28,5 +41,14 @@ in
       lm_sensors
       nix-search-tv
       sysstat
+      whisper-cpp
+      age
+      jq
+      mkpasswd
+      openssh
+      sops
+      wl-clipboard
+      xdg-utils
+      yq-go
     ];
 }

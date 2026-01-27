@@ -28,6 +28,7 @@
     thunderbird.enable = true;
     tmux.enable = true;
     vesktop.enable = true;
+    vicinae.enable = true;
     vscode.profiles.default = {
       enable = true;
       icons.enable = true;

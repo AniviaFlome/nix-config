@@ -13,21 +13,9 @@
     walk = "filesystem";
     global.excludes = [
       "LICENSE"
-      "*.{gif,png,svg,tape,mts,lock,mod,sum,toml,env,envrc,gitignore,pages}"
+      "*.{gif,png,svg,tape,mts,lock,mod,sum,env,envrc,gitignore,pages}"
     ];
     formatter = {
-      nixfmt = {
-        priority = 1;
-      };
-      deadnix = {
-        priority = 2;
-      };
-      statix = {
-        priority = 3;
-      };
-      shfmt = {
-        priority = 4;
-      };
       prettier = {
         options = [
           "--tab-width"

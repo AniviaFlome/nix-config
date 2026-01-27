@@ -18,9 +18,9 @@
     sponsorblock
     steam-database
     stylus
+    ublock-origin
     user-agent-string-switcher
     violentmonkey
-    ublock-origin
   ];
 
   force = true;

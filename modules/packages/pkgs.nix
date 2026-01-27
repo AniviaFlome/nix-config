@@ -4,7 +4,7 @@
 }:
 {
   environment.systemPackages = with pkgs; [
-    android-translation-layer
+    android-tools
     ani-cli
     antimicrox
     anup
@@ -34,6 +34,8 @@
     fzf
     gdu
     gearlever
+    geteduroam
+    geteduroam-cli
     git
     glib
     google-antigravity
@@ -77,6 +79,7 @@
     mat2
     mcpelauncher-ui-qt
     micro
+    mindustry-wayland
     motrix
     mousam
     mpv
@@ -86,7 +89,6 @@
     nix-init
     nix-update
     nixd
-    nixfmt-rfc-style
     nixpkgs-review
     ntfs3g
     nur.repos.Ev357.helium
@@ -94,6 +96,7 @@
     nyaa
     obs-studio
     onlyoffice-desktopeditors
+    openanime-bin
     opencode
     opencommit
     openrct2
@@ -104,8 +107,10 @@
     pwvucontrol
     python3
     qbittorrent
+    rPackages.stranslate
     rclone
     redeclipse
+    retroarch
     riseup-vpn
     rsync
     ryubing
@@ -127,7 +132,7 @@
     textpieces
     thunderbird
     torrra
-    treefmt
+    turkanime-cli
     umu-launcher
     upscayl
     vlc

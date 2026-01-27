@@ -8,7 +8,7 @@
     package = pkgs.stable.ollama-cuda;
     openFirewall = false;
     loadModels = [
-      "mistral"
+      "gemma3n:e4b"
     ];
   };
 }

@@ -1,6 +1,8 @@
+{ lib, ... }:
 {
   services.glances = {
-    enable = true;
-    openFirewall = true;
+    enable = lib.mkDefault true;
+    openFirewall = lib.mkDefault false; # Managed by Traefik
+    port = 61208;
   };
 }

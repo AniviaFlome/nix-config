@@ -30,18 +30,33 @@
         [
           "com.github.tchx84.Flatseal"
           "com.pokemmo.PokeMMO"
-          "com.pot_app.pot"
           "com.stremio.Stremio"
           "com.rustdesk.RustDesk"
           "com.usebottles.bottles"
           "io.github.astralvixen.geforce-infinity"
+          "io.github.chidiwilliams.Buzz"
           "io.github.giantpinkrobots.flatsweep"
           "io.github.giantpinkrobots.varia"
           "io.github.Soundux"
           "org.vinegarhq.Sober"
           "sh.fhs.ksre"
           "tw.ddnet.ddnet"
-        ];
+        ]
+      ++ [
+        (
+          let
+            sha256 = "1v153k3vns64axybkd08r63jrcj8csqks5777bncyw1rpn6rflpn";
+          in
+          {
+            appId = "com.hypixel.HytaleLauncher";
+            inherit sha256;
+            bundle = builtins.fetchurl {
+              url = "https://launcher.hytale.com/builds/release/linux/amd64/hytale-launcher-latest.flatpak";
+              inherit sha256;
+            };
+          }
+        )
+      ];
     overrides = {
       global = {
         Context = {
