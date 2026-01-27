@@ -33,11 +33,11 @@ trap 'rm -f "$TMP_KEY"' EXIT
 
 # Extract private key
 echo "Extracting '$KEY_NAME' from '$SOPS_FILE'..."
-print-secret "$KEY_NAME" "$SOPS_FILE" > "$TMP_KEY"
+print-secret "$KEY_NAME" "$SOPS_FILE" >"$TMP_KEY"
 
 if [ ! -s "$TMP_KEY" ]; then
-    echo "Error: Failed to extract key '$KEY_NAME' from '$SOPS_FILE' or key is empty."
-    exit 1
+  echo "Error: Failed to extract key '$KEY_NAME' from '$SOPS_FILE' or key is empty."
+  exit 1
 fi
 
 # Generate public key
@@ -46,16 +46,16 @@ echo
 PUB_KEY=$(ssh-keygen -y -f "$TMP_KEY")
 
 if [ $? -eq 0 ] && [ -n "$PUB_KEY" ]; then
-    echo "Public key:"
-    echo "$PUB_KEY"
-    echo
-    
-    # Copy to clipboard if wl-copy is available
-    if command -v wl-copy &> /dev/null; then
-        echo "$PUB_KEY" | wl-copy
-        echo "Public key copied to clipboard."
-    fi
+  echo "Public key:"
+  echo "$PUB_KEY"
+  echo
+
+  # Copy to clipboard if wl-copy is available
+  if command -v wl-copy &>/dev/null; then
+    echo "$PUB_KEY" | wl-copy
+    echo "Public key copied to clipboard."
+  fi
 else
-    echo "Error: Failed to extract public key."
-    exit 1
+  echo "Error: Failed to extract public key."
+  exit 1
 fi

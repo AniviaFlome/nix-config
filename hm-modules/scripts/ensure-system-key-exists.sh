@@ -69,11 +69,11 @@ if @age@ --decrypt --output "$TMP_KEY" "$AGE_FILE"; then
   # Check if key exists and compares
   if [ -f "$SYSTEM_KEY_FILE" ]; then
     if cmp -s "$TMP_KEY" "$SYSTEM_KEY_FILE" && [ "$FORCE" = false ]; then
-        printf "${GREEN}✓ System master key is already up to date at $SYSTEM_KEY_FILE${NC}\n"
-        rm -f "$TMP_KEY"
-        exit 0
+      printf "${GREEN}✓ System master key is already up to date at $SYSTEM_KEY_FILE${NC}\n"
+      rm -f "$TMP_KEY"
+      exit 0
     else
-        printf "${YELLOW_BOLD}System key differs or force enabled. Updating $SYSTEM_KEY_FILE...${NC}\n"
+      printf "${YELLOW_BOLD}System key differs or force enabled. Updating $SYSTEM_KEY_FILE...${NC}\n"
     fi
   else
     printf "${CYAN}Installing master key to system location ($SYSTEM_KEY_FILE)...${NC}\n"

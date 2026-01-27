@@ -319,7 +319,7 @@ select_nix_package_to_add() {
     if [[ -n $pkg ]]; then
       echo "$pkg"
     fi
-  done <<< "$selected_lines"
+  done <<<"$selected_lines"
 }
 
 select_nix_package_to_remove() {
@@ -793,7 +793,7 @@ nix_cmd_add() {
     [ -z "$pkg" ] && continue
     local full_attr="${NIX_PKG_PREFIX}.${pkg}"
     add_nix_package "$file" "$full_attr"
-  done <<< "$packages"
+  done <<<"$packages"
 }
 
 nix_cmd_remove() {

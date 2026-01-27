@@ -40,7 +40,7 @@ fi
 # Use a temp file for ssh-copy-id
 # ssh-copy-id often requires the file to end in .pub
 TMP_PUB=$(mktemp --suffix=.pub)
-echo "$PUB_KEY" > "$TMP_PUB"
+echo "$PUB_KEY" >"$TMP_PUB"
 
 # Cleanup on exit
 trap 'rm -f "$TMP_PUB"' EXIT

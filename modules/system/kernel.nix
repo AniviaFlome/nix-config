@@ -8,7 +8,7 @@
     kernelModules = [
       "binder_linux"
     ];
-    kernelParams = [ 
+    kernelParams = [
 
     ];
   };

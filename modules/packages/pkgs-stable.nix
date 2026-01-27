@@ -7,7 +7,6 @@
     joplin-desktop
     kdePackages.kdenlive
     normcap
-    pokerth
     rpcs3
   ];
 }

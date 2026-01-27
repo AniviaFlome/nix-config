@@ -110,7 +110,12 @@
       nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs outputs nixvirt myLib;
+            inherit
+              inputs
+              outputs
+              nixvirt
+              myLib
+              ;
           };
           modules = [
             ./hosts/nixos/configuration.nix
@@ -120,7 +125,12 @@
         };
         vps = inputs.nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
-            inherit inputs outputs username myLib;
+            inherit
+              inputs
+              outputs
+              username
+              myLib
+              ;
           };
           system = "x86_64-linux";
           modules = [

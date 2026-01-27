@@ -183,7 +183,7 @@
       location = {
         name = "Beytepe, Turkey";
         weatherEnabled = true;
-        firstDayOfWeek = -1;
+        firstDayOfWeek = 1;
         monthBeforeDay = false;
         showCalendarEvents = true;
         showCalendarWeather = true;

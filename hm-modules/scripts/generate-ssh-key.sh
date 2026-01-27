@@ -56,27 +56,27 @@ if [ "$METHOD" == "Generate New Key" ]; then
   ssh-keygen -t ed25519 -f "$KEY_FILE" -N "$PASSPHRASE" -C "$COMMENT"
 else
   echo "Paste your private key below:"
-  gum write --placeholder "Paste Private Key Here" > "$KEY_FILE"
-  
+  gum write --placeholder "Paste Private Key Here" >"$KEY_FILE"
+
   # Ensure strict permissions
   chmod 600 "$KEY_FILE"
 
   # Ensure trailing newline (ssh-keygen requires it)
   if [ -n "$(tail -c1 "$KEY_FILE")" ]; then
-    echo >> "$KEY_FILE"
+    echo >>"$KEY_FILE"
   fi
-  
+
   # Validate key
   echo "Validating key..."
-  if ! ssh-keygen -y -f "$KEY_FILE" > /dev/null; then
-     echo "Error: Invalid SSH private key."
-     exit 1
+  if ! ssh-keygen -y -f "$KEY_FILE" >/dev/null; then
+    echo "Error: Invalid SSH private key."
+    exit 1
   fi
 fi
 
 # Encode to JSON string for sops --set
 # Use jq -Rs . to read the file preserving newlines
-JSON_VALUE=$(jq --raw-input --slurp . < "$KEY_FILE")
+JSON_VALUE=$(jq --raw-input --slurp . <"$KEY_FILE")
 
 echo "Storing private key in secrets.yaml..."
 sops --set '["sshPrivKey"] '"$JSON_VALUE" "$SOPS_FILE"

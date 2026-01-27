@@ -1,8 +1,8 @@
-{ config, lib, pkgs, ... }:
+{ lib, ... }:
 {
   services.traefik = {
     enable = lib.mkDefault true;
-    
+
     staticConfigOptions = {
       entryPoints = {
         web = {
@@ -36,14 +36,14 @@
             service = "glances";
             entryPoints = [ "websecure" ];
           };
-          
+
           # FreshRSS
           freshrss = {
             rule = "Host(`rss.example.com`)"; # Change to your domain
             service = "freshrss";
             entryPoints = [ "websecure" ];
           };
-          
+
           # Coolify
           coolify = {
             rule = "Host(`coolify.example.com`)"; # Change to your domain
@@ -64,11 +64,11 @@
           glances.loadBalancer.servers = [
             { url = "http://localhost:61208"; }
           ];
-          
+
           freshrss.loadBalancer.servers = [
             { url = "http://localhost:8080"; }
           ];
-          
+
           coolify.loadBalancer.servers = [
             { url = "http://localhost:8000"; }
           ];
@@ -86,7 +86,10 @@
   };
 
   # Open HTTP and HTTPS ports
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
 
   # Create acme.json with correct permissions
   systemd.tmpfiles.rules = [

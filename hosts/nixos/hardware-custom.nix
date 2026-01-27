@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   inputs,
   username,
@@ -16,7 +15,7 @@
     inputs.nixos-hardware.nixosModules.common-hidpi
     inputs.nixos-hardware.nixosModules.asus-battery
   ];
-  
+
   zramSwap = {
     enable = true;
     memoryPercent = 100;
@@ -31,7 +30,7 @@
   # https://community.frame.work/t/responded-amd-7040-sleep-states/38101/13
   services.power-profiles-daemon.enable = true;
 
-  boot.kernelParams = [ 
+  boot.kernelParams = [
     "rcutree.enable_rcu_lazy=1"
     "rtc_cmos.use_acpi_alarm=1"
     "video=1920x1080"
@@ -52,8 +51,8 @@
 
   hardware.openrazer = {
     enable = true;
-    users = [ 
-      "${username}" 
+    users = [
+      "${username}"
     ];
   };
 

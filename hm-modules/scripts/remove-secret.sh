@@ -38,11 +38,11 @@ fi
 # Confirm removal
 if gum confirm "Are you sure you want to remove '$KEY_NAME'?"; then
   echo "Removing secret '$KEY_NAME'..."
-  
+
   # Use yq to delete key via sops edit mechanism
   export EDITOR="yq --inplace 'del(.[\"$KEY_NAME\"])'"
   sops edit "$SOPS_FILE"
-  
+
   echo "Secret '$KEY_NAME' removed."
 else
   echo "Cancelled."
