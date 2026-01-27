@@ -20,13 +20,13 @@
         ";
         init_hooks = "
           paru -S --needed --noconfirm \
-          torrra
+
         ";
         exported_apps = "
 
         ";
         exported_bins = "
-          torrra
+
         ";
       };
     };

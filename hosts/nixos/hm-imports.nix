@@ -3,8 +3,8 @@
     # Flake-Misc
     ../../misc/variables.nix
     # Desktop
-    ../../hm-modules/desktop/niri/default.nix
-    ../../hm-modules/desktop/plasma.nix
+    ../../hm-modules/desktop/niri
+    ../../hm-modules/desktop/plasma
     # Misc
     ../../hm-modules/misc/nix.nix
     ../../hm-modules/misc/sops-nix.nix
@@ -15,8 +15,8 @@
     ../../hm-modules/programs/atuin.nix
     ../../hm-modules/programs/bash.nix
     ../../hm-modules/programs/distrobox.nix
-    ../../hm-modules/programs/easyeffects/default.nix
-    ../../hm-modules/programs/fastfetch/default.nix
+    ../../hm-modules/programs/easyeffects
+    ../../hm-modules/programs/fastfetch
     ../../hm-modules/programs/fish.nix
     ../../hm-modules/programs/git.nix
     ../../hm-modules/programs/kate.nix
@@ -35,18 +35,18 @@
     ../../hm-modules/programs/ripgrep.nix
     ../../hm-modules/programs/spicetify.nix
     ../../hm-modules/programs/starship.nix
+    ../../hm-modules/programs/steam.nix
     ../../hm-modules/programs/thunderbird.nix
     ../../hm-modules/programs/tmenu.nix
     ../../hm-modules/programs/vicinae.nix
-    ../../hm-modules/programs/virtualization.nix
     ../../hm-modules/programs/vscode.nix
     ../../hm-modules/programs/yt-x.nix
     ../../hm-modules/programs/zed.nix
-    ../../hm-modules/programs/zen-browser/default.nix
+    ../../hm-modules/programs/zen-browser
     ../../hm-modules/programs/zoxide.nix
     # Scripts
-    ../../hm-modules/scripts/default.nix
+    ../../hm-modules/scripts
     # Theme
-    ../../hm-modules/theme/default.nix
+    ../../hm-modules/theme
   ];
 }

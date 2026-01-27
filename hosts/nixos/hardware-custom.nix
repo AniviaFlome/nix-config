@@ -25,7 +25,7 @@
     };
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   hardware.openrazer = {
@@ -33,5 +33,7 @@
     users = [ "${username}" ];
   };
 
-  environment.systemPackages = with pkgs.stable; [ polychromatic ];
+  environment.systemPackages = with pkgs.stable; [
+    polychromatic
+  ];
 }

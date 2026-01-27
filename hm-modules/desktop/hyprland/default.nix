@@ -5,7 +5,9 @@
   ...
 }:
 {
-  imports = [ ./caelestia.nix ];
+  imports = [
+    ../common/caelestia.nix
+  ];
 
   wayland.windowManager.hyprland = {
     enable = true;

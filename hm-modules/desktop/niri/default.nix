@@ -5,12 +5,12 @@
 }:
 {
   imports = [
-    inputs.niri.homeModules.config
+    inputs.niri.homeModules.niri
     ./autostart.nix
-    ./noctalia.nix
     ./settings.nix
     ./keybinds.nix
-    ../hyprland/hypridle.nix
+    ../common/hypridle.nix
+    ../common/noctalia.nix
   ];
 
   home.packages = with pkgs; [

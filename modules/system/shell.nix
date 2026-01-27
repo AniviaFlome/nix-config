@@ -4,5 +4,6 @@
 }:
 {
   programs.fish.enable = true;
-  users.defaultUserShell = with pkgs; fish;
+
+  users.defaultUserShell = pkgs.fish;
 }

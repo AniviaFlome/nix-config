@@ -21,6 +21,4 @@
       faviconService = "twenty";
     };
   };
-
-  xdg.configFile."vicinae/vicinae.json".force = true;
 }
