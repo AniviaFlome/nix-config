@@ -5,12 +5,12 @@
 {
   packages = with pkgs.firefox-addons; [
     augmented-steam
+    bitwarden
     buster-captcha-solver
     clearurls
     darkreader
     jump-cutter
     languagetool
-    proton-pass
     protondb-for-steam
     return-youtube-dislikes
     search-by-image

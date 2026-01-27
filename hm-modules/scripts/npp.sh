@@ -5,14 +5,30 @@ set -euo pipefail
 # Configuration
 # ============================================================================
 
-PKG_PREFIX="pkgs"
-CONFIG_FILENAME="pkgs.nix"
-STABLE_PKG_PREFIX="pkgs.stable"
-STABLE_CONFIG_FILENAME="pkgs-stable.nix"
+# Command aliases (configurable)
+CMD_ADD="a"                # Short alias for add
+CMD_ADD_FULL="add"         # Full command for add
+CMD_REMOVE="r"             # Short alias for remove
+CMD_REMOVE_FULL="remove"   # Full command for remove
+CMD_NIX="n"                # Short alias for nix
+CMD_NIX_FULL="nix"         # Full command for nix
+CMD_FLATPAK="f"            # Short alias for flatpak
+CMD_FLATPAK_FULL="flatpak" # Full command for flatpak
+CMD_STABLE="s"             # Short alias for stable
+CMD_STABLE_FULL="stable"   # Full command for stable
+
+# Nix package configuration
+NIX_PKG_PREFIX="pkgs"
+NIX_CONFIG_FILENAME="pkgs.nix"
+NIX_STABLE_PKG_PREFIX="pkgs.stable"
+NIX_STABLE_CONFIG_FILENAME="pkgs-stable.nix"
 USE_STABLE=false
 
+# Flatpak configuration
+FLATPAK_CONFIG_FILENAME="flatpak.nix"
+
 DEFAULT_DIR="${HOME}/nix-config"
-BACKUP_DIR="${XDG_STATE_HOME}/nix-pkgs-backups"
+BACKUP_DIR="${XDG_STATE_HOME}/npp-backups"
 MAX_BACKUPS=14
 
 # ============================================================================
@@ -106,7 +122,7 @@ confirm_and_apply() {
 }
 
 # ============================================================================
-# Flake Root Detection + pkgs.nix discovery (recursive)
+# Flake Root Detection + Config File Discovery (recursive)
 # ============================================================================
 find_flake_root() {
   local dir="$PWD"
@@ -149,19 +165,32 @@ find_single_file() {
   echo "${matches[0]}"
 }
 
-DEFAULT_CONFIG="$(find_single_file "$CONFIG_FILENAME")"
-DEFAULT_CONFIG_STABLE="$(find_single_file "$STABLE_CONFIG_FILENAME")"
+# Nix config files
+NIX_DEFAULT_CONFIG="$(find_single_file "$NIX_CONFIG_FILENAME")"
+NIX_DEFAULT_CONFIG_STABLE="$(find_single_file "$NIX_STABLE_CONFIG_FILENAME")"
 
-[ -z "$DEFAULT_CONFIG" ] && msg_error "No $CONFIG_FILENAME found under flake root." && exit 1
-[ -z "$DEFAULT_CONFIG_STABLE" ] && msg_warn "$STABLE_CONFIG_FILENAME not found (stable mode will only work with explicit file)."
+# Flatpak config file
+FLATPAK_DEFAULT_CONFIG="$(find_single_file "$FLATPAK_CONFIG_FILENAME")"
 
 # ============================================================================
 # Validation
 # ============================================================================
-check_dependencies() {
+check_nix_dependencies() {
   local missing=()
   command -v fzf >/dev/null || missing+=("fzf")
   command -v nix-search-tv >/dev/null || missing+=("nix-search-tv")
+  command -v nix-instantiate >/dev/null || missing+=("nix-instantiate")
+
+  if [ ${#missing[@]} -ne 0 ]; then
+    msg_error "Missing dependencies: ${missing[*]}"
+    exit 1
+  fi
+}
+
+check_flatpak_dependencies() {
+  local missing=()
+  command -v fzf >/dev/null || missing+=("fzf")
+  command -v flatpak >/dev/null || missing+=("flatpak")
   command -v nix-instantiate >/dev/null || missing+=("nix-instantiate")
 
   if [ ${#missing[@]} -ne 0 ]; then
@@ -182,18 +211,17 @@ check_config_file() {
 }
 
 # ============================================================================
-# Parsing
+# Nix Package Functions
 # ============================================================================
-get_package_name() {
-  # strip current PKG_PREFIX (pkgs or pkgs.stable) from attr path
-  echo "$1" | sed "s/^${PKG_PREFIX}\.//"
+
+get_nix_package_name() {
+  echo "$1" | sed "s/^${NIX_PKG_PREFIX}\.//"
 }
 
-# Extract bare package names from environment.systemPackages list
-extract_packages() {
+extract_nix_packages() {
   local file="$1"
 
-  awk -v stable_prefix="$STABLE_PKG_PREFIX" '
+  awk -v stable_prefix="$NIX_STABLE_PKG_PREFIX" '
     BEGIN { in_env=0; in_list=0 }
 
     /environment\.systemPackages/ {
@@ -240,10 +268,7 @@ extract_packages() {
     ' "$file"
 }
 
-# ============================================================================
-# nix-search-tv based selection (fzf)
-# ============================================================================
-select_package_to_add() {
+select_nix_package_to_add() {
   local selected raw clean pkg
 
   # fzf UI
@@ -260,7 +285,6 @@ select_package_to_add() {
   [ -z "$selected" ] && return 1
 
   # Extract first token-like part (before tab or pipe)
-  # This strips descriptions and metadata that FZF often includes after the package path.
   raw="${selected%%$'\t'*}"
   raw="${raw%%|*}"
 
@@ -278,15 +302,9 @@ select_package_to_add() {
   pkg="$clean"
 
   # --- Generic Prefix Deduplication ---
-  # This fixes issues like 'nur.nur.repos...' or 'gnome.gnome.terminal'
-  # where the top-level package set name is duplicated in the attribute path.
-
-  # Extract the first segment (e.g., 'nur' or 'gnome')
   local first_segment="${pkg%%.*}"
 
-  # Check if the remaining string immediately starts with the same segment again
   if [[ $pkg == "$first_segment.$first_segment."* ]]; then
-    # Strip the first instance of the duplicate prefix and the trailing dot
     pkg="${pkg#$first_segment.}"
   fi
 
@@ -298,10 +316,10 @@ select_package_to_add() {
   echo "$pkg"
 }
 
-select_package_to_remove() {
+select_nix_package_to_remove() {
   local file="$1"
 
-  extract_packages "$file" |
+  extract_nix_packages "$file" |
     fzf \
       --prompt='Select package to remove > ' \
       --border --reverse --ansi \
@@ -309,10 +327,7 @@ select_package_to_remove() {
       --tiebreak=begin,length
 }
 
-# ============================================================================
-# Add (alphabetical, respects with pkgs / with pkgs.stable)
-# ============================================================================
-add_package() {
+add_nix_package() {
   local file="$1"
   local attr="$2"
 
@@ -322,7 +337,7 @@ add_package() {
   fi
 
   local bare
-  bare="$(get_package_name "$attr")"
+  bare="$(get_nix_package_name "$attr")"
 
   # crude duplicate guard (by bare name)
   if grep -q "\\b$bare\\b" "$file"; then
@@ -330,11 +345,11 @@ add_package() {
     exit 0
   fi
 
-  local prefItem="$PKG_PREFIX.$bare"
+  local prefItem="$NIX_PKG_PREFIX.$bare"
   local temp
   temp="$(mktemp)"
 
-  awk -v bare="$bare" -v prefItem="$prefItem" -v stable_prefix="$STABLE_PKG_PREFIX" '
+  awk -v bare="$bare" -v prefItem="$prefItem" -v stable_prefix="$NIX_STABLE_PKG_PREFIX" '
         BEGIN { in_env=0; in_list=0; inserted=0; use_bare=0 }
 
         /environment\.systemPackages/ {
@@ -411,10 +426,7 @@ add_package() {
   confirm_and_apply "$file" "$temp"
 }
 
-# ============================================================================
-# Remove
-# ============================================================================
-remove_package() {
+remove_nix_package() {
   local file="$1"
   local pkg="$2"
 
@@ -426,7 +438,7 @@ remove_package() {
   local temp
   temp="$(mktemp)"
 
-  awk -v target="$pkg" -v stable_prefix="$STABLE_PKG_PREFIX" '
+  awk -v target="$pkg" -v stable_prefix="$NIX_STABLE_PKG_PREFIX" '
         BEGIN { in_env=0; in_list=0 }
 
         /environment\.systemPackages/ {
@@ -489,26 +501,258 @@ remove_package() {
 }
 
 # ============================================================================
-# Usage
+# Flatpak Package Functions
 # ============================================================================
-show_usage() {
-  echo -e "${BOLD}nix-pkgs${NC} — Add packages easily to your config"
-  echo "Usage:"
-  echo "  nix-pkgs add    [--stable] [FILE]"
-  echo "  nix-pkgs remove [--stable] [FILE]"
+
+extract_flatpak_packages() {
+  local file="$1"
+
+  awk '
+    BEGIN { in_packages=0; in_list=0 }
+
+    /services\.flatpak\.packages/ || /packages[[:space:]]*=/ {
+        in_packages=1
+        next
+    }
+
+    in_packages && !in_list && index($0, "[") > 0 {
+        in_list=1
+        next
+    }
+
+    in_list {
+        line=$0
+        stripped=line
+        gsub(/^[ \t]+/, "", stripped)
+        gsub(/[ \t]+$/, "", stripped)
+
+        # closing bracket
+        if (stripped ~ /^\];?$/ || stripped ~ /^\];/ || stripped ~ /^\]/) {
+            in_list=0
+            exit
+        }
+
+        if (stripped == "" || stripped ~ /^#/ || index(stripped, "[") > 0) {
+            next
+        }
+
+        pkg=stripped
+        gsub(/"/, "", pkg) # Remove quotes
+        if (pkg != "") print pkg
+        next
+    }
+    ' "$file"
+}
+
+select_flatpak_to_add() {
+  local selected app_id
+
+  # Use flatpak search and format output for fzf
+  selected="$(flatpak search "" --columns=application,name,description |
+    awk -F'\t' '{printf "%s | %s - %s\n", $1, $2, $3}' |
+    fzf --prompt='Search Flatpak > ' \
+      --border --reverse --ansi \
+      --exact \
+      --tiebreak=begin,length \
+      --with-nth=2.. \
+      --delimiter='\|')" || return 1
+
+  [ -z "$selected" ] && return 1
+
+  # Extract Application ID (first column)
+  app_id="$(echo "$selected" | awk -F' | ' '{print $1}')"
+
+  # Trim whitespace
+  app_id="${app_id//[[:space:]]/}"
+
+  if [[ -z $app_id ]]; then
+    msg_error "Invalid selection: '$selected' → parsed empty application ID"
+    return 1
+  fi
+
+  echo "$app_id"
+}
+
+select_flatpak_to_remove() {
+  local file="$1"
+
+  extract_flatpak_packages "$file" |
+    fzf \
+      --prompt='Select Flatpak to remove > ' \
+      --border --reverse --ansi \
+      --exact \
+      --tiebreak=begin,length
+}
+
+add_flatpak_package() {
+  local file="$1"
+  local app_id="$2"
+
+  if ! grep -qE "services\.flatpak\.packages|packages[[:space:]]*=" "$file"; then
+    msg_error "services.flatpak.packages block missing — abort."
+    exit 1
+  fi
+
+  # Check if already exists
+  if grep -q "\"$app_id\"" "$file"; then
+    msg_warn "Already exists: $app_id"
+    exit 0
+  fi
+
+  local temp
+  temp="$(mktemp)"
+
+  awk -v app_id="$app_id" '
+        BEGIN { in_packages=0; in_list=0; inserted=0 }
+
+        /services\.flatpak\.packages/ || /packages[[:space:]]*=/ {
+            in_packages=1
+            print
+            next
+        }
+
+        in_packages && !in_list && index($0, "[") > 0 {
+            in_list=1
+            print
+            next
+        }
+
+        in_list {
+            line=$0
+            stripped=line
+            gsub(/^[ \t]+/, "", stripped)
+            gsub(/[ \t]+$/, "", stripped)
+
+            is_closing = (stripped ~ /^\];?$/ || stripped ~ /^\];/ || stripped ~ /^\]/)
+            is_item = (stripped != "" && stripped !~ /^#/ && index(stripped, "[") == 0 && !is_closing)
+
+            if (is_item && !inserted) {
+                cur=stripped
+                gsub(/"/, "", cur)
+                if (app_id < cur) {
+                    print "          \"" app_id "\""
+                    inserted=1
+                }
+            }
+
+            if (is_closing && !inserted) {
+                print "          \"" app_id "\""
+                inserted=1
+            }
+
+            print line
+
+            if (is_closing) {
+                in_list=0
+                in_packages=0
+            }
+            next
+        }
+
+        { print }
+    ' "$file" >"$temp"
+
+  confirm_and_apply "$file" "$temp"
+}
+
+remove_flatpak_package() {
+  local file="$1"
+  local pkg="$2"
+
+  if ! grep -qE "services\.flatpak\.packages|packages[[:space:]]*=" "$file"; then
+    msg_error "services.flatpak.packages block missing — abort."
+    exit 1
+  fi
+
+  local temp
+  temp="$(mktemp)"
+
+  awk -v target="$pkg" '
+        BEGIN { in_packages=0; in_list=0 }
+
+        /services\.flatpak\.packages/ || /packages[[:space:]]*=/ {
+            in_packages=1
+            print
+            next
+        }
+
+        in_packages && !in_list && index($0, "[") > 0 {
+            in_list=1
+            print
+            next
+        }
+
+        in_list {
+            line=$0
+            stripped=line
+            gsub(/^[ \t]+/, "", stripped)
+            gsub(/[ \t]+$/, "", stripped)
+
+            is_closing = (stripped ~ /^\];?$/ || stripped ~ /^\];/ || stripped ~ /^\]/)
+            is_item = (stripped != "" && stripped !~ /^#/ && index(stripped, "[") == 0 && !is_closing)
+
+            if (is_item) {
+                cur=stripped
+                gsub(/"/, "", cur)
+                if (cur == target) {
+                    # skip this line
+                    if (is_closing) {
+                        in_list=0
+                        in_packages=0
+                    }
+                    next
+                }
+            }
+
+            print line
+
+            if (is_closing) {
+                in_list=0
+                in_packages=0
+            }
+            next
+        }
+
+        { print }
+    ' "$file" >"$temp"
+
+  confirm_and_apply "$file" "$temp"
 }
 
 # ============================================================================
-# Commands
+# Usage
 # ============================================================================
-cmd_add() {
+show_usage() {
+  echo -e "${BOLD}npp${NC} — Nix Package Provider"
+  echo ""
+  echo "Usage:"
+  echo "  npp $CMD_NIX $CMD_ADD    [-s|--stable] [FILE]   Add a nixpkgs package"
+  echo "  npp $CMD_NIX $CMD_REMOVE [-s|--stable] [FILE]   Remove a nixpkgs package"
+  echo "  npp $CMD_NIX $CMD_STABLE $CMD_ADD  [FILE]       Add a stable nixpkgs package"
+  echo "  npp $CMD_NIX $CMD_STABLE $CMD_REMOVE [FILE]     Remove a stable nixpkgs package"
+  echo ""
+  echo "  npp $CMD_FLATPAK $CMD_ADD    [FILE]             Add a Flatpak package"
+  echo "  npp $CMD_FLATPAK $CMD_REMOVE [FILE]             Remove a Flatpak package"
+  echo ""
+  echo "Aliases:"
+  echo "  $CMD_NIX/$CMD_NIX_FULL = nix packages (unstable)"
+  echo "  $CMD_NIX $CMD_STABLE/$CMD_STABLE_FULL = nix packages (stable)"
+  echo "  $CMD_FLATPAK/$CMD_FLATPAK_FULL = flatpak packages"
+  echo "  $CMD_ADD/$CMD_ADD_FULL = add package"
+  echo "  $CMD_REMOVE/$CMD_REMOVE_FULL = remove package"
+}
+
+# ============================================================================
+# Nix Commands
+# ============================================================================
+nix_cmd_add() {
   local file=""
 
   while [ $# -gt 0 ]; do
     case "$1" in
     -s | --stable)
       USE_STABLE=true
-      PKG_PREFIX="$STABLE_PKG_PREFIX"
+      NIX_PKG_PREFIX="$NIX_STABLE_PKG_PREFIX"
       ;;
     -h | --help)
       show_usage
@@ -520,34 +764,36 @@ cmd_add() {
   done
 
   if [ -z "${file:-}" ]; then
-    if [ "$USE_STABLE" = true ] && [ -n "$DEFAULT_CONFIG_STABLE" ]; then
-      file="$DEFAULT_CONFIG_STABLE"
+    if [ "$USE_STABLE" = true ] && [ -n "$NIX_DEFAULT_CONFIG_STABLE" ]; then
+      file="$NIX_DEFAULT_CONFIG_STABLE"
     else
-      file="$DEFAULT_CONFIG"
+      file="$NIX_DEFAULT_CONFIG"
     fi
   fi
 
-  check_dependencies
+  [ -z "$file" ] && msg_error "No $NIX_CONFIG_FILENAME found under flake root." && exit 1
+
+  check_nix_dependencies
   check_config_file "$file"
 
   local pkg full_attr
-  if ! pkg="$(select_package_to_add)"; then
+  if ! pkg="$(select_nix_package_to_add)"; then
     msg_warn "No package selected."
     exit 0
   fi
 
-  full_attr="${PKG_PREFIX}.${pkg}"
-  add_package "$file" "$full_attr"
+  full_attr="${NIX_PKG_PREFIX}.${pkg}"
+  add_nix_package "$file" "$full_attr"
 }
 
-cmd_remove() {
+nix_cmd_remove() {
   local file=""
 
   while [ $# -gt 0 ]; do
     case "$1" in
     -s | --stable)
       USE_STABLE=true
-      PKG_PREFIX="$STABLE_PKG_PREFIX"
+      NIX_PKG_PREFIX="$NIX_STABLE_PKG_PREFIX"
       ;;
     -h | --help)
       show_usage
@@ -559,38 +805,161 @@ cmd_remove() {
   done
 
   if [ -z "${file:-}" ]; then
-    if [ "$USE_STABLE" = true ] && [ -n "$DEFAULT_CONFIG_STABLE" ]; then
-      file="$DEFAULT_CONFIG_STABLE"
+    if [ "$USE_STABLE" = true ] && [ -n "$NIX_DEFAULT_CONFIG_STABLE" ]; then
+      file="$NIX_DEFAULT_CONFIG_STABLE"
     else
-      file="$DEFAULT_CONFIG"
+      file="$NIX_DEFAULT_CONFIG"
     fi
   fi
 
-  check_dependencies
+  [ -z "$file" ] && msg_error "No $NIX_CONFIG_FILENAME found under flake root." && exit 1
+
+  check_nix_dependencies
   check_config_file "$file"
 
   local pkg
-  pkg="$(select_package_to_remove "$file" || true)"
+  pkg="$(select_nix_package_to_remove "$file" || true)"
   [ -z "$pkg" ] && msg_warn "No package selected." && exit 0
 
-  remove_package "$file" "$pkg"
+  remove_nix_package "$file" "$pkg"
 }
 
+# ============================================================================
+# Flatpak Commands
+# ============================================================================
+flatpak_cmd_add() {
+  local file=""
+
+  while [ $# -gt 0 ]; do
+    case "$1" in
+    -h | --help)
+      show_usage
+      exit 0
+      ;;
+    *) file="$1" ;;
+    esac
+    shift
+  done
+
+  if [ -z "${file:-}" ]; then
+    file="$FLATPAK_DEFAULT_CONFIG"
+  fi
+
+  [ -z "$file" ] && msg_error "No $FLATPAK_CONFIG_FILENAME found under flake root." && exit 1
+
+  check_flatpak_dependencies
+  check_config_file "$file"
+
+  local app_id
+  if ! app_id="$(select_flatpak_to_add)"; then
+    msg_warn "No flatpak selected."
+    exit 0
+  fi
+  add_flatpak_package "$file" "$app_id"
+}
+
+flatpak_cmd_remove() {
+  local file=""
+
+  while [ $# -gt 0 ]; do
+    case "$1" in
+    -h | --help)
+      show_usage
+      exit 0
+      ;;
+    *) file="$1" ;;
+    esac
+    shift
+  done
+
+  if [ -z "${file:-}" ]; then
+    file="$FLATPAK_DEFAULT_CONFIG"
+  fi
+
+  [ -z "$file" ] && msg_error "No $FLATPAK_CONFIG_FILENAME found under flake root." && exit 1
+
+  check_flatpak_dependencies
+  check_config_file "$file"
+
+  local pkg
+  pkg="$(select_flatpak_to_remove "$file" || true)"
+  [ -z "$pkg" ] && msg_warn "No package selected." && exit 0
+
+  remove_flatpak_package "$file" "$pkg"
+}
+
+# ============================================================================
+# Main Entry Point
+# ============================================================================
 main() {
   [ $# -eq 0 ] && show_usage && exit 1
 
   case "$1" in
-  add)
+  $CMD_NIX | $CMD_NIX_FULL)
     shift
-    cmd_add "$@"
+    [ $# -eq 0 ] && msg_error "Missing subcommand for '$CMD_NIX'. Use: $CMD_ADD, $CMD_REMOVE, or $CMD_STABLE" && exit 1
+
+    case "$1" in
+    $CMD_STABLE | $CMD_STABLE_FULL)
+      shift
+      USE_STABLE=true
+      NIX_PKG_PREFIX="$NIX_STABLE_PKG_PREFIX"
+      [ $# -eq 0 ] && msg_error "Missing subcommand for '$CMD_NIX $CMD_STABLE'. Use: $CMD_ADD or $CMD_REMOVE" && exit 1
+
+      case "$1" in
+      $CMD_ADD | $CMD_ADD_FULL)
+        shift
+        nix_cmd_add "$@"
+        ;;
+      $CMD_REMOVE | $CMD_REMOVE_FULL)
+        shift
+        nix_cmd_remove "$@"
+        ;;
+      *)
+        msg_error "Unknown subcommand: $1"
+        exit 1
+        ;;
+      esac
+      ;;
+    $CMD_ADD | $CMD_ADD_FULL)
+      shift
+      nix_cmd_add "$@"
+      ;;
+    $CMD_REMOVE | $CMD_REMOVE_FULL)
+      shift
+      nix_cmd_remove "$@"
+      ;;
+    *)
+      msg_error "Unknown subcommand: $1"
+      exit 1
+      ;;
+    esac
     ;;
-  remove)
+  $CMD_FLATPAK | $CMD_FLATPAK_FULL)
     shift
-    cmd_remove "$@"
+    [ $# -eq 0 ] && msg_error "Missing subcommand for '$CMD_FLATPAK'. Use: $CMD_ADD or $CMD_REMOVE" && exit 1
+
+    case "$1" in
+    $CMD_ADD | $CMD_ADD_FULL)
+      shift
+      flatpak_cmd_add "$@"
+      ;;
+    $CMD_REMOVE | $CMD_REMOVE_FULL)
+      shift
+      flatpak_cmd_remove "$@"
+      ;;
+    *)
+      msg_error "Unknown subcommand: $1"
+      exit 1
+      ;;
+    esac
     ;;
-  -h | --help) show_usage ;;
+  -h | --help)
+    show_usage
+    ;;
   *)
     msg_error "Unknown command: $1"
+    show_usage
     exit 1
     ;;
   esac

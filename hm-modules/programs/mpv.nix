@@ -14,6 +14,7 @@
       mpvacious
       skipsilence
       sponsorblock-minimal
+      subtitle-sync
       occivink.seekTo
       quality-menu
       mpv-cheatsheet
@@ -47,8 +48,10 @@
       window-maximized = "yes";
       hr-seek = "yes";
       keep-open = "yes";
-      hvdec = "auto";
       vo = "gpu-next";
+      hwdec = "auto-safe";
+      hwdec-codecs = "all";
+      gpu-api = "vulkan";
       screenshot-dir = "${config.xdg.userDirs.pictures}/mpv";
       screenshot-format = "png";
     };

@@ -11,7 +11,7 @@
     discord.enable = false;
     vesktop = {
       enable = true;
-      package = with pkgs; vesktop;
+      package = pkgs.stable.vesktop;
       settings = {
         discordBranch = "stable";
         autoStartMinimized = true;

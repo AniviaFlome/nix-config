@@ -6,7 +6,7 @@
 }:
 {
   programs.niri = {
-    package = with pkgs; niri;
+    package = pkgs.niri;
     settings = {
       prefer-no-csd = true;
       hotkey-overlay = {
@@ -32,6 +32,17 @@
           right = 6;
           top = 4;
           bottom = 4;
+        };
+      };
+      recent-windows = {
+        debounce-ms = 500;
+        highlight = {
+          active-color = "#cba6f7";
+          urgent-color = "#f38ba8";
+        };
+        previews = {
+          max-height = 480;
+          max-scale = 0.3;
         };
       };
       input = {
