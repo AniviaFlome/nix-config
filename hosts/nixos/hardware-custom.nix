@@ -16,6 +16,16 @@
     inputs.nixos-hardware.nixosModules.asus-battery
   ];
 
+  fileSystems."/mnt/windows" = {
+    device = "/dev/disk/by-uuid/3858E77C58E736F2";
+    fsType = "ntfs";
+    options = [
+      "rw"
+      "uid=1000"
+      "nofail"
+    ];
+  };
+
   zramSwap = {
     enable = true;
     memoryPercent = 100;

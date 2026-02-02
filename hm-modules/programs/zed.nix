@@ -9,6 +9,7 @@
     extraPackages = with pkgs; [
       nil
       nixd
+      nixfmt
     ];
     extensions = [
       "env"

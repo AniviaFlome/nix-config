@@ -96,7 +96,7 @@
       ];
       variables = (import ./misc/variables.nix)._module.args;
       inherit (variables) username;
-      myLib = import ./lib { inherit (nixpkgs) lib; };
+      lib = nixpkgs.lib.extend (_final: prev: import ./lib { lib = prev; });
       eachSystem = f: nixpkgs.lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
       treefmtEval = eachSystem (pkgs: inputs.treefmt-nix.lib.evalModule pkgs ./misc/treefmt.nix);
     in
@@ -114,7 +114,7 @@
               inputs
               outputs
               nixvirt
-              myLib
+              lib
               ;
           };
           modules = [
@@ -129,7 +129,7 @@
               inputs
               outputs
               username
-              myLib
+              lib
               ;
           };
           system = "x86_64-linux";

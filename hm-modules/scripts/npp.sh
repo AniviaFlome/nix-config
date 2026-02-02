@@ -88,7 +88,7 @@ confirm_and_apply() {
     ') || true
   echo -e "${YELLOW}-------------${NC}"
 
-  read -rp "Apply changes? [Y/n] " answer
+  read -rp "Apply changes? [Y/n] " answer </dev/tty
   if [[ -z ${answer:-} || $answer =~ ^[Yy]$ ]]; then
     mkdir -p "$BACKUP_DIR"
 
@@ -269,12 +269,21 @@ extract_nix_packages() {
 }
 
 select_nix_package_to_add() {
+  local fzf_output
+  local query
   local selected_lines
+  local fzf_exit_code
 
   # fzf UI with multi-select (Tab to select, Enter to confirm)
-  selected_lines="$(
-    nix-search-tv print nixpkgs |
+  # We use --print-query to capture input if the user wants to add a custom package not in the list.
+  fzf_output="$(
+    {
+      nix-search-tv print nixpkgs
+      nix-search-tv print nur
+    } |
+      grep -E "^nixpkgs/|^nur/" |
       fzf \
+        --print-query \
         --prompt='Search nixpkgs package (Tab=select, Enter=confirm) > ' \
         --preview 'nix-search-tv preview {}' \
         --border --reverse --ansi \
@@ -282,9 +291,29 @@ select_nix_package_to_add() {
         --multi \
         --bind 'tab:toggle+down' \
         --tiebreak=begin,length
-  )" || return 1
+  )" || fzf_exit_code=$?
 
-  [ -z "$selected_lines" ] && return 1
+  # Exit code 130 means user cancelled (Esc/Ctrl-C)
+  if [ "${fzf_exit_code:-0}" -eq 130 ]; then
+    return 1
+  fi
+
+  [ -z "$fzf_output" ] && return 1
+
+  # The first line is the query
+  query="$(head -n1 <<<"$fzf_output")"
+  # The rest are the selections
+  selected_lines="$(process_fzf_output_lines "$fzf_output")"
+
+  # If nothing selected, but query exists, use query as the package
+  if [ -z "$selected_lines" ]; then
+    if [ -n "$query" ]; then
+      # Assume the user typed the exact package name
+      echo "$query"
+      return 0
+    fi
+    return 1
+  fi
 
   # Process each selected line
   while IFS= read -r selected; do
@@ -320,6 +349,11 @@ select_nix_package_to_add() {
       echo "$pkg"
     fi
   done <<<"$selected_lines"
+}
+
+process_fzf_output_lines() {
+  # Helper to skip first line safely
+  tail -n +2 <<<"$1"
 }
 
 select_nix_package_to_remove() {

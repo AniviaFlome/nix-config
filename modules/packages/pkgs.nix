@@ -6,6 +6,7 @@
   environment.systemPackages = with pkgs; [
     android-tools
     ani-cli
+    anitr-cli
     antimicrox
     anup
     atuin
@@ -28,7 +29,7 @@
     exiftool
     eza
     fastfetch
-    ffmpeg_8-full
+    ffmpeg-full
     flameshot
     fluent-reader
     fzf
@@ -85,7 +86,6 @@
     mpv
     neovim
     nicotine-plus
-    nix-du
     nix-init
     nix-update
     nixd
@@ -96,14 +96,13 @@
     nyaa
     obs-studio
     onlyoffice-desktopeditors
-    openanime-bin
     opencode
     opencommit
     openrct2
     osu-lazer-bin
     packwiz
     prismlauncher
-    protontricks
+    protonplus
     pwvucontrol
     python3
     qbittorrent
@@ -133,11 +132,11 @@
     thunderbird
     torrra
     turkanime-cli
+    turkanime-gui
     umu-launcher
     upscayl
     vlc
     vscodium
-    waha-tui
     wdisplays
     wget
     wine-staging

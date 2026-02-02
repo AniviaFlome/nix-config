@@ -1,4 +1,6 @@
 {
+  config,
+  lib,
   pkgs,
   ...
 }:
@@ -9,13 +11,19 @@
       set -U fish_greeting
       ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
     '';
-    shellAliases = {
-      cat = "bat";
-      cd = "z";
-      ls = "eza --icons -a --group-directories-first";
-      man = "batman";
-      rm = "rm -I";
-    };
+    shellAliases =
+      let
+        eza = lib.getExe config.programs.eza.package;
+        zoxide = lib.getExe config.programs.zoxide.package;
+      in
+      {
+        bios = "systemctl reboot --firmware-setup";
+        cat = "${lib.getExe pkgs.bat}";
+        cd = "${zoxide}";
+        ls = "${eza} --icons -a --group-directories-first";
+        man = "${lib.getExe pkgs.bat-extras.batman}";
+        rm = "rm -I";
+      };
     plugins = [
       {
         name = "bass";

@@ -33,7 +33,6 @@
           "com.stremio.Stremio"
           "com.rustdesk.RustDesk"
           "com.usebottles.bottles"
-          "io.github.astralvixen.geforce-infinity"
           "io.github.chidiwilliams.Buzz"
           "io.github.giantpinkrobots.flatsweep"
           "io.github.giantpinkrobots.varia"
@@ -84,10 +83,13 @@
         filesystems = [
           "xdg-data/Steam:rw"
           "/home/aniviaflome/Games:rw"
+          "/mnt/windows/Games:rw"
         ];
       };
       "org.vinegarhq.Sober".Context = {
-        devices = [ "input" ];
+        devices = [
+          "input"
+        ];
       };
     };
   };

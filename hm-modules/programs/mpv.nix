@@ -9,8 +9,8 @@
     scripts = with pkgs.mpvScripts; [
       autosubsync-mpv
       chapterskip
-      interSubs
       mpris
+      mpv-subtitle-lines
       mpvacious
       skipsilence
       sponsorblock-minimal
