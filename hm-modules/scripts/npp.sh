@@ -5,17 +5,17 @@ set -euo pipefail
 # Configuration
 # ============================================================================
 
-# Command aliases (configurable)
-CMD_ADD="a"                # Short alias for add
-CMD_ADD_FULL="add"         # Full command for add
-CMD_REMOVE="r"             # Short alias for remove
-CMD_REMOVE_FULL="remove"   # Full command for remove
-CMD_NIX="n"                # Short alias for nix
-CMD_NIX_FULL="nix"         # Full command for nix
-CMD_FLATPAK="f"            # Short alias for flatpak
-CMD_FLATPAK_FULL="flatpak" # Full command for flatpak
-CMD_STABLE="s"             # Short alias for stable
-CMD_STABLE_FULL="stable"   # Full command for stable
+# Command aliases
+CMD_ADD="a"
+CMD_ADD_FULL="add"
+CMD_REMOVE="r"
+CMD_REMOVE_FULL="remove"
+CMD_NIX="n"
+CMD_NIX_FULL="nix"
+CMD_FLATPAK="f"
+CMD_FLATPAK_FULL="flatpak"
+CMD_STABLE="s"
+CMD_STABLE_FULL="stable"
 
 # Nix package configuration
 NIX_PKG_PREFIX="pkgs"
@@ -207,6 +207,19 @@ check_config_file() {
   if [ ! -w "$1" ]; then
     msg_error "Config not writable: $1"
     exit 1
+  fi
+}
+
+resolve_nix_config_file() {
+  local file="$1"
+  if [ -z "${file:-}" ]; then
+    if [ "$USE_STABLE" = true ] && [ -n "$NIX_DEFAULT_CONFIG_STABLE" ]; then
+      echo "$NIX_DEFAULT_CONFIG_STABLE"
+    else
+      echo "$NIX_DEFAULT_CONFIG"
+    fi
+  else
+    echo "$file"
   fi
 }
 
@@ -803,13 +816,7 @@ nix_cmd_add() {
     shift
   done
 
-  if [ -z "${file:-}" ]; then
-    if [ "$USE_STABLE" = true ] && [ -n "$NIX_DEFAULT_CONFIG_STABLE" ]; then
-      file="$NIX_DEFAULT_CONFIG_STABLE"
-    else
-      file="$NIX_DEFAULT_CONFIG"
-    fi
-  fi
+  file="$(resolve_nix_config_file "$file")"
 
   [ -z "$file" ] && msg_error "No $NIX_CONFIG_FILENAME found under flake root." && exit 1
 
@@ -848,13 +855,7 @@ nix_cmd_remove() {
     shift
   done
 
-  if [ -z "${file:-}" ]; then
-    if [ "$USE_STABLE" = true ] && [ -n "$NIX_DEFAULT_CONFIG_STABLE" ]; then
-      file="$NIX_DEFAULT_CONFIG_STABLE"
-    else
-      file="$NIX_DEFAULT_CONFIG"
-    fi
-  fi
+  file="$(resolve_nix_config_file "$file")"
 
   [ -z "$file" ] && msg_error "No $NIX_CONFIG_FILENAME found under flake root." && exit 1
 

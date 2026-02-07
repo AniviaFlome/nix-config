@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   ...
 }:
@@ -13,7 +14,7 @@
       };
       apps = {
         rclone = {
-          executable = "${pkgs.rclone}/bin/rclone";
+          executable = "${lib.getExe pkgs.rclone}";
           arguments = "--fast-list";
         };
       };

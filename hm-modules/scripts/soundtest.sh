@@ -33,18 +33,6 @@ check_deps() {
   fi
 }
 
-# Styled header
-show_header() {
-  gum style \
-    --border double \
-    --margin "1" \
-    --padding "1 3" \
-    --border-foreground "$ACCENT" \
-    --foreground "$ACCENT" \
-    --bold \
-    "Audio Channel Tester"
-}
-
 # Show current settings
 show_settings() {
   gum style \
@@ -116,7 +104,6 @@ test_treble() {
 settings_menu() {
   while true; do
     clear
-    show_header
     gum style --foreground "$WARNING" --bold "Settings"
 
     local choice
@@ -155,7 +142,6 @@ settings_menu() {
 channel_menu() {
   while true; do
     clear
-    show_header
     show_settings
     gum style --foreground "$INFO" --bold "Channel Tests"
 
@@ -172,7 +158,7 @@ channel_menu() {
     "Left Channel") test_left ;;
     "Right Channel") test_right ;;
     "Both Channels") test_both ;;
-    "Back") break ;;
+    "Back" | "") break ;;
     esac
 
     gum style --foreground "$SUCCESS" "Test complete!"
@@ -184,7 +170,6 @@ channel_menu() {
 frequency_menu() {
   while true; do
     clear
-    show_header
     show_settings
     gum style --foreground "$INFO" --bold "Frequency Tests"
 
@@ -210,7 +195,7 @@ frequency_menu() {
       wait 2>/dev/null || true
       ;;
     "Frequency Sweep (20Hz to 20kHz)") test_frequency_sweep ;;
-    "Back") break ;;
+    "Back" | "") break ;;
     esac
 
     gum style --foreground "$SUCCESS" "Test complete!"
@@ -221,7 +206,6 @@ frequency_menu() {
 # Quick test - left, right, both only
 quick_test() {
   clear
-  show_header
   gum style --foreground "$WARNING" --bold "Running Quick Test..."
   echo
 
@@ -236,7 +220,7 @@ quick_test() {
 
   echo
   gum style --foreground "$SUCCESS" --bold "Quick test complete!"
-  gum input --placeholder "Press Enter to continue..."
+  read -rp "Press Enter to continue..."
 }
 
 # Main menu
@@ -245,7 +229,6 @@ main_menu() {
 
   while true; do
     clear
-    show_header
     show_settings
 
     local choice
@@ -263,7 +246,7 @@ main_menu() {
     "Channel Tests") channel_menu ;;
     "Frequency Tests") frequency_menu ;;
     "Settings") settings_menu ;;
-    "Quit")
+    "Quit" | "")
       exit 0
       ;;
     esac

@@ -14,7 +14,7 @@
     # Programs
     ../../hm-modules/programs/atuin.nix
     ../../hm-modules/programs/bash.nix
-    ../../hm-modules/programs/distrobox.nix
+    ../../hm-modules/programs/bat.nix
     ../../hm-modules/programs/easyeffects
     ../../hm-modules/programs/fastfetch
     ../../hm-modules/programs/fish.nix
@@ -22,6 +22,7 @@
     ../../hm-modules/programs/kate.nix
     ../../hm-modules/programs/kitty.nix
     ../../hm-modules/programs/konsole.nix
+    ../../hm-modules/programs/lazygit.nix
     ../../hm-modules/programs/ludusavi.nix
     ../../hm-modules/programs/micro.nix
     ../../hm-modules/programs/mpv.nix

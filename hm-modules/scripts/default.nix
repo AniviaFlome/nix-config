@@ -4,9 +4,9 @@
 }:
 let
   scripts = [
-    # Existing scripts
     "hyscript"
     "monitor-off"
+    "mpv-pl"
     "npp"
     "power-profiles-switch"
     "soundtest"

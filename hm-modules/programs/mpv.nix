@@ -15,19 +15,22 @@
       skipsilence
       sponsorblock-minimal
       subtitle-sync
-      occivink.seekTo
       quality-menu
       mpv-cheatsheet
-      mpv-playlistmanager
+      mpv-webm
       modernz
+      occivink.seekTo
       reload
       webtorrent-mpv-hook
       whisper-subs
       youtube-chat
     ];
     bindings = {
-      "C" = "script-binding quality_menu/video_formats_toggle";
-      "Alt+C" = "script-binding quality_menu/audio_formats_toggle";
+      "c" = "script-binding quality_menu/video_formats_toggle";
+      "Alt+c" = "script-binding quality_menu/audio_formats_toggle";
+      "Ctrl+p" = "script-binding mpv-playlistmanager/openmenu";
+      "Ctrl+f" = "script-binding subtitle_lines/list_subtitles";
+      "Ctrl+F" = "script-binding subtitle_lines/list_secondary_subtitles";
     };
     scriptOpts = {
       chapterskip = {
@@ -40,20 +43,34 @@
         jump_amount = "3";
         jump_softrepeat = "no";
       };
+      webm = {
+        output_directory = "${config.xdg.userDirs.videos}/mpv";
+      };
       webtorrent = {
         path = "memory";
       };
     };
     config = {
+      write-filename-in-watch-later-config = "yes";
+      save-watch-history = "yes";
+
+      alang = "jp,en,tr";
+      slang = "tr,en";
+      sub-auto = "fuzzy";
+      volume = 100;
+
       window-maximized = "yes";
       hr-seek = "yes";
       keep-open = "yes";
+
       vo = "gpu-next";
       hwdec = "auto-safe";
       hwdec-codecs = "all";
       gpu-api = "vulkan";
+
       screenshot-dir = "${config.xdg.userDirs.pictures}/mpv";
-      screenshot-format = "png";
+      screenshot-format = "webp";
+      screenshot-webp-lossless = "yes";
     };
   };
 

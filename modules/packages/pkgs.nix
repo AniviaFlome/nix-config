@@ -67,7 +67,6 @@
     kdiskmark
     kitty
     krita
-    lazygit
     legendary-gl
     libva
     libva-utils
