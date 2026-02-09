@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env dash
+set -eu
 
 # ============================================================================
 # Configuration
@@ -43,16 +43,16 @@ NC='\033[0m'
 # ============================================================================
 # Helper Functions
 # ============================================================================
-msg_info() { echo -e "${GREEN}✓${NC} $1" >&2; }
-msg_warn() { echo -e "${YELLOW}⚠${NC} $1" >&2; }
-msg_error() { echo -e "${RED}✗${NC} $1" >&2; }
+msg_info() { printf "%b%s%b %s\n" "${GREEN}" "✓" "${NC}" "$1" >&2; }
+msg_warn() { printf "%b%s%b %s\n" "${YELLOW}" "⚠" "${NC}" "$1" >&2; }
+msg_error() { printf "%b%s%b %s\n" "${RED}" "✗" "${NC}" "$1" >&2; }
 
 # ============================================================================
 # Confirm + Diff + Apply
 # ============================================================================
 confirm_and_apply() {
-  local original="$1"
-  local temp="$2"
+  original="$1"
+  temp="$2"
 
   # Empty check
   if [ ! -s "$temp" ]; then
@@ -62,7 +62,6 @@ confirm_and_apply() {
   fi
 
   # Syntax check with debug
-  local parse_log failed
   parse_log="$(mktemp)"
   if ! nix-instantiate --parse "$temp" >"$parse_log" 2>&1; then
     msg_error "Resulting file is NOT valid Nix syntax. Aborting."
@@ -76,56 +75,60 @@ confirm_and_apply() {
   fi
   rm -f "$parse_log"
 
-  echo -e "${YELLOW}--- DIFF ---${NC}"
-  # Avoid pipefail killing us when diff returns 1 (files differ)
-  (diff -u "$original" "$temp" | awk -v g="$GREEN" -v r="$RED" -v n="$NC" '
+  printf "%b%s%b\n" "${YELLOW}" "--- DIFF ---" "${NC}"
+  # Avoid exit on non-zero diff exit code
+  diff -u "$original" "$temp" | awk -v g="$GREEN" -v r="$RED" -v n="$NC" '
         /^@@/     { print $0; next }
         /^\+\+\+/ { print $0; next }
         /^---/    { print $0; next }
         /^\+/     { print g $0 n; next }
         /^-/      { print r $0 n; next }
         { print }
-    ') || true
-  echo -e "${YELLOW}-------------${NC}"
+    ' || true
+  printf "%b%s%b\n" "${YELLOW}" "-------------" "${NC}"
 
-  read -rp "Apply changes? [Y/n] " answer </dev/tty
-  if [[ -z ${answer:-} || $answer =~ ^[Yy]$ ]]; then
-    mkdir -p "$BACKUP_DIR"
+  # Read from tty for user input
+  printf "Apply changes? [Y/n] "
+  read -r answer </dev/tty
+  
+  case "${answer:-}" in
+    [Yy]*|"")
+      mkdir -p "$BACKUP_DIR"
 
-    # Human-readable timestamp, e.g. 2025-11-19_19-49-12
-    local timestamp backup_name backup_path base
-    timestamp="$(date +%Y-%m-%d_%H-%M-%S)"
-    base="$(basename "$original")"
-    backup_name="${base}.${timestamp}.backup"
-    backup_path="$BACKUP_DIR/$backup_name"
+      timestamp="$(date +%Y-%m-%d_%H-%M-%S)"
+      base="$(basename "$original")"
+      backup_name="${base}.${timestamp}.backup"
+      backup_path="$BACKUP_DIR/$backup_name"
 
-    # Save backup
-    cp "$original" "$backup_path"
+      # Save backup
+      cp "$original" "$backup_path"
 
-    # Enforce backup retention per file (keep newest MAX_BACKUPS)
-    if [ -n "${MAX_BACKUPS:-}" ]; then
-      mapfile -t backups < <(ls -1t "$BACKUP_DIR"/"${base}".*.backup 2>/dev/null || true)
-      if [ "${#backups[@]}" -gt "$MAX_BACKUPS" ]; then
-        for ((i = MAX_BACKUPS; i < ${#backups[@]}; i++)); do
-          rm -f "${backups[$i]}"
-        done
+      # Enforce backup retention per file (keep newest MAX_BACKUPS)
+      if [ -n "${MAX_BACKUPS:-}" ]; then
+        # Use find/sort/head to get old backups instead of arrays
+        find "$BACKUP_DIR" -maxdepth 1 -name "${base}.*.backup" -printf "%T@ %p\n" | \
+          sort -rn | tail -n +$((MAX_BACKUPS + 1)) | cut -d' ' -f2- | \
+          while read -r old_backup; do
+            rm -f "$old_backup"
+          done
       fi
-    fi
 
-    mv "$temp" "$original"
-    msg_info "Changes applied. Backup saved at: $backup_path"
-  else
-    msg_warn "Aborted. No changes applied."
-    rm -f "$temp"
-    exit 0
-  fi
+      mv "$temp" "$original"
+      msg_info "Changes applied. Backup saved at: $backup_path"
+      ;;
+    *)
+      msg_warn "Aborted. No changes applied."
+      rm -f "$temp"
+      exit 0
+      ;;
+  esac
 }
 
 # ============================================================================
 # Flake Root Detection + Config File Discovery (recursive)
 # ============================================================================
 find_flake_root() {
-  local dir="$PWD"
+  dir="$PWD"
   while [ "$dir" != "/" ]; do
     if [ -f "$dir/flake.nix" ]; then
       echo "$dir"
@@ -144,25 +147,31 @@ else
 fi
 
 find_single_file() {
-  local pattern="$1"
-  local matches=()
-
-  while IFS= read -r f; do
-    matches+=("$f")
-  done < <(find "$CONFIG_DIR" -type f -name "$pattern")
-
-  if [ "${#matches[@]}" -eq 0 ]; then
+  pattern="$1"
+  
+  # Find files and count them using wc -l
+  matches_file=$(mktemp)
+  find "$CONFIG_DIR" -type f -name "$pattern" > "$matches_file"
+  
+  count=$(wc -l < "$matches_file")
+  
+  if [ "$count" -eq 0 ]; then
     echo ""
+    rm -f "$matches_file"
     return
   fi
 
-  if [ "${#matches[@]}" -gt 1 ]; then
+  if [ "$count" -gt 1 ]; then
     msg_error "Multiple '$pattern' files found under flake root:"
-    printf ' - %s\n' "${matches[@]}"
+    while read -r match; do
+      printf " - %s\n" "$match"
+    done < "$matches_file"
+    rm -f "$matches_file"
     exit 1
   fi
 
-  echo "${matches[0]}"
+  head -n 1 "$matches_file"
+  rm -f "$matches_file"
 }
 
 # Nix config files
@@ -176,25 +185,25 @@ FLATPAK_DEFAULT_CONFIG="$(find_single_file "$FLATPAK_CONFIG_FILENAME")"
 # Validation
 # ============================================================================
 check_nix_dependencies() {
-  local missing=()
-  command -v fzf >/dev/null || missing+=("fzf")
-  command -v nix-search-tv >/dev/null || missing+=("nix-search-tv")
-  command -v nix-instantiate >/dev/null || missing+=("nix-instantiate")
+  missing=""
+  command -v fzf >/dev/null || missing="$missing fzf"
+  command -v nix-search-tv >/dev/null || missing="$missing nix-search-tv"
+  command -v nix-instantiate >/dev/null || missing="$missing nix-instantiate"
 
-  if [ ${#missing[@]} -ne 0 ]; then
-    msg_error "Missing dependencies: ${missing[*]}"
+  if [ -n "$missing" ]; then
+    msg_error "Missing dependencies:$missing"
     exit 1
   fi
 }
 
 check_flatpak_dependencies() {
-  local missing=()
-  command -v fzf >/dev/null || missing+=("fzf")
-  command -v flatpak >/dev/null || missing+=("flatpak")
-  command -v nix-instantiate >/dev/null || missing+=("nix-instantiate")
+  missing=""
+  command -v fzf >/dev/null || missing="$missing fzf"
+  command -v flatpak >/dev/null || missing="$missing flatpak"
+  command -v nix-instantiate >/dev/null || missing="$missing nix-instantiate"
 
-  if [ ${#missing[@]} -ne 0 ]; then
-    msg_error "Missing dependencies: ${missing[*]}"
+  if [ -n "$missing" ]; then
+    msg_error "Missing dependencies:$missing"
     exit 1
   fi
 }
@@ -211,7 +220,7 @@ check_config_file() {
 }
 
 resolve_nix_config_file() {
-  local file="$1"
+  file="$1"
   if [ -z "${file:-}" ]; then
     if [ "$USE_STABLE" = true ] && [ -n "$NIX_DEFAULT_CONFIG_STABLE" ]; then
       echo "$NIX_DEFAULT_CONFIG_STABLE"
@@ -232,7 +241,7 @@ get_nix_package_name() {
 }
 
 extract_nix_packages() {
-  local file="$1"
+  file="$1"
 
   awk -v stable_prefix="$NIX_STABLE_PKG_PREFIX" '
     BEGIN { in_env=0; in_list=0 }
@@ -282,19 +291,16 @@ extract_nix_packages() {
 }
 
 select_nix_package_to_add() {
-  local fzf_output
-  local query
-  local selected_lines
-  local fzf_exit_code
-
   # fzf UI with multi-select (Tab to select, Enter to confirm)
   # We use --print-query to capture input if the user wants to add a custom package not in the list.
-  fzf_output="$(
+  
+  fzf_output=$(
     {
       nix-search-tv print nixpkgs
       nix-search-tv print nur
     } |
       grep -E "^nixpkgs/|^nur/" |
+      sort -u |
       fzf \
         --print-query \
         --prompt='Search nixpkgs package (Tab=select, Enter=confirm) > ' \
@@ -304,7 +310,7 @@ select_nix_package_to_add() {
         --multi \
         --bind 'tab:toggle+down' \
         --tiebreak=begin,length
-  )" || fzf_exit_code=$?
+  ) || fzf_exit_code=$?
 
   # Exit code 130 means user cancelled (Esc/Ctrl-C)
   if [ "${fzf_exit_code:-0}" -eq 130 ]; then
@@ -314,9 +320,9 @@ select_nix_package_to_add() {
   [ -z "$fzf_output" ] && return 1
 
   # The first line is the query
-  query="$(head -n1 <<<"$fzf_output")"
-  # The rest are the selections
-  selected_lines="$(process_fzf_output_lines "$fzf_output")"
+  query="$(echo "$fzf_output" | head -n1)"
+  # The rest are the selections, skip first line (query)
+  selected_lines="$(echo "$fzf_output" | tail -n +2)"
 
   # If nothing selected, but query exists, use query as the package
   if [ -z "$selected_lines" ]; then
@@ -329,22 +335,19 @@ select_nix_package_to_add() {
   fi
 
   # Process each selected line
-  while IFS= read -r selected; do
+  printf "%s\n" "$selected_lines" | while IFS= read -r selected; do
     [ -z "$selected" ] && continue
-
-    local raw clean pkg
-
+    
     # Extract first token-like part (before tab or pipe)
-    raw="${selected%%$'\t'*}"
-    raw="${raw%%|*}"
+    # Using cut or awk because string manipulation in dash is limited
+    raw=$(echo "$selected" | cut -f1 | cut -d'|' -f1)
 
     # --- Attribute Path Normalization ---
-
     # 1. Remove all spaces
-    raw="${raw//[[:space:]]/}"
+    raw=$(echo "$raw" | tr -d '[:space:]')
 
     # 2. Convert slashes (path format) to dots (Nix attribute format)
-    clean="${raw//\//.}"
+    clean=$(echo "$raw" | tr '/' '.')
 
     # 3. Strip the standard nixpkgs. prefix if present
     clean="${clean#nixpkgs.}"
@@ -352,25 +355,22 @@ select_nix_package_to_add() {
     pkg="$clean"
 
     # --- Generic Prefix Deduplication ---
-    local first_segment="${pkg%%.*}"
+    first_segment="${pkg%%.*}"
 
-    if [[ $pkg == "$first_segment.$first_segment."* ]]; then
-      pkg="${pkg#$first_segment.}"
-    fi
+    case "$pkg" in
+      "$first_segment.$first_segment."*)
+        pkg="${pkg#$first_segment.}"
+        ;;
+    esac
 
-    if [[ -n $pkg ]]; then
+    if [ -n "$pkg" ]; then
       echo "$pkg"
     fi
-  done <<<"$selected_lines"
-}
-
-process_fzf_output_lines() {
-  # Helper to skip first line safely
-  tail -n +2 <<<"$1"
+  done
 }
 
 select_nix_package_to_remove() {
-  local file="$1"
+  file="$1"
 
   extract_nix_packages "$file" |
     fzf \
@@ -381,25 +381,24 @@ select_nix_package_to_remove() {
 }
 
 add_nix_package() {
-  local file="$1"
-  local attr="$2"
+  file="$1"
+  attr="$2"
 
   if ! grep -q "environment\.systemPackages" "$file"; then
     msg_error "systemPackages block missing — abort."
     exit 1
   fi
 
-  local bare
   bare="$(get_nix_package_name "$attr")"
 
   # crude duplicate guard (by bare name)
-  if grep -q "\\b$bare\\b" "$file"; then
+  # using grep with word boundaries
+  if grep -q "[[:<:]]$bare[[:>:]]" "$file" 2>/dev/null || grep -q "\b$bare\b" "$file"; then
     msg_warn "Already exists: $bare"
     exit 0
   fi
 
-  local prefItem="$NIX_PKG_PREFIX.$bare"
-  local temp
+  prefItem="$NIX_PKG_PREFIX.$bare"
   temp="$(mktemp)"
 
   awk -v bare="$bare" -v prefItem="$prefItem" -v stable_prefix="$NIX_STABLE_PKG_PREFIX" '
@@ -480,15 +479,14 @@ add_nix_package() {
 }
 
 remove_nix_package() {
-  local file="$1"
-  local pkg="$2"
+  file="$1"
+  pkg="$2"
 
   if ! grep -q "environment\.systemPackages" "$file"; then
     msg_error "systemPackages block missing — abort."
     exit 1
   fi
 
-  local temp
   temp="$(mktemp)"
 
   awk -v target="$pkg" -v stable_prefix="$NIX_STABLE_PKG_PREFIX" '
@@ -558,7 +556,7 @@ remove_nix_package() {
 # ============================================================================
 
 extract_flatpak_packages() {
-  local file="$1"
+  file="$1"
 
   awk '
     BEGIN { in_packages=0; in_list=0 }
@@ -598,7 +596,8 @@ extract_flatpak_packages() {
 }
 
 select_flatpak_to_add() {
-  local selected app_id
+  selected=""
+  app_id=""
 
   # Use flatpak search and format output for fzf
   selected="$(flatpak search "" --columns=application,name,description |
@@ -616,9 +615,9 @@ select_flatpak_to_add() {
   app_id="$(echo "$selected" | awk -F' | ' '{print $1}')"
 
   # Trim whitespace
-  app_id="${app_id//[[:space:]]/}"
+  app_id="$(echo "$app_id" | tr -d '[:space:]')"
 
-  if [[ -z $app_id ]]; then
+  if [ -z "$app_id" ]; then
     msg_error "Invalid selection: '$selected' → parsed empty application ID"
     return 1
   fi
@@ -627,7 +626,7 @@ select_flatpak_to_add() {
 }
 
 select_flatpak_to_remove() {
-  local file="$1"
+  file="$1"
 
   extract_flatpak_packages "$file" |
     fzf \
@@ -638,8 +637,8 @@ select_flatpak_to_remove() {
 }
 
 add_flatpak_package() {
-  local file="$1"
-  local app_id="$2"
+  file="$1"
+  app_id="$2"
 
   if ! grep -qE "services\.flatpak\.packages|packages[[:space:]]*=" "$file"; then
     msg_error "services.flatpak.packages block missing — abort."
@@ -652,7 +651,6 @@ add_flatpak_package() {
     exit 0
   fi
 
-  local temp
   temp="$(mktemp)"
 
   awk -v app_id="$app_id" '
@@ -709,15 +707,14 @@ add_flatpak_package() {
 }
 
 remove_flatpak_package() {
-  local file="$1"
-  local pkg="$2"
+  file="$1"
+  pkg="$2"
 
   if ! grep -qE "services\.flatpak\.packages|packages[[:space:]]*=" "$file"; then
     msg_error "services.flatpak.packages block missing — abort."
     exit 1
   fi
 
-  local temp
   temp="$(mktemp)"
 
   awk -v target="$pkg" '
@@ -776,8 +773,7 @@ remove_flatpak_package() {
 # Usage
 # ============================================================================
 show_usage() {
-  echo -e "${BOLD}npp${NC} — Nix Package Provider"
-  echo ""
+  printf "%b%s%b — Nix Package Provider\n\n" "${BOLD}" "npp" "${NC}"
   echo "Usage:"
   echo "  npp $CMD_NIX $CMD_ADD    [$CMD_STABLE] [FILE]   Add nixpkgs package(s) (multi-select with Tab)"
   echo "  npp $CMD_NIX $CMD_REMOVE [$CMD_STABLE] [FILE]   Remove a nixpkgs package"
@@ -799,7 +795,8 @@ show_usage() {
 # Nix Commands
 # ============================================================================
 nix_cmd_add() {
-  local file=""
+  file=""
+  NIX_PKG_PREFIX="pkgs"
 
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -818,28 +815,33 @@ nix_cmd_add() {
 
   file="$(resolve_nix_config_file "$file")"
 
-  [ -z "$file" ] && msg_error "No $NIX_CONFIG_FILENAME found under flake root." && exit 1
+  if [ -z "$file" ]; then
+    msg_error "No $NIX_CONFIG_FILENAME found under flake root."
+    exit 1
+  fi
 
   check_nix_dependencies
   check_config_file "$file"
 
-  local packages
   if ! packages="$(select_nix_package_to_add)"; then
     msg_warn "No package selected."
     exit 0
   fi
 
   # Process each selected package
-  while IFS= read -r pkg; do
+  # Avoiding use of here-string `<<<` which is a bashism
+  # Using printf and pipeline instead
+  printf "%s\n" "$packages" | while IFS= read -r pkg; do
     [ -z "$pkg" ] && continue
-    local full_attr="${NIX_PKG_PREFIX}.${pkg}"
+    full_attr="${NIX_PKG_PREFIX}.${pkg}"
     add_nix_package "$file" "$full_attr"
-  done <<<"$packages"
+  done
 }
 
 nix_cmd_remove() {
-  local file=""
-
+  file=""
+  NIX_PKG_PREFIX="pkgs"
+  
   while [ $# -gt 0 ]; do
     case "$1" in
     "$CMD_STABLE" | "$CMD_STABLE_FULL")
@@ -857,14 +859,19 @@ nix_cmd_remove() {
 
   file="$(resolve_nix_config_file "$file")"
 
-  [ -z "$file" ] && msg_error "No $NIX_CONFIG_FILENAME found under flake root." && exit 1
+  if [ -z "$file" ]; then 
+    msg_error "No $NIX_CONFIG_FILENAME found under flake root."
+    exit 1
+  fi
 
   check_nix_dependencies
   check_config_file "$file"
 
-  local pkg
   pkg="$(select_nix_package_to_remove "$file" || true)"
-  [ -z "$pkg" ] && msg_warn "No package selected." && exit 0
+  if [ -z "$pkg" ]; then
+    msg_warn "No package selected."
+    exit 0
+  fi
 
   remove_nix_package "$file" "$pkg"
 }
@@ -873,7 +880,7 @@ nix_cmd_remove() {
 # Flatpak Commands
 # ============================================================================
 flatpak_cmd_add() {
-  local file=""
+  file=""
 
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -890,12 +897,14 @@ flatpak_cmd_add() {
     file="$FLATPAK_DEFAULT_CONFIG"
   fi
 
-  [ -z "$file" ] && msg_error "No $FLATPAK_CONFIG_FILENAME found under flake root." && exit 1
+  if [ -z "$file" ]; then
+    msg_error "No $FLATPAK_CONFIG_FILENAME found under flake root."
+    exit 1
+  fi
 
   check_flatpak_dependencies
   check_config_file "$file"
 
-  local app_id
   if ! app_id="$(select_flatpak_to_add)"; then
     msg_warn "No flatpak selected."
     exit 0
@@ -904,7 +913,7 @@ flatpak_cmd_add() {
 }
 
 flatpak_cmd_remove() {
-  local file=""
+  file=""
 
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -921,14 +930,19 @@ flatpak_cmd_remove() {
     file="$FLATPAK_DEFAULT_CONFIG"
   fi
 
-  [ -z "$file" ] && msg_error "No $FLATPAK_CONFIG_FILENAME found under flake root." && exit 1
+  if [ -z "$file" ]; then
+    msg_error "No $FLATPAK_CONFIG_FILENAME found under flake root."
+    exit 1
+  fi
 
   check_flatpak_dependencies
   check_config_file "$file"
 
-  local pkg
   pkg="$(select_flatpak_to_remove "$file" || true)"
-  [ -z "$pkg" ] && msg_warn "No package selected." && exit 0
+  if [ -z "$pkg" ]; then
+    msg_warn "No package selected."
+    exit 0
+  fi
 
   remove_flatpak_package "$file" "$pkg"
 }
@@ -937,26 +951,35 @@ flatpak_cmd_remove() {
 # Main Entry Point
 # ============================================================================
 main() {
-  [ $# -eq 0 ] && show_usage && exit 1
+  if [ $# -eq 0 ]; then
+    show_usage
+    exit 1
+  fi
 
   case "$1" in
-  $CMD_NIX | $CMD_NIX_FULL)
+  "$CMD_NIX" | "$CMD_NIX_FULL")
     shift
-    [ $# -eq 0 ] && msg_error "Missing subcommand for '$CMD_NIX'. Use: $CMD_ADD, $CMD_REMOVE, or $CMD_STABLE" && exit 1
+    if [ $# -eq 0 ]; then
+      msg_error "Missing subcommand for '$CMD_NIX'. Use: $CMD_ADD, $CMD_REMOVE, or $CMD_STABLE"
+      exit 1
+    fi
 
     case "$1" in
-    $CMD_STABLE | $CMD_STABLE_FULL)
+    "$CMD_STABLE" | "$CMD_STABLE_FULL")
       shift
       USE_STABLE=true
       NIX_PKG_PREFIX="$NIX_STABLE_PKG_PREFIX"
-      [ $# -eq 0 ] && msg_error "Missing subcommand for '$CMD_NIX $CMD_STABLE'. Use: $CMD_ADD or $CMD_REMOVE" && exit 1
+      if [ $# -eq 0 ]; then
+        msg_error "Missing subcommand for '$CMD_NIX $CMD_STABLE'. Use: $CMD_ADD or $CMD_REMOVE"
+        exit 1
+      fi
 
       case "$1" in
-      $CMD_ADD | $CMD_ADD_FULL)
+      "$CMD_ADD" | "$CMD_ADD_FULL")
         shift
         nix_cmd_add "$@"
         ;;
-      $CMD_REMOVE | $CMD_REMOVE_FULL)
+      "$CMD_REMOVE" | "$CMD_REMOVE_FULL")
         shift
         nix_cmd_remove "$@"
         ;;
@@ -966,11 +989,11 @@ main() {
         ;;
       esac
       ;;
-    $CMD_ADD | $CMD_ADD_FULL)
+    "$CMD_ADD" | "$CMD_ADD_FULL")
       shift
       nix_cmd_add "$@"
       ;;
-    $CMD_REMOVE | $CMD_REMOVE_FULL)
+    "$CMD_REMOVE" | "$CMD_REMOVE_FULL")
       shift
       nix_cmd_remove "$@"
       ;;
@@ -980,16 +1003,19 @@ main() {
       ;;
     esac
     ;;
-  $CMD_FLATPAK | $CMD_FLATPAK_FULL)
+  "$CMD_FLATPAK" | "$CMD_FLATPAK_FULL")
     shift
-    [ $# -eq 0 ] && msg_error "Missing subcommand for '$CMD_FLATPAK'. Use: $CMD_ADD or $CMD_REMOVE" && exit 1
+    if [ $# -eq 0 ]; then
+      msg_error "Missing subcommand for '$CMD_FLATPAK'. Use: $CMD_ADD or $CMD_REMOVE"
+      exit 1
+    fi
 
     case "$1" in
-    $CMD_ADD | $CMD_ADD_FULL)
+    "$CMD_ADD" | "$CMD_ADD_FULL")
       shift
       flatpak_cmd_add "$@"
       ;;
-    $CMD_REMOVE | $CMD_REMOVE_FULL)
+    "$CMD_REMOVE" | "$CMD_REMOVE_FULL")
       shift
       flatpak_cmd_remove "$@"
       ;;

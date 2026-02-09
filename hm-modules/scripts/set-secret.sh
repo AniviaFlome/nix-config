@@ -1,8 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env dash
 # Set a secret in sops file
 # Usage: set-secret [sops_file]
 
-set -euo pipefail
+set -eu
+
 
 SOPS_FILE="${1:-}"
 

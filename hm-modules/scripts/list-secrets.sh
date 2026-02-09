@@ -1,15 +1,15 @@
-#!/usr/bin/env bash
+#!/usr/bin/env dash
 # List secrets keys from sops file
 # Usage: list-secrets [--json] [sops_file]
 
-set -euo pipefail
+set -eu
 
 JSON=false
 SOPS_FILE=""
 
 # Parse arguments
 for arg in "$@"; do
-  if [ "$arg" == "--json" ]; then
+  if [ "$arg" = "--json" ]; then
     JSON=true
   else
     SOPS_FILE="$arg"
@@ -33,7 +33,7 @@ if [ ! -f "$SOPS_FILE" ]; then
   exit 1
 fi
 
-if [ "$JSON" == true ]; then
+if [ "$JSON" = true ]; then
   # List keys in JSON format
   sops --decrypt "$SOPS_FILE" | yq --output-format json 'keys'
 else

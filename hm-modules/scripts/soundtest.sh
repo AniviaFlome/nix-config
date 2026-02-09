@@ -1,7 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/env dash
 # Dependencies: gum, speaker-test
 
-set -euo pipefail
+set -eu
 
 # Colors
 ACCENT="212"
@@ -19,15 +19,15 @@ trap 'tput rmcup' EXIT
 
 # Check for dependencies
 check_deps() {
-  local missing=()
+  missing=""
   for cmd in gum speaker-test; do
-    if ! command -v "$cmd" &>/dev/null; then
-      missing+=("$cmd")
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+      missing="$missing $cmd"
     fi
   done
 
-  if [[ ${#missing[@]} -gt 0 ]]; then
-    echo "Missing dependencies: ${missing[*]}"
+  if [ -n "$missing" ]; then
+    echo "Missing dependencies:$missing"
     echo "Please install 'gum' and 'alsa-utils'."
     exit 1
   fi
@@ -120,16 +120,16 @@ settings_menu() {
         --placeholder "Enter duration (1-10 seconds)" \
         --value "$DURATION" \
         --char-limit 2 | grep -E '^[0-9]+$' || echo "$DURATION")
-      [[ $DURATION -lt 1 ]] && DURATION=1
-      [[ $DURATION -gt 10 ]] && DURATION=10
+      if [ "$DURATION" -lt 1 ]; then DURATION=1; fi
+      if [ "$DURATION" -gt 10 ]; then DURATION=10; fi
       ;;
     "Frequency: ${FREQUENCY}Hz")
       FREQUENCY=$(gum input \
         --placeholder "Enter frequency (20-20000 Hz)" \
         --value "$FREQUENCY" \
         --char-limit 5 | grep -E '^[0-9]+$' || echo "$FREQUENCY")
-      [[ $FREQUENCY -lt 20 ]] && FREQUENCY=20
-      [[ $FREQUENCY -gt 20000 ]] && FREQUENCY=20000
+      if [ "$FREQUENCY" -lt 20 ]; then FREQUENCY=20; fi
+      if [ "$FREQUENCY" -gt 20000 ]; then FREQUENCY=20000; fi
       ;;
     "Back to Main Menu")
       break

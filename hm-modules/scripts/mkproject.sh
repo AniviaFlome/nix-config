@@ -1,19 +1,13 @@
-#!/usr/bin/env bash
+#!/usr/bin/env dash
 
-if ! command -v gum &>/dev/null; then
+if ! command -v gum >/dev/null 2>&1; then
   echo "Error: 'gum' is not installed. Please install it first."
   exit 1
 fi
 
 echo "Select project type:"
-types=(
-  "python"
-  "rust"
-  "go"
-  "node"
-  "default"
-)
-type=$(gum choose "${types[@]}")
+type=$(gum choose "python" "rust" "go" "node" "default")
+
 
 if [ -z "$type" ]; then
   echo "No selection made."

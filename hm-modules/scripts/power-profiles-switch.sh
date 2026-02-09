@@ -1,25 +1,15 @@
-#!/usr/bin/env bash
+#!/usr/bin/env dash
 # Get current profile
 current=$(powerprofilesctl get)
 
-# Ordered cycle list
-profiles=("power-saver" "balanced" "performance")
-
-index=0
-
-# Find index of current
-for i in "${!profiles[@]}"; do
-  if [[ ${profiles[$i]} == "$current" ]]; then
-    index=$i
-    break
-  fi
-done
-
-# Calculate next index (wrap around)
-next_index=$(((index + 1) % ${#profiles[@]}))
-
-next="${profiles[$next_index]}"
+# Cycle: power-saver -> balanced -> performance -> power-saver
+case "$current" in
+    power-saver) next="balanced" ;;
+    balanced) next="performance" ;;
+    performance) next="power-saver" ;;
+    *) next="balanced" ;;
+esac
 
 # Apply it
 powerprofilesctl set "$next"
-echo Power Profile Switched to: $next
+echo "Power Profile Switched to: $next"

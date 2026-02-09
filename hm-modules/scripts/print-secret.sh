@@ -1,8 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env dash
 # Print a secret from sops file
 # Usage: print-secret <secret_name> [sops_file]
 
-set -euo pipefail
+set -eu
+
 
 KEY_NAME="${1:-}"
 SOPS_FILE="${2:-}"

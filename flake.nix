@@ -19,6 +19,8 @@
     nix-webapps.url = "github:AniviaFlome/nix-webapps";
     nix-bwrapper.url = "github:Naxdy/nix-bwrapper";
     nix-mineral.url = "github:cynicsketch/nix-mineral/";
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    direnv-instant.url = "github:Mic92/direnv-instant";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";

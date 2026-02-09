@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env dash
 # basic stats checker script mostly adapted from statusbar, may need changes to work on your system
 CPU_TEMP=$(
   sensors | awk '
@@ -14,8 +14,8 @@ CPU_TEMP=$(
 )
 
 GPU_TEMP=$(sensors | awk '/^edge/ {print substr($2,2)}')
-if [[ -z $GPU_TEMP ]]; then
-  if command -v nvidia-smi &>/dev/null; then
+if [ -z "$GPU_TEMP" ]; then
+  if command -v nvidia-smi >/dev/null 2>&1; then
     GPU_TEMP=$(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits 2>/dev/null)
   fi
 fi
@@ -27,25 +27,26 @@ FAN_SPEED=$(sensors | awk '/^fan/ {print $2" "$3}')
 DISK1=$(df -h ~/ | awk 'NR==2 {print $4}')
 DISK2=$(df -h / | awk 'NR==2 {print $4}')
 
-[[ -n $(amixer get Capture | awk '/\[on\]/') ]] && MIC="on" || MIC="off"
+# shellcheck disable=SC2046
+if [ -n "$(amixer get Capture | awk '/\[on\]/')" ]; then MIC="on"; else MIC="off"; fi
 
 UPDATE=$(stat -c %y /nix/var/nix/profiles/system | awk '{print $1}')
 KERNEL=$(uname -r)
 
-echo -e "Stats $CPU_USE
+printf "Stats %s
 
-GPU temp: $GPU_TEMP
-CPU temp: $CPU_TEMP°C
+GPU temp: %s
+CPU temp: %s°C
 
-Memory use: ${MEM_USE}g
+Memory use: %sg
 
-Fan Speed: $FAN_SPEED
+Fan Speed: %s
 
-Home remaining: $DISK1
-Root remaining: $DISK2
+Home remaining: %s
+Root remaining: %s
 
-Last update: $UPDATE
-Kernel Version: $KERNEL
+Last update: %s
+Kernel Version: %s
 
-Mic is $MIC" |
+Mic is %s\n" "$CPU_USE" "$GPU_TEMP" "$CPU_TEMP" "$MEM_USE" "$FAN_SPEED" "$DISK1" "$DISK2" "$UPDATE" "$KERNEL" "$MIC" |
   bat -l cpuinfo --style=grid

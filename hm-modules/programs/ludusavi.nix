@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -10,7 +11,7 @@
     settings = {
       theme = "dark";
       backup = {
-        path = "~/Random/Backup/Ludusavi";
+        path = "${config.home.homeDirectory}/Random/Backup/Ludusavi";
       };
       apps = {
         rclone = {
@@ -30,16 +31,16 @@
       roots = [
         {
           store = "steam";
-          path = "~/.local/share/Steam";
+          path = "${config.home.homeDirectory}/.local/share/Steam";
         }
         {
           store = "heroic";
-          path = "~/.config/heroic";
+          path = "${config.home.homeDirectory}/.config/heroic";
         }
         {
           store = "lutris";
-          path = "~/.local/share/lutris";
-          database = "~/.local/share/lutris/pga.db";
+          path = "${config.home.homeDirectory}/.local/share/lutris";
+          database = "${config.home.homeDirectory}/.local/share/lutris/pga.db";
         }
       ];
     };

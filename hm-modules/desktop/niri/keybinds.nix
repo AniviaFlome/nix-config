@@ -31,14 +31,15 @@
       "Mod+Shift+P".action.screenshot-screen = [ ];
       "Mod+Ctrl+P".action.screenshot-window = [ ];
 
+      "Mod+Up".action = focus-window-up;
       "Mod+Left".action = focus-column-left;
       "Mod+Down".action = focus-window-down;
-      "Mod+Up".action = focus-window-up;
       "Mod+Right".action = focus-column-right;
-      "Mod+A".action = focus-column-left;
-      "Mod+D".action = focus-column-right;
-      "Mod+S".action = focus-workspace-down;
+
       "Mod+W".action = focus-workspace-up;
+      "Mod+A".action = focus-column-left;
+      "Mod+S".action = focus-workspace-down;
+      "Mod+D".action = focus-column-right;
 
       "Mod+WheelScrollDown".action = focus-column-right;
       "Mod+WheelScrollUp".action = focus-column-left;

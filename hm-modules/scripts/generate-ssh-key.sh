@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/usr/bin/env dash
 # Generate a new SSH key and store it in sops
 # Usage: generate-ssh-key [--yes]
 
-set -euo pipefail
+set -eu
 
 SOPS_FILE=""
 
@@ -17,7 +17,7 @@ else
 fi
 
 FORCE=false
-if [ "${1:-}" == "--yes" ]; then
+if [ "${1:-}" = "--yes" ]; then
   FORCE=true
 fi
 
@@ -33,7 +33,7 @@ KEY_FILE="$TMP_DIR/id_ed25519"
 # Cleanup on exit
 trap 'rm -rf "$TMP_DIR"' EXIT
 
-if [ "$METHOD" == "Generate New Key" ]; then
+if [ "$METHOD" = "Generate New Key" ]; then
   # Passphrase collection and verification
   while true; do
     PASSPHRASE=$(gum input --password --header "Enter passphrase (leave empty for none)" --placeholder "Passphrase")
@@ -41,7 +41,7 @@ if [ "$METHOD" == "Generate New Key" ]; then
       break
     fi
     VERIFY=$(gum input --password --header "Verify passphrase" --placeholder "Passphrase")
-    if [ "$PASSPHRASE" == "$VERIFY" ]; then
+    if [ "$PASSPHRASE" = "$VERIFY" ]; then
       break
     fi
     echo "Passphrases do not match. Please try again."

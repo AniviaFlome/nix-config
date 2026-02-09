@@ -1,3 +1,4 @@
+#!/usr/bin/env dash
 # Color definitions (ANSI escape codes)
 GREEN='\033[0;32m'
 YELLOW_BOLD='\033[1;33m'

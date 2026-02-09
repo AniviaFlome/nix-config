@@ -1,9 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/env dash
 # Create a new system age key and encrypt it
 # Usage: create-system-key
 # WARNING: This will overwrite existing secrets!
 
-set -euo pipefail
+set -eu
+
 
 # Color definitions
 RED_BOLD='\033[1;31m'

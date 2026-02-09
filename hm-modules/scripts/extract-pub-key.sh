@@ -1,8 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env dash
 # Extract public key from sops secret
 # Usage: extract-pub-key [sops_file] [key_name]
 
-set -euo pipefail
+set -eu
+
 
 SOPS_FILE="${1:-}"
 KEY_NAME="${2:-sshPrivKey}"

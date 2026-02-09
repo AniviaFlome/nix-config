@@ -2,7 +2,6 @@
   term-editor,
   ...
 }:
-
 {
   programs.git = {
     enable = true;

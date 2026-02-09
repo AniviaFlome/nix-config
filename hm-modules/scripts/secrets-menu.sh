@@ -1,13 +1,14 @@
+#!/usr/bin/env dash
 # Interactive secrets menu using gum
 
-function press_any_key() {
+press_any_key() {
   echo
   echo
-  echo "Press any key to return to menu..."
-  read -n 1 -s -r
+  echo "Press Enter to return to menu..."
+  read -r _
 }
 
-function other_secrets_submenu() {
+other_secrets_submenu() {
   while true; do
     CHOICE=$(@gum@ choose "List Secrets" "Print Secret" "Set Secret" "Remove Secret" "Copy Secret to Clipboard" "Edit Secrets" "Back")
 
@@ -52,7 +53,7 @@ function other_secrets_submenu() {
   done
 }
 
-function set_github_token_logic() {
+set_github_token_logic() {
   TOKEN=$(@gum@ input --header "Enter GitHub Token" --placeholder "github_pat_...")
   if [ -n "$TOKEN" ]; then
     # Encode to JSON string for sops --set
@@ -71,7 +72,7 @@ function set_github_token_logic() {
   fi
 }
 
-function github_token_submenu() {
+github_token_submenu() {
   while true; do
     CHOICE=$(@gum@ choose "Create Token" "Set Token" "Show Token" "Back")
 
@@ -104,7 +105,7 @@ function github_token_submenu() {
   done
 }
 
-function ssh_key_submenu() {
+ssh_key_submenu() {
   while true; do
     CHOICE=$(@gum@ choose "Extract Public Key" "Deploy Key to Remote Server" "Add/Recreate SSH key" "Back")
 
@@ -128,7 +129,7 @@ function ssh_key_submenu() {
   done
 }
 
-function system_key_submenu() {
+system_key_submenu() {
   while true; do
     CHOICE=$(@gum@ choose "Ensure System Key Exists" "Create New System Key (new users start here)" "Back")
 
@@ -148,7 +149,7 @@ function system_key_submenu() {
   done
 }
 
-function user_passwords_submenu() {
+user_passwords_submenu() {
   while true; do
     CHOICE=$(@gum@ choose "Set User Password" "Set Root Password" "Back")
 

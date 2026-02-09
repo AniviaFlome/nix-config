@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env dash
 
 # Test mode: simulate multiple Windows entries
 if [ "$1" = "--test" ]; then

@@ -9,6 +9,7 @@
     scripts = with pkgs.mpvScripts; [
       autosubsync-mpv
       chapterskip
+      cheatsheet
       mpris
       mpv-subtitle-lines
       mpvacious
@@ -16,7 +17,6 @@
       sponsorblock-minimal
       subtitle-sync
       quality-menu
-      mpv-cheatsheet
       mpv-webm
       modernz
       occivink.seekTo
@@ -28,9 +28,10 @@
     bindings = {
       "c" = "script-binding quality_menu/video_formats_toggle";
       "Alt+c" = "script-binding quality_menu/audio_formats_toggle";
-      "Ctrl+p" = "script-binding mpv-playlistmanager/openmenu";
       "Ctrl+f" = "script-binding subtitle_lines/list_subtitles";
       "Ctrl+F" = "script-binding subtitle_lines/list_secondary_subtitles";
+      "ö" = "add speed 0.05";
+      "ç" = "add speed -0.05";
     };
     scriptOpts = {
       chapterskip = {

@@ -3,7 +3,8 @@
   ...
 }:
 let
-  scripts = [
+  dashScripts = [
+    "deploy"
     "hyscript"
     "monitor-off"
     "mpv-pl"
@@ -19,20 +20,26 @@ let
     "extract-pub-key"
     "generate-ssh-key"
     "list-secrets"
+    "mkproject"
     "print-secret"
     "remove-secret"
     "secrets-menu"
     "set-hashed-password"
     "set-secret"
   ];
+
+  bashScripts = [
+  ];
 in
 {
   home.packages =
     with pkgs;
-    (map (script: writeShellScriptBin script (builtins.readFile ./${script}.sh)) scripts)
+    (map (script: writeScriptBin script (builtins.readFile ./${script}.sh)) dashScripts)
+    ++ (map (script: writeShellScriptBin script (builtins.readFile ./${script}.sh)) bashScripts)
     ++ [
       alsa-utils
       bat
+      dash
       efibootmgr
       fzf
       gawk

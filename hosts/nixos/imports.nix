@@ -16,7 +16,6 @@
     ../../modules/programs/kde-connect.nix
     ../../modules/programs/plasma.nix
     ../../modules/programs/niri.nix
-    ../../modules/programs/ollama.nix
     ../../modules/programs/oom.nix
     ../../modules/programs/podman.nix
     ../../modules/programs/printing.nix

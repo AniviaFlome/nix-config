@@ -13,6 +13,53 @@
 
   programs.noctalia-shell = {
     enable = true;
+    plugins = {
+      sources = [
+        {
+          enabled = true;
+          name = "Official Noctalia Plugins";
+          url = "https://github.com/noctalia-dev/noctalia-plugins";
+        }
+      ];
+      states = {
+        screen-recorder = {
+          enabled = true;
+          sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+        };
+        kaomoji-provider = {
+          enabled = true;
+          sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+        };
+        timer = {
+          enabled = true;
+          sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+        };
+        privacy-indicator = {
+          enabled = true;
+          sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+        };
+      };
+      version = 1;
+    };
+    pluginSettings = {
+      privacy-indicator = {
+        hideInactive = true;
+        removeMargins = true;
+        activeColor = "primary";
+        inactiveColor = "none";
+      };
+      screen-recorder = {
+        audioCodec = "opus";
+        audioSource = "default_output";
+        colorRange = "limited";
+        directory = config.xdg.userDirs.videos;
+        frameRate = 60;
+        quality = "very_high";
+        showCursor = true;
+        videoCodec = "h264";
+        videoSource = "portal";
+      };
+    };
     settings = {
       appLauncher = {
         backgroundOpacity = 1;
@@ -91,8 +138,10 @@
               displayMode = "on-hover";
               warningThreshold = 20;
             }
+            { id = "plugin:privacy-indicator"; }
             {
               id = "Clock";
+              clockColor = "primary";
               formatHorizontal = "HH:mm";
               formatVertical = "HH mm";
               useMonospacedFont = true;
@@ -148,14 +197,34 @@
           left = [
             { id = "WiFi"; }
             { id = "Bluetooth"; }
-            { id = "ScreenRecorder"; }
             { id = "WallpaperSelector"; }
+            { id = "plugin:timer"; }
+            {
+              id = "plugin:screen-recorder";
+              defaultSettings = {
+                audioCodec = "opus";
+                audioSource = "default_output";
+                colorRange = "limited";
+                copyToClipboard = false;
+                directory = "";
+                filenamePattern = "recording_yyyyMMdd_HHmmss";
+                frameRate = "60";
+                hideInactive = false;
+                iconColor = "none";
+                quality = "very_high";
+                resolution = "original";
+                showCursor = true;
+                videoCodec = "h264";
+                videoSource = "portal";
+              };
+            }
           ];
           right = [
             { id = "Notifications"; }
             { id = "PowerProfile"; }
             { id = "KeepAwake"; }
             { id = "NightLight"; }
+
           ];
         };
       };
@@ -204,17 +273,6 @@
         backgroundOpacity = 1;
         criticalUrgencyDuration = 15;
         location = "top_right";
-      };
-      screenRecorder = {
-        audioCodec = "opus";
-        audioSource = "default_output";
-        colorRange = "limited";
-        directory = config.xdg.userDirs.videos;
-        frameRate = 60;
-        quality = "very_high";
-        showCursor = true;
-        videoCodec = "h264";
-        videoSource = "portal";
       };
       ui = {
         fontDefault = font;

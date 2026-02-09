@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/usr/bin/env dash
 # Set user or root password (hashed)
 # Usage: set-hashed-password [user|root]
 
-set -euo pipefail
+set -eu
 
 SOPS_FILE=""
 
@@ -21,7 +21,7 @@ if [ -z "$TARGET" ]; then
   TARGET=$(gum choose "user" "root")
 fi
 
-if [ "$TARGET" == "root" ]; then
+if [ "$TARGET" = "root" ]; then
   SECRET_KEY="unixRootPassword"
 else
   SECRET_KEY="unixPassword"
@@ -34,7 +34,7 @@ while true; do
     continue
   fi
   CONFIRM=$(gum input --password --placeholder "Confirm password")
-  if [ "$PASSWORD" == "$CONFIRM" ]; then
+  if [ "$PASSWORD" = "$CONFIRM" ]; then
     break
   fi
   echo "Passwords do not match. Try again."

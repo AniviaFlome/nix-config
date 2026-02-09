@@ -1,8 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env dash
 # Remove a secret from sops file
 # Usage: remove-secret [secret_name] [sops_file]
 
-set -euo pipefail
+set -eu
+
 
 KEY_NAME="${1:-}"
 SOPS_FILE="${2:-}"

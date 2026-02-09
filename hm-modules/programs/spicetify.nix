@@ -12,6 +12,7 @@
     in
     {
       enable = true;
+      windowManagerPatch = true;
       enabledExtensions = with spicePkgs.extensions; [
         adblock
         betterGenres
@@ -24,6 +25,6 @@
         newReleases
       ];
       theme = spicePkgs.themes.comfy;
-      colorScheme = "rose-pine";
+      colorScheme = "catppuccin-mocha";
     };
 }

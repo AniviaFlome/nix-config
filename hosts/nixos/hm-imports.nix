@@ -15,6 +15,7 @@
     ../../hm-modules/programs/atuin.nix
     ../../hm-modules/programs/bash.nix
     ../../hm-modules/programs/bat.nix
+    ../../hm-modules/programs/direnv.nix
     ../../hm-modules/programs/easyeffects
     ../../hm-modules/programs/fastfetch
     ../../hm-modules/programs/fish.nix

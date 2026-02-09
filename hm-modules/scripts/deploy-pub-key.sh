@@ -1,8 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env dash
 # Deploy public key to remote host
 # Usage: deploy-pub-key [username] [host]
 
-set -euo pipefail
+set -eu
+
 
 USERNAME="${1:-}"
 HOST="${2:-}"

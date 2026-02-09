@@ -2,7 +2,7 @@ let
   StateDirName = "dnscrypt-proxy-state";
   StatePath = "/var/lib/${StateDirName}";
   CacheDirName = "dnscrpt-proxy-cache";
-  CachePath = "/var/lin/${CacheDirName}";
+  CachePath = "/var/lib/${CacheDirName}";
 in
 {
   networking = {

@@ -19,9 +19,7 @@
           teal = "#94e2d5";
           peach = "#fab387";
           red = "#f38ba8";
-          mauve = "#cba6f7";
-
-          accent = mauve;
+          accent = "#cba6f7";
           background = base;
           secondary = teal;
           warning = red;
