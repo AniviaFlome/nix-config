@@ -43,8 +43,8 @@ show_settings() {
 
 # Progress indicator during test
 show_progress() {
-  local msg=$1
-  local dur=$2
+  msg=$1
+  dur=$2
   gum spin --spinner dot --title "$msg" -- sleep "$dur"
 }
 
@@ -106,7 +106,6 @@ settings_menu() {
     clear
     gum style --foreground "$WARNING" --bold "Settings"
 
-    local choice
     choice=$(gum choose \
       --cursor.foreground "$ACCENT" \
       --header "Adjust test parameters:" \
@@ -145,7 +144,6 @@ channel_menu() {
     show_settings
     gum style --foreground "$INFO" --bold "Channel Tests"
 
-    local choice
     choice=$(gum choose \
       --cursor.foreground "$ACCENT" \
       --header "Select channel test:" \
@@ -173,7 +171,6 @@ frequency_menu() {
     show_settings
     gum style --foreground "$INFO" --bold "Frequency Tests"
 
-    local choice
     choice=$(gum choose \
       --cursor.foreground "$ACCENT" \
       --header "Select frequency test:" \
@@ -231,7 +228,6 @@ main_menu() {
     clear
     show_settings
 
-    local choice
     choice=$(gum choose \
       --cursor.foreground "$ACCENT" \
       --header "Select test category:" \

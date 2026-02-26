@@ -21,7 +21,7 @@ if [ -z "$GPU_TEMP" ]; then
 fi
 
 MEM_USE=$(free -m | awk '/^Mem/ {print ($3)/1024}' | cut -c-4)
-CPU_USE=$(iostat -c | awk 'NR>=4 && NR <=4' | awk '{print "User CPU: "$1"%\nSystem CPU: ",$3"%"}')
+CPU_USE=$(iostat -c | awk 'NR==4 {print "User CPU: "$1"%\nSystem CPU: ",$3"%"}')
 FAN_SPEED=$(sensors | awk '/^fan/ {print $2" "$3}')
 
 DISK1=$(df -h ~/ | awk 'NR==2 {print $4}')

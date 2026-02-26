@@ -4,7 +4,6 @@
 
 set -eu
 
-
 KEY_NAME="${1:-}"
 SOPS_FILE="${2:-}"
 

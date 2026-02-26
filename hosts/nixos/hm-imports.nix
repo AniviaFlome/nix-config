@@ -8,6 +8,7 @@
     # Misc
     ../../hm-modules/misc/nix.nix
     ../../hm-modules/misc/sops-nix.nix
+    ../../hm-modules/misc/manual.nix
     ../../hm-modules/misc/mime.nix
     ../../hm-modules/misc/variables.nix
     ../../hm-modules/misc/xdg.nix
@@ -16,6 +17,7 @@
     ../../hm-modules/programs/bash.nix
     ../../hm-modules/programs/bat.nix
     ../../hm-modules/programs/direnv.nix
+    ../../hm-modules/programs/distrobox
     ../../hm-modules/programs/easyeffects
     ../../hm-modules/programs/fastfetch
     ../../hm-modules/programs/fish.nix
@@ -37,7 +39,6 @@
     ../../hm-modules/programs/ripgrep.nix
     ../../hm-modules/programs/spicetify.nix
     ../../hm-modules/programs/starship.nix
-    ../../hm-modules/programs/steam.nix
     ../../hm-modules/programs/thunderbird.nix
     ../../hm-modules/programs/tmenu.nix
     ../../hm-modules/programs/vicinae.nix

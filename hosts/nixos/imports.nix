@@ -13,6 +13,7 @@
     ../../modules/packages/pkgs.nix
     # Programs
     ../../modules/programs/docker.nix
+    ../../modules/programs/fwupd.nix
     ../../modules/programs/kde-connect.nix
     ../../modules/programs/plasma.nix
     ../../modules/programs/niri.nix

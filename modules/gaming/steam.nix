@@ -11,7 +11,8 @@
     protontricks.enable = true;
     extraCompatPackages = with pkgs; [
       proton-ge-bin
-      boson
+      dwproton
+      gdk-proton
       nativecookie
     ];
   };

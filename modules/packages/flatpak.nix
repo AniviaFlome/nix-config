@@ -33,13 +33,10 @@
           "com.stremio.Stremio"
           "com.rustdesk.RustDesk"
           "com.usebottles.bottles"
-          "io.github.chidiwilliams.Buzz"
           "io.github.giantpinkrobots.flatsweep"
-          "io.github.giantpinkrobots.varia"
           "io.github.Soundux"
           "org.vinegarhq.Sober"
           "sh.fhs.ksre"
-          "tw.ddnet.ddnet"
         ]
       ++ [
         (

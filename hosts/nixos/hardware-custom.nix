@@ -52,11 +52,15 @@
     modesetting.enable = true; # Modesetting is required.
     powerManagement = {
       enable = true; # Needed for sleep.
-      finegrained = false; # Requires PRIME offload, not available on discrete-only GPU
+      finegrained = false;
     };
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
+  };
+
+  hardware.nvidia-container-toolkit = {
+    enable = true;
   };
 
   hardware.openrazer = {

@@ -4,10 +4,10 @@ current=$(powerprofilesctl get)
 
 # Cycle: power-saver -> balanced -> performance -> power-saver
 case "$current" in
-    power-saver) next="balanced" ;;
-    balanced) next="performance" ;;
-    performance) next="power-saver" ;;
-    *) next="balanced" ;;
+power-saver) next="balanced" ;;
+balanced) next="performance" ;;
+performance) next="power-saver" ;;
+*) next="balanced" ;;
 esac
 
 # Apply it

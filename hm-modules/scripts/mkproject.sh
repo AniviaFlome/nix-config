@@ -8,7 +8,6 @@ fi
 echo "Select project type:"
 type=$(gum choose "python" "rust" "go" "node" "default")
 
-
 if [ -z "$type" ]; then
   echo "No selection made."
   exit 1

@@ -297,7 +297,8 @@
     app2unit
     cava
     cliphist
-    pavucontrol
+    gpu-screen-recorder
+    pwvucontrol
     wlsunset
   ];
 }

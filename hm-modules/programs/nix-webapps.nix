@@ -7,7 +7,7 @@
 
   programs.nix-webapps = {
     enable = true;
-    browser = "brave";
+    browser = "helium";
     apps = {
       "Google Meet" = {
         url = "https://meet.google.com/landing";

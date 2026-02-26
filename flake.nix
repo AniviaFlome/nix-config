@@ -6,7 +6,6 @@
     nixpkgs-stable.url = "https://flakehub.com/f/NixOS/nixpkgs/*.tar.gz";
     sops-nix.url = "github:Mic92/sops-nix";
     nvf.url = "github:notashelf/nvf";
-    zen-browser.url = "github:0xc000022070/zen-browser-flake";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     catppuccin.url = "github:catppuccin/nix";
     lanzaboote.url = "github:nix-community/lanzaboote";
@@ -21,6 +20,9 @@
     nix-mineral.url = "github:cynicsketch/nix-mineral/";
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     direnv-instant.url = "github:Mic92/direnv-instant";
+    niri-session-manager.url = "github:MTeaHead/niri-session-manager";
+    distrobox-flake.url = "github:AniviaFlome/distrobox-flake";
+    nix-osu.url = "github:yunfachi/nix-osu";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -82,6 +84,13 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
   };
 
   outputs =
@@ -93,20 +102,22 @@
     }@inputs:
     let
       inherit (self) outputs;
-      systems = [
+      supportedSystems = [
         "x86_64-linux"
       ];
       variables = (import ./misc/variables.nix)._module.args;
       inherit (variables) username;
       lib = nixpkgs.lib.extend (_final: prev: import ./lib { lib = prev; });
-      eachSystem = f: nixpkgs.lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
-      treefmtEval = eachSystem (pkgs: inputs.treefmt-nix.lib.evalModule pkgs ./misc/treefmt.nix);
+      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+      treefmtEval = forAllSystems (
+        system: inputs.treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} ./misc/treefmt.nix
+      );
     in
     {
-      formatter = eachSystem (pkgs: treefmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.wrapper);
+      formatter = forAllSystems (system: treefmtEval.${system}.config.build.wrapper);
 
-      checks = eachSystem (pkgs: {
-        formatting = treefmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.check self;
+      checks = forAllSystems (system: {
+        formatting = treefmtEval.${system}.config.build.check self;
       });
 
       nixosConfigurations = {

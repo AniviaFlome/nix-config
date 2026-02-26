@@ -7,8 +7,5 @@
     settings = {
       show_startup_tips = false;
     };
-    layouts = {
-
-    };
   };
 }

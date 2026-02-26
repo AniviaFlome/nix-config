@@ -23,6 +23,9 @@
       "nix-access-token" = {
         mode = "0400";
       };
+      "vps-password" = {
+        mode = "0400";
+      };
     };
   };
 

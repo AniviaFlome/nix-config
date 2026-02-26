@@ -90,37 +90,37 @@ confirm_and_apply() {
   # Read from tty for user input
   printf "Apply changes? [Y/n] "
   read -r answer </dev/tty
-  
+
   case "${answer:-}" in
-    [Yy]*|"")
-      mkdir -p "$BACKUP_DIR"
+  [Yy]* | "")
+    mkdir -p "$BACKUP_DIR"
 
-      timestamp="$(date +%Y-%m-%d_%H-%M-%S)"
-      base="$(basename "$original")"
-      backup_name="${base}.${timestamp}.backup"
-      backup_path="$BACKUP_DIR/$backup_name"
+    timestamp="$(date +%Y-%m-%d_%H-%M-%S)"
+    base="$(basename "$original")"
+    backup_name="${base}.${timestamp}.backup"
+    backup_path="$BACKUP_DIR/$backup_name"
 
-      # Save backup
-      cp "$original" "$backup_path"
+    # Save backup
+    cp "$original" "$backup_path"
 
-      # Enforce backup retention per file (keep newest MAX_BACKUPS)
-      if [ -n "${MAX_BACKUPS:-}" ]; then
-        # Use find/sort/head to get old backups instead of arrays
-        find "$BACKUP_DIR" -maxdepth 1 -name "${base}.*.backup" -printf "%T@ %p\n" | \
-          sort -rn | tail -n +$((MAX_BACKUPS + 1)) | cut -d' ' -f2- | \
-          while read -r old_backup; do
-            rm -f "$old_backup"
-          done
-      fi
+    # Enforce backup retention per file (keep newest MAX_BACKUPS)
+    if [ -n "${MAX_BACKUPS:-}" ]; then
+      # Use find/sort/head to get old backups instead of arrays
+      find "$BACKUP_DIR" -maxdepth 1 -name "${base}.*.backup" -printf "%T@ %p\n" |
+        sort -rn | tail -n +$((MAX_BACKUPS + 1)) | cut -d' ' -f2- |
+        while read -r old_backup; do
+          rm -f "$old_backup"
+        done
+    fi
 
-      mv "$temp" "$original"
-      msg_info "Changes applied. Backup saved at: $backup_path"
-      ;;
-    *)
-      msg_warn "Aborted. No changes applied."
-      rm -f "$temp"
-      exit 0
-      ;;
+    mv "$temp" "$original"
+    msg_info "Changes applied. Backup saved at: $backup_path"
+    ;;
+  *)
+    msg_warn "Aborted. No changes applied."
+    rm -f "$temp"
+    exit 0
+    ;;
   esac
 }
 
@@ -148,13 +148,13 @@ fi
 
 find_single_file() {
   pattern="$1"
-  
+
   # Find files and count them using wc -l
   matches_file=$(mktemp)
-  find "$CONFIG_DIR" -type f -name "$pattern" > "$matches_file"
-  
-  count=$(wc -l < "$matches_file")
-  
+  find "$CONFIG_DIR" -type f -name "$pattern" >"$matches_file"
+
+  count=$(wc -l <"$matches_file")
+
   if [ "$count" -eq 0 ]; then
     echo ""
     rm -f "$matches_file"
@@ -165,7 +165,7 @@ find_single_file() {
     msg_error "Multiple '$pattern' files found under flake root:"
     while read -r match; do
       printf " - %s\n" "$match"
-    done < "$matches_file"
+    done <"$matches_file"
     rm -f "$matches_file"
     exit 1
   fi
@@ -184,30 +184,6 @@ FLATPAK_DEFAULT_CONFIG="$(find_single_file "$FLATPAK_CONFIG_FILENAME")"
 # ============================================================================
 # Validation
 # ============================================================================
-check_nix_dependencies() {
-  missing=""
-  command -v fzf >/dev/null || missing="$missing fzf"
-  command -v nix-search-tv >/dev/null || missing="$missing nix-search-tv"
-  command -v nix-instantiate >/dev/null || missing="$missing nix-instantiate"
-
-  if [ -n "$missing" ]; then
-    msg_error "Missing dependencies:$missing"
-    exit 1
-  fi
-}
-
-check_flatpak_dependencies() {
-  missing=""
-  command -v fzf >/dev/null || missing="$missing fzf"
-  command -v flatpak >/dev/null || missing="$missing flatpak"
-  command -v nix-instantiate >/dev/null || missing="$missing nix-instantiate"
-
-  if [ -n "$missing" ]; then
-    msg_error "Missing dependencies:$missing"
-    exit 1
-  fi
-}
-
 check_config_file() {
   if [ ! -f "$1" ]; then
     msg_error "Config file not found: $1"
@@ -235,10 +211,6 @@ resolve_nix_config_file() {
 # ============================================================================
 # Nix Package Functions
 # ============================================================================
-
-get_nix_package_name() {
-  echo "$1" | sed "s/^${NIX_PKG_PREFIX}\.//"
-}
 
 extract_nix_packages() {
   file="$1"
@@ -293,7 +265,7 @@ extract_nix_packages() {
 select_nix_package_to_add() {
   # fzf UI with multi-select (Tab to select, Enter to confirm)
   # We use --print-query to capture input if the user wants to add a custom package not in the list.
-  
+
   fzf_output=$(
     {
       nix-search-tv print nixpkgs
@@ -337,7 +309,7 @@ select_nix_package_to_add() {
   # Process each selected line
   printf "%s\n" "$selected_lines" | while IFS= read -r selected; do
     [ -z "$selected" ] && continue
-    
+
     # Extract first token-like part (before tab or pipe)
     # Using cut or awk because string manipulation in dash is limited
     raw=$(echo "$selected" | cut -f1 | cut -d'|' -f1)
@@ -358,9 +330,9 @@ select_nix_package_to_add() {
     first_segment="${pkg%%.*}"
 
     case "$pkg" in
-      "$first_segment.$first_segment."*)
-        pkg="${pkg#$first_segment.}"
-        ;;
+    "$first_segment.$first_segment."*)
+      pkg="${pkg#$first_segment.}"
+      ;;
     esac
 
     if [ -n "$pkg" ]; then
@@ -389,11 +361,9 @@ add_nix_package() {
     exit 1
   fi
 
-  bare="$(get_nix_package_name "$attr")"
+  bare="$(echo "$attr" | sed "s/^${NIX_PKG_PREFIX}\.//")"
 
-  # crude duplicate guard (by bare name)
-  # using grep with word boundaries
-  if grep -q "[[:<:]]$bare[[:>:]]" "$file" 2>/dev/null || grep -q "\b$bare\b" "$file"; then
+  if extract_nix_packages "$file" | grep -qxF "$bare"; then
     msg_warn "Already exists: $bare"
     exit 0
   fi
@@ -402,35 +372,27 @@ add_nix_package() {
   temp="$(mktemp)"
 
   awk -v bare="$bare" -v prefItem="$prefItem" -v stable_prefix="$NIX_STABLE_PKG_PREFIX" '
-        BEGIN { in_env=0; in_list=0; inserted=0; use_bare=0 }
+        BEGIN {
+            in_env=0; in_list=0; inserted=0; use_bare=0
+            pat_stable = "with[ \\t]+" stable_prefix "[ \\t]*;"
+        }
 
         /environment\.systemPackages/ {
             in_env=1
-            pat_stable = "with[ \\t]+" stable_prefix "[ \\t]*;"
-            if ($0 ~ /with[ \t]+pkgs[ \t]*;/ || $0 ~ pat_stable) {
-                use_bare=1
-            }
+            if ($0 ~ /with[ \t]+pkgs[ \t]*;/ || $0 ~ pat_stable) use_bare=1
             print
-            if (index($0, "[") > 0) {
-                in_list=1
-            }
+            if (index($0, "[") > 0) in_list=1
             next
         }
 
         in_env && !in_list && index($0, "[") == 0 {
-            pat_stable = "with[ \\t]+" stable_prefix "[ \\t]*;"
-            if ($0 ~ /with[ \t]+pkgs[ \t]*;/ || $0 ~ pat_stable) {
-                use_bare=1
-            }
+            if ($0 ~ /with[ \t]+pkgs[ \t]*;/ || $0 ~ pat_stable) use_bare=1
             print
             next
         }
 
         in_env && !in_list && index($0, "[") > 0 {
-            pat_stable = "with[ \\t]+" stable_prefix "[ \\t]*;"
-            if ($0 ~ /with[ \t]+pkgs[ \t]*;/ || $0 ~ pat_stable) {
-                use_bare=1
-            }
+            if ($0 ~ /with[ \t]+pkgs[ \t]*;/ || $0 ~ pat_stable) use_bare=1
             in_list=1
             print
             next
@@ -442,7 +404,7 @@ add_nix_package() {
             gsub(/^[ \t]+/, "", stripped)
             gsub(/[ \t]+$/, "", stripped)
 
-            is_closing = (stripped ~ /^\];?$/ || stripped ~ /^\];/ || stripped ~ /^\]/)
+            is_closing = (stripped ~ /^\]/)
             is_item = (stripped != "" && stripped !~ /^#/ && index(stripped, "[") == 0 && !is_closing)
 
             if (is_item && !inserted) {
@@ -518,7 +480,7 @@ remove_nix_package() {
             gsub(/^[ \t]+/, "", stripped)
             gsub(/[ \t]+$/, "", stripped)
 
-            is_closing = (stripped ~ /^\];?$/ || stripped ~ /^\];/ || stripped ~ /^\]/)
+            is_closing = (stripped ~ /^\]/)
             is_item = (stripped != "" && stripped !~ /^#/ && index(stripped, "[") == 0 && !is_closing)
 
             if (is_item) {
@@ -578,7 +540,7 @@ extract_flatpak_packages() {
         gsub(/[ \t]+$/, "", stripped)
 
         # closing bracket
-        if (stripped ~ /^\];?$/ || stripped ~ /^\];/ || stripped ~ /^\]/) {
+        if (stripped ~ /^\]/) {
             in_list=0
             exit
         }
@@ -596,9 +558,6 @@ extract_flatpak_packages() {
 }
 
 select_flatpak_to_add() {
-  selected=""
-  app_id=""
-
   # Use flatpak search and format output for fzf
   selected="$(flatpak search "" --columns=application,name,description |
     awk -F'\t' '{printf "%s | %s - %s\n", $1, $2, $3}' |
@@ -674,7 +633,7 @@ add_flatpak_package() {
             gsub(/^[ \t]+/, "", stripped)
             gsub(/[ \t]+$/, "", stripped)
 
-            is_closing = (stripped ~ /^\];?$/ || stripped ~ /^\];/ || stripped ~ /^\]/)
+            is_closing = (stripped ~ /^\]/)
             is_item = (stripped != "" && stripped !~ /^#/ && index(stripped, "[") == 0 && !is_closing)
 
             if (is_item && !inserted) {
@@ -738,7 +697,7 @@ remove_flatpak_package() {
             gsub(/^[ \t]+/, "", stripped)
             gsub(/[ \t]+$/, "", stripped)
 
-            is_closing = (stripped ~ /^\];?$/ || stripped ~ /^\];/ || stripped ~ /^\]/)
+            is_closing = (stripped ~ /^\]/)
             is_item = (stripped != "" && stripped !~ /^#/ && index(stripped, "[") == 0 && !is_closing)
 
             if (is_item) {
@@ -796,7 +755,6 @@ show_usage() {
 # ============================================================================
 nix_cmd_add() {
   file=""
-  NIX_PKG_PREFIX="pkgs"
 
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -820,7 +778,6 @@ nix_cmd_add() {
     exit 1
   fi
 
-  check_nix_dependencies
   check_config_file "$file"
 
   if ! packages="$(select_nix_package_to_add)"; then
@@ -840,8 +797,7 @@ nix_cmd_add() {
 
 nix_cmd_remove() {
   file=""
-  NIX_PKG_PREFIX="pkgs"
-  
+
   while [ $# -gt 0 ]; do
     case "$1" in
     "$CMD_STABLE" | "$CMD_STABLE_FULL")
@@ -859,12 +815,11 @@ nix_cmd_remove() {
 
   file="$(resolve_nix_config_file "$file")"
 
-  if [ -z "$file" ]; then 
+  if [ -z "$file" ]; then
     msg_error "No $NIX_CONFIG_FILENAME found under flake root."
     exit 1
   fi
 
-  check_nix_dependencies
   check_config_file "$file"
 
   pkg="$(select_nix_package_to_remove "$file" || true)"
@@ -880,8 +835,6 @@ nix_cmd_remove() {
 # Flatpak Commands
 # ============================================================================
 flatpak_cmd_add() {
-  file=""
-
   while [ $# -gt 0 ]; do
     case "$1" in
     -h | --help)
@@ -902,7 +855,6 @@ flatpak_cmd_add() {
     exit 1
   fi
 
-  check_flatpak_dependencies
   check_config_file "$file"
 
   if ! app_id="$(select_flatpak_to_add)"; then
@@ -913,8 +865,6 @@ flatpak_cmd_add() {
 }
 
 flatpak_cmd_remove() {
-  file=""
-
   while [ $# -gt 0 ]; do
     case "$1" in
     -h | --help)
@@ -935,7 +885,6 @@ flatpak_cmd_remove() {
     exit 1
   fi
 
-  check_flatpak_dependencies
   check_config_file "$file"
 
   pkg="$(select_flatpak_to_remove "$file" || true)"

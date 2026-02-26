@@ -4,7 +4,6 @@
 
 set -eu
 
-
 SOPS_FILE="${1:-}"
 KEY_NAME="${2:-sshPrivKey}"
 
@@ -52,7 +51,7 @@ if [ $? -eq 0 ] && [ -n "$PUB_KEY" ]; then
   echo
 
   # Copy to clipboard if wl-copy is available
-  if command -v wl-copy &>/dev/null; then
+  if command -v wl-copy >/dev/null 2>&1; then
     echo "$PUB_KEY" | wl-copy
     echo "Public key copied to clipboard."
   fi

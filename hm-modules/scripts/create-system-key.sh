@@ -5,7 +5,6 @@
 
 set -eu
 
-
 # Color definitions
 RED_BOLD='\033[1;31m'
 GREEN='\033[0;32m'

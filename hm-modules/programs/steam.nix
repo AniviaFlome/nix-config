@@ -9,11 +9,10 @@
     enable = true;
     closeSteam = true;
     defaultCompatTool = "GE-Proton";
-
     apps = {
       sea-of-thieves = {
         id = 1091500;
-        launchOptions = "gamemoderun %command%";
+        launchOptionsStr = "gamemoderun %command%";
       };
     };
   };

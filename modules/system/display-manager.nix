@@ -15,7 +15,7 @@
     defaultSession = null;
     autoLogin = {
       enable = false;
-      user = "${username}";
+      user = username;
     };
   };
 }

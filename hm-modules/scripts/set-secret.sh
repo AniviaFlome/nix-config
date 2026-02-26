@@ -4,7 +4,6 @@
 
 set -eu
 
-
 SOPS_FILE="${1:-}"
 
 # Find secrets.yaml if not specified

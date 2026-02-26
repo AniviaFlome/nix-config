@@ -1,6 +1,11 @@
 {
+  pkgs,
+  ...
+}:
+{
   programs.micro = {
     enable = true;
+    package = pkgs.micro-full;
     settings = {
       keymenu = true;
     };

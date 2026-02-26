@@ -13,12 +13,12 @@
     audacity
     bat
     bat-extras.core
+    bats
     better-control
     bleachbit
     bolt-launcher
     btrfs-progs
     bubblewrap
-    calibre
     comma
     crow-translate
     curl
@@ -29,18 +29,19 @@
     exiftool
     eza
     fastfetch
+    faugus-launcher
     ffmpeg-full
     flameshot
     fluent-reader
     fzf
     gdu
-    gearlever
     geteduroam
     geteduroam-cli
     git
     glib
     google-antigravity
     gparted
+    gpu-screen-recorder
     gpu-screen-recorder-gtk
     grsync
     gst_all_1.gstreamer
@@ -66,7 +67,6 @@
     kdePackages.partitionmanager
     kdiskmark
     kitty
-    krita
     legendary-gl
     libva
     libva-utils
@@ -98,6 +98,7 @@
     opencode
     opencommit
     openrct2
+    osu-beatmap-manager
     osu-lazer-bin
     packwiz
     prismlauncher
@@ -109,7 +110,6 @@
     rclone
     redeclipse
     retroarch
-    riseup-vpn
     rsync
     ryubing
     samira
@@ -117,9 +117,7 @@
     shattered-pixel-dungeon
     shellcheck
     songrec
-    space-station-14-launcher
     spotdl
-    spotify
     spotify-player
     starship
     statix

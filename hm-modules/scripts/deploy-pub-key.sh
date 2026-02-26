@@ -4,7 +4,6 @@
 
 set -eu
 
-
 USERNAME="${1:-}"
 HOST="${2:-}"
 

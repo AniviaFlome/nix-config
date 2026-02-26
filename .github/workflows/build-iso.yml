@@ -24,9 +24,6 @@ jobs:
       - name: Build NixOS Image
         run: nix build .#nixosConfigurations.${{ env.LIVEISO }}.config.system.build.isoImage
 
-      - name: List result directory
-        run: ls -la result/
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v6
         with:

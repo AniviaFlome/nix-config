@@ -98,8 +98,13 @@
           open-floating = true;
         }
         {
-          matches = [ { app-id = "^Minecraft"; } ];
-          open-fullscreen = true;
+          matches = [ { app-id = "^Minecraft 1.8.9"; } ];
+          open-focused = false;
+          open-maximized = true;
+        }
+        {
+          matches = [ { app-id = "^org.prismlauncher.PrismLauncher"; } ];
+          open-focused = false;
         }
       ];
       outputs = {

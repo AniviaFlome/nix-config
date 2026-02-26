@@ -3,7 +3,7 @@
   ...
 }:
 let
-  dashScripts = [
+  scripts = [
     "deploy"
     "hyscript"
     "monitor-off"
@@ -27,15 +27,11 @@ let
     "set-hashed-password"
     "set-secret"
   ];
-
-  bashScripts = [
-  ];
 in
 {
   home.packages =
     with pkgs;
-    (map (script: writeScriptBin script (builtins.readFile ./${script}.sh)) dashScripts)
-    ++ (map (script: writeShellScriptBin script (builtins.readFile ./${script}.sh)) bashScripts)
+    (map (script: writeScriptBin script (builtins.readFile ./${script}.sh)) scripts)
     ++ [
       alsa-utils
       bat

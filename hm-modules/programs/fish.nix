@@ -13,28 +13,28 @@
     '';
     shellAliases = {
       bios = "systemctl reboot --firmware-setup";
-      cat = "${lib.getExe config.programs.bat.package}";
+      cat = lib.getExe config.programs.bat.package;
       cd = "z";
       ls = "${lib.getExe config.programs.eza.package} --icons -a --group-directories-first";
-      man = "${lib.getExe pkgs.bat-extras.batman}";
+      man = lib.getExe pkgs.bat-extras.batman;
       rm = "rm -I";
     };
-    plugins = [
+    plugins = with pkgs.fishPlugins; [
+      {
+        name = "autopair";
+        inherit (autopair) src;
+      }
       {
         name = "bass";
-        inherit (pkgs.fishPlugins.bass) src;
+        inherit (bass) src;
       }
       {
         name = "done";
-        inherit (pkgs.fishPlugins.done) src;
-      }
-      {
-        name = "git";
-        inherit (pkgs.fishPlugins.plugin-git) src;
+        inherit (done) src;
       }
       {
         name = "fzf-fish";
-        inherit (pkgs.fishPlugins.fzf-fish) src;
+        inherit (fzf-fish) src;
       }
     ];
   };

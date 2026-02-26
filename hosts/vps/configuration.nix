@@ -1,6 +1,5 @@
 {
   modulesPath,
-  lib,
   pkgs,
   ...
 }@args:
@@ -12,38 +11,47 @@
     ./imports.nix
   ];
 
-  boot.loader.grub = {
-    # no need to set devices, disko will add all devices that have a EF02 partition to the list already
-    # devices = [ ];
-    efiSupport = true;
-    efiInstallAsRemovable = true;
+  boot = {
+    supportedFilesystems = [ "zfs" ];
+    loader.grub = {
+      # no need to set devices, disko will add all devices that have a EF02 partition to the list already
+      # devices = [ ];
+      efiSupport = true;
+      efiInstallAsRemovable = true;
+    };
+  };
+
+  networking.hostId = "3b8c3b1e";
+
+  services.zfs = {
+    autoScrub.enable = true;
+    trim.enable = true;
   };
 
   services.openssh = {
     enable = true;
   };
 
-  environment.systemPackages =
-    with pkgs;
-    map lib.lowPrio [
-      curl
-      gitMinimal
-    ];
+  environment.systemPackages = with pkgs; [
+    curl
+    micro-full
+  ];
 
-  users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICXW5gqP/C/NQYWmWLPefoQZkZI59/O1EjptVuzvA7gA aniviaflome@gmail.com"
-  ]
-  ++ (args.extraPublicKeys or [ ]);
-
-  users.users.vps = {
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "docker"
-    ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICXW5gqP/C/NQYWmWLPefoQZkZI59/O1EjptVuzvA7gA aniviaflome@gmail.com"
-    ];
+  users.users = {
+    vps = {
+      isNormalUser = true;
+      extraGroups = [
+        "wheel"
+        "docker"
+      ];
+    };
+    root = {
+      initialPassword = 1234;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICXW5gqP/C/NQYWmWLPefoQZkZI59/O1EjptVuzvA7gA aniviaflome@gmail.com"
+      ]
+      ++ (args.extraPublicKeys or [ ]);
+    };
   };
 
   system.stateVersion = "24.05";
