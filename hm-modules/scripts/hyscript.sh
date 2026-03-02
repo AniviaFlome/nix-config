@@ -57,9 +57,14 @@ move_to_workspace() {
 }
 
 id_in_list() {
-  _needle="$1"
-  _haystack="$2"
-  echo "$_haystack" | grep -qxF "$_needle"
+  case "
+$2
+" in
+  *"
+$1
+"*) return 0 ;;
+  *) return 1 ;;
+  esac
 }
 
 wait_for_minecraft_windows() {
