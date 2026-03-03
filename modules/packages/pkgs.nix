@@ -29,7 +29,6 @@
     exiftool
     eza
     fastfetch
-    faugus-launcher
     ffmpeg-full
     flameshot
     fluent-reader
@@ -56,6 +55,7 @@
     htop
     hugo
     hydralauncher
+    hyprism
     hyprpicker
     input-remapper
     jq

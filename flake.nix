@@ -23,6 +23,10 @@
     niri-session-manager.url = "github:MTeaHead/niri-session-manager";
     distrobox-flake.url = "github:AniviaFlome/distrobox-flake";
     nix-osu.url = "github:yunfachi/nix-osu";
+    airi = {
+      url = "github:moeru-ai/airi";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";

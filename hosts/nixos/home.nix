@@ -6,7 +6,7 @@
   imports = [ ./hm-imports.nix ];
 
   home = {
-    username = "${username}";
+    username = username;
     homeDirectory = "/home/${username}";
   };
 

@@ -1,6 +1,7 @@
 {
   inputs,
   osConfig,
+  pkgs,
   ...
 }:
 {
@@ -15,21 +16,16 @@
     containers = {
       arch = {
         image = "quay.io/toolbx/arch-toolbox:latest";
-        nvidia = osConfig.hardware.nvidia-containers.enable;
+        nvidia = osConfig.hardware.nvidia-containers.enable or false;
         pull = true;
         replace = true;
         additional_packages = builtins.concatStringsSep " " [
-          "atuin"
-          "base-devel"
-          "bat"
-          "eza"
-          "fastfetch"
-          "starship"
+
         ];
       };
       fedora = {
         image = "quay.io/fedora/fedora-toolbox:rawhide";
-        nvidia = osConfig.hardware.nvidia-containers.enable;
+        nvidia = osConfig.hardware.nvidia-containers.enable or false;
         pull = true;
         replace = true;
         additional_packages = builtins.concatStringsSep " " [
@@ -43,9 +39,14 @@
     enable = true;
     containers = {
       arch = {
-        alias = {
-          enable = true;
-        };
+        alias.enable = true;
+        packages = with pkgs; [
+          atuin
+          bat
+          eza
+          fastfetch
+          starship
+        ];
         aur = {
           enable = true;
           packages = [
@@ -54,9 +55,14 @@
         };
       };
       fedora = {
-        alias = {
-          enable = true;
-        };
+        alias.enable = true;
+        packages = with pkgs; [
+          atuin
+          bat
+          eza
+          fastfetch
+          starship
+        ];
         copr = {
           enable = true;
           repos = [
@@ -67,8 +73,18 @@
           ];
         };
         rpmfusion = {
-          free.enable = true;
-          unfree.enable = true;
+          free = {
+            enable = true;
+            packages = [
+
+            ];
+          };
+          unfree = {
+            enable = true;
+            packages = [
+
+            ];
+          };
         };
       };
     };
