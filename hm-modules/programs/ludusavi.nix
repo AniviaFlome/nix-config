@@ -15,7 +15,7 @@
       };
       apps = {
         rclone = {
-          executable = "${lib.getExe pkgs.rclone}";
+          executable = lib.getExe pkgs.rclone;
           arguments = "--fast-list";
         };
       };

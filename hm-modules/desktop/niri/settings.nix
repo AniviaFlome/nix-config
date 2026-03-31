@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }:
@@ -97,15 +96,6 @@
           matches = [ { title = "^Picture-in-Picture$"; } ];
           open-floating = true;
         }
-        {
-          matches = [ { app-id = "^Minecraft 1.8.9"; } ];
-          open-focused = false;
-          open-maximized = true;
-        }
-        {
-          matches = [ { app-id = "^org.prismlauncher.PrismLauncher"; } ];
-          open-focused = false;
-        }
       ];
       outputs = {
         "eDP-1" = {
@@ -130,12 +120,6 @@
         QT_QPA_PLATFORMTHEME = "kde";
         MOZ_ENABLE_WAYLAND = "1";
         NIXOS_OZONE_WL = "1";
-        QML2_IMPORT_PATH = lib.concatStringsSep ":" [
-          "${pkgs.quickshell}/lib/qt-6/qml"
-          "${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml"
-          "${pkgs.kdePackages.kirigami.unwrapped}/lib/qt-6/qml"
-          "${pkgs.kdePackages.qtmultimedia}/lib/qt-6/qml"
-        ];
       };
     };
   };

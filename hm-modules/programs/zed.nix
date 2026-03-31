@@ -28,6 +28,7 @@
       "toml"
       "xml"
     ];
+    enableMcpIntegration = true;
     userSettings = {
       buffer_font_family = "CascaydiaMono Nerd Font";
       telemetry = {

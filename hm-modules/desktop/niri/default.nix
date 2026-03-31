@@ -10,8 +10,7 @@
     ./keybinds.nix
     ./settings.nix
     ./scripts
-    ../common/hypridle.nix
-    ../common/noctalia.nix
+    ../common/dms
   ];
 
   home.packages = with pkgs; [

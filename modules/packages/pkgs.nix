@@ -38,7 +38,6 @@
     geteduroam-cli
     git
     glib
-    google-antigravity
     gparted
     gpu-screen-recorder
     gpu-screen-recorder-gtk
@@ -50,6 +49,8 @@
     gst_all_1.gst-plugins-ugly
     gst_all_1.gst-plugins-good
     gst_all_1.gst-plugins-base
+    handy
+    helium
     heroic
     home-manager
     htop
@@ -72,6 +73,7 @@
     libva-utils
     lidarr
     livecaptions
+    llm-agents.jules
     localsend
     man
     mangayomi
@@ -90,12 +92,10 @@
     nixd
     nixpkgs-review
     ntfs3g
-    nur.repos.Ev357.helium
     nurl
     nyaa
     obs-studio
     onlyoffice-desktopeditors
-    opencode
     opencommit
     openrct2
     osu-beatmap-manager

@@ -9,7 +9,6 @@
 
   programs.zen-browser = {
     enable = true;
-    suppressXdgMigrationWarning = true;
     profiles.${username} = {
       bookmarks = import ./bookmarks.nix;
       extensions = import ./extensions.nix { inherit inputs pkgs; };

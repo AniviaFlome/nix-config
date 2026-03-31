@@ -10,6 +10,7 @@
       autosubsync-mpv
       chapterskip
       cheatsheet
+      file-browser
       mpris
       mpv-subtitle-lines
       mpvacious

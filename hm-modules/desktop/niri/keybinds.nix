@@ -1,4 +1,5 @@
 {
+  clipboard,
   config,
   file,
   launcher,
@@ -17,10 +18,7 @@
       "Mod+B".action.spawn = "power-profiles-switch";
 
       "Mod+Space".action.spawn = lib.splitString " " launcher;
-      "Mod+H".action.spawn = [
-        "vicinae"
-        "vicinae://extensions/vicinae/clipboard/history"
-      ];
+      "Mod+H".action.spawn = lib.splitString " " clipboard;
 
       "Mod+F".action = maximize-column;
       "Mod+Shift+F".action = fullscreen-window;
@@ -40,6 +38,16 @@
       "Mod+A".action = focus-column-left;
       "Mod+S".action = focus-workspace-down;
       "Mod+D".action = focus-column-right;
+
+      "Mod+Shift+W".action = move-column-to-workspace-up;
+      "Mod+Shift+A".action = move-column-left;
+      "Mod+Shift+S".action = move-column-to-workspace-down;
+      "Mod+Shift+D".action = move-column-right;
+
+      "Mod+Shift+Up".action = move-window-up;
+      "Mod+Shift+Left".action = move-column-left;
+      "Mod+Shift+Down".action = move-window-down;
+      "Mod+Shift+Right".action = move-column-right;
 
       "Mod+WheelScrollDown".action = focus-column-right;
       "Mod+WheelScrollUp".action = focus-column-left;

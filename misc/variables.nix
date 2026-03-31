@@ -4,6 +4,7 @@
     audio-desktop = "mpv.desktop";
     browser = "zen-beta";
     browser-desktop = "zen-beta.desktop";
+    clipboard = "dms ipc clipboard toggle";
     discord = "vesktop";
     discord-desktop = "vesktop.desktop";
     ebook = "calibre";
@@ -15,8 +16,7 @@
     file-desktop = "org.kde.dolphin.desktop";
     image = "gwenview";
     image-desktop = "org.kde.gwenview.desktop";
-    launcher = "vicinae toggle";
-    launcher-desktop = "vicinae.desktop";
+    launcher = "dms ipc launcher toggle";
     mail = "thunderbird";
     mail-desktop = "thunderbird.desktop";
     music = "spotify";

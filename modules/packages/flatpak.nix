@@ -37,22 +37,7 @@
           "io.github.Soundux"
           "org.vinegarhq.Sober"
           "sh.fhs.ksre"
-        ]
-      ++ [
-        (
-          let
-            sha256 = "1v153k3vns64axybkd08r63jrcj8csqks5777bncyw1rpn6rflpn";
-          in
-          {
-            appId = "com.hypixel.HytaleLauncher";
-            inherit sha256;
-            bundle = builtins.fetchurl {
-              url = "https://launcher.hytale.com/builds/release/linux/amd64/hytale-launcher-latest.flatpak";
-              inherit sha256;
-            };
-          }
-        )
-      ];
+        ];
     overrides = {
       global = {
         Context = {

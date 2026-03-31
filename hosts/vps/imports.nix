@@ -2,7 +2,7 @@
   imports = [
     # Security
     ../../modules/security/fail2ban.nix
-    ../../modules/security/firewall.ncfix
+    ../../modules/security/firewall.nix
     # Server
     ../../modules/server/glances.nix
     ../../modules/server/freshrss.nix

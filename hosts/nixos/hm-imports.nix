@@ -16,6 +16,7 @@
     ../../hm-modules/programs/atuin.nix
     ../../hm-modules/programs/bash.nix
     ../../hm-modules/programs/bat.nix
+    ../../hm-modules/programs/claude-code.nix
     ../../hm-modules/programs/direnv.nix
     ../../hm-modules/programs/distrobox
     ../../hm-modules/programs/easyeffects
@@ -27,6 +28,7 @@
     ../../hm-modules/programs/konsole.nix
     ../../hm-modules/programs/lazygit.nix
     ../../hm-modules/programs/ludusavi.nix
+    ../../hm-modules/programs/mcp.nix
     ../../hm-modules/programs/micro.nix
     ../../hm-modules/programs/mpv.nix
     ../../hm-modules/programs/neovim.nix
@@ -35,13 +37,13 @@
     ../../hm-modules/programs/nixcord.nix
     ../../hm-modules/programs/nh.nix
     ../../hm-modules/programs/nyaa.nix
+    ../../hm-modules/programs/opencode.nix
     ../../hm-modules/programs/qutebrowser.nix
     ../../hm-modules/programs/ripgrep.nix
     ../../hm-modules/programs/spicetify.nix
     ../../hm-modules/programs/starship.nix
     ../../hm-modules/programs/thunderbird.nix
     ../../hm-modules/programs/tmenu.nix
-    ../../hm-modules/programs/vicinae.nix
     ../../hm-modules/programs/vscode.nix
     ../../hm-modules/programs/yt-x.nix
     ../../hm-modules/programs/zed.nix

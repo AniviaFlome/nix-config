@@ -3,12 +3,12 @@
   ...
 }:
 [
-  inputs.antigravity-nix.overlays.default
   inputs.firefox-addons.overlays.default
   inputs.nix-bwrapper.overlays.default
   inputs.nix-cachyos-kernel.overlays.pinned
   inputs.nix-repository.overlays.default
   inputs.nur.overlays.default
+  inputs.llm-agents.overlays.default
   (final: prev: {
     stable = import inputs.nixpkgs-stable {
       inherit (final.stdenv.hostPlatform) system;
@@ -16,9 +16,16 @@
         allowUnfree = true;
       };
     };
+    helium = prev.nur.repos.Ev357.helium.override {
+      enableWideVine = true;
+    };
+    qutebrowser = prev.qutebrowser.override {
+      enableWideVine = true;
+    };
     prismlauncher = prev.prismlauncher.override {
       additionalLibs = with prev; [
         bzip2
+        curl
         openssl
         nss
       ];
@@ -38,5 +45,12 @@
         np2kai
       ]
     );
+    pkgs-millennium = import inputs.nixpkgs-millennium {
+      inherit (final.stdenv.hostPlatform) system;
+      config = {
+        allowUnfree = true;
+      };
+    };
+    steam-millennium = final.pkgs-millennium.steam-millennium;
   })
 ]

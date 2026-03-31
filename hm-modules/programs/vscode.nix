@@ -6,8 +6,9 @@
 {
   programs.vscode = {
     enable = true;
-    package = with pkgs; vscodium;
+    package = pkgs.antigravity-fhs;
     profiles.default = {
+      enableMcpIntegration = true;
       extensions = with pkgs.vscode-extensions; [
         alefragnani.project-manager
         editorconfig.editorconfig

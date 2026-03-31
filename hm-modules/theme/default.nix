@@ -31,6 +31,7 @@ in
       package = catppuccin-gtk-override;
       name = "catppuccin-mocha-mauve-standard";
     };
+    gtk4.theme = config.gtk.theme;
   };
 
   home.file = {

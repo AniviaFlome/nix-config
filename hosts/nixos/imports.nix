@@ -23,7 +23,7 @@
     ../../modules/programs/snapper.nix
     ../../modules/programs/virtualization.nix
     ../../modules/programs/waydroid.nix
-    ../../modules/programs/zapret.nix
+    # ../../modules/programs/zapret.nix
     # Security
     ../../modules/security/fail2ban.nix
     ../../modules/security/firewall.nix
@@ -35,7 +35,7 @@
     ../../modules/system/bootloader.nix
     ../../modules/system/cachy.nix
     ../../modules/system/display-manager.nix
-    ../../modules/system/dns.nix
+    # ../../modules/system/dns.nix
     ../../modules/system/fonts.nix
     ../../modules/system/kernel.nix
     ../../modules/system/locale.nix

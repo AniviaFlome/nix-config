@@ -28,7 +28,7 @@ USE_STABLE=false
 FLATPAK_CONFIG_FILENAME="flatpak.nix"
 
 DEFAULT_DIR="${HOME}/nix-config"
-BACKUP_DIR="${XDG_STATE_HOME}/npp-backups"
+BACKUP_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/npp-backups"
 MAX_BACKUPS=14
 
 # ============================================================================

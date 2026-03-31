@@ -52,7 +52,7 @@
     modesetting.enable = true; # Modesetting is required.
     powerManagement = {
       enable = true; # Needed for sleep.
-      finegrained = false;
+      finegrained = false; # Requires PRIME
     };
     open = true;
     nvidiaSettings = true;
@@ -66,7 +66,7 @@
   hardware.openrazer = {
     enable = true;
     users = [
-      "${username}"
+      username
     ];
   };
 

@@ -35,12 +35,4 @@
     ];
     definedAliases = [ "@aw" ];
   };
-  "Leta - Google" = {
-    urls = [
-      {
-        template = "https://leta.mullvad.net/search?q={searchTerms}&engine=google";
-      }
-    ];
-    definedAliases = [ "@lt" ];
-  };
 }

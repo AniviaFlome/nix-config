@@ -23,9 +23,12 @@
     niri-session-manager.url = "github:MTeaHead/niri-session-manager";
     distrobox-flake.url = "github:AniviaFlome/distrobox-flake";
     nix-osu.url = "github:yunfachi/nix-osu";
-    airi = {
-      url = "github:moeru-ai/airi";
-      inputs.nixpkgs.follows = "nixpkgs";
+    nix-themes.url = "github:aniviaflome/nix-themes";
+    dms.url = "github:AvengeMedia/DankMaterialShell";
+    llm-agents.url = "github:numtide/llm-agents.nix";
+    dms-plugins = {
+      url = "github:AvengeMedia/dms-plugins";
+      flake = false;
     };
     disko = {
       url = "github:nix-community/disko";
@@ -41,10 +44,6 @@
     };
     nix-repository = {
       url = "github:AniviaFlome/nix-repository";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    antigravity-nix = {
-      url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     tmenu = {
@@ -95,6 +94,7 @@
         home-manager.follows = "home-manager";
       };
     };
+    nixpkgs-millennium.url = "github:NixOS/nixpkgs/pull/487045/head";
   };
 
   outputs =
@@ -102,6 +102,7 @@
       self,
       nixpkgs,
       nixvirt,
+      nixpkgs-millennium,
       ...
     }@inputs:
     let
