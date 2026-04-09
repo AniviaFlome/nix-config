@@ -16,7 +16,6 @@
     ../../hm-modules/programs/atuin.nix
     ../../hm-modules/programs/bash.nix
     ../../hm-modules/programs/bat.nix
-    ../../hm-modules/programs/claude-code.nix
     ../../hm-modules/programs/direnv.nix
     ../../hm-modules/programs/distrobox
     ../../hm-modules/programs/easyeffects
@@ -37,6 +36,7 @@
     ../../hm-modules/programs/nixcord.nix
     ../../hm-modules/programs/nh.nix
     ../../hm-modules/programs/nyaa.nix
+    ../../hm-modules/programs/obs-studio.nix
     ../../hm-modules/programs/opencode.nix
     ../../hm-modules/programs/qutebrowser.nix
     ../../hm-modules/programs/ripgrep.nix

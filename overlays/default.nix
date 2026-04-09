@@ -4,7 +4,6 @@
 }:
 [
   inputs.firefox-addons.overlays.default
-  inputs.nix-bwrapper.overlays.default
   inputs.nix-cachyos-kernel.overlays.pinned
   inputs.nix-repository.overlays.default
   inputs.nur.overlays.default
@@ -51,6 +50,6 @@
         allowUnfree = true;
       };
     };
-    steam-millennium = final.pkgs-millennium.steam-millennium;
+    inherit (final.pkgs-millennium) steam-millennium;
   })
 ]

@@ -14,9 +14,7 @@
     nixcord.url = "github:kaylorben/nixcord";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     systems.url = "github:nix-systems/default";
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nix-webapps.url = "github:AniviaFlome/nix-webapps";
-    nix-bwrapper.url = "github:Naxdy/nix-bwrapper";
     nix-mineral.url = "github:cynicsketch/nix-mineral/";
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     direnv-instant.url = "github:Mic92/direnv-instant";
@@ -102,7 +100,6 @@
       self,
       nixpkgs,
       nixvirt,
-      nixpkgs-millennium,
       ...
     }@inputs:
     let
@@ -137,7 +134,6 @@
           };
           modules = [
             ./hosts/nixos/configuration.nix
-            inputs.determinate.nixosModules.default
             inputs.nur.modules.nixos.default
           ];
         };
@@ -175,6 +171,7 @@
           inherit (self.nixosConfigurations.nixos) pkgs;
           extraSpecialArgs = {
             inherit inputs outputs;
+            osConfig = self.nixosConfigurations.nixos.config;
           };
           modules = [ ./hosts/nixos/home.nix ];
         };

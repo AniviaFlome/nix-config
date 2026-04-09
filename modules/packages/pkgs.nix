@@ -20,6 +20,7 @@
     btrfs-progs
     bubblewrap
     comma
+    crankshaft
     crow-translate
     curl
     dash
@@ -39,8 +40,6 @@
     git
     glib
     gparted
-    gpu-screen-recorder
-    gpu-screen-recorder-gtk
     grsync
     gst_all_1.gstreamer
     gst_all_1.gst-vaapi
@@ -82,9 +81,9 @@
     mcpelauncher-ui-qt
     micro
     mindustry-wayland
-    motrix
     mousam
     mpv
+    mullvad-browser
     neovim
     nicotine-plus
     nix-init
@@ -94,7 +93,6 @@
     ntfs3g
     nurl
     nyaa
-    obs-studio
     onlyoffice-desktopeditors
     opencommit
     openrct2
@@ -102,10 +100,12 @@
     osu-lazer-bin
     packwiz
     prismlauncher
+    proton-vpn
     protonplus
     pwvucontrol
     python3
     qbittorrent
+    qwen-code
     rPackages.stranslate
     rclone
     redeclipse

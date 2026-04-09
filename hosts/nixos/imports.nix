@@ -7,19 +7,19 @@
     ../../modules/gaming/gamemode.nix
     ../../modules/gaming/steam.nix
     # Packages
-    # ../../modules/packages/bubblewrap.nix
     ../../modules/packages/flatpak.nix
     ../../modules/packages/pkgs-stable.nix
     ../../modules/packages/pkgs.nix
     # Programs
     ../../modules/programs/docker.nix
     ../../modules/programs/fwupd.nix
+    ../../modules/programs/gpu-screen-recorder.nix
     ../../modules/programs/kde-connect.nix
     ../../modules/programs/plasma.nix
     ../../modules/programs/niri.nix
+    ../../modules/programs/obs-studio.nix
     ../../modules/programs/oom.nix
     ../../modules/programs/podman.nix
-    ../../modules/programs/printing.nix
     ../../modules/programs/snapper.nix
     ../../modules/programs/virtualization.nix
     ../../modules/programs/waydroid.nix
@@ -35,9 +35,10 @@
     ../../modules/system/bootloader.nix
     ../../modules/system/cachy.nix
     ../../modules/system/display-manager.nix
-    # ../../modules/system/dns.nix
+    ../../modules/system/dns.nix
     ../../modules/system/fonts.nix
     ../../modules/system/kernel.nix
+    ../../modules/system/lix.nix
     ../../modules/system/locale.nix
     ../../modules/system/network.nix
     ../../modules/system/nh.nix

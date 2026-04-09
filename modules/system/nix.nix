@@ -30,8 +30,7 @@
     extraOptions = ''
       !include ${config.sops.secrets."nix-access-token".path}
       builders-use-substitutes = true
-      experimental-features = nix-command flakes pipe-operators
-      eval-cores = 2
+      experimental-features = nix-command flakes
     '';
   };
 

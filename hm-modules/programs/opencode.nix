@@ -5,8 +5,8 @@ in
   programs.opencode = {
     enable = true;
     enableMcpIntegration = true;
-    commands = aiCommon.commands;
-    skills = aiCommon.skills;
+    inherit (aiCommon) commands;
+    inherit (aiCommon) skills;
     settings = {
 
     };

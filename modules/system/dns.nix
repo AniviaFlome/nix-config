@@ -1,8 +1,6 @@
 let
-  StateDirName = "dnscrypt-proxy-state";
-  StatePath = "/var/lib/${StateDirName}";
-  CacheDirName = "dnscrpt-proxy-cache";
-  CachePath = "/var/lib/${CacheDirName}";
+  hasIPv6Internet = true;
+  StateDirectory = "dnscrypt-proxy";
 in
 {
   networking = {
@@ -12,6 +10,7 @@ in
     nameservers = [
       "127.0.0.1"
       "::1"
+      "9.9.9.9"
     ];
   };
 
@@ -22,9 +21,12 @@ in
         "127.0.0.1:53"
         "[::1]:53"
       ];
-      ipv6_servers = true;
-      require_dnssec = true;
-      require_nolog = true;
+
+      ipv6_servers = hasIPv6Internet;
+      block_ipv6 = !hasIPv6Internet;
+
+      require_dnssec = false;
+      require_nolog = false;
       require_nofilter = false;
 
       # Bootstrap resolvers - plain DNS IPs to resolve DoH hostnames initially
@@ -39,7 +41,7 @@ in
           "https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md"
         ];
         minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-        cache_file = "${StatePath}/public-resolvers.md";
+        cache_file = "/var/lib/${StateDirectory}/public-resolvers.md";
       };
 
       server_names = [
@@ -50,7 +52,6 @@ in
   };
 
   systemd.services.dnscrypt-proxy2.serviceConfig = {
-    StateDirectory = StatePath;
-    CacheDirectory = CachePath;
+    inherit StateDirectory;
   };
 }

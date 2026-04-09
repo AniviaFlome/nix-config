@@ -22,6 +22,9 @@
             "gnome-keyring"
           ];
         };
+        niri = {
+          "org.freedesktop.impl.portal.FileChooser" = [ "kde" ];
+        };
       };
       extraPortals = with pkgs; [
         xdg-desktop-portal

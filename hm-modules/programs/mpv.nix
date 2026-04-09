@@ -45,6 +45,9 @@
       };
     };
     config = {
+      osc = "no";
+      title-bar = "no";
+
       write-filename-in-watch-later-config = "yes";
       save-watch-history = "yes";
 
@@ -56,6 +59,10 @@
       window-maximized = "yes";
       hr-seek = "yes";
       keep-open = "yes";
+
+      profile = "high-quality";
+      video-sync = "display-resample";
+      interpolation = true;
 
       vo = "gpu-next";
       hwdec = "auto-safe";
@@ -71,8 +78,8 @@
       "Alt+c" = "script-binding quality_menu/audio_formats_toggle";
       "Ctrl+f" = "script-binding subtitle_lines/list_subtitles";
       "Ctrl+F" = "script-binding subtitle_lines/list_secondary_subtitles";
-      "ö" = "add speed 0.05";
-      "ç" = "add speed -0.05";
+      "ö" = "add speed -0.05";
+      "ç" = "add speed 0.05";
 
       # Shaders
       "Ctrl+1" = ''no-osd change-list glsl-shaders clr ""; show-text "GLSL shaders cleared"'';
