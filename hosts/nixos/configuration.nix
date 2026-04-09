@@ -1,5 +1,6 @@
 {
   username,
+  inputs,
   ...
 }:
 {
@@ -17,10 +18,14 @@
     extraGroups = [ "wheel" ];
   };
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.${username} = import ./home.nix;
+    extraSpecialArgs = {
+      inherit inputs;
+    };
+  };
 
   system.stateVersion = "24.05";
 }

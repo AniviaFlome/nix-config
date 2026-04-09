@@ -134,6 +134,7 @@
           };
           modules = [
             ./hosts/nixos/configuration.nix
+            inputs.home-manager.nixosModules.home-manager
             inputs.nur.modules.nixos.default
           ];
         };
@@ -163,17 +164,6 @@
             inherit inputs outputs;
           };
           modules = [ ./hosts/liveiso-minimal/configuration.nix ];
-        };
-      };
-
-      homeConfigurations = {
-        "${username}@nixos" = inputs.home-manager.lib.homeManagerConfiguration {
-          inherit (self.nixosConfigurations.nixos) pkgs;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-            osConfig = self.nixosConfigurations.nixos.config;
-          };
-          modules = [ ./hosts/nixos/home.nix ];
         };
       };
     };

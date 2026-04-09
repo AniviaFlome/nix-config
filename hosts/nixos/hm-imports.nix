@@ -3,10 +3,8 @@
     # Flake-Misc
     ../../misc/variables.nix
     # Desktop
-    ../../hm-modules/desktop/niri
     ../../hm-modules/desktop/plasma
     # Misc
-    ../../hm-modules/misc/nix.nix
     ../../hm-modules/misc/sops-nix.nix
     ../../hm-modules/misc/manual.nix
     ../../hm-modules/misc/mime.nix
@@ -17,7 +15,7 @@
     ../../hm-modules/programs/bash.nix
     ../../hm-modules/programs/bat.nix
     ../../hm-modules/programs/direnv.nix
-    ../../hm-modules/programs/distrobox
+    # ../../hm-modules/programs/distrobox
     ../../hm-modules/programs/easyeffects
     ../../hm-modules/programs/fastfetch
     ../../hm-modules/programs/fish.nix
