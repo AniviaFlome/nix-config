@@ -13,8 +13,8 @@
         maxGenerations = 50;
         extraEntries = ''
           /Windows
-              protocol: efi_chainload
-              image_path: uuid(D4E5-C3DE):/EFI/Microsoft/Boot/bootmgfw.efi
+              PROTOCOL=efi_chainload
+              IMAGE_PATH=uuid(12CE-A600):/EFI/Microsoft/Boot/bootmgfw.efi
         '';
       };
     };

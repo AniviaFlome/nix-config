@@ -1,11 +1,12 @@
 {
   config,
+  osConfig,
   pkgs,
   ...
 }:
 {
   programs.niri = {
-    package = pkgs.niri;
+    package = osConfig.programs.niri.package or pkgs.niri-unstable;
     settings = {
       prefer-no-csd = true;
       hotkey-overlay = {
@@ -95,6 +96,10 @@
         {
           matches = [ { title = "^Picture-in-Picture$"; } ];
           open-floating = true;
+        }
+        {
+          matches = [ { title = "Taunahi"; } ];
+          open-focused = false;
         }
       ];
       outputs = {

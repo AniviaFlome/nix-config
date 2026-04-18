@@ -1,126 +1,46 @@
-#!/usr/bin/env dash
+#!/usr/bin/env bash
+set -euo pipefail
 
-set -eu
-
-INSTANCES="
-Script 31avcisi
-Script Anivia31
-Script sikisci31
-"
-INSTANCE_COUNT=3
-TARGET_WORKSPACE=9
+INSTANCES=(
+  "Script Anivia31"
+)
+TITLE_PATTERN="Taunahi"
 LAUNCH_GAP=3
-POLL_INTERVAL=0.5
 
-detect_compositor() {
-  if [ -n "${NIRI_SOCKET:-}" ] || pgrep -x niri >/dev/null 2>&1; then
-    echo "niri"
-  elif [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ] || pgrep -x Hyprland >/dev/null 2>&1; then
-    echo "hyprland"
-  elif echo "${XDG_CURRENT_DESKTOP:-}" | grep -q "KDE" || pgrep -x kwin_wayland >/dev/null 2>&1; then
-    echo "kde"
-  else
-    echo "unknown"
-  fi
-}
+EXPECTED=${#INSTANCES[@]}
+FOUND=0
 
-# Get only Minecraft window IDs (filters by title starting with "Minecraft",
-# since Java/GLFW windows often report null app_id)
-get_minecraft_windows() {
-  case "$COMPOSITOR" in
-  niri)
-    niri msg --json windows 2>/dev/null | jq -r '.[] | select(.title // "" | test("^Minecraft")) | .id' 2>/dev/null || true
-    ;;
-  hyprland)
-    hyprctl clients -j 2>/dev/null | jq -r '.[] | select(.title // "" | test("^Minecraft")) | .address' 2>/dev/null || true
-    ;;
-  kde)
-    kdotool search --name "Minecraft*" 2>/dev/null || true
-    ;;
-  esac
-}
+echo "Launching ${EXPECTED} instance(s)..."
 
-move_to_workspace() {
-  _wid="$1"
-  _target="$2"
-  case "$COMPOSITOR" in
-  niri)
-    niri msg action move-window-to-workspace --window-id "$_wid" --focus false "$_target" 2>/dev/null || true
-    ;;
-  hyprland)
-    hyprctl dispatch movetoworkspacesilent "$_target,address:$_wid" 2>/dev/null || true
-    ;;
-  kde)
-    kdotool windowsetdesktop "$_wid" "$_target" 2>/dev/null || true
-    ;;
-  esac
-}
+# snapshot existing matching windows
+KNOWN=$(niri msg --json windows | jq -r --arg p "$TITLE_PATTERN" \
+  '.[] | select(.title // "" | test($p)) | .id')
 
-id_in_list() {
-  case "
-$2
-" in
-  *"
-$1
-"*) return 0 ;;
-  *) return 1 ;;
-  esac
-}
+# launch all instances
+for instance in "${INSTANCES[@]}"; do
+  echo "Launching: $instance"
+  prismlauncher -l "$instance" &>/dev/null &
+  sleep "$LAUNCH_GAP"
+done
 
-wait_for_minecraft_windows() {
-  _count="$1"
-  _known="$2"
-  _new=""
-  _new_count=0
+echo "Waiting for $EXPECTED window(s)..."
 
-  while [ "$_new_count" -lt "$_count" ]; do
-    # Only get Minecraft windows, not PrismLauncher or anything else
-    _current=$(get_minecraft_windows)
+# watch event stream, move each new matching window to the last workspace
+niri msg -j event-stream |
+  jq --unbuffered -r '.WindowOpenedOrChanged?.window | select(.) | "\(.id) \(.title // "")"' |
+  while read -r id title; do
+    echo "$title" | grep -qE "$TITLE_PATTERN" || continue
+    echo "$KNOWN" | grep -qxF "$id" && continue
+    KNOWN="$KNOWN
+$id"
 
-    for _wid in $_current; do
-      [ -z "$_wid" ] && continue
+    LAST_WS=$(niri msg --json workspaces | jq -r 'max_by(.id) | .id')
+    echo "Caught: $title (id=$id) → last workspace $LAST_WS"
+    niri msg action move-window-to-workspace --window-id "$id" "$LAST_WS"
+    niri msg action focus-workspace-previous
 
-      # Skip if already known or already found
-      if id_in_list "$_wid" "$_known" 2>/dev/null || id_in_list "$_wid" "$_new" 2>/dev/null; then
-        continue
-      fi
-
-      # New Minecraft window found
-      if [ -n "$_new" ]; then
-        _new="$_new
-$_wid"
-      else
-        _new="$_wid"
-      fi
-      _new_count=$((_new_count + 1))
-
-      # Move every window directly to the target workspace
-      move_to_workspace "$_wid" "$TARGET_WORKSPACE"
-    done
-
-    sleep "$POLL_INTERVAL"
+    FOUND=$((FOUND + 1))
+    [ "$FOUND" -ge "$EXPECTED" ] && break
   done
-}
 
-COMPOSITOR=""
-
-main() {
-  COMPOSITOR=$(detect_compositor)
-  [ "$COMPOSITOR" = "unknown" ] && exit 1
-
-  known_mc_windows=$(get_minecraft_windows)
-
-  # Launch all instances
-  IFS='
-'
-  for instance in $INSTANCES; do
-    prismlauncher -l "$instance" >/dev/null 2>&1 &
-    sleep "$LAUNCH_GAP"
-  done
-  unset IFS
-
-  # Wait for Minecraft windows only, move each as it appears
-  wait_for_minecraft_windows "$INSTANCE_COUNT" "$known_mc_windows"
-}
-
-main "$@"
+echo "Done. Moved $FOUND window(s)."

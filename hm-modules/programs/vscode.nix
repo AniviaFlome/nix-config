@@ -16,6 +16,7 @@
         formulahendry.code-runner
         github.copilot
         jnoortheen.nix-ide
+        ms-python.python
       ];
       userSettings = {
         "editor.fontFamily" = "'${ide-font}', 'monospace', monospace";

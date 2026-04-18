@@ -26,7 +26,7 @@
   "network.trr.mode" = 1;
   "permissions.default.desktop-notification" = 2;
   "security.OCSP.enabled" = 1;
-  "security.OCSP.require" = true;
+  "security.OCSP.require" = false;
   "security.pki.crlite_mode" = 2;
   "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
   "ui.key.menuAccessKeyFocuses" = false;

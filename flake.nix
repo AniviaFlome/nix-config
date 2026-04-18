@@ -24,6 +24,7 @@
     nix-themes.url = "github:aniviaflome/nix-themes";
     dms.url = "github:AvengeMedia/DankMaterialShell";
     llm-agents.url = "github:numtide/llm-agents.nix";
+    rusic.url = "github:temidaradev/rusic";
     dms-plugins = {
       url = "github:AvengeMedia/dms-plugins";
       flake = false;
@@ -134,7 +135,6 @@
           };
           modules = [
             ./hosts/nixos/configuration.nix
-            inputs.home-manager.nixosModules.home-manager
             inputs.nur.modules.nixos.default
           ];
         };
@@ -164,6 +164,16 @@
             inherit inputs outputs;
           };
           modules = [ ./hosts/liveiso-minimal/configuration.nix ];
+        };
+      };
+
+      homeConfigurations = {
+        "${username}@nixos" = inputs.home-manager.lib.homeManagerConfiguration {
+          inherit (self.nixosConfigurations.nixos) pkgs;
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [ ./hosts/nixos/home.nix ];
         };
       };
     };

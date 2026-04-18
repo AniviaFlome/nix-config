@@ -1,15 +1,28 @@
 {
+  config,
+  pkgs,
   term-editor,
+  username,
   ...
 }:
 {
+  home.packages = with pkgs; [ git-absorb ];
+
+  programs.lazygit = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    enableFishIntegration = true;
+    enableNushellIntegration = true;
+  };
+
   programs.git = {
     enable = true;
     signing.format = "openpgp";
     settings = {
       user = {
-        email = "aniviaflome@gmail.com";
-        name = "AniviaFlome";
+        email = config.sops.secrets."mail".path;
+        name = username;
       };
       color.ui = true;
       core.editor = term-editor;
@@ -19,6 +32,7 @@
     };
     ignores = [
       ".DS_Store"
+      ".env"
       "Thumbs.db"
     ];
   };

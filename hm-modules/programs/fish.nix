@@ -1,6 +1,4 @@
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
@@ -11,14 +9,6 @@
       set -U fish_greeting
       ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
     '';
-    shellAliases = {
-      bios = "systemctl reboot --firmware-setup";
-      cat = lib.getExe config.programs.bat.package;
-      cd = "z";
-      ls = "${lib.getExe config.programs.eza.package} --icons -a --group-directories-first";
-      man = lib.getExe pkgs.bat-extras.batman;
-      rm = "rm -I";
-    };
     plugins = with pkgs.fishPlugins; [
       {
         name = "autopair";

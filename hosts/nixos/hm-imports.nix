@@ -3,10 +3,12 @@
     # Flake-Misc
     ../../misc/variables.nix
     # Desktop
+    ../../hm-modules/desktop/niri
     ../../hm-modules/desktop/plasma
     # Misc
     ../../hm-modules/misc/sops-nix.nix
     ../../hm-modules/misc/manual.nix
+    ../../hm-modules/misc/nix.nix
     ../../hm-modules/misc/mime.nix
     ../../hm-modules/misc/variables.nix
     ../../hm-modules/misc/xdg.nix
@@ -14,8 +16,10 @@
     ../../hm-modules/programs/atuin.nix
     ../../hm-modules/programs/bash.nix
     ../../hm-modules/programs/bat.nix
+    ../../hm-modules/programs/claude-code.nix
+    ../../hm-modules/programs/difftastic.nix
     ../../hm-modules/programs/direnv.nix
-    # ../../hm-modules/programs/distrobox
+    ../../hm-modules/programs/distrobox
     ../../hm-modules/programs/easyeffects
     ../../hm-modules/programs/fastfetch
     ../../hm-modules/programs/fish.nix
@@ -23,21 +27,23 @@
     ../../hm-modules/programs/kate.nix
     ../../hm-modules/programs/kitty.nix
     ../../hm-modules/programs/konsole.nix
-    ../../hm-modules/programs/lazygit.nix
     ../../hm-modules/programs/ludusavi.nix
     ../../hm-modules/programs/mcp.nix
+    ../../hm-modules/programs/mergiraf.nix
     ../../hm-modules/programs/micro.nix
     ../../hm-modules/programs/mpv.nix
-    ../../hm-modules/programs/neovim.nix
     ../../hm-modules/programs/nix-index.nix
     ../../hm-modules/programs/nix-webapps.nix
     ../../hm-modules/programs/nixcord.nix
     ../../hm-modules/programs/nh.nix
+    ../../hm-modules/programs/nushell.nix
+    ../../hm-modules/programs/nvf
     ../../hm-modules/programs/nyaa.nix
     ../../hm-modules/programs/obs-studio.nix
     ../../hm-modules/programs/opencode.nix
     ../../hm-modules/programs/qutebrowser.nix
     ../../hm-modules/programs/ripgrep.nix
+    ../../hm-modules/programs/shell-aliases.nix
     ../../hm-modules/programs/spicetify.nix
     ../../hm-modules/programs/starship.nix
     ../../hm-modules/programs/thunderbird.nix

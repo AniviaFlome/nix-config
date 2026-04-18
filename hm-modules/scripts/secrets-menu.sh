@@ -1,6 +1,12 @@
 #!/usr/bin/env dash
 # Interactive secrets menu using gum
 
+# Navigate to the repo secrets directory to satisfy sops relative path creation rules
+cd "$(dirname "$0")/../../secrets" || {
+  echo "Could not find secrets directory"
+  exit 1
+}
+
 press_any_key() {
   echo
   echo
@@ -56,12 +62,17 @@ other_secrets_submenu() {
 set_github_token_logic() {
   TOKEN=$(gum input --header "Enter GitHub Token" --placeholder "github_pat_...")
   if [ -n "$TOKEN" ]; then
-    # Encode to JSON string for sops --set
-    JSON_VALUE=$(jq --null-input --arg v "$TOKEN" '$v')
-    EXTRACT_PATH='["githubNixToken"]'
+    # Encode to JSON string for sops --set, must include the full nix.conf key=value pair
+    JSON_VALUE=$(jq --null-input --arg v "access-tokens = github.com=$TOKEN" '$v')
+    EXTRACT_PATH='["nix-access-token"]'
 
-    echo "Setting githubNixToken..."
+    echo "Setting nix-access-token..."
     sops --set "$EXTRACT_PATH $JSON_VALUE" secrets.yaml
+
+    # Also update the raw token for github-mcp
+    JSON_VALUE_RAW=$(jq --null-input --arg v "$TOKEN" '$v')
+    echo "Setting github-mcp..."
+    sops --set '["github-mcp"] '"$JSON_VALUE_RAW" secrets.yaml
 
     echo "Sorting secrets.yaml..."
     export EDITOR="yq --inplace 'sort_keys(..)'"
@@ -95,7 +106,7 @@ github_token_submenu() {
       set_github_token_logic
       ;;
     "Show Token")
-      print-secret githubNixToken
+      print-secret nix-access-token
       press_any_key
       ;;
     "Back" | "")

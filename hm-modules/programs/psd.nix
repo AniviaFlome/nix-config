@@ -1,0 +1,5 @@
+{
+  services.psd = {
+    enable = true;
+  };
+}

@@ -29,7 +29,6 @@
     ../../modules/security/firewall.nix
     # System
     ../../modules/system/appimage.nix
-    ../../modules/system/autoupdate.nix
     ../../modules/system/battery.nix
     ../../modules/system/bluetooth.nix
     ../../modules/system/bootloader.nix
@@ -46,7 +45,6 @@
     ../../modules/system/nix-ld.nix
     ../../modules/system/pipewire.nix
     ../../modules/system/shell.nix
-    ../../modules/system/secrets.nix
     ../../modules/system/sops-nix.nix
     ../../modules/system/sudo-rs.nix
     ../../modules/system/uutils.nix

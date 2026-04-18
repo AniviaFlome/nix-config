@@ -1,21 +1,13 @@
 {
-  config,
   inputs,
   osConfig,
   pkgs,
-  lib,
+  config,
   ...
 }:
 {
   nix = {
-    package = lib.mkDefault (osConfig.nix.package or pkgs.nix);
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-        "pipe-operator"
-      ];
-    };
+    package = osConfig.nix.package or pkgs.nix;
     extraOptions = ''
       !include ${config.sops.secrets."nix-access-token".path}
     '';

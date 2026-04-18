@@ -20,7 +20,7 @@
     btrfs-progs
     bubblewrap
     comma
-    crankshaft
+    crankshaft-bin
     crow-translate
     curl
     dash
@@ -34,11 +34,13 @@
     flameshot
     fluent-reader
     fzf
+    game-sentence-miner-bin
     gdu
     geteduroam
     geteduroam-cli
     git
     glib
+    gowall
     gparted
     grsync
     gst_all_1.gstreamer
@@ -48,7 +50,7 @@
     gst_all_1.gst-plugins-ugly
     gst_all_1.gst-plugins-good
     gst_all_1.gst-plugins-base
-    handy
+    handy-bin
     helium
     heroic
     home-manager
@@ -81,6 +83,7 @@
     mcpelauncher-ui-qt
     micro
     mindustry-wayland
+    motrix-next-bin
     mousam
     mpv
     mullvad-browser
@@ -96,11 +99,13 @@
     onlyoffice-desktopeditors
     opencommit
     openrct2
-    osu-beatmap-manager
+    openutau
+    osu-beatmap-manager-git
     osu-lazer-bin
     packwiz
     prismlauncher
     proton-vpn
+    proton-vpn-cli
     protonplus
     pwvucontrol
     python3
@@ -111,6 +116,7 @@
     redeclipse
     retroarch
     rsync
+    rusic
     ryubing
     samira
     scrcpy
@@ -127,7 +133,7 @@
     television
     textpieces
     thunderbird
-    torrra
+    torrra-bin
     turkanime-cli
     turkanime-gui
     umu-launcher

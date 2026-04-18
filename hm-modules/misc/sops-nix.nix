@@ -19,6 +19,9 @@
       "github-mcp" = {
         mode = "0400";
       };
+      "mail" = {
+        mode = "0400";
+      };
       "nix-access-token" = {
         mode = "0400";
       };

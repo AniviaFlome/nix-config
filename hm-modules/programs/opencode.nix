@@ -1,3 +1,7 @@
+{
+  pkgs,
+  ...
+}:
 let
   aiCommon = import ../misc/common/ai-common.nix;
 in
@@ -11,4 +15,9 @@ in
 
     };
   };
+
+  home.packages = with pkgs; [
+    opencode-desktop
+    opencode-claude-auth
+  ];
 }

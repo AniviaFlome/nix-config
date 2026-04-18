@@ -4,6 +4,7 @@
 }:
 [
   inputs.firefox-addons.overlays.default
+  inputs.niri.overlays.niri
   inputs.nix-cachyos-kernel.overlays.pinned
   inputs.nix-repository.overlays.default
   inputs.nur.overlays.default
@@ -15,6 +16,7 @@
         allowUnfree = true;
       };
     };
+    rusic = inputs.rusic.packages.${final.stdenv.hostPlatform.system}.default;
     helium = prev.nur.repos.Ev357.helium.override {
       enableWideVine = true;
     };
