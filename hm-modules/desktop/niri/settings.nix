@@ -8,11 +8,13 @@
   programs.niri = {
     package = osConfig.programs.niri.package or pkgs.niri-unstable;
     settings = {
+      # includes = lib.mkAfter [ ./extra.kdl ];
       prefer-no-csd = true;
       hotkey-overlay = {
         skip-at-startup = true;
       };
       layout = {
+        default-column-width = { };
         background-color = "transparent";
         border = {
           enable = true;
@@ -60,16 +62,13 @@
           enable = true;
           max-scroll-amount = "0%";
         };
-        warp-mouse-to-focus = {
-          enable = false;
-          mode = "center-xy";
-        };
-      };
-      gestures = {
-        hot-corners.enable = false;
+
       };
       clipboard = {
         disable-primary = true;
+      };
+      gestures = {
+        hot-corners.enable = false;
       };
       overview = {
         backdrop-color = "#181825";

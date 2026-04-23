@@ -23,7 +23,7 @@
     ../../modules/programs/snapper.nix
     ../../modules/programs/virtualization.nix
     ../../modules/programs/waydroid.nix
-    # ../../modules/programs/zapret.nix
+    ../../modules/programs/zapret.nix
     # Security
     ../../modules/security/fail2ban.nix
     ../../modules/security/firewall.nix

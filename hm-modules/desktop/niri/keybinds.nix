@@ -22,7 +22,7 @@
 
       "Mod+F".action = maximize-column;
       "Mod+Shift+F".action = fullscreen-window;
-      # "Mod+Ctrl+F".action = open-fullscreen;
+      # "Mod+Ctrl+F".action = maximize-window-to-edges;
       "Mod+V".action = toggle-window-floating;
       "Mod+Q".action = toggle-column-tabbed-display;
 

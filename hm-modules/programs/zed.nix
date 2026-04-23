@@ -18,6 +18,8 @@
       "github-actions"
       "ini"
       "justfile"
+      "kdl"
+      "log"
       "lua"
       "mcp-server-github"
       "nix"

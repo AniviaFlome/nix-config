@@ -17,6 +17,7 @@
     better-control
     bleachbit
     bolt-launcher
+    brightnessctl
     btrfs-progs
     bubblewrap
     comma
@@ -69,6 +70,7 @@
     kdePackages.partitionmanager
     kdiskmark
     kitty
+    kopuz
     legendary-gl
     libva
     libva-utils
@@ -95,6 +97,7 @@
     nixpkgs-review
     ntfs3g
     nurl
+    nvd
     nyaa
     onlyoffice-desktopeditors
     opencommit
@@ -103,6 +106,7 @@
     osu-beatmap-manager-git
     osu-lazer-bin
     packwiz
+    pear-desktop
     prismlauncher
     proton-vpn
     proton-vpn-cli
@@ -116,7 +120,6 @@
     redeclipse
     retroarch
     rsync
-    rusic
     ryubing
     samira
     scrcpy
@@ -133,6 +136,8 @@
     television
     textpieces
     thunderbird
+    tor
+    tor-browser
     torrra-bin
     turkanime-cli
     turkanime-gui

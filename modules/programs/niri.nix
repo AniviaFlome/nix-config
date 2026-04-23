@@ -1,4 +1,6 @@
 {
+  config,
+  lib,
   pkgs,
   inputs,
   ...
@@ -13,8 +15,34 @@
 
   environment.systemPackages = with pkgs; [
     xwayland-satellite
-    nautilus
   ];
 
   systemd.user.services.niri-flake-polkit.enable = false;
+
+  environment.etc."nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool.json".text =
+    lib.mkIf config.hardware.nvidia.enabled
+      (
+        builtins.toJSON {
+          rules = [
+            {
+              pattern = {
+                feature = "procname";
+                matches = "niri";
+              };
+              profile = "Limit Free Buffer Pool On Wayland Compositors";
+            }
+          ];
+          profiles = [
+            {
+              name = "Limit Free Buffer Pool On Wayland Compositors";
+              settings = [
+                {
+                  key = "GLVidHeapReuseRatio";
+                  value = 0;
+                }
+              ];
+            }
+          ];
+        }
+      );
 }

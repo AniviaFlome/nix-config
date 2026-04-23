@@ -1,0 +1,15 @@
+recent-windows {
+    debounce-ms 500
+    highlight {
+        active-color "#cba6f7"
+        urgent-color "#f38ba8"
+    }
+    previews {
+        max-height 480
+        max-scale 0.3
+    }
+}
+
+binds {
+    "Mod+Ctrl+F" { maximize-window-to-edges; }
+}

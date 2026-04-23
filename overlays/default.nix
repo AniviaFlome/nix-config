@@ -16,7 +16,7 @@
         allowUnfree = true;
       };
     };
-    rusic = inputs.rusic.packages.${final.stdenv.hostPlatform.system}.default;
+    kopuz = inputs.kopuz.packages.${final.stdenv.hostPlatform.system}.default;
     helium = prev.nur.repos.Ev357.helium.override {
       enableWideVine = true;
     };

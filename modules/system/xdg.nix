@@ -22,6 +22,7 @@
         };
         niri = {
           "org.freedesktop.impl.portal.FileChooser" = [ "kde" ];
+          "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
         };
       };
       extraPortals = with pkgs; [

@@ -18,13 +18,12 @@
     nix-mineral.url = "github:cynicsketch/nix-mineral/";
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     direnv-instant.url = "github:Mic92/direnv-instant";
-    niri-session-manager.url = "github:MTeaHead/niri-session-manager";
     distrobox-flake.url = "github:AniviaFlome/distrobox-flake";
     nix-osu.url = "github:yunfachi/nix-osu";
     nix-themes.url = "github:aniviaflome/nix-themes";
     dms.url = "github:AvengeMedia/DankMaterialShell";
     llm-agents.url = "github:numtide/llm-agents.nix";
-    rusic.url = "github:temidaradev/rusic";
+    kopuz.url = "github:temidaradev/kopuz";
     dms-plugins = {
       url = "github:AvengeMedia/dms-plugins";
       flake = false;

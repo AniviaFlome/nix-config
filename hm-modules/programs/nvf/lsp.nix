@@ -16,7 +16,7 @@
           "nil"
           "nixd"
         ];
-        format.type = "nixfmt";
+        format.type = [ "nixfmt" ];
       };
       bash.enable = true;
       lua.enable = true;
