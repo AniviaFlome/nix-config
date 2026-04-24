@@ -25,9 +25,7 @@
 
   programs.plasma = {
     enable = true;
-    startup.startupScript = {
 
-    };
     configFile.kdeglobals.General = {
       TerminalApplication = terminal;
       TerminalService = terminal-desktop;

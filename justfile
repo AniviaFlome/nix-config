@@ -7,10 +7,6 @@ age-gen:
   mkdir -p ~/.config/sops/age && \
     nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt
 
-[doc('Nixos rebuild boot')]
-boot SYSTEM:
-  nh {{SYSTEM}} boot
-
 [doc('Check for errors in the configuration')]
 code:
   nix shell nixpkgs#statix nixpkgs#deadnix -c statix check; deadnix
@@ -18,14 +14,6 @@ code:
 [doc('Check for errors in the flake')]
 check:
   nix flake check
-
-[doc('Nixos rebuild switch')]
-switch SYSTEM:
-  nh {{SYSTEM}} switch
-
-[doc('Code formatting')]
-format:
-  nix fmt
 
 [doc('Clean up disk space')]
 garbage OPTIONS:

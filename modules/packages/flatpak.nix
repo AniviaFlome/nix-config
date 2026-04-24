@@ -30,7 +30,6 @@
         [
           "com.github.tchx84.Flatseal"
           "com.pokemmo.PokeMMO"
-          "com.stremio.Stremio"
           "com.rustdesk.RustDesk"
           "com.usebottles.bottles"
           "io.github.giantpinkrobots.flatsweep"

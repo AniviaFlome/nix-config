@@ -8,36 +8,27 @@
     nvf.url = "github:notashelf/nvf";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     catppuccin.url = "github:catppuccin/nix";
-    lanzaboote.url = "github:nix-community/lanzaboote";
     niri.url = "github:sodiboo/niri-flake";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixcord.url = "github:kaylorben/nixcord";
     treefmt-nix.url = "github:numtide/treefmt-nix";
-    systems.url = "github:nix-systems/default";
     nix-webapps.url = "github:AniviaFlome/nix-webapps";
     nix-mineral.url = "github:cynicsketch/nix-mineral/";
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     direnv-instant.url = "github:Mic92/direnv-instant";
     distrobox-flake.url = "github:AniviaFlome/distrobox-flake";
-    nix-osu.url = "github:yunfachi/nix-osu";
     nix-themes.url = "github:aniviaflome/nix-themes";
     dms.url = "github:AvengeMedia/DankMaterialShell";
     llm-agents.url = "github:numtide/llm-agents.nix";
     kopuz.url = "github:temidaradev/kopuz";
+    nixpkgs-millennium.url = "github:NixOS/nixpkgs/pull/487045/head";
+    flake-parts.url = "github:hercules-ci/flake-parts";
     dms-plugins = {
       url = "github:AvengeMedia/dms-plugins";
       flake = false;
     };
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    steam-config-nix = {
-      url = "github:different-name/steam-config-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixvirt = {
-      url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-repository = {
@@ -92,88 +83,12 @@
         home-manager.follows = "home-manager";
       };
     };
-    nixpkgs-millennium.url = "github:NixOS/nixpkgs/pull/487045/head";
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      nixvirt,
-      ...
-    }@inputs:
-    let
-      inherit (self) outputs;
-      supportedSystems = [
-        "x86_64-linux"
-      ];
-      variables = (import ./misc/variables.nix)._module.args;
-      inherit (variables) username;
-      lib = nixpkgs.lib.extend (_final: prev: import ./lib { lib = prev; });
-      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-      treefmtEval = forAllSystems (
-        system: inputs.treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} ./misc/treefmt.nix
-      );
-    in
-    {
-      formatter = forAllSystems (system: treefmtEval.${system}.config.build.wrapper);
-
-      checks = forAllSystems (system: {
-        formatting = treefmtEval.${system}.config.build.check self;
-      });
-
-      nixosConfigurations = {
-        nixos = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit
-              inputs
-              outputs
-              nixvirt
-              lib
-              ;
-          };
-          modules = [
-            ./hosts/nixos/configuration.nix
-            inputs.nur.modules.nixos.default
-          ];
-        };
-        vps = inputs.nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            inherit
-              inputs
-              outputs
-              username
-              lib
-              ;
-          };
-          system = "x86_64-linux";
-          modules = [
-            inputs.disko.nixosModules.disko
-            ./hosts/vps/configuration.nix
-          ];
-        };
-        liveiso = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [ ./hosts/liveiso/configuration.nix ];
-        };
-        liveiso-minimal = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [ ./hosts/liveiso-minimal/configuration.nix ];
-        };
-      };
-
-      homeConfigurations = {
-        "${username}@nixos" = inputs.home-manager.lib.homeManagerConfiguration {
-          inherit (self.nixosConfigurations.nixos) pkgs;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [ ./hosts/nixos/home.nix ];
-        };
-      };
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" ];
+      imports = [ ./flake ];
     };
 }

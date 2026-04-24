@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   ...
 }:
@@ -21,7 +20,6 @@
       "kdl"
       "log"
       "lua"
-      "mcp-server-github"
       "nix"
       "nu"
       "opencode"
@@ -41,15 +39,6 @@
       base_keymap = "VSCode";
       colorize_brackets = true;
       disable_agent = false;
-      context_servers = {
-        "mcp-server-github" = {
-          enabled = true;
-          remote = false;
-          settings = {
-            github_personal_access_token = config.sops.secrets."github-mcp".path;
-          };
-        };
-      };
       lsp = {
         "nil".settings = {
           nix.flake = {

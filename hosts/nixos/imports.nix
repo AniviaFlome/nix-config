@@ -1,7 +1,5 @@
 {
   imports = [
-    # Flake-Misc
-    ../../misc/variables.nix
     # Gaming
     ../../modules/gaming/gamescope.nix
     ../../modules/gaming/gamemode.nix

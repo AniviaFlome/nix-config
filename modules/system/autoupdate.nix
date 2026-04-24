@@ -1,17 +1,13 @@
 {
-  inputs,
+  self,
   ...
 }:
 {
   system.autoUpgrade = {
     enable = true;
-    flake = inputs.self.outPath;
-    flags = [
-      "--update-input"
-      "nixpkgs"
-      "nixpkgs-stable"
-    ];
-    dates = "04:00";
+    flake = self.outPath;
+    dates = "daily";
     randomizedDelaySec = "45min";
+    runGarbageCollection = true;
   };
 }

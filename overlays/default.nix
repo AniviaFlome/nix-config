@@ -2,6 +2,14 @@
   inputs,
   ...
 }:
+let
+  mkNixpkgs =
+    input: system:
+    import input {
+      inherit system;
+      config.allowUnfree = true;
+    };
+in
 [
   inputs.firefox-addons.overlays.default
   inputs.niri.overlays.niri
@@ -10,12 +18,7 @@
   inputs.nur.overlays.default
   inputs.llm-agents.overlays.default
   (final: prev: {
-    stable = import inputs.nixpkgs-stable {
-      inherit (final.stdenv.hostPlatform) system;
-      config = {
-        allowUnfree = true;
-      };
-    };
+    stable = mkNixpkgs inputs.nixpkgs-stable final.stdenv.hostPlatform.system;
     kopuz = inputs.kopuz.packages.${final.stdenv.hostPlatform.system}.default;
     helium = prev.nur.repos.Ev357.helium.override {
       enableWideVine = true;
@@ -46,12 +49,7 @@
         np2kai
       ]
     );
-    pkgs-millennium = import inputs.nixpkgs-millennium {
-      inherit (final.stdenv.hostPlatform) system;
-      config = {
-        allowUnfree = true;
-      };
-    };
+    pkgs-millennium = mkNixpkgs inputs.nixpkgs-millennium final.stdenv.hostPlatform.system;
     inherit (final.pkgs-millennium) steam-millennium;
   })
 ]

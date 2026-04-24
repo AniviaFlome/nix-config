@@ -1,7 +1,7 @@
 {
   inputs,
   browser,
-  menu,
+  launcher,
   music,
   ...
 }:
@@ -71,7 +71,7 @@
               };
               shortcut3 = {
                 tooltip = "Search";
-                command = "${menu}";
+                command = "${launcher}";
                 icon = "";
               };
               shortcut4 = {

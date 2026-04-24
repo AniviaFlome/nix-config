@@ -8,6 +8,7 @@
     ../../modules/server/freshrss.nix
     ../../modules/server/traefik.nix
     # System
+    ../../modules/system/nix.nix
     ../../modules/system/autoupdate.nix
     ../../modules/system/nh.nix
     ../../modules/system/shell.nix

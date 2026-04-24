@@ -72,6 +72,7 @@
     kitty
     kopuz
     legendary-gl
+    libreoffice-fresh
     libva
     libva-utils
     lidarr
@@ -130,6 +131,7 @@
     spotify-player
     starship
     statix
+    stremio-linux-shell
     syncthing
     tealdeer
     telegram-desktop

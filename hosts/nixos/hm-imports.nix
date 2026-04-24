@@ -1,7 +1,5 @@
 {
   imports = [
-    # Flake-Misc
-    ../../misc/variables.nix
     # Desktop
     ../../hm-modules/desktop/niri
     ../../hm-modules/desktop/plasma

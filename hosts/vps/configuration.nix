@@ -46,7 +46,7 @@
       ];
     };
     root = {
-      initialPassword = 1234;
+      initialPassword = "1234";
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICXW5gqP/C/NQYWmWLPefoQZkZI59/O1EjptVuzvA7gA aniviaflome@gmail.com"
       ]

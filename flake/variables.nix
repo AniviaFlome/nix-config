@@ -1,5 +1,15 @@
 {
-  _module.args = {
+  self,
+  lib,
+  ...
+}:
+{
+  options.flake.variables = lib.mkOption {
+    type = lib.types.attrs;
+    default = { };
+  };
+
+  config.flake.variables = {
     audio = "mpv";
     audio-desktop = "mpv.desktop";
     browser = "zen-beta";
@@ -37,6 +47,6 @@
     font-size = "10";
     ide-font = "Cascadia Code";
 
-    wallpaper = ./. + "/../hm-modules/theme/wallpaper/wallpaper.png";
+    wallpaper = self + "/hm-modules/theme/wallpaper/wallpaper.png";
   };
 }
