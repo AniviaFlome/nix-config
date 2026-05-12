@@ -35,7 +35,6 @@
     ../../modules/system/dns.nix
     ../../modules/system/fonts.nix
     ../../modules/system/kernel.nix
-    ../../modules/system/lix.nix
     ../../modules/system/locale.nix
     ../../modules/system/network.nix
     ../../modules/system/nh.nix

@@ -51,7 +51,7 @@
       write-filename-in-watch-later-config = "yes";
       save-watch-history = "yes";
 
-      alang = "jp,en,tr";
+      alang = "en,jp,tr";
       slang = "tr,en";
       sub-auto = "fuzzy";
       volume = 100;
@@ -84,29 +84,9 @@
       # Shaders
       "Ctrl+1" = ''no-osd change-list glsl-shaders clr ""; show-text "GLSL shaders cleared"'';
       "Ctrl+2" =
-        ''no-osd change-list glsl-shaders set "${pkgs.fallin}/Fallin_Soft.onnx"; show-text "Fallin: Soft"'';
+        ''no-osd change-list glsl-shaders set "${pkgs.adore}/2x_Adore_renarchi_fp32.onnx"; show-text "Adore fp32"'';
       "Ctrl+3" =
-        ''no-osd change-list glsl-shaders set "${pkgs.fallin}/Fallin_Strong.onnx"; show-text "Fallin: Strong"'';
-      "Ctrl+4" =
-        ''no-osd change-list glsl-shaders set "${pkgs.artcnn}/ArtCNN_C4F16.glsl"; show-text "ArtCNN: C4F16"'';
-      "Ctrl+5" =
-        ''no-osd change-list glsl-shaders set "${pkgs.artcnn}/ArtCNN_C4F16_DN.glsl"; show-text "ArtCNN: C4F16 Denoise"'';
-      "Ctrl+6" =
-        ''no-osd change-list glsl-shaders set "${pkgs.artcnn}/ArtCNN_C4F32.glsl"; show-text "ArtCNN: C4F32"'';
-      "Ctrl+7" =
-        ''no-osd change-list glsl-shaders set "${pkgs.artcnn}/ArtCNN_C4F32_DN.glsl"; show-text "ArtCNN: C4F32 Denoise"'';
-      "Ctrl+8" =
-        ''no-osd change-list glsl-shaders set "${pkgs.anime4k}/Anime4K_Clamp_Highlights.glsl:${pkgs.anime4k}/Anime4K_Restore_CNN_VL.glsl:${pkgs.anime4k}/Anime4K_Upscale_CNN_x2_VL.glsl:${pkgs.anime4k}/Anime4K_Restore_CNN_M.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x2.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x4.glsl:${pkgs.anime4k}/Anime4K_Upscale_CNN_x2_M.glsl"; show-text "Anime4K: Mode A+A (HQ)"'';
-      "Ctrl+9" =
-        ''no-osd change-list glsl-shaders set "${pkgs.anime4k}/Anime4K_Clamp_Highlights.glsl:${pkgs.anime4k}/Anime4K_Restore_CNN_Soft_VL.glsl:${pkgs.anime4k}/Anime4K_Upscale_CNN_x2_VL.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x2.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x4.glsl:${pkgs.anime4k}/Anime4K_Restore_CNN_Soft_M.glsl:${pkgs.anime4k}/Anime4K_Upscale_CNN_x2_M.glsl"; show-text "Anime4K: Mode B+B (HQ)"'';
-      "Ctrl+0" =
-        ''no-osd change-list glsl-shaders set "${pkgs.anime4k}/Anime4K_Clamp_Highlights.glsl:${pkgs.anime4k}/Anime4K_Upscale_Denoise_CNN_x2_VL.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x2.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x4.glsl:${pkgs.anime4k}/Anime4K_Restore_CNN_M.glsl:${pkgs.anime4k}/Anime4K_Upscale_CNN_x2_M.glsl"; show-text "Anime4K: Mode C+A (HQ)"'';
-      "Alt+8" =
-        ''no-osd change-list glsl-shaders set "${pkgs.anime4k}/Anime4K_Clamp_Highlights.glsl:${pkgs.anime4k}/Anime4K_Restore_CNN_VL.glsl:${pkgs.anime4k}/Anime4K_Upscale_CNN_x2_VL.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x2.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x4.glsl:${pkgs.anime4k}/Anime4K_Upscale_CNN_x2_M.glsl"; show-text "Anime4K: Mode A (HQ)"'';
-      "Alt+9" =
-        ''no-osd change-list glsl-shaders set "${pkgs.anime4k}/Anime4K_Clamp_Highlights.glsl:${pkgs.anime4k}/Anime4K_Restore_CNN_Soft_VL.glsl:${pkgs.anime4k}/Anime4K_Upscale_CNN_x2_VL.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x2.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x4.glsl:${pkgs.anime4k}/Anime4K_Upscale_CNN_x2_M.glsl"; show-text "Anime4K: Mode B (HQ)"'';
-      "Alt+0" =
-        ''no-osd change-list glsl-shaders set "${pkgs.anime4k}/Anime4K_Clamp_Highlights.glsl:${pkgs.anime4k}/Anime4K_Upscale_Denoise_CNN_x2_VL.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x2.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x4.glsl:${pkgs.anime4k}/Anime4K_Upscale_CNN_x2_M.glsl"; show-text "Anime4K: Mode C (HQ)"'';
+        ''no-osd change-list glsl-shaders set "${pkgs.adore}/2x_Adore_renarchi_fp16.onnx"; show-text "Adore fp16"'';
     };
   };
 

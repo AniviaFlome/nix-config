@@ -131,9 +131,10 @@ let
 
   associations =
     with lists;
-    listToAttrs (
-      flatten (mapAttrsToList (key: map (type: attrsets.nameValuePair type defaultApps."${key}")) mimeMap)
-    );
+    mimeMap
+    |> mapAttrsToList (key: map (type: attrsets.nameValuePair type defaultApps."${key}"))
+    |> flatten
+    |> listToAttrs;
 
   noCalibre =
     let
@@ -150,7 +151,7 @@ let
         "calibre-gui.desktop"
       ];
     in
-    lib.zipAttrs (map (d: lib.genAttrs mimeTypes (_: d)) desktopFiles);
+    desktopFiles |> map (d: lib.genAttrs mimeTypes (_: d)) |> lib.zipAttrs;
 in
 {
   xdg = {

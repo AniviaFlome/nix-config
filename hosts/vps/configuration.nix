@@ -8,24 +8,16 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disk-config.nix
+    ./hardware-configuration.nix
     ./imports.nix
   ];
 
   boot = {
-    supportedFilesystems = [ "zfs" ];
+    supportedFilesystems = [ "ext4" ];
     loader.grub = {
-      # no need to set devices, disko will add all devices that have a EF02 partition to the list already
-      # devices = [ ];
       efiSupport = true;
       efiInstallAsRemovable = true;
     };
-  };
-
-  networking.hostId = "3b8c3b1e";
-
-  services.zfs = {
-    autoScrub.enable = true;
-    trim.enable = true;
   };
 
   services.openssh = {
@@ -44,13 +36,14 @@
         "wheel"
         "docker"
       ];
-    };
-    root = {
       initialPassword = "1234";
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICXW5gqP/C/NQYWmWLPefoQZkZI59/O1EjptVuzvA7gA aniviaflome@gmail.com"
       ]
       ++ (args.extraPublicKeys or [ ]);
+    };
+    root = {
+      initialPassword = "1234";
     };
   };
 

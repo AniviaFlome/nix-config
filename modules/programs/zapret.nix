@@ -40,7 +40,7 @@
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.zapret}/bin/nfqws ${
-          builtins.concatStringsSep " " (config.services.zapret.params ++ [ "--qnum=200" ])
+          (config.services.zapret.params ++ [ "--qnum=200" ]) |> builtins.concatStringsSep " "
         }";
         ExecStartPre = "${pkgs.nftables}/bin/nft -f ${nftRules}";
         ExecStopPost = "-${pkgs.nftables}/bin/nft delete table inet zapret";

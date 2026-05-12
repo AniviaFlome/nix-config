@@ -8,7 +8,7 @@
   flake.nixosConfigurations.nixos = inputs.nixpkgs.lib.nixosSystem {
     specialArgs = config.flake.variables // {
       inherit inputs self;
-      lib = config.flake.lib;
+      inherit (config.flake) lib;
     };
     modules = [
       ./configuration.nix
@@ -21,6 +21,7 @@
       inherit (self.nixosConfigurations.nixos) pkgs;
       extraSpecialArgs = config.flake.variables // {
         inherit inputs self;
+        osConfig = self.nixosConfigurations.nixos.config;
       };
       modules = [ ./home.nix ];
     };

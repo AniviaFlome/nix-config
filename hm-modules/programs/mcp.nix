@@ -17,6 +17,10 @@ in
         command = "${github-mcp}";
         args = [ ];
       };
+      nix = {
+        command = "${pkgs.mcp-nixos}/bin/mcp-nixos";
+        args = [ ];
+      };
     };
   };
 }

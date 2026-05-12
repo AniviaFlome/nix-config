@@ -6,6 +6,8 @@
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
+      dconf
+
       fontconfig
       freetype
       SDL2

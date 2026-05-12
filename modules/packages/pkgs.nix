@@ -15,7 +15,6 @@
     bat-extras.core
     bats
     better-control
-    bleachbit
     bolt-launcher
     brightnessctl
     btrfs-progs
@@ -35,11 +34,11 @@
     flameshot
     fluent-reader
     fzf
-    game-sentence-miner-bin
     gdu
     geteduroam
     geteduroam-cli
     git
+    github-cli
     glib
     gowall
     gparted
@@ -72,7 +71,6 @@
     kitty
     kopuz
     legendary-gl
-    libreoffice-fresh
     libva
     libva-utils
     lidarr
@@ -92,6 +90,7 @@
     mullvad-browser
     neovim
     nicotine-plus
+    nix-fast-build
     nix-init
     nix-update
     nixd
@@ -118,7 +117,7 @@
     qwen-code
     rPackages.stranslate
     rclone
-    redeclipse
+    readest
     retroarch
     rsync
     ryubing
@@ -131,7 +130,6 @@
     spotify-player
     starship
     statix
-    stremio-linux-shell
     syncthing
     tealdeer
     telegram-desktop
@@ -158,6 +156,7 @@
     yazi
     yt-dlp
     zathura
+    zerotierone
     zip
     zoxide
   ];

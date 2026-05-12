@@ -19,6 +19,9 @@
       "github-mcp" = {
         mode = "0400";
       };
+      "listenbrainz-token" = {
+        mode = "0400";
+      };
       "mail" = {
         mode = "0400";
       };

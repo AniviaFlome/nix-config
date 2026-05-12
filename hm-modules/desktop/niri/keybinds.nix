@@ -10,7 +10,7 @@
 {
   programs.niri.settings.binds =
     with config.lib.niri.actions;
-    lib.mapAttrs (_: bind: bind // { repeat = lib.mkDefault false; }) {
+    {
       "Mod+C".action = close-window;
       "Mod+G".action = toggle-overview;
       "Mod+E".action.spawn = file;
@@ -22,7 +22,6 @@
 
       "Mod+F".action = maximize-column;
       "Mod+Shift+F".action = fullscreen-window;
-      # "Mod+Ctrl+F".action = maximize-window-to-edges;
       "Mod+V".action = toggle-window-floating;
       "Mod+Q".action = toggle-column-tabbed-display;
 
@@ -79,5 +78,6 @@
       "Mod+Shift+7".action.move-column-to-workspace = 7;
       "Mod+Shift+8".action.move-column-to-workspace = 8;
       "Mod+Shift+9".action.move-column-to-workspace = 9;
-    };
+    }
+    |> lib.mapAttrs (_: bind: bind // { repeat = lib.mkDefault false; });
 }

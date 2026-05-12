@@ -3,7 +3,9 @@
   ...
 }:
 {
-  imports = [ ./hm-imports.nix ];
+  imports = [
+    ./hm-imports.nix
+  ];
 
   home = {
     inherit username;

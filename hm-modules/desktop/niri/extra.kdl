@@ -11,5 +11,21 @@ recent-windows {
 }
 
 binds {
-    "Mod+Ctrl+F" { maximize-window-to-edges; }
+    "Mod+M" { maximize-window-to-edges; }
+}
+
+blur {
+    passes 3
+    offset 3
+    noise 0.02
+    saturation 1.5
+}
+
+window-rule {
+    match app-id="^kitty$"
+    opacity 0.9
+    background-effect {
+        blur true
+        xray true
+    }
 }

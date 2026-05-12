@@ -116,10 +116,6 @@
           url = "https://www.turkanime.co/";
         }
         {
-          name = "HiAnime";
-          url = "https://hianime.to/";
-        }
-        {
           name = "nyaa.si";
           url = "https://nyaa.si/";
         }
@@ -138,6 +134,10 @@
         {
           name = "Backloggd";
           url = "https://backloggd.com/";
+        }
+        {
+          name = "ListenBrainz";
+          url = "https://listenbrainz.org/";
         }
       ];
     }

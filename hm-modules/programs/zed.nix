@@ -6,6 +6,7 @@
   programs.zed-editor = {
     enable = true;
     extraPackages = with pkgs; [
+      marksman
       nil
       nixd
       nixfmt
@@ -22,23 +23,41 @@
       "lua"
       "nix"
       "nu"
-      "opencode"
       "powershell"
       "rainbow-csv"
       "toml"
       "xml"
     ];
     enableMcpIntegration = true;
+    userKeymaps = [
+      {
+        context = "Editor";
+        bindings = {
+          "ctrl-k" = "editor::Cut";
+        };
+      }
+    ];
     userSettings = {
-      buffer_font_family = "CascaydiaMono Nerd Font";
       telemetry = {
         diagnostics = false;
         metrics = false;
       };
-      hour_format = "hour24";
       base_keymap = "VSCode";
       colorize_brackets = true;
-      disable_agent = false;
+      disable_ai = false;
+      journal = {
+        hour_format = "hour24";
+      };
+      active_pane_modifiers = {
+        inactive_opacity = 0.85;
+      };
+      agent_servers = {
+        OpenCode = {
+          type = "custom";
+          command = "opencode";
+          args = [ "acp" ];
+        };
+      };
       lsp = {
         "nil".settings = {
           nix.flake = {

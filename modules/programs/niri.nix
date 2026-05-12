@@ -10,7 +10,7 @@
 
   programs.niri = {
     enable = true;
-    package = pkgs.niri-unstable;
+    package = pkgs.niri;
   };
 
   environment.systemPackages = with pkgs; [
@@ -23,7 +23,7 @@
   environment.etc."nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool.json".text =
     lib.mkIf config.hardware.nvidia.enabled
       (
-        builtins.toJSON {
+        {
           rules = [
             {
               pattern = {
@@ -45,5 +45,6 @@
             }
           ];
         }
+        |> builtins.toJSON
       );
 }

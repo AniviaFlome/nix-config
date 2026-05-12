@@ -4,9 +4,9 @@
   ...
 }:
 {
-  programs.vscode = {
+  programs.vscodium = {
     enable = true;
-    package = pkgs.antigravity-fhs;
+    package = pkgs.vscodium-fhs;
     profiles.default = {
       enableMcpIntegration = true;
       extensions = with pkgs.vscode-extensions; [

@@ -1,5 +1,7 @@
 {
   imports = [
+    # Options
+    ../../hm-modules/options
     # Desktop
     ../../hm-modules/desktop/niri
     ../../hm-modules/desktop/plasma
@@ -11,13 +13,13 @@
     ../../hm-modules/misc/variables.nix
     ../../hm-modules/misc/xdg.nix
     # Programs
+    ../../hm-modules/programs/antigravity.nix
     ../../hm-modules/programs/atuin.nix
     ../../hm-modules/programs/bash.nix
     ../../hm-modules/programs/bat.nix
     ../../hm-modules/programs/claude-code.nix
     ../../hm-modules/programs/difftastic.nix
     ../../hm-modules/programs/direnv.nix
-    ../../hm-modules/programs/distrobox
     ../../hm-modules/programs/easyeffects
     ../../hm-modules/programs/fastfetch
     ../../hm-modules/programs/fish.nix
@@ -46,8 +48,6 @@
     ../../hm-modules/programs/starship.nix
     ../../hm-modules/programs/thunderbird.nix
     ../../hm-modules/programs/tmenu.nix
-    ../../hm-modules/programs/vscode.nix
-    ../../hm-modules/programs/yt-x.nix
     ../../hm-modules/programs/zed.nix
     ../../hm-modules/programs/zen-browser
     ../../hm-modules/programs/zoxide.nix

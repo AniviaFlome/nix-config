@@ -1,14 +1,19 @@
 {
   config,
-  osConfig,
+  lib,
   pkgs,
   ...
 }:
 {
   programs.niri = {
-    package = osConfig.programs.niri.package or pkgs.niri-unstable;
+    package = pkgs.niri;
     settings = {
-      # includes = lib.mkAfter [ ./extra.kdl ];
+      includes = lib.mkAfter [
+        {
+          path = ./extra.kdl;
+          required = true;
+        }
+      ];
       prefer-no-csd = true;
       hotkey-overlay = {
         skip-at-startup = true;
@@ -36,17 +41,6 @@
           bottom = 4;
         };
       };
-      # recent-windows = {
-      #   debounce-ms = 500;
-      #   highlight = {
-      #     active-color = "#cba6f7";
-      #     urgent-color = "#f38ba8";
-      #   };
-      #   previews = {
-      #     max-height = 480;
-      #     max-scale = 0.3;
-      #   };
-      # };
       input = {
         keyboard = {
           xkb.layout = "tr";
@@ -62,13 +56,17 @@
           enable = true;
           max-scroll-amount = "0%";
         };
-
       };
       clipboard = {
         disable-primary = true;
       };
       gestures = {
-        hot-corners.enable = false;
+        hot-corners = {
+          bottom-left = false;
+          bottom-right = false;
+          top-left = false;
+          top-right = false;
+        };
       };
       overview = {
         backdrop-color = "#181825";

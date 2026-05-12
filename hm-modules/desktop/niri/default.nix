@@ -9,7 +9,6 @@
     ./autostart.nix
     ./keybinds.nix
     ./settings.nix
-    ./scripts
     ../common/dms
   ];
 

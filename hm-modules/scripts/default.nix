@@ -31,7 +31,7 @@ in
 {
   home.packages =
     with pkgs;
-    (map (script: writeScriptBin script (builtins.readFile ./${script}.sh)) scripts)
+    (scripts |> map (script: ./${script}.sh |> builtins.readFile |> writeScriptBin script))
     ++ [
       alsa-utils
       bat

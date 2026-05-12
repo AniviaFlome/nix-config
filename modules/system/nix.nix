@@ -1,10 +1,12 @@
 {
   config,
   inputs,
+  pkgs,
   ...
 }:
 {
   nix = {
+    package = pkgs.lixPackageSets.stable.lix;
     optimise.automatic = true;
     settings = {
       auto-optimise-store = true;
@@ -30,7 +32,7 @@
     extraOptions = ''
       !include ${config.sops.secrets."nix-access-token".path}
       builders-use-substitutes = true
-      experimental-features = cgroups flakes nix-command
+      experimental-features = cgroups flakes nix-command pipe-operator
       show-trace = true
       use-cgroups = true
       use-xdg-base-directories = true

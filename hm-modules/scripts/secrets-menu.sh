@@ -1,9 +1,14 @@
 #!/usr/bin/env dash
 # Interactive secrets menu using gum
 
-# Navigate to the repo secrets directory to satisfy sops relative path creation rules
-cd "$(dirname "$0")/../../secrets" || {
-  echo "Could not find secrets directory"
+REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
+if [ -z "$REPO_ROOT" ]; then
+  echo "Could not find git repository root"
+  exit 1
+fi
+
+cd "$REPO_ROOT/secrets" || {
+  echo "Could not find secrets directory at $REPO_ROOT/secrets"
   exit 1
 }
 

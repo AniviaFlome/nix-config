@@ -29,43 +29,10 @@
             name = "root";
             size = "100%";
             content = {
-              type = "zfs";
-              pool = "zroot";
+              type = "filesystem";
+              format = "ext4";
+              mountpoint = "/";
             };
-          };
-        };
-      };
-    };
-    zpool = {
-      zroot = {
-        type = "zpool";
-        rootFsOptions = {
-          compression = "zstd";
-          acltype = "posixacl";
-          xattr = "sa";
-          atime = "off";
-          "com.sun:auto-snapshot" = "false";
-        };
-        options = {
-          ashift = "12";
-          autotrim = "on";
-        };
-        datasets = {
-          "root" = {
-            type = "zfs_fs";
-            mountpoint = "/";
-          };
-          "nix" = {
-            type = "zfs_fs";
-            mountpoint = "/nix";
-          };
-          "var" = {
-            type = "zfs_fs";
-            mountpoint = "/var";
-          };
-          "home" = {
-            type = "zfs_fs";
-            mountpoint = "/home";
           };
         };
       };

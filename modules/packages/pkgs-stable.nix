@@ -8,7 +8,6 @@
     joplin-desktop
     kdePackages.kdenlive
     krita
-    libresprite
     losslesscut-bin
     normcap
     rpcs3

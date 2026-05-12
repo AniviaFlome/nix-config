@@ -13,10 +13,10 @@ in
 [
   inputs.firefox-addons.overlays.default
   inputs.niri.overlays.niri
-  inputs.nix-cachyos-kernel.overlays.pinned
   inputs.nix-repository.overlays.default
   inputs.nur.overlays.default
   inputs.llm-agents.overlays.default
+  inputs.millennium.overlays.default
   (final: prev: {
     stable = mkNixpkgs inputs.nixpkgs-stable final.stdenv.hostPlatform.system;
     kopuz = inputs.kopuz.packages.${final.stdenv.hostPlatform.system}.default;
@@ -49,7 +49,5 @@ in
         np2kai
       ]
     );
-    pkgs-millennium = mkNixpkgs inputs.nixpkgs-millennium final.stdenv.hostPlatform.system;
-    inherit (final.pkgs-millennium) steam-millennium;
   })
 ]

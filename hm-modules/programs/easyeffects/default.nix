@@ -1,5 +1,5 @@
 let
-  loadPreset = path: builtins.fromJSON (builtins.readFile path);
+  loadPreset = path: path |> builtins.readFile |> builtins.fromJSON;
 in
 {
   services.easyeffects = {

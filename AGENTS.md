@@ -22,22 +22,11 @@ Shared config lives in `flake/variables.nix` (username, default apps, fonts). Ac
 | liveiso | unstable | no | ISO image build |
 | liveiso-minimal | unstable | no | minimal ISO |
 
-## Commands
-
-```bash
-just code          # lint: statix check + deadnix
-just check         # nix flake check
-just rekey         # re-encrypt sops secrets after key changes
-just iso-normal    # build liveiso
-just iso-minimal   # build liveiso-minimal
-```
-
 Build the desktop host: `nix build .#nixosConfigurations.nixos.config.system.build.toplevel`
 
 ## Conventions
 
 - **Formatter** is treefmt-nix (`nix fmt`). Runs nixfmt, deadnix, statix, and shfmt.
-- **statix**: `repeated_keys` rule is disabled (`statix.toml`).
 - **Overlays**: unfree packages are allowed globally. Several inputs provide overlays (niri, firefox-addons, nur, nix-cachyos-kernel, nix-repository, llm-agents).
 - `pkgs-millennium` overlay pulls `steam-millennium` from a nixpkgs PR branch (`nixpkgs-millennium` input) — don't replace this with a normal nixpkgs reference.
 - **Secrets** use sops-nix with age keys. Key paths configured in `.sops.yaml`. Run `just rekey` after changing encryption keys.

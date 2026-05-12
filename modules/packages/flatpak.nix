@@ -22,21 +22,21 @@
       }
     ];
     packages =
-      map
-        (id: {
-          appId = id;
-          origin = "flathub";
-        })
-        [
-          "com.github.tchx84.Flatseal"
-          "com.pokemmo.PokeMMO"
-          "com.rustdesk.RustDesk"
-          "com.usebottles.bottles"
-          "io.github.giantpinkrobots.flatsweep"
-          "io.github.Soundux"
-          "org.vinegarhq.Sober"
-          "sh.fhs.ksre"
-        ];
+      [
+        "com.github.tchx84.Flatseal"
+        "com.pokemmo.PokeMMO"
+          "com.pot_app.pot"
+        "com.rustdesk.RustDesk"
+          "com.stremio.Stremio"
+        "io.github.giantpinkrobots.flatsweep"
+        "io.github.Soundux"
+        "org.vinegarhq.Sober"
+        "sh.fhs.ksre"
+      ]
+      |> map (id: {
+        appId = id;
+        origin = "flathub";
+      });
     overrides = {
       global = {
         Context = {

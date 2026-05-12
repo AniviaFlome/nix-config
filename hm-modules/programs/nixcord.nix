@@ -11,11 +11,13 @@
     discord.enable = false;
     vesktop = {
       enable = true;
-      package = pkgs.stable.vesktop;
+      package = pkgs.vesktop;
       settings = {
         discordBranch = "stable";
         autoStartMinimized = true;
         clickTrayToShowHide = true;
+        hardwareAcceleration = true;
+        hardwareVideoAcceleration = true;
       };
     };
     config = {
@@ -38,7 +40,6 @@
         fakeNitro.enable = true;
         fixImagesQuality.enable = true;
         fixYoutubeEmbeds.enable = true;
-        iLoveSpam.enable = true;
         imageZoom = {
           enable = true;
           size = 500.0;
@@ -48,7 +49,6 @@
         noOnboardingDelay.enable = true;
         noTypingAnimation.enable = true;
         permissionsViewer.enable = true;
-        petpet.enable = true;
         pictureInPicture.enable = true;
         showHiddenThings.enable = true;
         summaries.enable = true;
