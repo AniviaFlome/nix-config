@@ -65,6 +65,9 @@
           position = 0;
           screenPreferences = [ "all" ];
           showOnLastDisplay = true;
+          innerPadding = 0;
+          openOnOverview = true;
+          fullscreenDetection = false;
           leftWidgets = [
             {
               id = "launcherButton";
@@ -123,8 +126,6 @@
               enabled = true;
             }
           ];
-          innerPadding = 0;
-          openOnOverview = true;
         }
       ];
     };

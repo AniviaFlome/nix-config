@@ -1,5 +1,6 @@
 {
   pkgs,
+  inputs,
   lib,
   modulesPath,
   ...
@@ -12,17 +13,21 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
-  services.xserver.xkb.layout = "tr";
+  console.keyMap = "trq";
 
-  environment.systemPackages = with pkgs; [
-    curl
-    disko
-    git
-    micro
-    neovim
-    parted
-    rsync
-  ];
+  networking.networkmanager.enable = true;
+  environment.systemPackages =
+    with pkgs;
+    [
+      curl
+      disko
+      git
+      micro
+      neovim
+      parted
+      rsync
+    ]
+    ++ lib.optional (inputs ? nixos-wizard) inputs.nixos-wizard.packages.${pkgs.system}.default;
 
   boot.kernelParams = [ "video=1920x1080" ];
 

@@ -34,6 +34,10 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-wizard = {
+      url = "github:km-clay/nixos-wizard";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-repository = {
       url = "github:AniviaFlome/nix-repository";
       inputs.nixpkgs.follows = "nixpkgs";
