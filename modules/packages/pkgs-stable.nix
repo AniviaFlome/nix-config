@@ -5,6 +5,7 @@
 {
   environment.systemPackages = with pkgs.stable; [
     calibre
+    grim
     joplin-desktop
     kdePackages.kdenlive
     krita

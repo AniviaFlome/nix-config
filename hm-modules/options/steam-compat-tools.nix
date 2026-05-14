@@ -1,19 +1,23 @@
 {
   config,
   lib,
-  osConfig ? throw "steam-compat-tools: osConfig is not available. The module will be ignored.",
+  osConfig,
   ...
 }:
 let
   cfg = config.programs.steam-compat-tools;
-  compatPackages = osConfig.programs.steam.extraCompatPackages or [ ];
 in
 {
   options.programs.steam-compat-tools = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = compatPackages != [ ];
+      default = osConfig.programs.steam.extraCompatPackages != [ ];
       description = "Symlink Steam compatibility tools to a shared directory for use by Lutris, Heroic, and other launchers.";
+    };
+    packages = lib.mkOption {
+      type = lib.types.listOf lib.types.package;
+      default = osConfig.programs.steam.extraCompatPackages;
+      description = "List of compatibility tool packages to symlink.";
     };
   };
 
@@ -22,7 +26,7 @@ in
       map (pkg: {
         name = ".steam/steam/compatibilitytools.d/${lib.getName pkg}";
         value.source = pkg.steamcompattool;
-      }) (lib.filter (pkg: pkg ? steamcompattool) compatPackages)
+      }) (lib.filter (pkg: pkg ? steamcompattool) cfg.packages)
     );
   };
 }

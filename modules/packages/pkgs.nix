@@ -80,6 +80,7 @@
     man
     mangayomi
     mangohud
+    manix
     mat2
     mcpelauncher-ui-qt
     micro
@@ -95,6 +96,7 @@
     nix-update
     nixd
     nixpkgs-review
+    normcap
     ntfs3g
     nurl
     nvd

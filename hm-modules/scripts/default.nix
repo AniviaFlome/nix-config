@@ -11,28 +11,19 @@ let
     "npp"
     "power-profiles-switch"
     "soundtest"
+    "nixdev"
     "stats"
     "winboot"
-    # Secrets management scripts
-    "create-system-key"
-    "deploy-pub-key"
-    "ensure-system-key-exists"
-    "extract-pub-key"
-    "generate-ssh-key"
-    "list-secrets"
-    "mkproject"
-    "print-secret"
-    "remove-secret"
-    "secrets-menu"
-    "set-hashed-password"
-    "set-secret"
   ];
 in
 {
+  imports = [ ./secrets ];
+
   home.packages =
     with pkgs;
     (scripts |> map (script: ./${script}.sh |> builtins.readFile |> writeScriptBin script))
     ++ [
+      age
       alsa-utils
       bat
       dash
@@ -40,16 +31,15 @@ in
       fzf
       gawk
       gum
+      jq
       libnotify
       lm_sensors
-      nix-search-tv
-      sysstat
-      whisper-cpp
-      age
-      jq
       mkpasswd
-      openssh
+      nix-search-tv
+      shellcheck
+      sysstat
       sops
+      openssh
       wl-clipboard
       xdg-utils
       yq-go

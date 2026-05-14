@@ -6,7 +6,6 @@ set -eu
 
 SOPS_FILE=""
 
-# Find secrets.yaml
 if [ -f "secrets/secrets.yaml" ]; then
   SOPS_FILE="secrets/secrets.yaml"
 elif [ -f "secrets.yaml" ]; then
@@ -43,7 +42,6 @@ done
 echo "Hashing password..."
 HASH=$(echo "$PASSWORD" | mkpasswd --method=yescrypt --stdin)
 
-# Encode to JSON string for sops --set
 JSON_VALUE=$(jq --null-input --arg v "$HASH" '$v')
 EXTRACT_PATH='["'"$SECRET_KEY"'"]'
 

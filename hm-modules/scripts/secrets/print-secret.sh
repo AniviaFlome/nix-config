@@ -12,7 +12,6 @@ if [ -z "$KEY_NAME" ]; then
   exit 1
 fi
 
-# Find secrets.yaml if not specified
 if [ -z "$SOPS_FILE" ]; then
   if [ -f "secrets/secrets.yaml" ]; then
     SOPS_FILE="secrets/secrets.yaml"
@@ -29,8 +28,6 @@ if [ ! -f "$SOPS_FILE" ]; then
   exit 1
 fi
 
-# Construct path with robust quoting
 EXTRACT_PATH='["'"$KEY_NAME"'"]'
 
-# Extract and print to stdout
 sops --extract "$EXTRACT_PATH" --decrypt "$SOPS_FILE"

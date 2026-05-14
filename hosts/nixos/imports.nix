@@ -32,6 +32,7 @@
     ../../modules/system/bootloader.nix
     ../../modules/system/cachy.nix
     ../../modules/system/display-manager.nix
+    ../../modules/system/documentation.nix
     ../../modules/system/dns.nix
     ../../modules/system/fonts.nix
     ../../modules/system/kernel.nix
@@ -39,6 +40,7 @@
     ../../modules/system/network.nix
     ../../modules/system/nh.nix
     ../../modules/system/nix.nix
+    ../../modules/system/home-manager.nix
     ../../modules/system/nix-ld.nix
     ../../modules/system/pipewire.nix
     ../../modules/system/shell.nix

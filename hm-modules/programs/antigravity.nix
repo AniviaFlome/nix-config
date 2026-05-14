@@ -20,6 +20,11 @@
       ];
       userSettings = {
         "editor.fontFamily" = "'${ide-font}', 'monospace', monospace";
+        "nix.formatterPath" = "${pkgs.nixfmt}/bin/nixfmt";
+        "[nix]" = {
+          "editor.defaultFormatter" = "jnoortheen.nix-ide";
+          "editor.formatOnSave" = true;
+        };
       };
     };
   };

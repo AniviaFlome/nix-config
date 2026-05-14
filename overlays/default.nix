@@ -42,6 +42,13 @@ in
         temurin-bin-8
       ];
     };
+    normcap = prev.symlinkJoin {
+      name = prev.normcap.name;
+      paths = with prev; [
+        normcap
+        grim
+      ];
+    };
     retroarch = prev.retroarch.withCores (
       cores: with cores; [
         melonds

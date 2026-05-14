@@ -1,11 +1,33 @@
 #!/usr/bin/env dash
 # Deploy public key to remote host
-# Usage: deploy-pub-key [username] [host]
+# Usage: deploy-pub-key [options] [username] [host]
 
 set -eu
 
-USERNAME="${1:-}"
-HOST="${2:-}"
+USERNAME=""
+HOST=""
+PORT=""
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+  -p | --port)
+    PORT="$2"
+    shift 2
+    ;;
+  -*)
+    echo "Unknown option: $1"
+    exit 1
+    ;;
+  *)
+    if [ -z "$USERNAME" ]; then
+      USERNAME="$1"
+    elif [ -z "$HOST" ]; then
+      HOST="$1"
+    fi
+    shift
+    ;;
+  esac
+done
 
 if [ -z "$USERNAME" ]; then
   echo "Enter username:"
@@ -20,6 +42,14 @@ if [ -z "$HOST" ]; then
   HOST=$(gum input --placeholder "Host (e.g. 192.168.1.10)")
 fi
 
+if [ -z "$PORT" ]; then
+  echo "Enter port:"
+  PORT=$(gum input --placeholder "22")
+  if [ -z "$PORT" ]; then
+    PORT="22"
+  fi
+fi
+
 if [ -z "$HOST" ]; then
   echo "Host is required."
   exit 1
@@ -27,7 +57,6 @@ fi
 
 echo "Deploying key to $USERNAME@$HOST..."
 
-# Extract public key (filter for ssh- prefixed lines)
 PUB_KEY=$(extract-pub-key 2>/dev/null | grep "^ssh-" || true)
 
 if [ -z "$PUB_KEY" ]; then
@@ -37,14 +66,15 @@ if [ -z "$PUB_KEY" ]; then
   exit 1
 fi
 
-# Use a temp file for ssh-copy-id
-# ssh-copy-id often requires the file to end in .pub
 TMP_PUB=$(mktemp --suffix=.pub)
 echo "$PUB_KEY" >"$TMP_PUB"
 
-# Cleanup on exit
 trap 'rm -f "$TMP_PUB"' EXIT
 
-ssh-copy-id -f -i "$TMP_PUB" "$USERNAME@$HOST"
+if [ -n "$PORT" ]; then
+  ssh-copy-id -p "$PORT" -f -i "$TMP_PUB" "$USERNAME@$HOST"
+else
+  ssh-copy-id -f -i "$TMP_PUB" "$USERNAME@$HOST"
+fi
 
 echo "Key deployed successfully to $USERNAME@$HOST"

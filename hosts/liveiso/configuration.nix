@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   lib,
   modulesPath,
@@ -8,6 +7,7 @@
 {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-graphical-calamares-plasma6.nix"
+    ../../modules/system/documentation.nix
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
@@ -76,11 +76,8 @@
     "flakes"
   ];
 
-  nixpkgs = {
-    overlays = import ../../overlays { inherit inputs; };
-    config = {
-      allowUnfree = true;
-    };
+  nixpkgs.config = {
+    allowUnfree = true;
   };
 
   isoImage.squashfsCompression = "xz -Xdict-size 100%";

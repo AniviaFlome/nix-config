@@ -19,7 +19,5 @@
     };
   };
 
-  programs.steam-compat-tools = {
-    enable = true;
-  };
+  programs.steam-compat-tools.enable = true;
 }

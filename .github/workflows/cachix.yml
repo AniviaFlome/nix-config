@@ -15,13 +15,17 @@ jobs:
           remove-docker-images: true
           remove-dotnet: true
           remove-haskell: true
+
       - uses: actions/checkout@v6
+
       - uses: cachix/install-nix-action@v31
         with:
           nix_path: nixpkgs=channel:nixos-unstable
+
       - uses: cachix/cachix-action@v17
         with:
           name: aniviaflome
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+
       - run: nix --experimental-features 'nix-command flakes' build .#nixosConfigurations.nixos.config.system.build.toplevel
       - run: nix-shell --run "echo OK"

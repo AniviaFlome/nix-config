@@ -14,6 +14,8 @@
       package = pkgs.vesktop;
       settings = {
         discordBranch = "stable";
+        arRPC = true;
+        appBadge = false;
         autoStartMinimized = true;
         clickTrayToShowHide = true;
         hardwareAcceleration = true;

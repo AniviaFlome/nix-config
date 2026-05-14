@@ -9,21 +9,8 @@
     specialArgs = config.flake.variables // {
       inherit inputs self;
       inherit (config.flake) lib;
+      flakeVars = config.flake.variables;
     };
-    modules = [
-      ./configuration.nix
-      inputs.nur.modules.nixos.default
-    ];
-  };
-
-  flake.homeConfigurations = {
-    "${config.flake.variables.username}@nixos" = inputs.home-manager.lib.homeManagerConfiguration {
-      inherit (self.nixosConfigurations.nixos) pkgs;
-      extraSpecialArgs = config.flake.variables // {
-        inherit inputs self;
-        osConfig = self.nixosConfigurations.nixos.config;
-      };
-      modules = [ ./home.nix ];
-    };
+    modules = [ ./configuration.nix ];
   };
 }

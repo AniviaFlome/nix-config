@@ -7,7 +7,6 @@ set -eu
 JSON=false
 SOPS_FILE=""
 
-# Parse arguments
 for arg in "$@"; do
   if [ "$arg" = "--json" ]; then
     JSON=true
@@ -16,7 +15,6 @@ for arg in "$@"; do
   fi
 done
 
-# Find secrets.yaml if not specified
 if [ -z "$SOPS_FILE" ]; then
   if [ -f "secrets/secrets.yaml" ]; then
     SOPS_FILE="secrets/secrets.yaml"
@@ -34,10 +32,7 @@ if [ ! -f "$SOPS_FILE" ]; then
 fi
 
 if [ "$JSON" = true ]; then
-  # List keys in JSON format
   sops --decrypt "$SOPS_FILE" | yq --output-format json 'keys'
 else
-  # List keys one per line (human readable)
-  # yq 'keys' outputs a yaml list, sed strips the leading "- "
   sops --decrypt "$SOPS_FILE" | yq 'keys' | sed 's/^- //'
 fi

@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   lib,
   modulesPath,
@@ -7,7 +6,8 @@
 }:
 {
   imports = [
-    "${modulesPath}/installer/cd-dvd/installation-cd-minimal-new-kernel.nix"
+    "${modulesPath}/installer/cd-dvd/installation-cd-minimal-combined.nix"
+    ../../modules/system/documentation.nix
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
@@ -50,12 +50,11 @@
     "flakes"
   ];
 
-  nixpkgs = {
-    overlays = import ../../overlays { inherit inputs; };
-    config = {
-      allowUnfree = true;
-    };
+  nixpkgs.config = {
+    allowUnfree = true;
   };
+
+  boot.supportedFilesystems.zfs = false;
 
   isoImage.squashfsCompression = "xz -Xdict-size 100%";
 }

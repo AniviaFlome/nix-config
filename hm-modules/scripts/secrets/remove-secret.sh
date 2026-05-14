@@ -7,7 +7,6 @@ set -eu
 KEY_NAME="${1:-}"
 SOPS_FILE="${2:-}"
 
-# Find secrets.yaml if not specified
 if [ -z "$SOPS_FILE" ]; then
   if [ -f "secrets/secrets.yaml" ]; then
     SOPS_FILE="secrets/secrets.yaml"
@@ -35,11 +34,9 @@ if [ -z "$KEY_NAME" ]; then
   exit 1
 fi
 
-# Confirm removal
 if gum confirm "Are you sure you want to remove '$KEY_NAME'?"; then
   echo "Removing secret '$KEY_NAME'..."
 
-  # Use yq to delete key via sops edit mechanism
   export EDITOR="yq --inplace 'del(.[\"$KEY_NAME\"])'"
   sops edit "$SOPS_FILE"
 

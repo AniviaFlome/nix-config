@@ -25,9 +25,9 @@
       [
         "com.github.tchx84.Flatseal"
         "com.pokemmo.PokeMMO"
-          "com.pot_app.pot"
+        "com.pot_app.pot"
         "com.rustdesk.RustDesk"
-          "com.stremio.Stremio"
+        "com.stremio.Stremio"
         "io.github.giantpinkrobots.flatsweep"
         "io.github.Soundux"
         "org.vinegarhq.Sober"

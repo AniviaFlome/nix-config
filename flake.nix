@@ -12,9 +12,7 @@
     nixcord.url = "github:kaylorben/nixcord";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     nix-webapps.url = "github:AniviaFlome/nix-webapps";
-    nix-mineral.url = "github:cynicsketch/nix-mineral/";
-    direnv-instant.url = "github:Mic92/direnv-instant";
-    distrobox-flake.url = "github:AniviaFlome/distrobox-flake";
+    nix-mineral.url = "github:cynicsketch/nix-mineral";
     nix-themes.url = "github:aniviaflome/nix-themes";
     dms.url = "github:AvengeMedia/DankMaterialShell";
     llm-agents.url = "github:numtide/llm-agents.nix";
