@@ -44,6 +44,7 @@
     ../../hm-modules/programs/qutebrowser.nix
     ../../hm-modules/programs/ripgrep.nix
     ../../hm-modules/programs/shell-aliases.nix
+    ../../hm-modules/programs/sldl.nix
     ../../hm-modules/programs/spicetify.nix
     ../../hm-modules/programs/starship.nix
     ../../hm-modules/programs/thunderbird.nix

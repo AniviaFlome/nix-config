@@ -9,6 +9,7 @@
   home.sessionVariables = {
     XDG_UTILS_DEFAULT_BROWSER = browser;
     XDG_UTILS_DEFAULT_TERMINAL = terminal;
+    TERMINAL = terminal;
     XDG_UTILS_DEFAULT_FILE_MANAGER = file;
     EDITOR = term-editor;
     NIXPKGS_ALLOW_UNFREE = "1";

@@ -42,8 +42,8 @@
         Context = {
           filesystems = [
             "xdg-run/discord-ipc-0"
-            "xdg-data/themes:ro"
             "xdg-data/icons:ro"
+            "xdg-data/themes:ro"
             "$HOME/.local/share/fonts:ro"
             "/run/current-system/sw/share/themes:ro"
             "/run/current-system/sw/share/icons:ro"

@@ -7,6 +7,7 @@
     ../../modules/server/glances.nix
     ../../modules/server/freshrss.nix
     ../../modules/server/traefik.nix
+    ../../modules/server/waha.nix
     # System
     ../../modules/system/nix.nix
     ../../modules/system/autoupdate.nix

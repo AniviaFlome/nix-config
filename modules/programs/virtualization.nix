@@ -1,5 +1,4 @@
 {
-  pkgs,
   username,
   ...
 }:
@@ -8,9 +7,7 @@
     spiceUSBRedirection.enable = true;
     libvirtd = {
       enable = true;
-      package = pkgs.libvirt;
       qemu = {
-        package = pkgs.qemu;
         swtpm = {
           enable = true;
         };

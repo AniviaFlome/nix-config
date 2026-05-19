@@ -12,7 +12,6 @@ let
     "power-profiles-switch"
     "soundtest"
     "nixdev"
-    "stats"
     "winboot"
   ];
 in

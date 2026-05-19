@@ -12,19 +12,19 @@
     plugins = with pkgs.fishPlugins; [
       {
         name = "autopair";
-        inherit (autopair) src;
+        src = autopair;
       }
       {
         name = "bass";
-        inherit (bass) src;
+        src = bass;
       }
       {
         name = "done";
-        inherit (done) src;
+        src = done;
       }
       {
         name = "fzf-fish";
-        inherit (fzf-fish) src;
+        src = fzf-fish;
       }
     ];
   };

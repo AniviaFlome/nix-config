@@ -17,6 +17,7 @@
   "dom.security.https_only_mode_ever_enabled" = true;
   "dom.webgpu.enabled" = true;
   "extensions.autoDisableScopes" = 0;
+  "full-screen-api.warning.timeout" = 0;
   "general.autoScroll" = true;
   "identity.fxaccounts.enabled" = true;
   "layout.css.grid-template-masonry-value.enabled" = true;

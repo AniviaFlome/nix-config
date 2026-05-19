@@ -373,8 +373,8 @@ add_nix_package() {
 
   awk -v bare="$bare" -v prefItem="$prefItem" -v stable_prefix="$NIX_STABLE_PKG_PREFIX" '
         BEGIN {
-            in_env=0; in_list=0; inserted=0; use_bare=0
-            pat_stable = "with[ \\t]+" stable_prefix "[ \\t]*;"
+            in_env=0; in_list=0; inserted=0; use_bare=0; indent=""
+            pat_stable = "with[ \t]+" stable_prefix "[ \t]*;"
         }
 
         /environment\.systemPackages/ {
@@ -407,6 +407,12 @@ add_nix_package() {
             is_closing = (stripped ~ /^\]/)
             is_item = (stripped != "" && stripped !~ /^#/ && index(stripped, "[") == 0 && !is_closing)
 
+            if (is_item && indent == "") {
+                if (match(line, /^[ \t]+/)) {
+                    indent=substr(line, RSTART, RLENGTH)
+                }
+            }
+
             if (is_item && !inserted) {
                 cur=stripped
                 gsub(/^pkgs\./, "", cur)
@@ -414,14 +420,14 @@ add_nix_package() {
                 gsub(/[ \t].*$/, "", cur)
                 if (bare < cur) {
                     item=(use_bare ? bare : prefItem)
-                    print "    " item
+                    print indent item
                     inserted=1
                 }
             }
 
             if (is_closing && !inserted) {
                 item=(use_bare ? bare : prefItem)
-                print "    " item
+                print indent item
                 inserted=1
             }
 
@@ -613,7 +619,7 @@ add_flatpak_package() {
   temp="$(mktemp)"
 
   awk -v app_id="$app_id" '
-        BEGIN { in_packages=0; in_list=0; inserted=0 }
+        BEGIN { in_packages=0; in_list=0; inserted=0; indent="" }
 
         /services\.flatpak\.packages/ || /packages[[:space:]]*=/ {
             in_packages=1
@@ -636,17 +642,23 @@ add_flatpak_package() {
             is_closing = (stripped ~ /^\]/)
             is_item = (stripped != "" && stripped !~ /^#/ && index(stripped, "[") == 0 && !is_closing)
 
+            if (is_item && indent == "") {
+                if (match(line, /^[ \t]+/)) {
+                    indent=substr(line, RSTART, RLENGTH)
+                }
+            }
+
             if (is_item && !inserted) {
                 cur=stripped
                 gsub(/"/, "", cur)
                 if (app_id < cur) {
-                    print "          \"" app_id "\""
+                    print indent "\"" app_id "\""
                     inserted=1
                 }
             }
 
             if (is_closing && !inserted) {
-                print "          \"" app_id "\""
+                print indent "\"" app_id "\""
                 inserted=1
             }
 

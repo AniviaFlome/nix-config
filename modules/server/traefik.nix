@@ -44,6 +44,13 @@
             entryPoints = [ "websecure" ];
           };
 
+          # WAHA
+          waha = {
+            rule = "Host(`waha.example.com`)"; # Change to your domain
+            service = "waha";
+            entryPoints = [ "websecure" ];
+          };
+
           # Coolify
           coolify = {
             rule = "Host(`coolify.example.com`)"; # Change to your domain
@@ -71,6 +78,10 @@
 
           coolify.loadBalancer.servers = [
             { url = "http://localhost:8000"; }
+          ];
+
+          waha.loadBalancer.servers = [
+            { url = "http://localhost:3000"; }
           ];
         };
 

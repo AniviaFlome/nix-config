@@ -19,6 +19,7 @@
     brightnessctl
     btrfs-progs
     bubblewrap
+    calyx-vpn
     comma
     crankshaft-bin
     crow-translate
@@ -42,6 +43,7 @@
     glib
     gowall
     gparted
+    grim
     grsync
     gst_all_1.gstreamer
     gst_all_1.gst-vaapi
@@ -60,6 +62,7 @@
     hyprism
     hyprpicker
     input-remapper
+    joplin-desktop
     jq
     just
     kdePackages.dolphin
@@ -67,7 +70,6 @@
     kdePackages.gwenview
     kdePackages.okular
     kdePackages.partitionmanager
-    kdiskmark
     kitty
     kopuz
     legendary-gl
@@ -121,6 +123,7 @@
     rclone
     readest
     retroarch
+    riseup-vpn
     rsync
     ryubing
     samira
