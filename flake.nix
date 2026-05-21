@@ -1,6 +1,15 @@
 {
   description = "My Nixos configuration";
 
+  nixConfig = {
+    extra-experimental-features = [
+      "cgroups"
+      "flakes"
+      "nix-command"
+      "pipe-operator"
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "https://flakehub.com/f/NixOS/nixpkgs/*.tar.gz";
