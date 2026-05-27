@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   inputs,
   ...
@@ -19,6 +20,7 @@
     secrets = {
       "syncthing-password" = {
         mode = "0400";
+        owner = config.services.syncthing.user;
       };
       "nix-access-token" = {
         mode = "0400";

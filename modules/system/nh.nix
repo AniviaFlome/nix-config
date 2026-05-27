@@ -1,6 +1,11 @@
 {
+  self,
+  ...
+}:
+{
   programs.nh = {
     enable = true;
+    flake = toString self;
     clean = {
       enable = true;
       dates = "weekly";

@@ -11,15 +11,12 @@
     anup
     atuin
     audacity
-    bat
-    bat-extras.core
     bats
     better-control
     bolt-launcher
     brightnessctl
     btrfs-progs
     bubblewrap
-    calyx-vpn
     comma
     crankshaft-bin
     crow-translate
@@ -110,6 +107,7 @@
     osu-beatmap-manager-git
     osu-lazer-bin
     packwiz
+    pdfarranger
     pear-desktop
     prismlauncher
     proton-vpn
@@ -118,7 +116,6 @@
     pwvucontrol
     python3
     qbittorrent
-    qwen-code
     rPackages.stranslate
     rclone
     readest

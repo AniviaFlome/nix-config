@@ -27,13 +27,10 @@
     llm-agents.url = "github:numtide/llm-agents.nix";
     kopuz.url = "github:temidaradev/kopuz";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    millennium.url = "github:SteamClientHomebrew/Millennium/next?dir=packages/nix";
     dms-plugins = {
       url = "github:AvengeMedia/dms-plugins";
       flake = false;
-    };
-    millennium = {
-      url = "github:SteamClientHomebrew/Millennium/pull/727/head?dir=packages/nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     niri = {
       url = "github:sodiboo/niri-flake/very-refactor";

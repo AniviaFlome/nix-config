@@ -5,12 +5,12 @@
 {
   packages = with pkgs.firefox-addons; [
     augmented-steam
-    bitwarden
     buster-captcha-solver
     clearurls
     darkreader
     jump-cutter
     languagetool
+    proton-pass
     protondb-for-steam
     return-youtube-dislikes
     search-by-image
@@ -54,6 +54,11 @@
     };
 
     "uBlock0@raymondhill.net".settings = {
+      showIconBadge = false;
+      cloudStorageEnabled = true;
+      advancedUserEnabled = true;
+      uiAccentCustom = true;
+      uiAccent = "#cba7f6";
       selectedFilterLists = [
         "ublock-filters"
         "ublock-badware"
@@ -76,6 +81,7 @@
         "adguard-popup-overlays"
         "adguard-widgets"
         "ublock-annoyances"
+        "tr-0"
       ];
     };
 

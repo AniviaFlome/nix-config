@@ -1,4 +1,7 @@
-{ lib, ... }:
+{
+  lib,
+  ...
+}:
 {
   services.glances = {
     enable = lib.mkDefault true;

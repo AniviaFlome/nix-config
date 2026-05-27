@@ -12,7 +12,10 @@ in
     inherit (aiCommon) commands;
     inherit (aiCommon) skills;
     settings = {
-
+      plugin = [
+        "opencode-vibeguard"
+        "rtk"
+      ];
     };
   };
 

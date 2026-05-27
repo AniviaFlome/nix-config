@@ -25,6 +25,8 @@
     # Security
     ../../modules/security/fail2ban.nix
     ../../modules/security/firewall.nix
+    # Server
+    ../../modules/server/syncthing.nix
     # System
     ../../modules/system/appimage.nix
     ../../modules/system/battery.nix

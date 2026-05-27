@@ -68,6 +68,8 @@
           innerPadding = 0;
           openOnOverview = true;
           fullscreenDetection = false;
+          squareCorners = true;
+          spacing = 0;
           leftWidgets = [
             {
               id = "launcherButton";
