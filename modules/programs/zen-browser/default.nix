@@ -1,0 +1,25 @@
+{ inputs, ... }:
+{
+  flake.modules.homeManager.zen-browser =
+    { pkgs, username, ... }:
+    {
+      imports = [ inputs.zen-browser.homeModules.beta ];
+
+      programs.zen-browser = {
+        enable = true;
+        profiles.${username} = {
+          bookmarks = import ./bookmarks.nix;
+          extensions = import ./extensions.nix { inherit inputs pkgs; };
+          settings = import ./settings.nix;
+          userChrome = builtins.readFile ./userChrome.css;
+          userContent = builtins.readFile ./userContent.css;
+          search = {
+            engines = import ./search-engines.nix { inherit pkgs; };
+            force = true;
+            default = "ddg";
+            privateDefault = "ddg";
+          };
+        };
+      };
+    };
+}

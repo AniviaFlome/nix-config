@@ -1,16 +1,11 @@
 {
-  pkgs,
-  ...
-}:
-{
-  boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = [
-      "binder_linux"
-      "ntsync"
-    ];
-    kernelParams = [
-
-    ];
-  };
+  flake.modules.nixos.kernel =
+    { pkgs, ... }:
+    {
+      boot.kernelPackages = pkgs.linuxPackages_latest;
+      boot.kernelModules = [
+        "binder_linux"
+        "ntsync"
+      ];
+    };
 }

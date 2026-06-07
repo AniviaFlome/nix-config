@@ -16,14 +16,24 @@
     inputs.nixos-hardware.nixosModules.asus-battery
   ];
 
-  fileSystems."/mnt/windows" = {
-    device = "/dev/disk/by-uuid/3858E77C58E736F2";
-    fsType = "ntfs";
-    options = [
-      "rw"
-      "uid=1000"
-      "nofail"
-    ];
+  fileSystems = {
+    "/mnt/windows" = {
+      device = "/dev/disk/by-uuid/3858E77C58E736F2";
+      fsType = "ntfs";
+      options = [
+        "rw"
+        "uid=1000"
+        "nofail"
+      ];
+    };
+    "/mnt/sdd" = {
+      device = "/dev/disk/by-uuid/bb4507a5-12cb-465d-b372-050cc4f1429c";
+      fsType = "btrfs";
+      options = [
+        "compress=zstd"
+        "nofail"
+      ];
+    };
   };
 
   zramSwap = {
@@ -60,7 +70,7 @@
   };
 
   hardware.openrazer = {
-    # enable = true;
+    enable = true;
     users = [
       username
     ];

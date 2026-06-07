@@ -1,0 +1,66 @@
+{ inputs, ... }:
+{
+  flake.modules.homeManager.nixcord =
+    { pkgs, ... }:
+    {
+      imports = [ inputs.nixcord.homeModules.nixcord ];
+
+      programs.nixcord = {
+        enable = true;
+        discord.enable = false;
+        vesktop = {
+          enable = true;
+          package = pkgs.vesktop;
+          settings = {
+            discordBranch = "stable";
+            arRPC = true;
+            appBadge = false;
+            autoStartMinimized = true;
+            clickTrayToShowHide = true;
+            hardwareAcceleration = true;
+            hardwareVideoAcceleration = true;
+          };
+        };
+        config = {
+          useQuickCss = false;
+          themeLinks = [
+            "https://catppuccin.github.io/discord/dist/catppuccin-mocha-mauve.theme.css"
+          ];
+          plugins = {
+            alwaysTrust.enable = true;
+            anonymiseFileNames.enable = true;
+            betterGifAltText.enable = true;
+            callTimer.enable = true;
+            crashHandler.enable = true;
+            customIdle = {
+              enable = true;
+              idleTimeout = 0.0;
+            };
+            experiments.enable = true;
+            expressionCloner.enable = true;
+            fakeNitro.enable = true;
+            fixImagesQuality.enable = true;
+            fixYoutubeEmbeds.enable = true;
+            imageZoom = {
+              enable = true;
+              size = 500.0;
+            };
+            messageLogger.enable = true;
+            noF1.enable = true;
+            noOnboardingDelay.enable = true;
+            noTypingAnimation.enable = true;
+            permissionsViewer.enable = true;
+            pictureInPicture.enable = true;
+            showHiddenThings.enable = true;
+            summaries.enable = true;
+            validReply.enable = true;
+            validUser.enable = true;
+            volumeBooster.enable = true;
+            webKeybinds.enable = true;
+            webScreenShareFixes.enable = true;
+            youtubeAdblock.enable = true;
+          };
+        };
+      };
+    };
+}

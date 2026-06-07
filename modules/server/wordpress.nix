@@ -1,3 +1,5 @@
 {
-  services.wordpress.sites."localhost" = { };
+  flake.modules.nixos.wordpress = {
+    services.wordpress.sites."localhost" = { };
+  };
 }

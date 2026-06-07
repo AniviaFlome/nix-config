@@ -1,21 +1,21 @@
 {
-  username,
-  ...
-}:
-{
-  services.displayManager = {
-    sddm = {
-      enable = true;
-      autoNumlock = true;
-      wayland = {
-        enable = true;
-        compositor = "kwin";
+  flake.modules.nixos.display-manager =
+    { username, ... }:
+    {
+      services.displayManager = {
+        sddm = {
+          enable = true;
+          autoNumlock = true;
+          wayland = {
+            enable = true;
+            compositor = "kwin";
+          };
+        };
+        defaultSession = null;
+        autoLogin = {
+          enable = false;
+          user = username;
+        };
       };
     };
-    defaultSession = null;
-    autoLogin = {
-      enable = false;
-      user = username;
-    };
-  };
 }

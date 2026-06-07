@@ -1,13 +1,8 @@
 {
-  username,
-  ...
-}:
-{
-  networking = {
-    networkmanager = {
-      enable = true;
+  flake.modules.nixos.network =
+    { username, ... }:
+    {
+      networking.networkmanager.enable = true;
+      users.users.${username}.extraGroups = [ "networkmanager" ];
     };
-  };
-
-  users.users.${username}.extraGroups = [ "networkmanager" ];
 }

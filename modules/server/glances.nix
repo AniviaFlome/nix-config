@@ -1,11 +1,11 @@
 {
-  lib,
-  ...
-}:
-{
-  services.glances = {
-    enable = lib.mkDefault true;
-    openFirewall = lib.mkDefault false; # Managed by Traefik
-    port = 61208;
-  };
+  flake.modules.nixos.glances =
+    { lib, ... }:
+    {
+      services.glances = {
+        enable = lib.mkDefault true;
+        openFirewall = lib.mkDefault false;
+        port = 61208;
+      };
+    };
 }

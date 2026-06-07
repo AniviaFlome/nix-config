@@ -47,6 +47,6 @@
     font-size = "10";
     ide-font = "Cascadia Code";
 
-    wallpaper = self + "/hm-modules/theme/wallpaper/wallpaper.png";
+    wallpaper = self + "/modules/wallpaper/wallpaper.png";
   };
 }

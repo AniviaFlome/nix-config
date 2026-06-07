@@ -1,33 +1,35 @@
-{ pkgs, ... }:
 {
-  services.snapper = {
-    configs = {
-      root = {
-        SUBVOLUME = "/";
-        TIMELINE_CREATE = false;
-        TIMELINE_CLEANUP = true;
-        TIMELINE_LIMIT_HOURLY = 0;
-        TIMELINE_LIMIT_DAILY = 7;
-        TIMELINE_LIMIT_WEEKLY = 2;
-        TIMELINE_LIMIT_MONTHLY = 2;
-        TIMELINE_LIMIT_YEARLY = 0;
+  flake.modules.nixos.snapper =
+    { pkgs, ... }:
+    {
+      services.snapper = {
+        configs = {
+          root = {
+            SUBVOLUME = "/";
+            TIMELINE_CREATE = false;
+            TIMELINE_CLEANUP = true;
+            TIMELINE_LIMIT_HOURLY = 0;
+            TIMELINE_LIMIT_DAILY = 7;
+            TIMELINE_LIMIT_WEEKLY = 2;
+            TIMELINE_LIMIT_MONTHLY = 2;
+            TIMELINE_LIMIT_YEARLY = 0;
+          };
+          home = {
+            SUBVOLUME = "/home";
+            TIMELINE_CREATE = true;
+            TIMELINE_CLEANUP = true;
+            TIMELINE_LIMIT_HOURLY = 0;
+            TIMELINE_LIMIT_DAILY = 7;
+            TIMELINE_LIMIT_WEEKLY = 2;
+            TIMELINE_LIMIT_MONTHLY = 2;
+            TIMELINE_LIMIT_YEARLY = 0;
+          };
+        };
+        cleanupInterval = "1d";
       };
-      home = {
-        SUBVOLUME = "/home";
-        TIMELINE_CREATE = true;
-        TIMELINE_CLEANUP = true;
-        TIMELINE_LIMIT_HOURLY = 0;
-        TIMELINE_LIMIT_DAILY = 7;
-        TIMELINE_LIMIT_WEEKLY = 2;
-        TIMELINE_LIMIT_MONTHLY = 2;
-        TIMELINE_LIMIT_YEARLY = 0;
-      };
+      environment.systemPackages = with pkgs.stable; [
+        btrfs-assistant
+        snapper
+      ];
     };
-    cleanupInterval = "1d";
-  };
-
-  environment.systemPackages = with pkgs.stable; [
-    btrfs-assistant
-    snapper
-  ];
 }

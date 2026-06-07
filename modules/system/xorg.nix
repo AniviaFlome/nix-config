@@ -1,5 +1,5 @@
 {
-  services.xserver = {
-    enable = true;
+  flake.modules.nixos.xorg = {
+    services.xserver.enable = true;
   };
 }

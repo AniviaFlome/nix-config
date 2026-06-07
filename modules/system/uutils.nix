@@ -1,7 +1,9 @@
 {
-  pkgs,
-  ...
-}:
-{
-  environment.systemPackages = with pkgs; [ (lib.hiPrio pkgs.uutils-coreutils-noprefix) ];
+  flake.modules.nixos.uutils =
+    { pkgs, lib, ... }:
+    {
+      environment.systemPackages = [
+        (lib.hiPrio pkgs.uutils-coreutils-noprefix)
+      ];
+    };
 }

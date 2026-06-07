@@ -1,8 +1,8 @@
 {
-  services.archisteamfarm = {
-    enable = true;
-    settings = {
-      s_SteamOwnerID = "76561198889718025";
+  flake.modules.nixos.archisteamfarm = {
+    services.archisteamfarm = {
+      enable = true;
+      settings.s_SteamOwnerID = "76561198889718025";
     };
   };
 }

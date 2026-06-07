@@ -1,14 +1,15 @@
+{ inputs, ... }:
 {
-  inputs,
-  ...
-}:
-{
-  imports = [ inputs.nix-themes.nixosModules.default ];
+  flake.modules.homeManager.nix-themes = {
+    imports = [ inputs.nix-themes.homeModules.default ];
 
-  themes = {
-    enable = true;
-    theme = "catppuccin";
-    variant = "mocha";
-    accent = "mauve";
+    themes = {
+      enable = true;
+      theme = "catppuccin";
+      variant = "mocha";
+      accent = "mauve";
+
+      kvantum.enable = false;
+    };
   };
 }
