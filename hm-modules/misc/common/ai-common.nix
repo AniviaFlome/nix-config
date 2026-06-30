@@ -6,9 +6,7 @@
   commands = {
 
   };
-  context = {
-
-  };
+  context = "";
   skills = {
     context-canary = "${inputs.julius-skills}/skills/context-canary";
     fuck-slop = "${inputs.julius-skills}/skills/fuck-slop";
