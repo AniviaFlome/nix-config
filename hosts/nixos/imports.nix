@@ -12,9 +12,10 @@
     ../../modules/programs/docker.nix
     ../../modules/programs/fwupd.nix
     ../../modules/programs/gpu-screen-recorder.nix
-    ../../modules/programs/kde-connect.nix
+    ../../modules/programs/kdeconnect.nix
     ../../modules/programs/plasma.nix
     ../../modules/programs/niri.nix
+    ../../modules/programs/nixos-cli.nix
     ../../modules/programs/obs-studio.nix
     ../../modules/programs/oom.nix
     ../../modules/programs/podman.nix
@@ -36,6 +37,7 @@
     ../../modules/system/display-manager.nix
     ../../modules/system/documentation.nix
     ../../modules/system/dns.nix
+    ../../modules/system/envfs.nix
     ../../modules/system/fonts.nix
     ../../modules/system/kernel.nix
     ../../modules/system/locale.nix

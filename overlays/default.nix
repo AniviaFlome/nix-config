@@ -20,9 +20,6 @@ in
   (final: prev: {
     stable = mkNixpkgs inputs.nixpkgs-stable final.stdenv.hostPlatform.system;
     kopuz = inputs.kopuz.packages.${final.stdenv.hostPlatform.system}.default;
-    helium = prev.nur.repos.Ev357.helium.override {
-      enableWideVine = true;
-    };
     qutebrowser = prev.qutebrowser.override {
       enableWideVine = true;
     };

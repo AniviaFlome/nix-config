@@ -5,7 +5,7 @@
 {
   wayland.windowManager.hyprland.settings = {
     exec-once = [
-      "noctalia-shell"
+      "start-shell"
       "hypridle"
       "kdeconnectd"
       "XDG_MENU_PREFIX=plasma- kbuildsycoca6"

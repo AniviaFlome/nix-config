@@ -16,14 +16,24 @@
     inputs.nixos-hardware.nixosModules.asus-battery
   ];
 
-  fileSystems."/mnt/windows" = {
-    device = "/dev/disk/by-uuid/3858E77C58E736F2";
-    fsType = "ntfs";
-    options = [
-      "rw"
-      "uid=1000"
-      "nofail"
-    ];
+  fileSystems = {
+    "/mnt/windows" = {
+      device = "/dev/disk/by-uuid/3858E77C58E736F2";
+      fsType = "ntfs";
+      options = [
+        "rw"
+        "uid=1000"
+        "nofail"
+      ];
+    };
+    "/mnt/sdd" = {
+      device = "/dev/disk/by-uuid/bb4507a5-12cb-465d-b372-050cc4f1429c";
+      fsType = "btrfs";
+      options = [
+        "compress=zstd"
+        "nofail"
+      ];
+    };
   };
 
   zramSwap = {
@@ -40,6 +50,7 @@
     "rcutree.enable_rcu_lazy=1"
     "rtc_cmos.use_acpi_alarm=1"
     "video=1920x1080"
+    "pcie_aspm=off"
   ];
 
   services.xserver.videoDrivers = [ "nvidia" ]; # Load nvidia driver for Xorg and Wayland
@@ -52,15 +63,20 @@
     };
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    moduleParams = {
+      nvidia = {
+        NVreg_EnableGpuFirmware = 0;
+      };
+    };
   };
 
   hardware.nvidia-container-toolkit = {
-    enable = true;
+    enable = config.hardware.nvidia.enabled;
   };
 
   hardware.openrazer = {
-    # enable = true;
+    enable = true;
     users = [
       username
     ];

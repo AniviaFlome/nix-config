@@ -1,5 +1,7 @@
 {
+  config,
   inputs,
+  username,
   ...
 }:
 {
@@ -63,7 +65,7 @@
       "com.usebottles.bottles".Context = {
         filesystems = [
           "xdg-data/Steam:rw"
-          "/home/aniviaflome/Games:rw"
+          "${config.users.users.${username}.home}/Games:rw"
           "/mnt/windows/Games:rw"
         ];
       };

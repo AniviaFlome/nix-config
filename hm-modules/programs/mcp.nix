@@ -21,6 +21,10 @@ in
         command = "${pkgs.mcp-nixos}/bin/mcp-nixos";
         args = [ ];
       };
+      context7 = {
+        command = "${pkgs.context7-mcp}/bin/context7-mcp";
+        args = [ ];
+      };
     };
   };
 }

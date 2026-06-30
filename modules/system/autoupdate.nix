@@ -1,11 +1,11 @@
 {
-  username,
+  config,
   ...
 }:
 {
   system.autoUpgrade = {
     enable = true;
-    flake = "/home/${username}/nix-config";
+    flake = "${config.home.homeDirectory}/nix-config";
     dates = "daily";
     randomizedDelaySec = "45min";
     runGarbageCollection = true;

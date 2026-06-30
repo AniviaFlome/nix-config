@@ -32,6 +32,10 @@
       url = "github:AvengeMedia/dms-plugins";
       flake = false;
     };
+    julius-skills = {
+      url = "github:JuliusBrussee/skills";
+      flake = false;
+    };
     niri = {
       url = "github:sodiboo/niri-flake/very-refactor";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -54,6 +58,10 @@
     };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-cli = {
+      url = "github:nix-community/nixos-cli";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     cachy-tweaks = {

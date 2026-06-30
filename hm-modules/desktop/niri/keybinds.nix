@@ -51,6 +51,11 @@
 
       "Mod+WheelScrollDown".action = focus-column-right;
       "Mod+WheelScrollUp".action = focus-column-left;
+      "Mod+O".action.spawn = [
+        "shell-selector"
+        "toggle"
+      ];
+
       "Mod+Shift+WheelScrollDown" = {
         action = focus-workspace-down;
         cooldown-ms = 150;

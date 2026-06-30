@@ -13,4 +13,6 @@
 
     ];
   };
+
+  hardware.usbStorage.manageShutdown = true;
 }

@@ -8,7 +8,8 @@
     ./keybinds.nix
     ./settings.nix
     ../common/hypridle.nix
-    ../common/noctalia.nix
+    ../common/dms
+    ../common/shell-switcher.nix
   ];
 
   wayland.windowManager.hyprland = {

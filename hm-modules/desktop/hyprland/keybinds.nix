@@ -21,6 +21,7 @@
       "$mainMod, B, exec, power-profiles-switch"
       "$mainMod, Space, exec, ${launcher}"
       "$mainMod, H, exec, ${clipboard}"
+      "$mainMod, O, exec, shell-selector toggle"
 
       "$mainMod, P, exec, grimblast copy area"
       "$mainMod SHIFT, P, exec, grimblast copy screen"

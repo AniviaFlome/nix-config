@@ -236,6 +236,7 @@
       },
       "split-channels": false
     },
-    "plugins_order": ["equalizer#0"]
+    "stereo_tools#0": {},
+    "plugins_order": ["equalizer#0", "stereo_tools#0"]
   }
 }

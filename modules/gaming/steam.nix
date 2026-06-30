@@ -11,8 +11,9 @@
     localNetworkGameTransfers.openFirewall = false; # Open ports in the firewall for Steam Local Network Game Transfers
     protontricks.enable = true;
     extraCompatPackages = with pkgs; [
-      proton-ge-bin
       dwproton-bin
+      proton-ge-bin
+      proton-cachyos
     ];
   };
 }

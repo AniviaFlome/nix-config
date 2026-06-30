@@ -17,7 +17,6 @@
     ../../hm-modules/programs/atuin.nix
     ../../hm-modules/programs/bash.nix
     ../../hm-modules/programs/bat.nix
-    ../../hm-modules/programs/claude-code.nix
     ../../hm-modules/programs/difftastic.nix
     ../../hm-modules/programs/direnv.nix
     ../../hm-modules/programs/easyeffects
@@ -45,6 +44,7 @@
     ../../hm-modules/programs/shell-aliases.nix
     ../../hm-modules/programs/sldl.nix
     ../../hm-modules/programs/spicetify.nix
+    ../../hm-modules/programs/spotify-player.nix
     ../../hm-modules/programs/starship.nix
     ../../hm-modules/programs/thunderbird.nix
     ../../hm-modules/programs/tmenu.nix

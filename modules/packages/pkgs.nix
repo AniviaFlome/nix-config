@@ -14,11 +14,12 @@
     bats
     better-control
     bolt-launcher
+    brave
     brightnessctl
     btrfs-progs
     bubblewrap
     comma
-    crankshaft-bin
+    crankshaft
     crow-translate
     curl
     dash
@@ -40,7 +41,6 @@
     glib
     gowall
     gparted
-    grim
     grsync
     gst_all_1.gstreamer
     gst_all_1.gst-vaapi
@@ -49,14 +49,12 @@
     gst_all_1.gst-plugins-ugly
     gst_all_1.gst-plugins-good
     gst_all_1.gst-plugins-base
-    handy-bin
-    helium
+    handy
     heroic
     home-manager
     htop
     hugo
     hydralauncher
-    hyprism
     hyprpicker
     input-remapper
     joplin-desktop
@@ -70,21 +68,20 @@
     kitty
     kopuz
     legendary-gl
+    libreoffice-fresh
     libva
     libva-utils
     lidarr
     livecaptions
-    llm-agents.jules
     localsend
     man
     mangayomi
     mangohud
     manix
     mat2
-    mcpelauncher-ui-qt
     micro
     mindustry-wayland
-    motrix-next-bin
+    motrix-next
     mousam
     mpv
     mullvad-browser
@@ -104,9 +101,11 @@
     opencommit
     openrct2
     openutau
+    optnix
     osu-beatmap-manager-git
-    osu-lazer-bin
+    osu-lazer
     packwiz
+    patent
     pdfarranger
     pear-desktop
     prismlauncher
@@ -116,6 +115,7 @@
     pwvucontrol
     python3
     qbittorrent
+    qtscrcpy
     rPackages.stranslate
     rclone
     readest
@@ -127,11 +127,13 @@
     scrcpy
     shattered-pixel-dungeon
     shellcheck
+    smassh
     songrec
     spotdl
     spotify-player
     starship
     statix
+    subtitleedit
     syncthing
     tealdeer
     telegram-desktop
@@ -140,7 +142,7 @@
     thunderbird
     tor
     tor-browser
-    torrra-bin
+    torrra
     turkanime-cli
     turkanime-gui
     umu-launcher
@@ -160,6 +162,7 @@
     zathura
     zerotierone
     zip
+    zotero
     zoxide
   ];
 }
