@@ -94,9 +94,11 @@
           matches = [ { title = "^Picture-in-Picture$"; } ];
           open-floating = true;
         }
+      ];
+      layer-rules = [
         {
-          matches = [ { title = "Taunahi"; } ];
-          open-focused = false;
+          matches = [ { namespace = "^dms:clipboard$"; } ];
+          block-out-from = "screencast";
         }
       ];
       outputs = {
@@ -116,8 +118,6 @@
         };
       };
       environment = {
-        XDG_CURRENT_DESKTOP = "niri";
-        XDG_SESSION_TYPE = "wayland";
         QT_QPA_PLATFORM = "wayland";
         QT_QPA_PLATFORMTHEME = "kde";
         MOZ_ENABLE_WAYLAND = "1";

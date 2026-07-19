@@ -8,7 +8,6 @@
     ./keybinds.nix
     ./settings.nix
     ../common/dms
-    ../common/shell-switcher.nix
   ];
 
   home.packages = with pkgs; [

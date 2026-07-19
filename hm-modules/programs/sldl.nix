@@ -5,7 +5,6 @@
 {
   home.packages = with pkgs; [
     slsk-batchdl
-    sldl-tui
   ];
 
   xdg.configFile."sldl/sldl.conf" = {

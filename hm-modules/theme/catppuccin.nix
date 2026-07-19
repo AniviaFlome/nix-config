@@ -8,13 +8,15 @@
   catppuccin = {
     enable = true;
     autoEnable = true;
-    cache.enable = true;
+    cache.enable = false;
     flavor = "mocha";
     accent = "mauve";
 
+    cursors.enable = false;
     atuin.enable = true;
     bat.enable = true;
     fish.enable = true;
+    gtk.icon.enable = false;
     hyprlock.enable = false;
     kitty.enable = true;
     kvantum.enable = false;

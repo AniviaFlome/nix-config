@@ -15,11 +15,10 @@ in
   inputs.niri.overlays.niri
   inputs.nix-repository.overlays.default
   inputs.nur.overlays.default
-  inputs.llm-agents.overlays.default
   inputs.millennium.overlays.default
   (final: prev: {
+    kopuz-flake = inputs.kopuz.packages.${final.stdenv.hostPlatform.system}.default;
     stable = mkNixpkgs inputs.nixpkgs-stable final.stdenv.hostPlatform.system;
-    kopuz = inputs.kopuz.packages.${final.stdenv.hostPlatform.system}.default;
     qutebrowser = prev.qutebrowser.override {
       enableWideVine = true;
     };

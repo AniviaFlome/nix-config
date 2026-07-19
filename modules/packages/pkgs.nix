@@ -4,6 +4,7 @@
 }:
 {
   environment.systemPackages = with pkgs; [
+    # keep-sorted start case=no
     android-tools
     ani-cli
     anitr-cli
@@ -12,6 +13,7 @@
     atuin
     audacity
     bats
+    bedrock-on-linux
     better-control
     bolt-launcher
     brave
@@ -42,13 +44,12 @@
     gowall
     gparted
     grsync
-    gst_all_1.gstreamer
-    gst_all_1.gst-vaapi
     gst_all_1.gst-libav
     gst_all_1.gst-plugins-bad
-    gst_all_1.gst-plugins-ugly
-    gst_all_1.gst-plugins-good
     gst_all_1.gst-plugins-base
+    gst_all_1.gst-plugins-good
+    gst_all_1.gst-plugins-ugly
+    gst_all_1.gstreamer
     handy
     heroic
     home-manager
@@ -56,7 +57,6 @@
     hugo
     hydralauncher
     hyprpicker
-    input-remapper
     joplin-desktop
     jq
     just
@@ -66,7 +66,7 @@
     kdePackages.okular
     kdePackages.partitionmanager
     kitty
-    kopuz
+    kopuz-flake
     legendary-gl
     libreoffice-fresh
     libva
@@ -105,9 +105,7 @@
     osu-beatmap-manager-git
     osu-lazer
     packwiz
-    patent
     pdfarranger
-    pear-desktop
     prismlauncher
     proton-vpn
     proton-vpn-cli
@@ -116,7 +114,6 @@
     python3
     qbittorrent
     qtscrcpy
-    rPackages.stranslate
     rclone
     readest
     retroarch
@@ -164,5 +161,6 @@
     zip
     zotero
     zoxide
+    # keep-sorted end
   ];
 }

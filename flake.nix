@@ -24,13 +24,13 @@
     nix-mineral.url = "github:cynicsketch/nix-mineral";
     nix-themes.url = "github:aniviaflome/nix-themes";
     dms.url = "github:AvengeMedia/DankMaterialShell";
-    llm-agents.url = "github:numtide/llm-agents.nix";
-    kopuz.url = "github:temidaradev/kopuz";
+    dankcalendar.url = "github:AvengeMedia/dankcalendar";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    millennium.url = "github:SteamClientHomebrew/Millennium/next?dir=packages/nix";
-    dms-plugins = {
-      url = "github:AvengeMedia/dms-plugins";
-      flake = false;
+    millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
+    kopuz.url = "github:temidaradev/kopuz";
+    dms-plugin-registry = {
+      url = "github:AvengeMedia/dms-plugin-registry";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     julius-skills = {
       url = "github:JuliusBrussee/skills";

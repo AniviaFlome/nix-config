@@ -12,6 +12,7 @@
     ../../modules/programs/docker.nix
     ../../modules/programs/fwupd.nix
     ../../modules/programs/gpu-screen-recorder.nix
+    ../../modules/programs/hyprland.nix
     ../../modules/programs/kdeconnect.nix
     ../../modules/programs/plasma.nix
     ../../modules/programs/niri.nix

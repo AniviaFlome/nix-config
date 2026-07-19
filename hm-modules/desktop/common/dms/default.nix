@@ -7,6 +7,7 @@
   imports = [
     inputs.dms.homeModules.dank-material-shell
     inputs.dms.homeModules.niri
+    inputs.dms-plugin-registry.homeModules.default
   ];
 
   programs.dank-material-shell = {
@@ -31,12 +32,9 @@
       };
     };
 
-    plugins.dankKDEConnect = {
-      enable = true;
-      src = "${inputs.dms-plugins}/DankKDEConnect";
-      settings = {
-        enabled = true;
-      };
+    plugins = {
+      dankKDEConnect.enable = true;
+      linuxWallpaperEngine.enable = true;
     };
 
     settings = {
@@ -45,7 +43,7 @@
       };
       currentThemeName = "custom";
       currentThemeCategory = "custom";
-      customThemeFile = ./catppuccin/theme.json;
+      customThemeFile = inputs.dms-plugin-registry + "/themes/catppuccin/theme.json";
       controlCenterShowMicPercent = true;
       waveProgressEnabled = false;
       scrollTitleEnabled = false;
@@ -138,4 +136,8 @@
     };
 
   };
+
+  wayland.windowManager.hyprland.extraConfig = ''
+    hl.layer_rule({ match = { namespace = "dms" }, no_anim = true })
+  '';
 }

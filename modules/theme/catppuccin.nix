@@ -9,7 +9,7 @@
   catppuccin = {
     enable = true;
     autoEnable = true;
-    cache.enable = true;
+    cache.enable = false;
     flavor = "mocha";
     accent = "mauve";
 

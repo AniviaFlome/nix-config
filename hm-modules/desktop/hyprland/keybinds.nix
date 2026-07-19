@@ -1,81 +1,70 @@
 {
-  clipboard,
-  file,
-  launcher,
-  terminal,
-  ...
-}:
-{
-  wayland.windowManager.hyprland.settings = {
-    "$mainMod" = "SUPER";
+  wayland.windowManager.hyprland.extraConfig = ''
+    local mainMod = "SUPER"
 
-    bind = [
-      "$mainMod, C, killactive,"
-      "$mainMod, F, fullscreen, 1"
-      "$mainMod SHIFT, F, fullscreen, 0"
-      "$mainMod, V, togglefloating,"
-      "$mainMod, Q, togglegroup,"
+    -- window ops
+    hl.bind(mainMod .. " + C", hl.dsp.window.kill())
+    hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+    hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
+    hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+    hl.bind(mainMod .. " + Q", hl.dsp.group.toggle())
 
-      "$mainMod, T, exec, ${terminal}"
-      "$mainMod, E, exec, ${file}"
-      "$mainMod, B, exec, power-profiles-switch"
-      "$mainMod, Space, exec, ${launcher}"
-      "$mainMod, H, exec, ${clipboard}"
-      "$mainMod, O, exec, shell-selector toggle"
+    -- exec
+    hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("kitty"))
+    hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("dolphin"))
+    hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("power-profiles-switch"))
+    hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("dms ipc launcher toggle"))
+    hl.bind(mainMod .. " + H", hl.dsp.exec_cmd("dms ipc clipboard toggle"))
+    hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("shell-selector toggle"))
+    hl.bind(mainMod .. " + G", hl.dsp.exec_cmd("dms ipc call hypr toggleOverview"))
 
-      "$mainMod, P, exec, grimblast copy area"
-      "$mainMod SHIFT, P, exec, grimblast copy screen"
-      "$mainMod CTRL, P, exec, grimblast copy active"
+    -- screenshots
+    hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("grimblast copy area"))
+    hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("grimblast copy screen"))
+    hl.bind(mainMod .. " + CTRL + P", hl.dsp.exec_cmd("grimblast copy active"))
 
-      "$mainMod, Up, layoutmsg, focus u"
-      "$mainMod, Left, layoutmsg, focus l"
-      "$mainMod, Down, layoutmsg, focus d"
-      "$mainMod, Right, layoutmsg, focus r"
+    -- focus directional
+    hl.bind(mainMod .. " + UP", hl.dsp.focus({ direction = "up" }))
+    hl.bind(mainMod .. " + LEFT", hl.dsp.focus({ direction = "left" }))
+    hl.bind(mainMod .. " + DOWN", hl.dsp.focus({ direction = "down" }))
+    hl.bind(mainMod .. " + RIGHT", hl.dsp.focus({ direction = "right" }))
+    hl.bind(mainMod .. " + A", hl.dsp.focus({ direction = "left" }))
+    hl.bind(mainMod .. " + D", hl.dsp.focus({ direction = "right" }))
 
-      "$mainMod, W, workspace, -1"
-      "$mainMod, A, layoutmsg, focus l"
-      "$mainMod, S, workspace, +1"
-      "$mainMod, D, layoutmsg, focus r"
+    -- workspace cycling
+    hl.bind(mainMod .. " + W", hl.dsp.focus({ workspace = "-1" }))
+    hl.bind(mainMod .. " + S", hl.dsp.focus({ workspace = "+1" }))
 
-      "$mainMod SHIFT, W, movetoworkspace, -1"
-      "$mainMod SHIFT, A, layoutmsg, swapcol l"
-      "$mainMod SHIFT, S, movetoworkspace, +1"
-      "$mainMod SHIFT, D, layoutmsg, swapcol r"
+    -- swap columns
+    hl.bind(mainMod .. " + SHIFT + A", hl.dsp.layout("swapcol l"))
+    hl.bind(mainMod .. " + SHIFT + D", hl.dsp.layout("swapcol r"))
 
-      "$mainMod SHIFT, Up, movewindow, u"
-      "$mainMod SHIFT, Left, layoutmsg, move -col"
-      "$mainMod SHIFT, Down, movewindow, d"
-      "$mainMod SHIFT, Right, layoutmsg, move +col"
+    -- move columns
+    hl.bind(mainMod .. " + SHIFT + LEFT", hl.dsp.layout("move -col"))
+    hl.bind(mainMod .. " + SHIFT + RIGHT", hl.dsp.layout("move +col"))
 
-      "$mainMod, 1, workspace, 1"
-      "$mainMod, 2, workspace, 2"
-      "$mainMod, 3, workspace, 3"
-      "$mainMod, 4, workspace, 4"
-      "$mainMod, 5, workspace, 5"
-      "$mainMod, 6, workspace, 6"
-      "$mainMod, 7, workspace, 7"
-      "$mainMod, 8, workspace, 8"
-      "$mainMod, 9, workspace, 9"
+    -- move window up/down
+    hl.bind(mainMod .. " + SHIFT + UP", hl.dsp.window.move({ direction = "u" }))
+    hl.bind(mainMod .. " + SHIFT + DOWN", hl.dsp.window.move({ direction = "d" }))
 
-      "$mainMod SHIFT, 1, movetoworkspace, 1"
-      "$mainMod SHIFT, 2, movetoworkspace, 2"
-      "$mainMod SHIFT, 3, movetoworkspace, 3"
-      "$mainMod SHIFT, 4, movetoworkspace, 4"
-      "$mainMod SHIFT, 5, movetoworkspace, 5"
-      "$mainMod SHIFT, 6, movetoworkspace, 6"
-      "$mainMod SHIFT, 7, movetoworkspace, 7"
-      "$mainMod SHIFT, 8, movetoworkspace, 8"
-      "$mainMod SHIFT, 9, movetoworkspace, 9"
+    -- move to workspace -1 / +1
+    hl.bind(mainMod .. " + SHIFT + W", hl.dsp.window.move({ workspace = "-1" }))
+    hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "+1" }))
 
-      "$mainMod, mouse_down, layoutmsg, focus r"
-      "$mainMod, mouse_up, layoutmsg, focus l"
-      "$mainMod SHIFT, mouse_down, workspace, +1"
-      "$mainMod SHIFT, mouse_up, workspace, -1"
-    ];
+    -- mouse scroll
+    hl.bind(mainMod .. " + mouse_down", hl.dsp.layout("focus r"))
+    hl.bind(mainMod .. " + mouse_up", hl.dsp.layout("focus l"))
+    hl.bind(mainMod .. " + SHIFT + mouse_down", hl.dsp.focus({ workspace = "+1" }))
+    hl.bind(mainMod .. " + SHIFT + mouse_up", hl.dsp.focus({ workspace = "-1" }))
 
-    bindm = [
-      "$mainMod, mouse:272, movewindow"
-      "$mainMod, mouse:273, resizewindow"
-    ];
-  };
+    -- workspace 1-9: focus and move-to
+    for i = 1, 9 do
+        hl.bind(mainMod .. " + " .. i, hl.dsp.focus({ workspace = i }))
+        hl.bind(mainMod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
+    end
+
+    -- mouse move/resize
+    hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+    hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+  '';
 }

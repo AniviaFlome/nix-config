@@ -61,6 +61,9 @@
       expat
       libdrm
       udev
+
+      qt6.qtbase
+      libzip
     ];
   };
 }

@@ -3,6 +3,7 @@
     # Options
     ../../hm-modules/options
     # Desktop
+    ../../hm-modules/desktop/hyprland
     ../../hm-modules/desktop/niri
     ../../hm-modules/desktop/plasma
     # Misc
@@ -17,6 +18,7 @@
     ../../hm-modules/programs/atuin.nix
     ../../hm-modules/programs/bash.nix
     ../../hm-modules/programs/bat.nix
+    ../../hm-modules/programs/dank-calendar.nix
     ../../hm-modules/programs/difftastic.nix
     ../../hm-modules/programs/direnv.nix
     ../../hm-modules/programs/easyeffects
