@@ -6,10 +6,13 @@
   programs.zed-editor = {
     enable = true;
     extraPackages = with pkgs; [
+      cargo
       marksman
       nil
       nixd
       nixfmt
+      rust-analyzer
+      rustc
     ];
     extensions = [
       "env"
@@ -29,6 +32,14 @@
       "xml"
     ];
     enableMcpIntegration = true;
+    userTasks = [
+      {
+        label = "json2nix";
+        command = "nix eval --impure --expr 'builtins.fromJSON (builtins.getEnv \"ZED_SELECTED_TEXT\")' | nix-shell -p wl-clipboard --run wl-copy";
+        use_new_terminal = false;
+        hide = "on_success";
+      }
+    ];
     userKeymaps = [
       {
         context = "Editor";

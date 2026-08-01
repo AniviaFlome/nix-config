@@ -13,6 +13,7 @@
     {
       "Mod+C".action = close-window;
       "Mod+G".action = toggle-overview;
+      "Mod+M".action = maximize-window-to-edges;
       "Mod+E".action.spawn = file;
       "Mod+T".action.spawn = terminal;
       "Mod+B".action.spawn = "power-profiles-switch";
@@ -25,7 +26,8 @@
       "Mod+V".action = toggle-window-floating;
       "Mod+Q".action = toggle-column-tabbed-display;
 
-      "Mod+P".action.screenshot = [ ];
+      "Mod+P".action.spawn = "screenshot-to-waytator";
+      "Mod+L".action.screenshot = [ ];
       "Mod+Shift+P".action.screenshot-screen = [ ];
       "Mod+Ctrl+P".action.screenshot-window = [ ];
 
@@ -74,6 +76,7 @@
       "Mod+7".action.focus-workspace = 7;
       "Mod+8".action.focus-workspace = 8;
       "Mod+9".action.focus-workspace = 9;
+
       "Mod+Shift+1".action.move-column-to-workspace = 1;
       "Mod+Shift+2".action.move-column-to-workspace = 2;
       "Mod+Shift+3".action.move-column-to-workspace = 3;

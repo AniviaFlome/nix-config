@@ -7,6 +7,7 @@
     ./autostart.nix
     ./keybinds.nix
     ./settings.nix
+    ./nirikit.nix
     ../common/dms
   ];
 

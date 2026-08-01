@@ -10,13 +10,17 @@ in
   programs.opencode = {
     enable = true;
     enableMcpIntegration = true;
+    extraPackages = with pkgs; [
+      rtk
+    ];
     inherit (aiCommon) commands;
     inherit (aiCommon) context;
     inherit (aiCommon) skills;
     settings = {
       plugin = [
         "opencode-vibeguard"
-        "rtk"
+        "openrtk"
+        "superpowers@git+https://github.com/obra/superpowers.git"
       ];
     };
   };

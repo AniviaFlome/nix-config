@@ -12,11 +12,14 @@ let
 in
 [
   inputs.firefox-addons.overlays.default
-  inputs.niri.overlays.niri
+  inputs.helium.overlays.default
   inputs.nix-repository.overlays.default
   inputs.nur.overlays.default
   inputs.millennium.overlays.default
   (final: prev: {
+    rtk = prev.rtk.overrideAttrs (_old: {
+      doCheck = false;
+    });
     kopuz-flake = inputs.kopuz.packages.${final.stdenv.hostPlatform.system}.default;
     stable = mkNixpkgs inputs.nixpkgs-stable final.stdenv.hostPlatform.system;
     qutebrowser = prev.qutebrowser.override {

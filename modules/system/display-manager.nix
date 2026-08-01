@@ -12,7 +12,6 @@
         compositor = "kwin";
       };
     };
-    defaultSession = null;
     autoLogin = {
       enable = false;
       user = username;

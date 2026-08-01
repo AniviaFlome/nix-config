@@ -25,6 +25,10 @@ in
         command = "${pkgs.context7-mcp}/bin/context7-mcp";
         args = [ ];
       };
+      playwright = {
+        command = "${pkgs.playwright-mcp}/bin/playwright-mcp";
+        args = [ ];
+      };
     };
   };
 }

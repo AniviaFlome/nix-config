@@ -363,7 +363,7 @@ add_nix_package() {
 
   bare="$(echo "$attr" | sed "s/^${NIX_PKG_PREFIX}\.//")"
 
-  if extract_nix_packages "$file" | grep -qxF "$bare"; then
+  if extract_nix_packages "$file" | grep -qixF "$bare"; then
     msg_warn "Already exists: $bare"
     exit 0
   fi
@@ -405,6 +405,7 @@ add_nix_package() {
             gsub(/[ \t]+$/, "", stripped)
 
             is_closing = (stripped ~ /^\]/)
+            is_keep_sorted_end = (stripped ~ /# keep-sorted end/)
             is_item = (stripped != "" && stripped !~ /^#/ && index(stripped, "[") == 0 && !is_closing)
 
             if (is_item && indent == "") {
@@ -418,14 +419,14 @@ add_nix_package() {
                 gsub(/^pkgs\./, "", cur)
                 gsub("^" stable_prefix "\\.", "", cur)
                 gsub(/[ \t].*$/, "", cur)
-                if (bare < cur) {
+                if (tolower(bare) < tolower(cur)) {
                     item=(use_bare ? bare : prefItem)
                     print indent item
                     inserted=1
                 }
             }
 
-            if (is_closing && !inserted) {
+            if ((is_closing || is_keep_sorted_end) && !inserted) {
                 item=(use_bare ? bare : prefItem)
                 print indent item
                 inserted=1
@@ -494,7 +495,7 @@ remove_nix_package() {
                 gsub(/^pkgs\./, "", cur)
                 gsub("^" stable_prefix "\\.", "", cur)
                 gsub(/[ \t].*$/, "", cur)
-                if (cur == target) {
+                if (tolower(cur) == tolower(target)) {
                     # skip this line
                     if (is_closing) {
                         in_list=0
@@ -611,7 +612,7 @@ add_flatpak_package() {
   fi
 
   # Check if already exists
-  if grep -q "\"$app_id\"" "$file"; then
+  if grep -qi "\"$app_id\"" "$file"; then
     msg_warn "Already exists: $app_id"
     exit 0
   fi
@@ -640,6 +641,7 @@ add_flatpak_package() {
             gsub(/[ \t]+$/, "", stripped)
 
             is_closing = (stripped ~ /^\]/)
+            is_keep_sorted_end = (stripped ~ /# keep-sorted end/)
             is_item = (stripped != "" && stripped !~ /^#/ && index(stripped, "[") == 0 && !is_closing)
 
             if (is_item && indent == "") {
@@ -651,13 +653,13 @@ add_flatpak_package() {
             if (is_item && !inserted) {
                 cur=stripped
                 gsub(/"/, "", cur)
-                if (app_id < cur) {
+                if (tolower(app_id) < tolower(cur)) {
                     print indent "\"" app_id "\""
                     inserted=1
                 }
             }
 
-            if (is_closing && !inserted) {
+            if ((is_closing || is_keep_sorted_end) && !inserted) {
                 print indent "\"" app_id "\""
                 inserted=1
             }
@@ -715,7 +717,7 @@ remove_flatpak_package() {
             if (is_item) {
                 cur=stripped
                 gsub(/"/, "", cur)
-                if (cur == target) {
+                if (tolower(cur) == tolower(target)) {
                     # skip this line
                     if (is_closing) {
                         in_list=0

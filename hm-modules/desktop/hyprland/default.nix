@@ -14,6 +14,7 @@
     enable = true;
     xwayland.enable = true;
     configType = "lua";
+    systemd.enable = true;
     plugins = [
 
     ];

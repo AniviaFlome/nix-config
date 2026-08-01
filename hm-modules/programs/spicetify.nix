@@ -26,7 +26,7 @@
         marketplace
         newReleases
       ];
-      theme = spicePkgs.themes.comfy;
+      theme = spicePkgs.themes.catppuccin;
       colorScheme = "custom";
       customColorScheme = {
         text = "cdd6f4";

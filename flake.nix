@@ -28,16 +28,21 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
     kopuz.url = "github:temidaradev/kopuz";
+    nirikit.url = "github:AniviaFlome/nirikit";
+    anthropics-skills = {
+      url = "github:anthropics/skills";
+      flake = false;
+    };
+    helium = {
+      url = "github:schembriaiden/helium-browser-nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     dms-plugin-registry = {
       url = "github:AvengeMedia/dms-plugin-registry";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    julius-skills = {
-      url = "github:JuliusBrussee/skills";
-      flake = false;
-    };
     niri = {
-      url = "github:sodiboo/niri-flake/very-refactor";
+      url = "github:epireyn/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     disko = {

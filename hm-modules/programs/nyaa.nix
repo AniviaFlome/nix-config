@@ -19,7 +19,7 @@
       hot_reload_config = true
 
       [client.command]
-      cmd = "${video} {torrent}"
+      cmd = "nohup ${video} {torrent}"
       shell_cmd = "bash -c"
     '';
   };

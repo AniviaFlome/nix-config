@@ -16,7 +16,6 @@
     bedrock-on-linux
     better-control
     bolt-launcher
-    brave
     brightnessctl
     btrfs-progs
     bubblewrap
@@ -51,6 +50,7 @@
     gst_all_1.gst-plugins-ugly
     gst_all_1.gstreamer
     handy
+    helium
     heroic
     home-manager
     htop
@@ -80,11 +80,11 @@
     manix
     mat2
     micro
-    mindustry-wayland
     motrix-next
     mousam
     mpv
     mullvad-browser
+    navi
     neovim
     nicotine-plus
     nix-fast-build
@@ -146,6 +146,7 @@
     upscayl
     vlc
     vscodium
+    waytator
     wdisplays
     wget
     wine-staging

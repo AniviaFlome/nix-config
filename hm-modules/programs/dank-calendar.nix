@@ -7,6 +7,12 @@
 
   programs.dank-calendar = {
     enable = true;
-    systemd.enable = true;
+    systemd = {
+      enable = true;
+    };
+    settings = {
+      showTrayIcon = false;
+      use24HourClock = true;
+    };
   };
 }

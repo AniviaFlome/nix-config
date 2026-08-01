@@ -12,16 +12,16 @@
 
   programs.dank-material-shell = {
     enable = true;
-    systemd = {
-      enable = false;
-      restartIfChanged = true;
-    };
     enableSystemMonitoring = true;
     enableVPN = true;
     enableDynamicTheming = false;
     enableAudioWavelength = true;
     enableCalendarEvents = true;
     enableClipboardPaste = true;
+    systemd = {
+      enable = false;
+      restartIfChanged = true;
+    };
 
     niri = {
       enableKeybinds = false;
@@ -50,11 +50,16 @@
       audioVisualizerEnabled = false;
       appIdSubstitutions = [ ];
       useAutoLocation = true;
-      acMonitorTimeout = 180;
-      acLockTimeout = 300;
+
+      # Sleep
+      acMonitorTimeout = 300;
+      acLockTimeout = 900;
       acSuspendTimeout = 300;
       lockBeforeSuspend = true;
+
       osdPowerProfileEnabled = true;
+      lowerDisplayRefreshRateOnBattery = true;
+
       barConfigs = [
         {
           id = "default";

@@ -4,15 +4,18 @@
 }:
 let
   scripts = [
+    # keep-sorted start case=no
     "deploy"
     "hyscript"
     "monitor-off"
     "mpv-pl"
+    "nixdev"
     "npp"
     "power-profiles-switch"
+    "screenshot-to-waytator"
     "soundtest"
-    "nixdev"
     "winboot"
+    # keep-sorted end
   ];
 in
 {

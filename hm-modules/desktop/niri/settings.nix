@@ -1,19 +1,12 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }:
 {
   programs.niri = {
-    package = pkgs.niri;
+    package = pkgs.stable.niri;
     settings = {
-      includes = lib.mkAfter [
-        {
-          path = ./extra.kdl;
-          required = true;
-        }
-      ];
       prefer-no-csd = true;
       hotkey-overlay = {
         skip-at-startup = true;
@@ -62,14 +55,28 @@
       };
       gestures = {
         hot-corners = {
-          bottom-left = false;
-          bottom-right = false;
-          top-left = false;
-          top-right = false;
+          enable = false;
         };
       };
       overview = {
         backdrop-color = "#181825";
+      };
+      recent-windows = {
+        debounce-ms = 500;
+        highlight = {
+          active-color = "#cba6f7";
+          urgent-color = "#f38ba8";
+        };
+        previews = {
+          max-height = 480;
+          max-scale = 0.3;
+        };
+      };
+      blur = {
+        passes = 3;
+        offset = 3;
+        noise = 0.02;
+        saturation = 1.5;
       };
       debug = {
         honor-xdg-activation-with-invalid-serial = { };
@@ -93,6 +100,18 @@
         {
           matches = [ { title = "^Picture-in-Picture$"; } ];
           open-floating = true;
+        }
+        {
+          matches = [ { app-id = "^dev\\.faetalize\\.waytator$"; } ];
+          open-floating = true;
+        }
+        {
+          matches = [ { app-id = "^kitty$"; } ];
+          opacity = 0.9;
+          background-effect = {
+            blur = true;
+            xray = true;
+          };
         }
       ];
       layer-rules = [

@@ -8,11 +8,11 @@
   };
   context = "";
   skills = {
-    context-canary = "${inputs.julius-skills}/skills/context-canary";
-    fuck-slop = "${inputs.julius-skills}/skills/fuck-slop";
-    grill-me = "${inputs.julius-skills}/skills/grill-me";
-    interface-kit = "${inputs.julius-skills}/skills/interface-kit";
-    junior-to-senior = "${inputs.julius-skills}/skills/junior-to-senior";
-    loop-factory = "${inputs.julius-skills}/skills/loop-factory";
+    canvas-design = "${inputs.anthropics-skills}/skills/canvas-design";
+    docx = "${inputs.anthropics-skills}/skills/docx";
+    frontend-design = "${inputs.anthropics-skills}/skills/frontend-design";
+    pdf = "${inputs.anthropics-skills}/skills/pdf";
+    pptx = "${inputs.anthropics-skills}/skills/pptx";
+    webapp-testing = "${inputs.anthropics-skills}/skills/webapp-testing";
   };
 }

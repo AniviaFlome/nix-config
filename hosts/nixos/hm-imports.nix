@@ -49,7 +49,6 @@
     ../../hm-modules/programs/spotify-player.nix
     ../../hm-modules/programs/starship.nix
     ../../hm-modules/programs/thunderbird.nix
-    ../../hm-modules/programs/tmenu.nix
     ../../hm-modules/programs/zed.nix
     ../../hm-modules/programs/zen-browser
     ../../hm-modules/programs/zoxide.nix
