@@ -110,6 +110,7 @@
     proton-vpn
     proton-vpn-cli
     protonplus
+    proxychains-ng
     pwvucontrol
     python3
     qbittorrent
@@ -148,6 +149,7 @@
     vscodium
     waytator
     wdisplays
+    weston
     wget
     wine-staging
     winetricks

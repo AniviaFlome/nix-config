@@ -5,7 +5,7 @@
 }:
 {
   programs.niri = {
-    package = pkgs.stable.niri;
+    package = pkgs.master.niri;
     settings = {
       prefer-no-csd = true;
       hotkey-overlay = {
@@ -112,6 +112,16 @@
             blur = true;
             xray = true;
           };
+        }
+        {
+          matches = [
+            { app-id = "^Regulus2\\.exe$"; }
+            { app-id = "^metin2\\.exe$"; }
+            { title = "^Metin2$"; }
+            { title = "^Regulus2$"; }
+          ];
+          open-floating = true;
+          open-fullscreen = true;
         }
       ];
       layer-rules = [

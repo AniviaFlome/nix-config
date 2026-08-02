@@ -4,6 +4,24 @@
       enable = true;
       inlayHints.enable = true;
       formatOnSave = true;
+
+      mappings = {
+        goToDefinition = "gd";
+        goToDeclaration = "gD";
+        goToType = "gy";
+        listReferences = "gr";
+        listImplementations = "gI";
+        hover = "K";
+        signatureHelp = "gK";
+        renameSymbol = "<leader>cr";
+        codeAction = "<leader>ca";
+        listDocumentSymbols = "gO";
+        openDiagnosticFloat = "<leader>cd";
+        nextDiagnostic = "]d";
+        previousDiagnostic = "[d";
+        format = "<leader>cf";
+        toggleFormatOnSave = "<leader>uf";
+      };
     };
 
     languages = {

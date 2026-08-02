@@ -18,6 +18,6 @@
   home.packages = with pkgs; [
     fd
     lsof
-    tree-sitter
+    lazygit
   ];
 }

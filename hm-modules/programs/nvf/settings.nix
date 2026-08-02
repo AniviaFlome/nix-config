@@ -20,14 +20,14 @@
       inccommand = "split";
       swapfile = false;
       backup = false;
-      tabstop = 4;
-      shiftwidth = 4;
+      tabstop = 2;
+      shiftwidth = 2;
       smarttab = true;
-      cindent = true;
+      smartindent = true;
       termguicolors = true;
-      conceallevel = 2;
+      conceallevel = 3;
       laststatus = 3;
-      wrap = true;
+      wrap = false;
       foldenable = true;
       foldlevel = 99;
       foldlevelstart = 99;
@@ -50,7 +50,7 @@
     clipboard.enable = true;
 
     spellcheck = {
-      enable = false;
+      enable = true;
       languages = [
         "en"
         "tr"

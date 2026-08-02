@@ -5,7 +5,7 @@
     settings = {
       General = {
         Experimental = true;
-        FastConnectable = true;
+        FastConnectable = false;
       };
       Policy = {
         AutoEnable = true;

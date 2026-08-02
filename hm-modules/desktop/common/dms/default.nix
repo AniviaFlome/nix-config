@@ -54,7 +54,7 @@
       # Sleep
       acMonitorTimeout = 300;
       acLockTimeout = 900;
-      acSuspendTimeout = 300;
+      acSuspendTimeout = 900;
       lockBeforeSuspend = true;
 
       osdPowerProfileEnabled = true;

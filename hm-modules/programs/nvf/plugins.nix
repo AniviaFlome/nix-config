@@ -5,6 +5,17 @@
 {
   programs.nvf.settings.vim = {
     mini.icons.enable = true;
+    mini.ai.enable = true;
+    mini.indentscope = {
+      enable = true;
+      setupOpts.ignore_filetypes = [
+        "neo-tree"
+        "alpha"
+        "dashboard"
+        "toggleterm"
+      ];
+    };
+
     statusline.lualine.enable = true;
     telescope.enable = true;
     autopairs.nvim-autopairs.enable = true;
@@ -14,9 +25,27 @@
 
     visuals.indent-blankline.enable = true;
 
+    treesitter = {
+      context.enable = true;
+      textobjects.enable = true;
+    };
+
     utility = {
       surround.enable = true;
       oil-nvim.enable = true;
+      motion.flash-nvim.enable = true;
+      snacks-nvim = {
+        enable = true;
+        setupOpts = {
+          notifier.enabled = true;
+          bigfile.enabled = true;
+          quickfile.enabled = true;
+          words.enabled = true;
+          bufdelete.enabled = true;
+          terminal.enabled = true;
+          picker.enabled = true;
+        };
+      };
     };
 
     tabline.nvimBufferline = {
@@ -25,13 +54,17 @@
       mappings = {
         cycleNext = "<S-l>";
         cyclePrevious = "<S-h>";
-        closeCurrent = "<leader>q";
+        closeCurrent = "<leader>bd";
       };
     };
 
     terminal.toggleterm = {
       enable = true;
       setupOpts.direction = "float";
+      lazygit = {
+        enable = true;
+        direction = "float";
+      };
     };
 
     ui = {
@@ -56,6 +89,18 @@
           topdelete.text = "‾";
           changedelete.text = "~";
         };
+      };
+    };
+
+    lsp.trouble = {
+      enable = true;
+      mappings = {
+        documentDiagnostics = "<leader>xx";
+        workspaceDiagnostics = "<leader>xX";
+        quickfix = "<leader>xq";
+        locList = "<leader>xl";
+        symbols = "<leader>cs";
+        lspReferences = "<leader>cR";
       };
     };
 
@@ -95,10 +140,6 @@
       smear-cursor = {
         package = smear-cursor-nvim;
         setup = "require('smear_cursor').setup {}";
-      };
-      snacks = {
-        package = snacks-nvim;
-        setup = "require('snacks').setup { notifier = { enabled = true } }";
       };
     };
   };

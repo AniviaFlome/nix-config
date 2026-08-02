@@ -21,6 +21,7 @@ in
         "opencode-vibeguard"
         "openrtk"
         "superpowers@git+https://github.com/obra/superpowers.git"
+        "@prevalentware/opencode-goal-plugin"
       ];
     };
   };

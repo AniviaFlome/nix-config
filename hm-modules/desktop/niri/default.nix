@@ -13,6 +13,7 @@
 
   home.packages = with pkgs; [
     nirius
+    nirimon
     xwayland-satellite
   ];
 }

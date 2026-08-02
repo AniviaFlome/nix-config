@@ -21,17 +21,6 @@
       })
     '';
 
-    whichkey-groups = ''
-      local wk_ok, wk = pcall(require, 'which-key')
-      if wk_ok then
-        wk.add({
-          { "<leader>s", group = "[S]earch", mode = { "n", "v" } },
-          { "<leader>t", group = "[T]oggle" },
-          { "<leader>x", group = "Diagnostics" },
-        })
-      end
-    '';
-
     neotree-autoopen = ''
       vim.api.nvim_create_autocmd('VimEnter', {
         desc = 'Open Neo-tree when opening files',
@@ -64,41 +53,12 @@
       local ok, _ = pcall(function()
         local dashboard = require('alpha.themes.dashboard')
 
-        vim.api.nvim_create_user_command('OpenFolder', function()
-          local pickers = require('telescope.pickers')
-          local finders = require('telescope.finders')
-          local conf = require('telescope.config').values
-          local actions = require('telescope.actions')
-          local state = require('telescope.actions.state')
-
-          pickers.new({}, {
-            prompt_title = 'Open Folder',
-            finder = finders.new_oneshot_job(
-              { 'find', '.', '-maxdepth', '3', '-type', 'd', '-not', '-path', '*/.git/*', '-not', '-name', '.git' },
-              { cwd = vim.fn.expand('~') }
-            ),
-            sorter = conf.generic_sorter({}),
-            attach_mappings = function(prompt_bufnr)
-              actions.select_default:replace(function()
-                local entry = state.get_selected_entry()
-                actions.close(prompt_bufnr)
-                if entry then
-                  local dir = vim.fn.expand('~/' .. entry[1])
-                  vim.cmd('cd ' .. vim.fn.fnameescape(dir))
-                  vim.cmd('Neotree reveal')
-                end
-              end)
-              return true
-            end,
-          }):find()
-        end, {})
-
         dashboard.section.buttons.val = {
           dashboard.button("f", "  Find file",    ":Telescope find_files <CR>"),
           dashboard.button("n", "  New file",     ":ene <BAR> startinsert <CR>"),
           dashboard.button("r", "  Recent files", ":Telescope oldfiles <CR>"),
           dashboard.button("g", "  Find text",    ":Telescope live_grep <CR>"),
-          dashboard.button("p", "  Open folder",  ":OpenFolder<CR>"),
+          dashboard.button("p", "  Open project", ":lua Snacks.picker.projects()<CR>"),
           dashboard.button("q", "  Quit",         ":qa<CR>"),
         }
         require('alpha').setup(dashboard.config)
@@ -114,16 +74,6 @@
           if mark[1] > 0 and mark[1] <= lcount then
             pcall(vim.api.nvim_win_set_cursor, 0, mark)
           end
-        end,
-      })
-
-      -- 2-space indent for nix files
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'nix',
-        callback = function()
-          vim.bo.tabstop = 2
-          vim.bo.shiftwidth = 2
-          vim.bo.expandtab = true
         end,
       })
 

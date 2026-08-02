@@ -22,6 +22,7 @@ in
     });
     kopuz-flake = inputs.kopuz.packages.${final.stdenv.hostPlatform.system}.default;
     stable = mkNixpkgs inputs.nixpkgs-stable final.stdenv.hostPlatform.system;
+    master = mkNixpkgs inputs.nixpkgs-master final.stdenv.hostPlatform.system;
     qutebrowser = prev.qutebrowser.override {
       enableWideVine = true;
     };

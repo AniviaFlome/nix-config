@@ -7,10 +7,6 @@ age-gen:
   mkdir -p ~/.config/sops/age && \
     nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt
 
-[doc('Check for errors in the configuration')]
-code:
-  nix shell nixpkgs#statix nixpkgs#deadnix -c statix check; deadnix
-
 [doc('Check for errors in the flake')]
 check:
   nix flake check
@@ -26,6 +22,10 @@ iso-normal:
 [doc('Build minimal iso')]
 iso-minimal:
   nix build .#nixosConfigurations.liveiso-minimal.config.system.build.isoImage
+
+[doc('Check for errors in the configuration')]
+lint:
+  nix shell nixpkgs#statix nixpkgs#deadnix -c statix check; deadnix
 
 [doc('Update sops-nix keys')]
 rekey:

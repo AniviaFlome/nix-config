@@ -17,7 +17,7 @@ require_command() {
 }
 
 cleanup() {
-  if [[ -n "${STREAM_PID:-}" ]]; then
+  if [[ -n ${STREAM_PID:-} ]]; then
     kill "$STREAM_PID" >/dev/null 2>&1 || true
     wait "$STREAM_PID" >/dev/null 2>&1 || true
   fi
@@ -49,11 +49,11 @@ clipboard_image_mime() {
   fi
 
   while IFS= read -r mime; do
-    if [[ "$mime" == image/* ]]; then
+    if [[ $mime == image/* ]]; then
       printf '%s\n' "$mime"
       return 0
     fi
-  done <<< "$types"
+  done <<<"$types"
 
   return 1
 }
@@ -81,7 +81,7 @@ waytator_bin="$(resolve_waytator_bin)"
 initial_clipboard_fingerprint=""
 initial_clipboard_mime="$(clipboard_image_mime || true)"
 
-if [[ -n "$initial_clipboard_mime" ]]; then
+if [[ -n $initial_clipboard_mime ]]; then
   initial_clipboard_fingerprint="$(clipboard_image_fingerprint "$initial_clipboard_mime" || true)"
 fi
 
@@ -89,9 +89,9 @@ tmp_pipe=$(mktemp -u)
 mkfifo "$tmp_pipe"
 trap 'rm -f "$tmp_pipe"; cleanup' EXIT
 
-niri msg --json event-stream > "$tmp_pipe" &
+niri msg --json event-stream >"$tmp_pipe" &
 STREAM_PID=$!
-exec 3< "$tmp_pipe"
+exec 3<"$tmp_pipe"
 
 niri msg action screenshot >/dev/null
 
@@ -100,13 +100,13 @@ screenshot_path=""
 clipboard_fingerprint=""
 clipboard_mime_after=""
 
-while (( SECONDS < deadline )); do
+while ((SECONDS < deadline)); do
   if ! read -t 1 -u 3 line; then
     clipboard_mime_after="$(clipboard_image_mime || true)"
-    if [[ -n "$clipboard_mime_after" ]]; then
+    if [[ -n $clipboard_mime_after ]]; then
       clipboard_fingerprint="$(clipboard_image_fingerprint "$clipboard_mime_after" || true)"
 
-      if [[ -n "$clipboard_fingerprint" && "$clipboard_fingerprint" != "$initial_clipboard_fingerprint" ]]; then
+      if [[ -n $clipboard_fingerprint && $clipboard_fingerprint != "$initial_clipboard_fingerprint" ]]; then
         break
       fi
     fi
@@ -116,23 +116,23 @@ while (( SECONDS < deadline )); do
 
   screenshot_path="$(printf '%s\n' "$line" | jq -r '.ScreenshotCaptured.path? // empty' 2>/dev/null || true)"
 
-  if [[ -n "$screenshot_path" ]]; then
+  if [[ -n $screenshot_path ]]; then
     break
   fi
 
   clipboard_mime_after="$(clipboard_image_mime || true)"
-  if [[ -n "$clipboard_mime_after" ]]; then
+  if [[ -n $clipboard_mime_after ]]; then
     clipboard_fingerprint="$(clipboard_image_fingerprint "$clipboard_mime_after" || true)"
 
-    if [[ -n "$clipboard_fingerprint" && "$clipboard_fingerprint" != "$initial_clipboard_fingerprint" ]]; then
+    if [[ -n $clipboard_fingerprint && $clipboard_fingerprint != "$initial_clipboard_fingerprint" ]]; then
       break
     fi
   fi
 done
 
-if [[ -n "$screenshot_path" ]]; then
+if [[ -n $screenshot_path ]]; then
   setsid -f "$waytator_bin" "$screenshot_path" >/dev/null 2>&1
-elif [[ -n "$clipboard_fingerprint" && "$clipboard_fingerprint" != "$initial_clipboard_fingerprint" ]]; then
+elif [[ -n $clipboard_fingerprint && $clipboard_fingerprint != "$initial_clipboard_fingerprint" ]]; then
   open_clipboard_image "$clipboard_mime_after"
 else
   printf 'timed out waiting for niri to report a screenshot path or image clipboard update\n' >&2

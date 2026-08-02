@@ -25,6 +25,7 @@
     ../../hm-modules/programs/fastfetch
     ../../hm-modules/programs/fish.nix
     ../../hm-modules/programs/git.nix
+    ../../hm-modules/programs/herdr.nix
     ../../hm-modules/programs/kate.nix
     ../../hm-modules/programs/kitty.nix
     ../../hm-modules/programs/konsole.nix

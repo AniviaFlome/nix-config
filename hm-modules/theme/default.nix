@@ -35,6 +35,8 @@ in
     gtk4.theme = config.gtk.theme;
   };
 
+  xdg.configFile."gtk-4.0/gtk.css".force = true;
+
   home.file = {
     "${config.xdg.dataHome}/themes/catppuccin-mocha-mauve-standard".source =
       "${catppuccin-gtk-override}/share/themes/catppuccin-mocha-mauve-standard";
@@ -48,7 +50,6 @@ in
 
   home.packages = with pkgs; [
     adwaita-icon-theme
-    gnome-icon-theme
     hicolor-icon-theme
 
   ];

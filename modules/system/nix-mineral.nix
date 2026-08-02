@@ -7,5 +7,8 @@
 
   nix-mineral = {
     enable = true;
+    preset = [
+      "performance"
+    ];
   };
 }

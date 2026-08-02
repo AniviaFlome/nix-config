@@ -6,7 +6,7 @@
 {
   programs.antigravity = {
     enable = true;
-    package = pkgs.antigravity-fhs;
+    package = pkgs.antigravity-ide-fhs;
     profiles.default = {
       enableMcpIntegration = true;
       extensions = with pkgs.vscode-extensions; [
