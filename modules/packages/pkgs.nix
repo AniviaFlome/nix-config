@@ -5,6 +5,7 @@
 {
   environment.systemPackages = with pkgs; [
     # keep-sorted start case=no
+    amplitude-soundboard
     android-tools
     ani-cli
     anitr-cli
@@ -25,6 +26,7 @@
     curl
     dash
     deadnix
+    drawy
     easyeffects
     efibootmgr
     exiftool
@@ -36,7 +38,6 @@
     fzf
     gdu
     geteduroam
-    geteduroam-cli
     git
     github-cli
     glib
@@ -49,12 +50,10 @@
     gst_all_1.gst-plugins-good
     gst_all_1.gst-plugins-ugly
     gst_all_1.gstreamer
-    handy
     helium
     heroic
     home-manager
     htop
-    hugo
     hydralauncher
     hyprpicker
     joplin-desktop
@@ -66,19 +65,16 @@
     kdePackages.okular
     kdePackages.partitionmanager
     kitty
-    kopuz-flake
     legendary-gl
     libreoffice-fresh
     libva
     libva-utils
-    lidarr
     livecaptions
     localsend
     man
     mangayomi
     mangohud
     manix
-    mat2
     micro
     motrix-next
     mousam
@@ -144,12 +140,9 @@
     turkanime-cli
     turkanime-gui
     umu-launcher
-    upscayl
     vlc
-    vscodium
     waytator
     wdisplays
-    weston
     wget
     wine-staging
     winetricks

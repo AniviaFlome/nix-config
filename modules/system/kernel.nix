@@ -4,9 +4,10 @@
 }:
 {
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-x86_64-v3;
     kernelModules = [
       "binder_linux"
+      "udmabuf"
       "ntsync"
     ];
     kernelParams = [

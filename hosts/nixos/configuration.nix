@@ -14,7 +14,9 @@
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    extraGroups = [ "wheel" ];
+    extraGroups = [
+      "wheel"
+    ];
   };
 
   system.stateVersion = "24.05";

@@ -6,13 +6,13 @@
     ../../modules/gaming/steam.nix
     # Packages
     ../../modules/packages/flatpak.nix
+    ../../modules/packages/multiverse.nix
     ../../modules/packages/pkgs-stable.nix
     ../../modules/packages/pkgs.nix
     # Programs
     ../../modules/programs/docker.nix
     ../../modules/programs/fwupd.nix
     ../../modules/programs/gpu-screen-recorder.nix
-    ../../modules/programs/hyprland.nix
     ../../modules/programs/kdeconnect.nix
     ../../modules/programs/plasma.nix
     ../../modules/programs/niri.nix
@@ -21,8 +21,9 @@
     ../../modules/programs/oom.nix
     ../../modules/programs/podman.nix
     ../../modules/programs/snapper.nix
+    ../../modules/programs/uinput.nix
     ../../modules/programs/virtualization.nix
-    ../../modules/programs/waydroid.nix
+    ../../modules/programs/waydroid-nvidia.nix
     ../../modules/programs/zapret.nix
     # Security
     ../../modules/security/fail2ban.nix

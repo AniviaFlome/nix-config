@@ -25,6 +25,7 @@
     ];
     packages =
       [
+        # keep-sorted start case=no
         "com.github.tchx84.Flatseal"
         "com.pokemmo.PokeMMO"
         "com.pot_app.pot"
@@ -32,8 +33,10 @@
         "com.stremio.Stremio"
         "io.github.giantpinkrobots.flatsweep"
         "io.github.Soundux"
+        "io.github.tanaybhomia.Whisp"
         "org.vinegarhq.Sober"
         "sh.fhs.ksre"
+        # keep-sorted end
       ]
       |> map (id: {
         appId = id;

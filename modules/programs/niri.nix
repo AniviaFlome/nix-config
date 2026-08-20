@@ -10,7 +10,7 @@
 
   programs.niri = {
     enable = true;
-    package = pkgs.master.niri;
+    package = inputs.niri-fork.packages.${pkgs.stdenv.hostPlatform.system}.niri;
   };
 
   environment.systemPackages = with pkgs; [

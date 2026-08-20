@@ -3,7 +3,6 @@
     # Options
     ../../hm-modules/options
     # Desktop
-    ../../hm-modules/desktop/hyprland
     ../../hm-modules/desktop/niri
     ../../hm-modules/desktop/plasma
     # Misc
@@ -29,7 +28,9 @@
     ../../hm-modules/programs/kate.nix
     ../../hm-modules/programs/kitty.nix
     ../../hm-modules/programs/konsole.nix
+    ../../hm-modules/programs/kopuz.nix
     ../../hm-modules/programs/ludusavi.nix
+    ../../hm-modules/programs/lutris.nix
     ../../hm-modules/programs/mcp.nix
     ../../hm-modules/programs/mergiraf.nix
     ../../hm-modules/programs/micro.nix
@@ -50,6 +51,7 @@
     ../../hm-modules/programs/spotify-player.nix
     ../../hm-modules/programs/starship.nix
     ../../hm-modules/programs/thunderbird.nix
+    ../../hm-modules/programs/weston.nix
     ../../hm-modules/programs/zed.nix
     ../../hm-modules/programs/zen-browser
     ../../hm-modules/programs/zoxide.nix

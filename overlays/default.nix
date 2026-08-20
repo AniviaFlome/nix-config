@@ -13,8 +13,10 @@ in
 [
   inputs.firefox-addons.overlays.default
   inputs.helium.overlays.default
+  inputs.nix-cachyos-kernel.overlays.pinned
   inputs.nix-repository.overlays.default
   inputs.nur.overlays.default
+  inputs.waydroid-nvidia-nix.overlays.default
   inputs.millennium.overlays.default
   (final: prev: {
     rtk = prev.rtk.overrideAttrs (_old: {

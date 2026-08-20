@@ -62,13 +62,7 @@
       active_pane_modifiers = {
         inactive_opacity = 0.85;
       };
-      agent_servers = {
-        OpenCode = {
-          type = "custom";
-          command = "opencode";
-          args = [ "acp" ];
-        };
-      };
+
       lsp = {
         "nil".settings = {
           nix.flake = {
@@ -77,6 +71,7 @@
           };
         };
       };
+
       languages = {
         Markdown = {
           language_servers = [ "marksman" ];

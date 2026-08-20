@@ -1,11 +1,12 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }:
 {
   programs.niri = {
-    package = pkgs.master.niri;
+    package = inputs.niri-fork.packages.${pkgs.stdenv.hostPlatform.system}.niri;
     settings = {
       prefer-no-csd = true;
       hotkey-overlay = {

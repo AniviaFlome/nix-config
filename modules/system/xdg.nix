@@ -14,15 +14,11 @@
       wlr.enable = true;
       config = {
         common = {
-          default = [
-            "kde"
-            "gtk"
-            "gnome"
-          ];
           "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
         };
         niri = {
-          "org.freedesktop.impl.portal.FileChooser" = [ "kde" ];
+          default = [ "gtk" ];
+          "org.freedesktop.impl.portal.FileChooser" = [ "gnome" ];
           "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
         };
       };
@@ -36,4 +32,9 @@
   };
 
   services.gnome.gnome-keyring.enable = true;
+
+  systemd.user.services.xdg-desktop-portal-gtk = {
+    after = [ "plasma-kded6.service" ];
+    wants = [ "plasma-kded6.service" ];
+  };
 }

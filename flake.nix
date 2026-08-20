@@ -14,6 +14,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "https://flakehub.com/f/NixOS/nixpkgs/*.tar.gz";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
+    multiverse.url = "github:fzakaria/nixpkgs-multiverse";
     sops-nix.url = "github:Mic92/sops-nix";
     nvf.url = "github:notashelf/nvf";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
@@ -30,6 +31,11 @@
     millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
     kopuz.url = "github:temidaradev/kopuz";
     nirikit.url = "github:AniviaFlome/nirikit";
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    waydroid-nvidia-nix = {
+      url = "github:yigexuanmu/waydroid-nvidia-nix/180697edb1ea2c53fed49d6a07d20a39af563083";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     anthropics-skills = {
       url = "github:anthropics/skills";
       flake = false;
@@ -46,6 +52,7 @@
       url = "github:epireyn/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    niri-fork.url = "github:urayde/niri";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";

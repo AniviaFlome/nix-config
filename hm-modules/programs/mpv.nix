@@ -59,7 +59,7 @@
       write-filename-in-watch-later-config = "yes";
       save-watch-history = "yes";
 
-      alang = "en,jp,tr";
+      alang = "jp,en,tr";
       slang = "tr,en";
       sub-auto = "fuzzy";
       volume = 100;

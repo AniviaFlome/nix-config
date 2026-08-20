@@ -5,7 +5,6 @@ My Nixos config
 ### Todo:
 
 - Hyprland config.
-- Fix sddm wrong keyboard layout issue.
 
 ## License
 

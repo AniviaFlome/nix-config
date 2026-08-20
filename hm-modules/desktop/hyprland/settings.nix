@@ -49,10 +49,6 @@
             },
         },
 
-        animations = {
-            enabled = true,
-        },
-
         scrolling = {
             fullscreen_on_one_column = true,
             column_width = 0.8,
@@ -73,6 +69,11 @@
             disable_splash_rendering = true,
         },
 
+        ecosystem = {
+            no_update_news = true,
+            no_donation_nag = true,
+        },
+
         cursor = {
             no_warps = true,
         },
@@ -81,26 +82,6 @@
     hl.curve("niriExpo",   { type = "bezier", points = { { 0.16, 1 },    { 0.30, 1 } } })
     hl.curve("niriQuad",   { type = "bezier", points = { { 0.25, 0.46 }, { 0.45, 0.94 } } })
     hl.curve("niriCubic",  { type = "bezier", points = { { 0.33, 1 },    { 0.68, 1 } } })
-
-    hl.animation({ leaf = "windows",        enabled = true, speed = 2, bezier = "niriExpo",  style = "popin 80%" })
-    hl.animation({ leaf = "windowsIn",      enabled = true, speed = 2, bezier = "niriExpo",  style = "popin 80%" })
-    hl.animation({ leaf = "windowsOut",     enabled = true, speed = 2, bezier = "niriQuad",  style = "popin 95%" })
-    hl.animation({ leaf = "windowsMove",    enabled = true, speed = 3, bezier = "niriCubic" })
-
-    hl.animation({ leaf = "layersIn",       enabled = true, speed = 3, bezier = "niriCubic", style = "slide right" })
-    hl.animation({ leaf = "layersOut",      enabled = true, speed = 3, bezier = "niriCubic", style = "slide right" })
-
-    hl.animation({ leaf = "fade",           enabled = true, speed = 2, bezier = "niriQuad" })
-    hl.animation({ leaf = "fadeIn",         enabled = true, speed = 2, bezier = "niriQuad" })
-    hl.animation({ leaf = "fadeOut",        enabled = true, speed = 2, bezier = "niriQuad" })
-    hl.animation({ leaf = "fadeSwitch",     enabled = true, speed = 2, bezier = "niriQuad" })
-    hl.animation({ leaf = "fadeShadow",     enabled = true, speed = 2, bezier = "niriQuad" })
-    hl.animation({ leaf = "fadeDim",        enabled = true, speed = 2, bezier = "niriQuad" })
-    hl.animation({ leaf = "fadeDpms",       enabled = true, speed = 2, bezier = "niriQuad" })
-    hl.animation({ leaf = "fadeLayers",     enabled = true, speed = 3, bezier = "niriCubic" })
-
-    hl.animation({ leaf = "workspaces",       enabled = true, speed = 3, bezier = "niriExpo", style = "slidefade 30%" })
-    hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 3, bezier = "niriExpo", style = "slidefadevert 30%" })
 
     hl.window_rule({
         match = { title = "Picture-in-Picture" },

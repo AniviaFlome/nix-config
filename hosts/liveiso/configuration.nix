@@ -1,6 +1,5 @@
 {
   pkgs,
-  inputs,
   lib,
   modulesPath,
   ...
@@ -17,27 +16,24 @@
 
   networking.networkmanager.enable = true;
 
-  environment.systemPackages =
-    with pkgs;
-    [
-      curl
-      disko
-      git
-      grsync
-      kitty
-      micro
-      neovim
-      parted
-      rsync
-      (catppuccin-sddm.override {
-        flavor = "mocha";
-        accent = "mauve";
-        font = "Noto Sans";
-        fontSize = "9";
-        loginBackground = false;
-      })
-    ]
-    ++ lib.optional (inputs ? nixos-wizard) inputs.nixos-wizard.packages.${pkgs.system}.default;
+  environment.systemPackages = with pkgs; [
+    curl
+    disko
+    git
+    grsync
+    kitty
+    micro
+    neovim
+    parted
+    rsync
+    (catppuccin-sddm.override {
+      flavor = "mocha";
+      accent = "mauve";
+      font = "Noto Sans";
+      fontSize = "9";
+      loginBackground = false;
+    })
+  ];
 
   services.displayManager = lib.mkForce {
     sddm = {

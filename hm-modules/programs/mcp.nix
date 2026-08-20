@@ -13,7 +13,7 @@ in
   programs.mcp = {
     enable = true;
     servers = {
-      Github = {
+      github = {
         command = "${github-mcp}";
         args = [ ];
       };

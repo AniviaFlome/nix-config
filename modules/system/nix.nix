@@ -19,18 +19,18 @@
       extra-substituters = [
         "https://aniviaflome-nix-repository.cachix.org"
         "https://cache.nixos-cuda.org"
-        "https://cache.numtide.com"
         "https://kopuz.cachix.org"
         "https://nix-community.cachix.org"
         "https://noctalia.cachix.org"
+        "https://numtide.cachix.org"
       ];
       extra-trusted-public-keys = [
         "aniviaflome-nix-repository.cachix.org-1:P+CE5AN1cNlYCvfAr/8xbKpD3MjdL1ZL9OiA5HJSBBo="
         "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
-        "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
         "kopuz.cachix.org-1:J2X3AnAYhKTJW5S3aCLoA1ckonQXVNZMQvhZA0YAufw="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+        "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
       ];
       extra-trusted-users = [
         "@wheel"
@@ -50,6 +50,9 @@
     overlays = import ../../overlays { inherit inputs; };
     config = {
       allowUnfree = true;
+      permittedInsecurePackages = [
+        "electron-40.10.5"
+      ];
     };
   };
 }

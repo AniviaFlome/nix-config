@@ -1,6 +1,5 @@
 {
   pkgs,
-  inputs,
   lib,
   modulesPath,
   ...
@@ -15,18 +14,15 @@
 
   console.keyMap = "trq";
 
-  environment.systemPackages =
-    with pkgs;
-    [
-      curl
-      disko
-      git
-      micro
-      neovim
-      parted
-      rsync
-    ]
-    ++ lib.optional (inputs ? nixos-wizard) inputs.nixos-wizard.packages.${pkgs.system}.default;
+  environment.systemPackages = with pkgs; [
+    curl
+    disko
+    git
+    micro
+    neovim
+    parted
+    rsync
+  ];
 
   boot.kernelParams = [ "video=1920x1080" ];
 
