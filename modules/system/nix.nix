@@ -16,23 +16,27 @@
         "nix-command"
         "pipe-operator"
       ];
-      extra-substituters = [
+      substituters = [
         "https://aniviaflome-nix-repository.cachix.org"
+        "https://attic.xuyh0120.win/lantian"
         "https://cache.nixos-cuda.org"
         "https://kopuz.cachix.org"
+        "https://niri-epireyn.cachix.org"
         "https://nix-community.cachix.org"
         "https://noctalia.cachix.org"
         "https://numtide.cachix.org"
       ];
-      extra-trusted-public-keys = [
+      trusted-public-keys = [
         "aniviaflome-nix-repository.cachix.org-1:P+CE5AN1cNlYCvfAr/8xbKpD3MjdL1ZL9OiA5HJSBBo="
+        "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
         "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
         "kopuz.cachix.org-1:J2X3AnAYhKTJW5S3aCLoA1ckonQXVNZMQvhZA0YAufw="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
         "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
       ];
-      extra-trusted-users = [
+      trusted-users = [
+        "root"
         "@wheel"
       ];
     };

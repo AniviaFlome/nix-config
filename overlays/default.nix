@@ -19,12 +19,19 @@ in
   inputs.waydroid-nvidia-nix.overlays.default
   inputs.millennium.overlays.default
   (final: prev: {
-    rtk = prev.rtk.overrideAttrs (_old: {
-      doCheck = false;
-    });
-    kopuz-flake = inputs.kopuz.packages.${final.stdenv.hostPlatform.system}.default;
     stable = mkNixpkgs inputs.nixpkgs-stable final.stdenv.hostPlatform.system;
     master = mkNixpkgs inputs.nixpkgs-master final.stdenv.hostPlatform.system;
+    bedrock-on-linux = inputs.bedrock-on-linux.packages.${final.stdenv.hostPlatform.system}.default;
+    kopuz-flake = inputs.kopuz.packages.${final.stdenv.hostPlatform.system}.default;
+    kdePackages = prev.kdePackages.overrideScope (
+      _kfinal: kprev: {
+        kde-gtk-config = kprev.kde-gtk-config.overrideAttrs (old: {
+          postInstall = (old.postInstall or "") + ''
+            rm -rf $out/lib/gtk-3.0/modules
+          '';
+        });
+      }
+    );
     qutebrowser = prev.qutebrowser.override {
       enableWideVine = true;
     };
@@ -40,8 +47,6 @@ in
         javaPackages.compiler.openjdk21
         temurin-bin-25
         temurin-bin-21
-        temurin-bin-17
-        temurin-bin-8
       ];
     };
     normcap = prev.symlinkJoin {

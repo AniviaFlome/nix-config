@@ -7,24 +7,27 @@
   programs.mpv = {
     enable = true;
     scripts = with pkgs.mpvScripts; [
+      # keep-sorted start case=no
       autosubsync-mpv
       chapterskip
-      cheatsheet
       file-browser
+      keybind-visualizer
+      modernz
       mpris
       mpv-subtitle-lines
+      mpv-webm
       mpvacious
+      occivink.seekTo
+      quality-menu
+      reload
       skipsilence
       sponsorblock-minimal
+      sub-seek
       subtitle-sync
-      quality-menu
-      mpv-webm
-      modernz
-      occivink.seekTo
-      reload
+      subtitle-translate
       webtorrent-mpv-hook
-      whisper-subs
       youtube-chat
+      # keep-sorted end
     ];
     scriptOpts = {
       chapterskip = {
@@ -51,6 +54,16 @@
       webtorrent = {
         path = "memory";
       };
+      subtitle-translate = {
+        provider = "google";
+        word_provider = "cambridge";
+
+        lang_from = "en";
+        lang_to = "tr";
+
+        position = "top-center";
+        translation_background = "yes";
+      };
     };
     config = {
       osc = "no";
@@ -59,8 +72,6 @@
       write-filename-in-watch-later-config = "yes";
       save-watch-history = "yes";
 
-      alang = "jp,en,tr";
-      slang = "tr,en";
       sub-auto = "fuzzy";
       volume = 100;
 
@@ -84,12 +95,17 @@
       screenshot-webp-lossless = "yes";
     };
     bindings = {
-      "c" = "script-binding quality_menu/video_formats_toggle";
-      "Alt+c" = "script-binding quality_menu/audio_formats_toggle";
-      "Ctrl+f" = "script-binding subtitle_lines/list_subtitles";
-      "Ctrl+F" = "script-binding subtitle_lines/list_secondary_subtitles";
       "ö" = "add speed -0.05";
       "ç" = "add speed 0.05";
+
+      "c" = "script-binding quality_menu/video_formats_toggle";
+      "Alt+c" = "script-binding quality_menu/audio_formats_toggle";
+
+      "Ctrl+f" = "script-binding subtitle_lines/list_subtitles";
+      "Ctrl+F" = "script-binding subtitle_lines/list_secondary_subtitles";
+
+      "F7" = "script-binding keybind-visualizer";
+      "F8" = "script-binding sub-seek-list";
 
       # Shaders
       "Ctrl+1" = ''no-osd change-list glsl-shaders clr ""; show-text "GLSL shaders cleared"'';

@@ -54,7 +54,6 @@
     heroic
     home-manager
     htop
-    hydralauncher
     hyprpicker
     joplin-desktop
     jq
@@ -66,7 +65,7 @@
     kdePackages.partitionmanager
     kitty
     legendary-gl
-    libreoffice-fresh
+    libreoffice
     libva
     libva-utils
     livecaptions
@@ -94,11 +93,9 @@
     nvd
     nyaa
     onlyoffice-desktopeditors
-    opencommit
     openrct2
-    openutau
     optnix
-    osu-beatmap-manager-git
+    osu-beatmap-manager
     osu-lazer
     packwiz
     pdfarranger
@@ -127,7 +124,6 @@
     spotify-player
     starship
     statix
-    subtitleedit
     syncthing
     tealdeer
     telegram-desktop

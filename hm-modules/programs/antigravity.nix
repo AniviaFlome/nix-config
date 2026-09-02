@@ -1,8 +1,12 @@
 {
-  pkgs,
   ide-font,
+  inputs,
+  pkgs,
   ...
 }:
+let
+  aiCommon = import ../misc/common/ai-common.nix { inherit inputs; };
+in
 {
   programs.antigravity = {
     enable = true;
@@ -25,6 +29,16 @@
           "editor.formatOnSave" = true;
         };
       };
+    };
+  };
+
+  programs.antigravity-cli = {
+    enable = true;
+    enableMcpIntegration = true;
+    inherit (aiCommon) commands;
+    inherit (aiCommon) skills;
+    settings = {
+
     };
   };
 }

@@ -51,14 +51,14 @@ show_progress() {
 # Test functions
 test_left() {
   gum style --foreground "$SUCCESS" --bold "Testing LEFT Channel..."
-  (timeout "${DURATION}s" speaker-test -t sine -f "$FREQUENCY" -c 2 -s 1 &>/dev/null) &
+  (timeout "${DURATION}s" speaker-test -t sine -f "$FREQUENCY" -c 2 -s 1 >/dev/null 2>&1) &
   show_progress "Playing on LEFT speaker" "$DURATION"
   wait 2>/dev/null || true
 }
 
 test_right() {
   gum style --foreground "$SUCCESS" --bold "Testing RIGHT Channel..."
-  (timeout "${DURATION}s" speaker-test -t sine -f "$FREQUENCY" -c 2 -s 2 &>/dev/null) &
+  (timeout "${DURATION}s" speaker-test -t sine -f "$FREQUENCY" -c 2 -s 2 >/dev/null 2>&1) &
   show_progress "Playing on RIGHT speaker" "$DURATION"
   wait 2>/dev/null || true
 }
@@ -66,36 +66,36 @@ test_right() {
 test_both() {
   gum style --foreground "$SUCCESS" --bold "Testing BOTH Channels..."
   # Run left and right simultaneously
-  (timeout "${DURATION}s" speaker-test -t sine -f "$FREQUENCY" -c 2 -s 1 &>/dev/null) &
-  (timeout "${DURATION}s" speaker-test -t sine -f "$FREQUENCY" -c 2 -s 2 &>/dev/null) &
+  (timeout "${DURATION}s" speaker-test -t sine -f "$FREQUENCY" -c 2 -s 1 >/dev/null 2>&1) &
+  (timeout "${DURATION}s" speaker-test -t sine -f "$FREQUENCY" -c 2 -s 2 >/dev/null 2>&1) &
   show_progress "Playing on BOTH speakers" "$DURATION"
   wait 2>/dev/null || true
 }
 
 test_frequency_sweep() {
   gum style --foreground "$SUCCESS" --bold "Frequency Sweep (20Hz to 20kHz)..."
-  (timeout "${DURATION}s" speaker-test -t sine -f 20 -F 20000 -c 2 &>/dev/null 2>&1) &
+  (timeout "${DURATION}s" speaker-test -t sine -f 20 -F 20000 -c 2 >/dev/null 2>&1) &
   show_progress "Sweeping frequencies" "$DURATION"
   wait 2>/dev/null || true
 }
 
 test_bass() {
   gum style --foreground "$SUCCESS" --bold "Bass Test (60Hz)..."
-  (timeout "${DURATION}s" speaker-test -t sine -f 60 -c 2 &>/dev/null) &
+  (timeout "${DURATION}s" speaker-test -t sine -f 60 -c 2 >/dev/null 2>&1) &
   show_progress "Playing bass frequency" "$DURATION"
   wait 2>/dev/null || true
 }
 
 test_mid() {
   gum style --foreground "$SUCCESS" --bold "Mid-Range Test (1kHz)..."
-  (timeout "${DURATION}s" speaker-test -t sine -f 1000 -c 2 &>/dev/null) &
+  (timeout "${DURATION}s" speaker-test -t sine -f 1000 -c 2 >/dev/null 2>&1) &
   show_progress "Playing mid frequency" "$DURATION"
   wait 2>/dev/null || true
 }
 
 test_treble() {
   gum style --foreground "$SUCCESS" --bold "Treble Test (8kHz)..."
-  (timeout "${DURATION}s" speaker-test -t sine -f 8000 -c 2 &>/dev/null) &
+  (timeout "${DURATION}s" speaker-test -t sine -f 8000 -c 2 >/dev/null 2>&1) &
   show_progress "Playing treble frequency" "$DURATION"
   wait 2>/dev/null || true
 }
@@ -187,7 +187,7 @@ frequency_menu() {
     "Treble (8kHz)") test_treble ;;
     "Custom Frequency (${FREQUENCY}Hz)")
       gum style --foreground "$SUCCESS" --bold "Custom Frequency (${FREQUENCY}Hz)..."
-      (timeout "${DURATION}s" speaker-test -t sine -f "$FREQUENCY" -c 2 &>/dev/null) &
+      (timeout "${DURATION}s" speaker-test -t sine -f "$FREQUENCY" -c 2 >/dev/null 2>&1) &
       show_progress "Playing ${FREQUENCY}Hz" "$DURATION"
       wait 2>/dev/null || true
       ;;

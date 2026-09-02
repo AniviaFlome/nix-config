@@ -26,8 +26,8 @@
       "Mod+V".action = toggle-window-floating;
       "Mod+Q".action = toggle-column-tabbed-display;
 
-      "Mod+P".action.spawn = "screenshot-to-waytator";
-      "Mod+L".action.screenshot = [ ];
+      "Mod+L".action.spawn = "screenshot-to-waytator";
+      "Mod+P".action.screenshot = [ ];
       "Mod+Shift+P".action.screenshot-screen = [ ];
       "Mod+Ctrl+P".action.screenshot-window = [ ];
 

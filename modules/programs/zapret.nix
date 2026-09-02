@@ -9,7 +9,7 @@
     enable = !config.networking.nftables.enable;
     configureFirewall = true;
     params = [
-      "--dpi-desync=fake"
+      "--dpi-desync=hostfakesplit"
       "--dpi-desync-ttl=3"
     ];
   };

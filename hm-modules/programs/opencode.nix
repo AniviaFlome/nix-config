@@ -10,16 +10,12 @@ in
   programs.opencode = {
     enable = true;
     enableMcpIntegration = true;
-    extraPackages = with pkgs; [
-      rtk
-    ];
     inherit (aiCommon) commands;
     inherit (aiCommon) context;
     inherit (aiCommon) skills;
     settings = {
       plugin = [
-        "opencode-vibeguard"
-        "openrtk"
+        "opencode-auto-resume"
         "@prevalentware/opencode-goal-plugin"
       ];
     };
@@ -27,6 +23,5 @@ in
 
   home.packages = with pkgs; [
     opencode-desktop
-    opencode-claude-auth
   ];
 }

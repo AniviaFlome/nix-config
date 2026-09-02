@@ -1,6 +1,7 @@
 {
   inputs,
   pkgs,
+  username,
   ...
 }:
 {
@@ -20,9 +21,10 @@
     "d /var/lib/misc 0755 root root -"
   ];
 
-  systemd.user.services.wd-venus.serviceConfig.ExecStartPre = [
-    "-/run/current-system/sw/bin/rm -f /run/waydroid-venus/venus.sock"
-  ];
+  # Unit is installed system-wide; without this, SDDM's greeter session also
+  # starts it and grabs /run/waydroid-venus/venus.sock as the sddm user,
+  # leaving a stale socket your session can't remove (sticky-bit dir).
+  systemd.user.services.wd-venus.unitConfig.ConditionUser = username;
 
   services.dbus.packages = [
     pkgs.waydroid-nvidia-full

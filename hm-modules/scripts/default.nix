@@ -19,7 +19,10 @@ let
   ];
 in
 {
-  imports = [ ./secrets ];
+  imports = [
+    ./secrets
+    ./soberlauncher
+  ];
 
   home.packages =
     with pkgs;

@@ -32,9 +32,4 @@
   };
 
   services.gnome.gnome-keyring.enable = true;
-
-  systemd.user.services.xdg-desktop-portal-gtk = {
-    after = [ "plasma-kded6.service" ];
-    wants = [ "plasma-kded6.service" ];
-  };
 }

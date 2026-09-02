@@ -268,15 +268,22 @@ select_nix_package_to_add() {
 
   fzf_output=$(
     {
-      nix-search-tv print nixpkgs
-      nix-search-tv print nur
+      (nix-search-tv print --indexes nixpkgs 2>/dev/null ||
+        nix-search-tv print --offline --indexes nixpkgs 2>/dev/null) |
+        sed 's|^|nixpkgs/ |'
+      (nix-search-tv print --indexes nur 2>/dev/null ||
+        nix-search-tv print --offline --indexes nur 2>/dev/null) |
+        sed 's|^|nur/ |'
     } |
-      grep -E "^nixpkgs/|^nur/" |
+      # Retain source labels for the picker while rejecting indexer status/errors.
+      grep -E "^(nixpkgs|nur)/[[:space:]]+[[:alnum:]_.+-]+$" |
       sort -u |
       fzf \
         --print-query \
-        --prompt='Search nixpkgs package (Tab=select, Enter=confirm) > ' \
-        --preview 'nix-search-tv preview {}' \
+        --prompt='Search Nix package (Tab=select, Enter=confirm) > ' \
+        --preview 'nix-search-tv preview --indexes nixpkgs --indexes nur "$(printf "%s" {} | tr -d " " | sed -e "s|^nixpkgs/||" -e "s|^nur/nur\\.|nur.|")"' \
+        --delimiter='[[:space:]]+' \
+        --freeze-left=1 \
         --border --reverse --ansi \
         --exact \
         --multi \
@@ -405,7 +412,7 @@ add_nix_package() {
             gsub(/[ \t]+$/, "", stripped)
 
             is_closing = (stripped ~ /^\]/)
-            is_keep_sorted_end = (stripped ~ /# keep-sorted end/)
+            is_keep_sorted_end = (index(stripped, "# keep-sorted en" "d") > 0)
             is_item = (stripped != "" && stripped !~ /^#/ && index(stripped, "[") == 0 && !is_closing)
 
             if (is_item && indent == "") {
@@ -641,7 +648,7 @@ add_flatpak_package() {
             gsub(/[ \t]+$/, "", stripped)
 
             is_closing = (stripped ~ /^\]/)
-            is_keep_sorted_end = (stripped ~ /# keep-sorted end/)
+            is_keep_sorted_end = (index(stripped, "# keep-sorted en" "d") > 0)
             is_item = (stripped != "" && stripped !~ /^#/ && index(stripped, "[") == 0 && !is_closing)
 
             if (is_item && indent == "") {

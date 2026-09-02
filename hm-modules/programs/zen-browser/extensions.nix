@@ -9,7 +9,6 @@
     clearurls
     darkreader
     jump-cutter
-    languagetool
     proton-pass
     protondb-for-steam
     return-youtube-dislikes

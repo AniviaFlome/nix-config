@@ -1,4 +1,11 @@
 #!/usr/bin/env dash
+
+notification=false
+
+case "$1" in
+-n | --notification) notification=true ;;
+esac
+
 # Get current profile
 current=$(powerprofilesctl get)
 
@@ -13,3 +20,7 @@ esac
 # Apply it
 powerprofilesctl set "$next"
 echo "Power Profile Switched to: $next"
+
+if "$notification"; then
+  notify-send "Power Profile Switched" "$next"
+fi

@@ -54,11 +54,6 @@
             "/run/current-system/sw/share/icons:ro"
             "/nix/store:ro"
           ];
-          sockets = [
-            "wayland"
-            "!x11"
-            "!fallback-x11"
-          ];
         };
         Environment = {
           GTK_THEME = "catppuccin-mocha-mauve-standard";
