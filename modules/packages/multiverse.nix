@@ -8,7 +8,7 @@
   multiverse = {
     enable = true;
     pins = {
-      glib = "2.86.3";
+      opencode = "1.18.29";
     };
   };
 }

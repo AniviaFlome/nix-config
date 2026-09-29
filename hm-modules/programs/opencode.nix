@@ -4,24 +4,21 @@
   ...
 }:
 let
-  aiCommon = import ../misc/common/ai-common.nix { inherit inputs; };
+  aiCommon = import ../misc/common/ai-common.nix { inherit inputs pkgs; };
 in
 {
   programs.opencode = {
     enable = true;
     enableMcpIntegration = true;
     inherit (aiCommon) commands;
-    inherit (aiCommon) context;
     inherit (aiCommon) skills;
     settings = {
-      plugin = [
-        "opencode-auto-resume"
+      plugins = [
+        "opencode-tps-meter"
+        "opencode-wakelock"
         "@prevalentware/opencode-goal-plugin"
+        "@tarquinen/opencode-dcp"
       ];
     };
   };
-
-  home.packages = with pkgs; [
-    opencode-desktop
-  ];
 }

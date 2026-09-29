@@ -25,11 +25,11 @@
 
     -- focus directional
     hl.bind(mainMod .. " + UP", hl.dsp.focus({ direction = "up" }))
-    hl.bind(mainMod .. " + LEFT", hl.dsp.focus({ direction = "left" }))
+    hl.bind(mainMod .. " + LEFT", hl.dsp.layout("focus l"))
     hl.bind(mainMod .. " + DOWN", hl.dsp.focus({ direction = "down" }))
-    hl.bind(mainMod .. " + RIGHT", hl.dsp.focus({ direction = "right" }))
-    hl.bind(mainMod .. " + A", hl.dsp.focus({ direction = "left" }))
-    hl.bind(mainMod .. " + D", hl.dsp.focus({ direction = "right" }))
+    hl.bind(mainMod .. " + RIGHT", hl.dsp.layout("focus r"))
+    hl.bind(mainMod .. " + A", hl.dsp.layout("focus l"))
+    hl.bind(mainMod .. " + D", hl.dsp.layout("focus r"))
 
     -- workspace cycling
     hl.bind(mainMod .. " + W", hl.dsp.focus({ workspace = "-1" }))

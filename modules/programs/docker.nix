@@ -1,6 +1,5 @@
 {
   pkgs,
-  username,
   ...
 }:
 {
@@ -10,6 +9,4 @@
       docker-compose
     ];
   };
-
-  users.users.${username}.extraGroups = [ "docker" ];
 }

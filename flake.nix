@@ -17,14 +17,13 @@
     multiverse.url = "github:fzakaria/nixpkgs-multiverse";
     sops-nix.url = "github:Mic92/sops-nix";
     nvf.url = "github:notashelf/nvf";
-    nix-flatpak.url = "github:gmodena/nix-flatpak";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     catppuccin.url = "github:catppuccin/nix";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixcord.url = "github:kaylorben/nixcord";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     nix-webapps.url = "github:AniviaFlome/nix-webapps";
     nix-mineral.url = "github:cynicsketch/nix-mineral";
-    nix-themes.url = "github:aniviaflome/nix-themes";
     dms.url = "github:AvengeMedia/DankMaterialShell";
     dankcalendar.url = "github:AvengeMedia/dankcalendar";
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -32,13 +31,35 @@
     kopuz.url = "github:temidaradev/kopuz";
     nirikit.url = "github:AniviaFlome/nirikit";
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    nixgrep.url = "github:AniviaFlome/nixgrep";
+    spotifast.url = "github:crmne/spotifast";
+    anthropics-skills = {
+      url = "github:anthropics/skills";
+      flake = false;
+    };
+    caveman = {
+      url = "github:JuliusBrussee/caveman";
+      flake = false;
+    };
+    agent-workspace = {
+      url = "github:agent-sh/agent-workspace-linux";
+      flake = false;
+    };
+    computer-use = {
+      url = "github:agent-sh/computer-use-linux";
+      flake = false;
+    };
+    context7 = {
+      url = "github:upstash/context7";
+      flake = false;
+    };
     waydroid-nvidia-nix = {
       url = "github:yigexuanmu/waydroid-nvidia-nix/180697edb1ea2c53fed49d6a07d20a39af563083";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    anthropics-skills = {
-      url = "github:anthropics/skills";
-      flake = false;
+    opencode = {
+      url = "github:anomalyco/opencode/beta";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     bedrock-on-linux = {
       url = "github:Wyze3306/BedrockOnLinux";
@@ -57,12 +78,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     niri-fork.url = "github:urayde/niri";
-    disko = {
-      url = "github:nix-community/disko";
+    inir = {
+      url = "github:snowarch/iNiR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-wizard = {
-      url = "github:km-clay/nixos-wizard";
+    disko = {
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-repository = {

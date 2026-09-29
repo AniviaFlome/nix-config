@@ -5,6 +5,7 @@
 {
   environment.systemPackages = with pkgs; [
     # keep-sorted start case=no
+    act
     amplitude-soundboard
     android-tools
     ani-cli
@@ -20,6 +21,7 @@
     brightnessctl
     btrfs-progs
     bubblewrap
+    chronicle
     comma
     crankshaft
     crow-translate
@@ -71,11 +73,10 @@
     livecaptions
     localsend
     man
-    mangayomi
     mangohud
     manix
     micro
-    motrix-next
+    motrix-beta
     mousam
     mpv
     mullvad-browser
@@ -86,12 +87,12 @@
     nix-init
     nix-update
     nixd
+    nixgrep
     nixpkgs-review
     normcap
     ntfs3g
     nurl
     nvd
-    nyaa
     onlyoffice-desktopeditors
     openrct2
     optnix
@@ -103,7 +104,6 @@
     proton-vpn
     proton-vpn-cli
     protonplus
-    proxychains-ng
     pwvucontrol
     python3
     qbittorrent
@@ -121,6 +121,7 @@
     smassh
     songrec
     spotdl
+    # spotifast
     spotify-player
     starship
     statix
@@ -148,8 +149,7 @@
     xdg-utils
     yazi
     yt-dlp
-    zathura
-    zerotierone
+    zapfast
     zip
     zotero
     zoxide

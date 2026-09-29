@@ -45,7 +45,7 @@
     font = "Noto Sans";
     font-fixed = "Hack";
     font-size = "10";
-    ide-font = "Cascadia Code";
+    ide-font = "JetBrains Mono";
 
     wallpaper = self + "/hm-modules/theme/wallpaper/wallpaper.png";
   };

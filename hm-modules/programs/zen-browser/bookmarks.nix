@@ -67,10 +67,6 @@
       name = "Hacettepe";
       bookmarks = [
         {
-          name = "Autofcourse";
-          url = "https://docs.google.com/spreadsheets/d/1nJ-9BKsXtg3XG_oEtlbM2l2KiIY9vflaJLG4rER3_e8";
-        }
-        {
           name = "Hacettepe Bilsis";
           url = "https://bilsis.hacettepe.edu.tr/oibs/std/index.aspx?curOp=0";
         }
@@ -112,10 +108,6 @@
           url = "https://anisub.co/";
         }
         {
-          name = "TürkAnime";
-          url = "https://www.turkanime.co/";
-        }
-        {
           name = "nyaa.si";
           url = "https://nyaa.si/";
         }
@@ -145,12 +137,12 @@
       name = "Games";
       bookmarks = [
         {
-          name = "Tetr.io";
-          url = "https://tetr.io/";
-        }
-        {
           name = "Minesweeper Online";
           url = "https://minesweeper.online/";
+        }
+        {
+          name = "Tetr.io";
+          url = "https://tetr.io/";
         }
         {
           name = "Lichess";
@@ -169,6 +161,19 @@
     {
       name = "Github";
       url = "https://github.com/";
+    }
+    {
+      name = "Finance";
+      bookmarks = [
+        {
+          name = "Fon.org.tr";
+          url = "https://fon.org.tr/";
+        }
+        {
+          name = "Halkarz";
+          url = "https://halkarz.com/";
+        }
+      ];
     }
     {
       name = "Crypto";

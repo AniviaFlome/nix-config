@@ -44,6 +44,8 @@
       currentThemeName = "custom";
       currentThemeCategory = "custom";
       customThemeFile = inputs.dms-plugin-registry + "/themes/catppuccin/theme.json";
+      # 1.7 default is "sch" (Surface High); "sth" (Overlay) is the pre-1.7 look.
+      widgetBackgroundColor = "sth";
       controlCenterShowMicPercent = true;
       waveProgressEnabled = false;
       scrollTitleEnabled = false;
@@ -73,6 +75,7 @@
           fullscreenDetection = false;
           squareCorners = true;
           spacing = 0;
+          fontScale = 0.95;
           leftWidgets = [
             {
               id = "launcherButton";
@@ -139,10 +142,5 @@
       wallpaperPath = wallpaper;
       showThirdPartyPlugins = true;
     };
-
   };
-
-  wayland.windowManager.hyprland.extraConfig = ''
-    hl.layer_rule({ match = { namespace = "dms" }, no_anim = true })
-  '';
 }

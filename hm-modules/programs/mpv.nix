@@ -55,14 +55,18 @@
         path = "memory";
       };
       subtitle-translate = {
-        provider = "google";
+        provider = "deepl";
         word_provider = "cambridge";
+        deepl_api_path = config.sops.secrets."deepl-api".path;
+
+        ocr_backend = "rapidocr";
+        ocr_cuda = "yes";
 
         lang_from = "en";
         lang_to = "tr";
 
+        accent = "#cba6f7";
         position = "top-center";
-        translation_background = "yes";
       };
     };
     config = {

@@ -16,7 +16,6 @@
       enabledExtensions = with spicePkgs.extensions; [
         adblock
         aiBandBlocker
-        betterGenres
         extendedCopy
         hidePodcasts
         volumePercentage

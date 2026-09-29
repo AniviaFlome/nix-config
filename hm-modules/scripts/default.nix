@@ -21,7 +21,6 @@ in
 {
   imports = [
     ./secrets
-    ./soberlauncher
   ];
 
   home.packages =

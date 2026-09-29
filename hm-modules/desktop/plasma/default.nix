@@ -5,6 +5,9 @@
   discord-desktop,
   file,
   file-desktop,
+  font,
+  font-fixed,
+  font-size,
   launcher,
   music-desktop,
   terminal,
@@ -30,14 +33,36 @@
       TerminalApplication = terminal;
       TerminalService = terminal-desktop;
     };
+
+    fonts = {
+      general = {
+        family = font;
+        pointSize = builtins.fromJSON font-size;
+      };
+      fixedWidth = {
+        family = font-fixed;
+        pointSize = builtins.fromJSON font-size;
+      };
+      menu = {
+        family = font;
+        pointSize = builtins.fromJSON font-size;
+      };
+      toolbar = {
+        family = font;
+        pointSize = builtins.fromJSON font-size;
+      };
+    };
+
     workspace = {
       enableMiddleClickPaste = false;
       colorScheme = "CatppuccinMochaMauve";
       lookAndFeel = "Catppuccin-Mocha-Mauve";
       theme = "default";
       clickItemTo = "select";
+      iconTheme = "breeze-dark";
       inherit wallpaper;
     };
+
     input = {
       mice = [
         {
@@ -49,21 +74,25 @@
         }
       ];
     };
-    hotkeys.commands."launch-terminal" = {
-      name = "Launch Terminal";
-      key = "Meta+T";
-      command = terminal;
+
+    hotkeys.commands = {
+      launch-terminal = {
+        name = "Launch Terminal";
+        key = "Meta+T";
+        command = terminal;
+      };
+      launch-file-manager = {
+        name = "Launch File Manager";
+        key = "Meta+E";
+        command = file;
+      };
+      launch-launcher = {
+        name = "Launch Launcher";
+        key = "Meta+Space";
+        command = launcher;
+      };
     };
-    hotkeys.commands."launch-file-manager" = {
-      name = "Launch File Manager";
-      key = "Meta+E";
-      command = file;
-    };
-    hotkeys.commands."launch-launcher" = {
-      name = "Launch Launcher";
-      key = "Meta+Space";
-      command = launcher;
-    };
+
     shortcuts = {
       kwin = {
         "Window Close" = "Meta+C";
@@ -71,6 +100,7 @@
         "Edit Tiles" = "Meta+M";
       };
     };
+
     kwin = {
       edgeBarrier = 0;
       effects = {
@@ -87,6 +117,7 @@
         rows = 2;
       };
     };
+
     kscreenlocker = {
       autoLock = true;
       lockOnResume = true;
@@ -95,6 +126,7 @@
         inherit wallpaper;
       };
     };
+
     powerdevil = {
       battery = {
         dimDisplay = {
@@ -103,11 +135,13 @@
         };
       };
     };
+
     session = {
       sessionRestore = {
         restoreOpenApplicationsOnLogin = "whenSessionWasManuallySaved";
       };
     };
+
     panels = [
       {
         location = "bottom";

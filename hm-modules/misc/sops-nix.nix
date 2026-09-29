@@ -16,7 +16,7 @@
     };
 
     secrets = {
-      "github-mcp" = {
+      "deepl-api" = {
         mode = "0400";
       };
       "listenbrainz-token" = {

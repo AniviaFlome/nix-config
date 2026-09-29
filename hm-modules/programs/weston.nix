@@ -26,7 +26,7 @@
       cursor-size=24
 
       [launcher]
-      path=${pkgs.tofi}/bin/tofi
+      path=${pkgs.tofi}/bin/tofi-drun
       displayname=Launcher
 
       [launcher]

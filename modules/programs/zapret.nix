@@ -35,7 +35,7 @@
         "nftables.service"
       ];
       wants = [ "nftables.service" ];
-      wantedBy = [ "multi-user.target" ];
+      # wantedBy = [ "multi-user.target" ];
       path = [ pkgs.nftables ];
       serviceConfig = {
         Type = "simple";

@@ -15,14 +15,43 @@ in
   inputs.helium.overlays.default
   inputs.nix-cachyos-kernel.overlays.pinned
   inputs.nix-repository.overlays.default
+  inputs.nixgrep.overlays.default
   inputs.nur.overlays.default
   inputs.waydroid-nvidia-nix.overlays.default
   inputs.millennium.overlays.default
+  inputs.opencode.overlays.default
+  (
+    _final: prev:
+    let
+      system = prev.stdenv.hostPlatform.system;
+      fixedNodeModules = prev.opencode.node_modules.override {
+        hash = "sha256-xAnVAOMKE34h6m6jcFQFkNvIAamBHmZdBmX7zjzd6e0=";
+      };
+      fixedOpencode = prev.opencode.override {
+        node_modules = fixedNodeModules;
+      };
+    in
+    if system == "x86_64-linux" then
+      {
+        opencode = fixedOpencode;
+        opencode-desktop = prev.opencode-desktop.override {
+          opencode = fixedOpencode;
+        };
+      }
+    else
+      { }
+  )
   (final: prev: {
     stable = mkNixpkgs inputs.nixpkgs-stable final.stdenv.hostPlatform.system;
     master = mkNixpkgs inputs.nixpkgs-master final.stdenv.hostPlatform.system;
     bedrock-on-linux = inputs.bedrock-on-linux.packages.${final.stdenv.hostPlatform.system}.default;
     kopuz-flake = inputs.kopuz.packages.${final.stdenv.hostPlatform.system}.default;
+    spotifast = inputs.spotifast.packages.${final.stdenv.hostPlatform.system}.default;
+    mpvScripts = prev.mpvScripts // {
+      subtitle-translate = prev.mpvScripts.subtitle-translate.override {
+        withRapidocr = true;
+      };
+    };
     kdePackages = prev.kdePackages.overrideScope (
       _kfinal: kprev: {
         kde-gtk-config = kprev.kde-gtk-config.overrideAttrs (old: {

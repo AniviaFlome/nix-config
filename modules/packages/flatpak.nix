@@ -22,9 +22,13 @@
         name = "flathub";
         location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
       }
+      {
+        name = "cordial";
+        location = "https://luohoa97.github.io/cordial/cordial.flatpakrepo";
+      }
     ];
     packages =
-      [
+      ([
         # keep-sorted start case=no
         "com.github.tchx84.Flatseal"
         "com.pokemmo.PokeMMO"
@@ -36,12 +40,19 @@
         "io.github.tanaybhomia.Whisp"
         "org.vinegarhq.Sober"
         "sh.fhs.ksre"
+        "space.bigrat.mocktail"
         # keep-sorted end
       ]
       |> map (id: {
         appId = id;
         origin = "flathub";
-      });
+      }))
+      ++ [
+        {
+          appId = "io.github.luohoa97.Cordial";
+          origin = "cordial";
+        }
+      ];
     overrides = {
       global = {
         Context = {

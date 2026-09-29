@@ -28,6 +28,9 @@
       "vps-password" = {
         mode = "0400";
       };
+      "wifi-psk" = {
+        mode = "0400";
+      };
     };
   };
 

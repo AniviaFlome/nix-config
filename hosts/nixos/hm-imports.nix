@@ -3,6 +3,7 @@
     # Options
     ../../hm-modules/options
     # Desktop
+    ../../hm-modules/desktop/hyprland
     ../../hm-modules/desktop/niri
     ../../hm-modules/desktop/plasma
     # Misc

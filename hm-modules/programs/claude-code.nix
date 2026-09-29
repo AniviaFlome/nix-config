@@ -1,9 +1,10 @@
 {
   inputs,
+  pkgs,
   ...
 }:
 let
-  aiCommon = import ../misc/common/ai-common.nix { inherit inputs; };
+  aiCommon = import ../misc/common/ai-common.nix { inherit inputs pkgs; };
 in
 {
   programs.claude-code = {

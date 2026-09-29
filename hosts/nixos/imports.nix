@@ -1,5 +1,9 @@
 {
   imports = [
+    # Desktop
+    ../../modules/desktop/hyprland.nix
+    ../../modules/desktop/plasma.nix
+    ../../modules/desktop/niri.nix
     # Gaming
     ../../modules/gaming/gamescope.nix
     ../../modules/gaming/gamemode.nix
@@ -14,8 +18,6 @@
     ../../modules/programs/fwupd.nix
     ../../modules/programs/gpu-screen-recorder.nix
     ../../modules/programs/kdeconnect.nix
-    ../../modules/programs/plasma.nix
-    ../../modules/programs/niri.nix
     ../../modules/programs/nixos-cli.nix
     ../../modules/programs/obs-studio.nix
     ../../modules/programs/oom.nix
@@ -38,7 +40,6 @@
     ../../modules/system/cachy.nix
     ../../modules/system/display-manager.nix
     ../../modules/system/documentation.nix
-    ../../modules/system/dns.nix
     ../../modules/system/envfs.nix
     ../../modules/system/fonts.nix
     ../../modules/system/kernel.nix
@@ -49,6 +50,7 @@
     ../../modules/system/home-manager.nix
     ../../modules/system/nix-ld.nix
     ../../modules/system/pipewire.nix
+    ../../modules/system/resolv.nix
     ../../modules/system/shell.nix
     ../../modules/system/sops-nix.nix
     ../../modules/system/sudo-rs.nix

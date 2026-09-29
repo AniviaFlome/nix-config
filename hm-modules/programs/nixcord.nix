@@ -53,7 +53,6 @@
         permissionsViewer.enable = true;
         pictureInPicture.enable = true;
         showHiddenThings.enable = true;
-        summaries.enable = true;
         validReply.enable = true;
         validUser.enable = true;
         volumeBooster.enable = true;

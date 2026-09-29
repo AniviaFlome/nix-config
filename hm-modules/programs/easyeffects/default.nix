@@ -1,12 +1,22 @@
 let
   loadPreset = path: path |> builtins.readFile |> builtins.fromJSON;
+  hexa = loadPreset ./output/Hexa.json;
+  mic = loadPreset ./input/Mic.json;
 in
 {
   services.easyeffects = {
     enable = true;
-    preset = "Hexa";
+    preset = {
+      input = "Mic";
+      output = "Hexa";
+    };
     extraPresets = {
-      main = loadPreset ./output/Hexa.json;
+      Hexa = {
+        inherit (hexa) output;
+      };
+      Mic = {
+        inherit (mic) input;
+      };
     };
   };
 }
