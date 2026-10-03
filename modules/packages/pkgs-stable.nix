@@ -9,6 +9,7 @@
     kdePackages.kdenlive
     mindustry-wayland
     openutau
+    zotero
     # keep-sorted end
   ];
 }

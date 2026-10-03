@@ -15,6 +15,7 @@
     atuin
     audacity
     bats
+    spotifast
     bedrock-on-linux
     better-control
     bolt-launcher
@@ -134,8 +135,6 @@
     tor
     tor-browser
     torrra
-    turkanime-cli
-    turkanime-gui
     umu-launcher
     vlc
     waytator
@@ -145,13 +144,13 @@
     winetricks
     wl-clipboard
     wlr-randr
+    xclicker
     xclip
     xdg-utils
     yazi
     yt-dlp
     zapfast
     zip
-    zotero
     zoxide
     # keep-sorted end
   ];

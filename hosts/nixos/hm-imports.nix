@@ -7,10 +7,11 @@
     ../../hm-modules/desktop/niri
     ../../hm-modules/desktop/plasma
     # Misc
+    ../../hm-modules/misc/common/ai-packages.nix
     ../../hm-modules/misc/sops-nix.nix
     ../../hm-modules/misc/manual.nix
-    ../../hm-modules/misc/nix.nix
     ../../hm-modules/misc/mime.nix
+    ../../hm-modules/misc/nix.nix
     ../../hm-modules/misc/variables.nix
     ../../hm-modules/misc/xdg.nix
     # Programs

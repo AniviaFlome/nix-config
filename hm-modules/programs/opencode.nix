@@ -10,8 +10,12 @@ in
   programs.opencode = {
     enable = true;
     enableMcpIntegration = true;
-    inherit (aiCommon) commands;
-    inherit (aiCommon) skills;
+    commands = aiCommon.commands // {
+      impeccable = "${inputs.impeccable}/.opencode/commands/impeccable.md";
+    };
+    skills = aiCommon.skills // {
+      impeccable = "${inputs.impeccable}/.opencode/skills/impeccable";
+    };
     settings = {
       plugins = [
         "opencode-tps-meter"

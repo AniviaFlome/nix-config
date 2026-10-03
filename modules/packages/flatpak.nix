@@ -28,25 +28,27 @@
       }
     ];
     packages =
-      ([
-        # keep-sorted start case=no
-        "com.github.tchx84.Flatseal"
-        "com.pokemmo.PokeMMO"
-        "com.pot_app.pot"
-        "com.rustdesk.RustDesk"
-        "com.stremio.Stremio"
-        "io.github.giantpinkrobots.flatsweep"
-        "io.github.Soundux"
-        "io.github.tanaybhomia.Whisp"
-        "org.vinegarhq.Sober"
-        "sh.fhs.ksre"
-        "space.bigrat.mocktail"
-        # keep-sorted end
-      ]
-      |> map (id: {
-        appId = id;
-        origin = "flathub";
-      }))
+      (
+        [
+          # keep-sorted start case=no
+          "com.github.tchx84.Flatseal"
+          "com.pokemmo.PokeMMO"
+          "com.pot_app.pot"
+          "com.rustdesk.RustDesk"
+          "com.stremio.Stremio"
+          "io.github.giantpinkrobots.flatsweep"
+          "io.github.Soundux"
+          "io.github.tanaybhomia.Whisp"
+          "org.vinegarhq.Sober"
+          "sh.fhs.ksre"
+          "space.bigrat.mocktail"
+          # keep-sorted end
+        ]
+        |> map (id: {
+          appId = id;
+          origin = "flathub";
+        })
+      )
       ++ [
         {
           appId = "io.github.luohoa97.Cordial";

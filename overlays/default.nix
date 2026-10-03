@@ -46,7 +46,6 @@ in
     master = mkNixpkgs inputs.nixpkgs-master final.stdenv.hostPlatform.system;
     bedrock-on-linux = inputs.bedrock-on-linux.packages.${final.stdenv.hostPlatform.system}.default;
     kopuz-flake = inputs.kopuz.packages.${final.stdenv.hostPlatform.system}.default;
-    spotifast = inputs.spotifast.packages.${final.stdenv.hostPlatform.system}.default;
     mpvScripts = prev.mpvScripts // {
       subtitle-translate = prev.mpvScripts.subtitle-translate.override {
         withRapidocr = true;

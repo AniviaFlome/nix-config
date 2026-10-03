@@ -6,7 +6,6 @@ let
   scripts = [
     # keep-sorted start case=no
     "deploy"
-    "hyscript"
     "monitor-off"
     "mpv-pl"
     "nixdev"

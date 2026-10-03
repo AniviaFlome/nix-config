@@ -90,12 +90,12 @@
         # Base and Text
         "--color=bg:${colors.base}"
         "--color=fg:${colors.text}"
-        # Selection (Active Item)
+        # Selection
         "--color=bg+:${colors.surface0}"
         "--color=fg+:${colors.text}"
         # UI Elements
         "--color=hl:${colors.accent}" # Highlighted substrings
-        "--color=hl+:${colors.accent}" # Highlighted substrings (selected)
+        "--color=hl+:${colors.accent}" # Highlighted substrings
         "--color=info:${colors.accent}" # Info text
         "--color=marker:${colors.accent}" # Multi-select marker
         "--color=prompt:${colors.accent}" # Input prompt

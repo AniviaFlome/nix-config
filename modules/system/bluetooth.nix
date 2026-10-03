@@ -5,11 +5,15 @@
     settings = {
       General = {
         Experimental = true;
-        FastConnectable = false;
+        FastConnectable = true;
       };
       Policy = {
         AutoEnable = true;
       };
     };
   };
+
+  boot.extraModprobeConfig = ''
+    options btusb enable_autosuspend=n
+  '';
 }

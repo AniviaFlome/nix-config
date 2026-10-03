@@ -8,6 +8,7 @@
     enable = true;
     scripts = with pkgs.mpvScripts; [
       # keep-sorted start case=no
+      anilist-updater
       autosubsync-mpv
       chapterskip
       file-browser
@@ -20,6 +21,7 @@
       occivink.seekTo
       quality-menu
       reload
+      reset-all
       skipsilence
       sponsorblock-minimal
       sub-seek

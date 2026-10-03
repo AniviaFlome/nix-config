@@ -32,25 +32,20 @@
     nirikit.url = "github:AniviaFlome/nirikit";
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     nixgrep.url = "github:AniviaFlome/nixgrep";
-    spotifast.url = "github:crmne/spotifast";
-    anthropics-skills = {
-      url = "github:anthropics/skills";
-      flake = false;
-    };
     caveman = {
       url = "github:JuliusBrussee/caveman";
-      flake = false;
-    };
-    agent-workspace = {
-      url = "github:agent-sh/agent-workspace-linux";
       flake = false;
     };
     computer-use = {
       url = "github:agent-sh/computer-use-linux";
       flake = false;
     };
-    context7 = {
-      url = "github:upstash/context7";
+    mattpocock-skills = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
+    impeccable = {
+      url = "github:pbakaus/impeccable";
       flake = false;
     };
     waydroid-nvidia-nix = {
@@ -77,7 +72,10 @@
       url = "github:epireyn/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    niri-fork.url = "github:urayde/niri";
+    niri-fork = {
+      url = "github:urayde/niri";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     inir = {
       url = "github:snowarch/iNiR";
       inputs.nixpkgs.follows = "nixpkgs";

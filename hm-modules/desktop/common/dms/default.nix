@@ -44,8 +44,6 @@
       currentThemeName = "custom";
       currentThemeCategory = "custom";
       customThemeFile = inputs.dms-plugin-registry + "/themes/catppuccin/theme.json";
-      # 1.7 default is "sch" (Surface High); "sth" (Overlay) is the pre-1.7 look.
-      widgetBackgroundColor = "sth";
       controlCenterShowMicPercent = true;
       waveProgressEnabled = false;
       scrollTitleEnabled = false;

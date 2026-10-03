@@ -40,14 +40,6 @@
         hide = "on_success";
       }
     ];
-    userKeymaps = [
-      {
-        context = "Editor";
-        bindings = {
-          "ctrl-k" = "editor::Cut";
-        };
-      }
-    ];
     userSettings = {
       telemetry = {
         diagnostics = false;
