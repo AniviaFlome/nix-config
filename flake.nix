@@ -32,21 +32,9 @@
     nirikit.url = "github:AniviaFlome/nirikit";
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     nixgrep.url = "github:AniviaFlome/nixgrep";
-    caveman = {
-      url = "github:JuliusBrussee/caveman";
-      flake = false;
-    };
-    computer-use = {
-      url = "github:agent-sh/computer-use-linux";
-      flake = false;
-    };
-    mattpocock-skills = {
-      url = "github:mattpocock/skills";
-      flake = false;
-    };
-    impeccable = {
-      url = "github:pbakaus/impeccable";
-      flake = false;
+    nixdatifier = {
+      url = "github:Muddyblack/nixdatifier";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     waydroid-nvidia-nix = {
       url = "github:yigexuanmu/waydroid-nvidia-nix/180697edb1ea2c53fed49d6a07d20a39af563083";

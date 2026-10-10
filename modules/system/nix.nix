@@ -54,9 +54,6 @@
     overlays = import ../../overlays { inherit inputs; };
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = [
-        "electron-40.10.5"
-      ];
     };
   };
 }

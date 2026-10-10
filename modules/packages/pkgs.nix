@@ -15,6 +15,7 @@
     atuin
     audacity
     bats
+    kdePackages.ktexteditor
     spotifast
     bedrock-on-linux
     better-control
@@ -126,6 +127,7 @@
     spotify-player
     starship
     statix
+    streamlink
     syncthing
     tealdeer
     telegram-desktop

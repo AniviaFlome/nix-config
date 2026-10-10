@@ -6,16 +6,6 @@
   ...
 }:
 {
-  home.packages = with pkgs; [ git-absorb ];
-
-  programs.lazygit = {
-    enable = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
-    enableFishIntegration = true;
-    enableNushellIntegration = true;
-  };
-
   programs.git = {
     enable = true;
     signing.format = "openpgp";
@@ -34,6 +24,20 @@
       ".DS_Store"
       ".env"
       "Thumbs.db"
+      ".agents"
+      ".opencode"
     ];
+  };
+
+  home.packages = with pkgs; [
+    git-absorb
+  ];
+
+  programs.lazygit = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    enableFishIntegration = true;
+    enableNushellIntegration = true;
   };
 }

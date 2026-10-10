@@ -68,6 +68,8 @@
         "easyprivacy"
         "urlhaus-1"
         "plowe-0"
+        "adguard-spyware-url"
+        "block-lan"
         "fanboy-cookiemonster"
         "ublock-cookies-easylist"
         "fanboy-ai-suggestions"
@@ -80,7 +82,7 @@
         "adguard-popup-overlays"
         "adguard-widgets"
         "ublock-annoyances"
-        "tr-0"
+        "TUR-0"
       ];
     };
 

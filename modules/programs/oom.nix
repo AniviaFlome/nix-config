@@ -2,8 +2,8 @@
   systemd.oomd = {
     enable = true;
     settings.OOM = {
-      SwapUsedLimit = "90%";
-      DefaultMemoryPressureDurationSec = "20s";
+      SwapUsedLimit = "95%";
+      DefaultMemoryPressureDurationSec = "60s";
     };
   };
 }

@@ -1,11 +1,10 @@
 {
   ide-font,
-  inputs,
   pkgs,
   ...
 }:
 let
-  aiCommon = import ../misc/common/ai-common.nix { inherit inputs pkgs; };
+  aiCommon = import ../misc/common/ai-common.nix { inherit pkgs; };
 in
 {
   programs.antigravity = {

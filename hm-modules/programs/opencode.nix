@@ -1,27 +1,25 @@
 {
   pkgs,
-  inputs,
   ...
 }:
 let
-  aiCommon = import ../misc/common/ai-common.nix { inherit inputs pkgs; };
+  aiCommon = import ../misc/common/ai-common.nix { inherit pkgs; };
 in
 {
   programs.opencode = {
     enable = true;
     enableMcpIntegration = true;
     commands = aiCommon.commands // {
-      impeccable = "${inputs.impeccable}/.opencode/commands/impeccable.md";
+      impeccable = "${pkgs.impeccable}/share/opencode-commands/impeccable.md";
     };
     skills = aiCommon.skills // {
-      impeccable = "${inputs.impeccable}/.opencode/skills/impeccable";
+      impeccable = "${pkgs.impeccable}/share/skills/impeccable";
     };
     settings = {
       plugins = [
         "opencode-tps-meter"
         "opencode-wakelock"
-        "@prevalentware/opencode-goal-plugin"
-        "@tarquinen/opencode-dcp"
+        "opencode-goal-plugin"
       ];
     };
   };

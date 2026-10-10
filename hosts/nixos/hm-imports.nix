@@ -40,6 +40,7 @@
     ../../hm-modules/programs/nix-index.nix
     ../../hm-modules/programs/nix-webapps.nix
     ../../hm-modules/programs/nixcord.nix
+    ../../hm-modules/programs/nixdatifier.nix
     ../../hm-modules/programs/nushell.nix
     ../../hm-modules/programs/nvf
     ../../hm-modules/programs/nyaa.nix

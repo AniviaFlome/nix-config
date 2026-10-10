@@ -1,8 +1,11 @@
 {
-  inputs,
   pkgs,
   ...
 }:
 {
-  home.packages = (import ./ai-common.nix { inherit inputs pkgs; }).packages;
+  home.packages = with pkgs; [
+    agent-workspace-linux
+    ctx7
+    playwright-test
+  ];
 }

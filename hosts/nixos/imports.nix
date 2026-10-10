@@ -50,7 +50,6 @@
     ../../modules/system/home-manager.nix
     ../../modules/system/nix-ld.nix
     ../../modules/system/pipewire.nix
-    ../../modules/system/resolv.nix
     ../../modules/system/shell.nix
     ../../modules/system/sops-nix.nix
     ../../modules/system/sudo-rs.nix
