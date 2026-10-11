@@ -15,8 +15,6 @@
     atuin
     audacity
     bats
-    kdePackages.ktexteditor
-    spotifast
     bedrock-on-linux
     better-control
     bolt-launcher
@@ -65,6 +63,7 @@
     kdePackages.dolphin
     kdePackages.dolphin-plugins
     kdePackages.gwenview
+    kdePackages.ktexteditor
     kdePackages.okular
     kdePackages.partitionmanager
     kitty
@@ -123,11 +122,10 @@
     smassh
     songrec
     spotdl
-    # spotifast
+    spotifast
     spotify-player
     starship
     statix
-    streamlink
     syncthing
     tealdeer
     telegram-desktop

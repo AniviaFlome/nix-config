@@ -124,5 +124,6 @@
 
   home.packages = with pkgs; [
     ffsubsync
+    streamlink
   ];
 }

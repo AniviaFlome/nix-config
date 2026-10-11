@@ -1,16 +1,59 @@
 {
   pkgs,
+  filterLists,
   ...
 }:
+let
+  alwaysVisible = pkgs.firefox-addons.buildFirefoxXpiAddon {
+    pname = "always-visible";
+    version = "0.4.6";
+    addonId = "{4b7825da-0dd1-44f9-9717-bee5b2408af6}";
+    url = "https://addons.mozilla.org/firefox/downloads/file/4641852/always_visible-0.4.6.xpi";
+    sha256 = "1f9c4d38e130f01edbfe63401c2efdb3ba364738043d578b4ab6c09626b91419";
+    meta = with pkgs.lib; {
+      homepage = "https://webextension.org/listing/always-active.html";
+      description = "Pretend that all browser windows are active by spoofing the visibility state event";
+      license = licenses.mpl20;
+      mozPermissions = [
+        "storage"
+        "scripting"
+        "*://*/*"
+      ];
+      platforms = platforms.all;
+    };
+  };
+
+  redditUnhider = pkgs.firefox-addons.buildFirefoxXpiAddon {
+    pname = "reddit-unhider";
+    version = "1.0.4";
+    addonId = "reddit-unhider@siddh.dev";
+    url = "https://addons.mozilla.org/firefox/downloads/file/4813095/reddit_unhider-1.0.4.xpi";
+    sha256 = "76d60b1143a3f90baff399013ffcae5b5ad3b07fb9a8db020105585b0e07fd6a";
+    meta = with pkgs.lib; {
+      homepage = "https://addons.mozilla.org/en-US/firefox/addon/reddit-unhider/";
+      description = "Seamlessly explore hidden user profiles, read deleted comments, and view removed posts natively within the interface on Reddit.com.";
+      license = licenses.gpl3Only;
+      mozPermissions = [
+        "webNavigation"
+        "*://*.reddit.com/*"
+        "https://arctic-shift.photon-reddit.com/*"
+      ];
+      platforms = platforms.all;
+    };
+  };
+in
 {
   packages = with pkgs.firefox-addons; [
+    alwaysVisible
     augmented-steam
     buster-captcha-solver
-    clearurls
     darkreader
+    indie-wiki-buddy
     jump-cutter
     proton-pass
+    proton-vpn
     protondb-for-steam
+    redditUnhider
     return-youtube-dislikes
     search-by-image
     seventv
@@ -20,6 +63,7 @@
     ublock-origin
     user-agent-string-switcher
     violentmonkey
+    zotero-connector
   ];
 
   force = true;
@@ -58,32 +102,7 @@
       advancedUserEnabled = true;
       uiAccentCustom = true;
       uiAccent = "#cba7f6";
-      selectedFilterLists = [
-        "ublock-filters"
-        "ublock-badware"
-        "ublock-privacy"
-        "ublock-quick-fixes"
-        "ublock-unbreak"
-        "easylist"
-        "easyprivacy"
-        "urlhaus-1"
-        "plowe-0"
-        "adguard-spyware-url"
-        "block-lan"
-        "fanboy-cookiemonster"
-        "ublock-cookies-easylist"
-        "fanboy-ai-suggestions"
-        "easylist-chat"
-        "easylist-newsletters"
-        "easylist-notifications"
-        "easylist-annoyances"
-        "adguard-mobile-app-banners"
-        "adguard-other-annoyances"
-        "adguard-popup-overlays"
-        "adguard-widgets"
-        "ublock-annoyances"
-        "TUR-0"
-      ];
+      selectedFilterLists = filterLists;
     };
 
     "sponsorBlocker@ajay.app".settings = {
