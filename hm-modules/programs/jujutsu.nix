@@ -1,5 +1,4 @@
 {
-  config,
   username,
   ...
 }:
@@ -11,7 +10,7 @@
   programs.jujutsu = {
     enable = true;
     settings = {
-      email = config.sops.secrets."mail".path;
+      email = "66728147+AniviaFlome@users.noreply.github.com";
       name = username;
 
       aliases = {

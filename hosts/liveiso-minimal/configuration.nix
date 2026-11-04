@@ -1,28 +1,15 @@
 {
-  pkgs,
   lib,
-  modulesPath,
+  pkgs,
   ...
 }:
 {
   imports = [
-    "${modulesPath}/installer/cd-dvd/installation-cd-minimal-combined.nix"
     ../../modules/system/documentation.nix
+    ../../modules/system/locale.nix
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-
-  console.keyMap = "trq";
-
-  environment.systemPackages = with pkgs; [
-    curl
-    disko
-    git
-    micro
-    neovim
-    parted
-    rsync
-  ];
 
   boot.kernelParams = [ "video=1920x1080" ];
 
@@ -49,7 +36,24 @@
     allowUnfree = true;
   };
 
-  boot.supportedFilesystems.zfs = false;
+  environment.systemPackages = with pkgs; [
+    # keep-sorted start case=no
+    btrfs-progs
+    comma
+    curl
+    ddrescue
+    disko
+    efibootmgr
+    git
+    micro
+    neovim
+    ntfs3g
+    opencode
+    parted
+    rsync
+    sbctl
+    # keep-sorted end
+  ];
 
-  isoImage.squashfsCompression = "xz -Xdict-size 100%";
+  isoImage.squashfsCompression = "zstd -Xcompression-level 19";
 }

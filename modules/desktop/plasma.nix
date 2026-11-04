@@ -15,6 +15,7 @@
     elisa
     gwenview
     okular
+    plasma-workspace-wallpapers
     # keep-sorted end
   ];
 

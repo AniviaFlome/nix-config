@@ -9,6 +9,8 @@
   programs.nixcord = {
     enable = true;
     discord.enable = false;
+    userPlugins.QuickFind = inputs.vesktop-plugins.plugins.QuickFind;
+    extraConfig.plugins.QuickFind.enable = true;
     vesktop = {
       enable = true;
       package = pkgs.vesktop;

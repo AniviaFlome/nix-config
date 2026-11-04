@@ -21,7 +21,9 @@
   "general.autoScroll" = true;
   "identity.fxaccounts.enabled" = true;
   "layout.css.grid-template-masonry-value.enabled" = true;
-  "media.eme.enabled" = true;
+  "media.eme.enabled" = false;
+  "media.gmp-widevinecdm.enabled" = false;
+  "media.gmp-widevinecdm.visible" = false;
   "media.videocontrols.picture-in-picture.video-toggle.has-used" = true;
   "middlemouse.paste" = false;
   "network.trr.mode" = 1;

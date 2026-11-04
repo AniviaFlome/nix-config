@@ -1,5 +1,6 @@
 {
   inputs,
+  pkgs,
   ...
 }:
 {
@@ -8,16 +9,24 @@
   programs.steam = {
     config = {
       enable = true;
-      closeSteam = true;
-      defaultCompatTool = "GE-Proton";
+      onSteamRunning = "wait";
+      defaultCompatTool = "dwproton";
       apps = {
-        sea-of-thieves = {
-          id = 1091500;
-          launchOptionsStr = "gamemoderun %command%";
+        "1091500" = {
+          name = "Sea of Thieves";
+          rawLaunchOptions = "gamemoderun %command%";
+        };
+        "570" = {
+          name = "Dota 2";
+          rawLaunchOptions = "gamemoderun %command% -novid -nojoy";
         };
       };
     };
   };
 
   programs.steam-compat-tools.enable = true;
+
+  home.packages = with pkgs; [
+    dota2-rpc-client
+  ];
 }

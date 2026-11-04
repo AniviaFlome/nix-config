@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   term-editor,
   username,
@@ -11,7 +10,7 @@
     signing.format = "openpgp";
     settings = {
       user = {
-        email = config.sops.secrets."mail".path;
+        email = "66728147+AniviaFlome@users.noreply.github.com";
         name = username;
       };
       color.ui = true;

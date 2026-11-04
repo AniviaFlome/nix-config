@@ -1,8 +1,10 @@
 {
   programs.nvf.settings.vim = {
-    binds.whichKey = {
-      enable = true;
-      setupOpts.delay = 0;
+    binds = {
+      whichKey = {
+        enable = true;
+        setupOpts.delay = 0;
+      };
     };
 
     keymaps = [
@@ -84,77 +86,86 @@
         desc = "Increase window height";
       }
 
-      # Telescope / Search (Kickstart style <leader>s*)
+      # Pickers / Search
+      {
+        key = "<leader><space>";
+        mode = "n";
+        action = "<cmd>lua Snacks.picker.smart()<CR>";
+        desc = "Smart Find Files";
+      }
       {
         key = "<leader>sh";
         mode = "n";
-        action = "<cmd>Telescope help_tags<CR>";
+        action = "<cmd>lua Snacks.picker.help()<CR>";
         desc = "[S]earch [H]elp";
       }
       {
         key = "<leader>sk";
         mode = "n";
-        action = "<cmd>Telescope keymaps<CR>";
+        action = "<cmd>lua Snacks.picker.keymaps()<CR>";
         desc = "[S]earch [K]eymaps";
       }
       {
         key = "<leader>sf";
         mode = "n";
-        action = "<cmd>Telescope find_files<CR>";
+        action = "<cmd>lua Snacks.picker.files()<CR>";
         desc = "[S]earch [F]iles";
       }
       {
         key = "<leader>ss";
         mode = "n";
-        action = "<cmd>Telescope builtin<CR>";
-        desc = "[S]earch [S]elect Telescope";
+        action = "<cmd>lua Snacks.picker()<CR>";
+        desc = "[S]earch [S]elect Picker";
       }
       {
         key = "<leader>sw";
-        mode = "n";
-        action = "<cmd>Telescope grep_string<CR>";
+        mode = [
+          "n"
+          "x"
+        ];
+        action = "<cmd>lua Snacks.picker.grep_word()<CR>";
         desc = "[S]earch current [W]ord";
       }
       {
         key = "<leader>sg";
         mode = "n";
-        action = "<cmd>Telescope live_grep<CR>";
+        action = "<cmd>lua Snacks.picker.grep()<CR>";
         desc = "[S]earch by [G]rep";
       }
       {
         key = "<leader>sd";
         mode = "n";
-        action = "<cmd>Telescope diagnostics<CR>";
+        action = "<cmd>lua Snacks.picker.diagnostics()<CR>";
         desc = "[S]earch [D]iagnostics";
       }
       {
         key = "<leader>sr";
         mode = "n";
-        action = "<cmd>Telescope resume<CR>";
+        action = "<cmd>lua Snacks.picker.resume()<CR>";
         desc = "[S]earch [R]esume";
       }
       {
         key = "<leader>s.";
         mode = "n";
-        action = "<cmd>Telescope oldfiles<CR>";
+        action = "<cmd>lua Snacks.picker.recent()<CR>";
         desc = "[S]earch Recent Files";
       }
       {
         key = "<leader><leader>";
         mode = "n";
-        action = "<cmd>Telescope buffers<CR>";
+        action = "<cmd>lua Snacks.picker.buffers()<CR>";
         desc = "Find existing buffers";
       }
       {
         key = "<leader>/";
         mode = "n";
-        action = "<cmd>Telescope current_buffer_fuzzy_find<CR>";
+        action = "<cmd>lua Snacks.picker.lines()<CR>";
         desc = "[/] Fuzzily search in current buffer";
       }
       {
         key = "<leader>sn";
         mode = "n";
-        action = "<cmd>Telescope find_files cwd=~/nix-config<CR>";
+        action = "<cmd>lua Snacks.picker.files({ cwd = vim.fn.expand('~/nix-config') })<CR>";
         desc = "[S]earch [N]ix config files";
       }
 
@@ -207,18 +218,48 @@
         desc = "Open diagnostic [Q]uickfix list";
       }
 
-      # File navigation
+      # File navigation (LazyVim-style: Snacks explorer primary, Oil for buffer editing)
       {
         key = "<leader>e";
         mode = "n";
+        action = "<cmd>lua Snacks.explorer()<CR>";
+        desc = "File [E]xplorer (Snacks root)";
+      }
+      {
+        key = "<leader>E";
+        mode = "n";
         action = "<cmd>Neotree toggle<CR>";
-        desc = "Toggle file [E]xplorer";
+        desc = "File [E]xplorer (Neo-tree)";
+      }
+      {
+        key = "<leader>fe";
+        mode = "n";
+        action = "<cmd>lua Snacks.explorer()<CR>";
+        desc = "[F]ind [E]xplorer (root)";
+      }
+      {
+        key = "<leader>fE";
+        mode = "n";
+        action = "<cmd>lua Snacks.explorer({ cwd = vim.fn.getcwd() })<CR>";
+        desc = "[F]ind [E]xplorer (cwd)";
+      }
+      {
+        key = "<leader>o";
+        mode = "n";
+        action = "<cmd>Oil --float<CR>";
+        desc = "[O]pen folder (Oil float)";
       }
       {
         key = "-";
         mode = "n";
         action = "<cmd>Oil<CR>";
         desc = "Open parent directory (Oil)";
+      }
+      {
+        key = "_";
+        mode = "n";
+        action = "<cmd>lua require('oil').open(vim.fn.getcwd())<CR>";
+        desc = "Open cwd directory (Oil)";
       }
 
       # Cheatsheet
@@ -257,10 +298,28 @@
         desc = "[Q]uit [Q]uit all";
       }
       {
+        key = "<leader>qs";
+        mode = "n";
+        action = "<cmd>lua require('persistence').load()<CR>";
+        desc = "[Q]uit restore [S]ession";
+      }
+      {
+        key = "<leader>qS";
+        mode = "n";
+        action = "<cmd>lua require('persistence').select()<CR>";
+        desc = "[Q]uit [S]elect session";
+      }
+      {
+        key = "<leader>ql";
+        mode = "n";
+        action = "<cmd>lua require('persistence').load({ last = true })<CR>";
+        desc = "[Q]uit restore [L]ast session";
+      }
+      {
         key = "<leader>qd";
         mode = "n";
-        action = "<cmd>lua Snacks.bufdelete.delete({ wipe = false })<CR>";
-        desc = "[Q]uit + [D]rop buffer";
+        action = "<cmd>lua require('persistence').stop()<CR>";
+        desc = "[Q]uit [D]on't save current session";
       }
 
       # Git group (<leader>g*)

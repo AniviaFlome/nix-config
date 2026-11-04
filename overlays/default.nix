@@ -19,28 +19,6 @@ in
   inputs.nur.overlays.default
   inputs.waydroid-nvidia-nix.overlays.default
   inputs.millennium.overlays.default
-  inputs.opencode.overlays.default
-  (
-    _final: prev:
-    let
-      system = prev.stdenv.hostPlatform.system;
-      fixedNodeModules = prev.opencode.node_modules.override {
-        hash = "sha256-xAnVAOMKE34h6m6jcFQFkNvIAamBHmZdBmX7zjzd6e0=";
-      };
-      fixedOpencode = prev.opencode.override {
-        node_modules = fixedNodeModules;
-      };
-    in
-    if system == "x86_64-linux" then
-      {
-        opencode = fixedOpencode;
-        opencode-desktop = prev.opencode-desktop.override {
-          opencode = fixedOpencode;
-        };
-      }
-    else
-      { }
-  )
   (final: prev: {
     stable = mkNixpkgs inputs.nixpkgs-stable final.stdenv.hostPlatform.system;
     master = mkNixpkgs inputs.nixpkgs-master final.stdenv.hostPlatform.system;
@@ -71,12 +49,11 @@ in
         nss
       ];
       jdks = with prev; [
-        javaPackages.compiler.openjdk25
-        javaPackages.compiler.openjdk21
-        temurin-bin-25
-        temurin-bin-21
-        temurin-bin-17
-        temurin-bin-8
+        temurin-jre-bin-26
+        temurin-jre-bin-25
+        temurin-jre-bin-21
+        temurin-jre-bin-17
+        temurin-jre-bin-8
       ];
     };
     normcap = prev.symlinkJoin {

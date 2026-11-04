@@ -56,7 +56,10 @@
       };
       gestures = {
         hot-corners = {
-          enable = false;
+          top-left = false;
+          top-right = false;
+          bottom-left = false;
+          bottom-right = false;
         };
       };
       overview = {
@@ -113,16 +116,6 @@
             blur = true;
             xray = true;
           };
-        }
-        {
-          matches = [
-            { app-id = "^Regulus2\\.exe$"; }
-            { app-id = "^metin2\\.exe$"; }
-            { title = "^Metin2$"; }
-            { title = "^Regulus2$"; }
-          ];
-          open-floating = true;
-          open-fullscreen = true;
         }
       ];
       layer-rules = [

@@ -1,81 +1,66 @@
 {
+  inputs,
   pkgs,
-  lib,
   modulesPath,
   ...
 }:
 {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-graphical-calamares-plasma6.nix"
-    ../../modules/system/documentation.nix
+    inputs.home-manager.nixosModules.home-manager
+    ../../modules/theme/catppuccin.nix
+    ../liveiso-minimal/configuration.nix
   ];
-
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-
-  console.keyMap = "trq";
 
   networking.networkmanager.enable = true;
 
+  programs.fish.enable = true;
+  users.users.nixos.shell = pkgs.fish;
+
   environment.systemPackages = with pkgs; [
-    curl
-    disko
-    git
-    grsync
+    # keep-sorted start case=no
+    gparted
     kitty
-    micro
-    neovim
-    parted
-    rsync
-    (catppuccin-sddm.override {
-      flavor = "mocha";
-      accent = "mauve";
-      font = "Noto Sans";
-      fontSize = "9";
-      loginBackground = false;
-    })
+    # keep-sorted end
   ];
 
-  services.displayManager = lib.mkForce {
+  services.displayManager = {
     sddm = {
       enable = true;
       autoNumlock = true;
-      theme = "catppuccin-mocha-mauve";
       wayland = {
-        enable = false;
+        enable = true;
         compositor = "kwin";
       };
     };
-    defaultSession = "plasmax11";
+    defaultSession = "plasma";
     autoLogin = {
       enable = true;
       user = "nixos";
     };
   };
 
-  boot.kernelParams = [ "video=1920x1080" ];
-
-  console.colors = [
-    "1e1e2e"
-    "f38ba8"
-    "a6e3a1"
-    "f9e2af"
-    "89b4fa"
-    "f5c2e7"
-    "94e2d5"
-    "bac2de"
-    "585b70"
-    "f38ba8"
-    "a6e3a1"
-    "f9e2af"
-    "89b4fa"
-    "f5c2e7"
-    "94e2d5"
-    "a6adc8"
-  ];
-
-  nixpkgs.config = {
-    allowUnfree = true;
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    backupFileExtension = "backup";
+    extraSpecialArgs = { inherit inputs; };
+    users.nixos = {
+      imports = [ ./home.nix ];
+    };
   };
 
-  isoImage.squashfsCompression = "xz -Xdict-size 100%";
+  programs.firefox = {
+    enable = true;
+    policies = {
+      ExtensionSettings = {
+        "uBlock0@raymondhill.net" = {
+          installation_mode = "force_installed";
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+          default_area = "navbar";
+          private_browsing = true;
+        };
+      };
+    };
+  };
 }

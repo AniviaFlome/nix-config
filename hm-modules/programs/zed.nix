@@ -6,13 +6,10 @@
   programs.zed-editor = {
     enable = true;
     extraPackages = with pkgs; [
-      cargo
       marksman
       nil
       nixd
       nixfmt
-      rust-analyzer
-      rustc
     ];
     extensions = [
       "env"

@@ -23,11 +23,14 @@
 
     neotree-autoopen = ''
       vim.api.nvim_create_autocmd('VimEnter', {
-        desc = 'Open Neo-tree when opening files',
+        desc = 'Open Neo-tree when opening files (not directories, Snacks explorer handles those)',
         callback = function()
           if vim.fn.argc() > 0 then
-            vim.cmd('Neotree show')
-            vim.cmd('wincmd p')
+            local first = vim.fn.argv(0)
+            if first ~= "" and vim.fn.isdirectory(first) == 0 then
+              vim.cmd('Neotree show')
+              vim.cmd('wincmd p')
+            end
           end
         end,
       })
@@ -47,22 +50,6 @@
       end
       vim.keymap.set('i', '<Right>', right_arrow_accept('i'))
       vim.keymap.set('c', '<Right>', right_arrow_accept('c'))
-    '';
-
-    alpha-custom-buttons = ''
-      local ok, _ = pcall(function()
-        local dashboard = require('alpha.themes.dashboard')
-
-        dashboard.section.buttons.val = {
-          dashboard.button("f", "  Find file",    ":Telescope find_files <CR>"),
-          dashboard.button("n", "  New file",     ":ene <BAR> startinsert <CR>"),
-          dashboard.button("r", "  Recent files", ":Telescope oldfiles <CR>"),
-          dashboard.button("g", "  Find text",    ":Telescope live_grep <CR>"),
-          dashboard.button("p", "  Open project", ":lua Snacks.picker.projects()<CR>"),
-          dashboard.button("q", "  Quit",         ":qa<CR>"),
-        }
-        require('alpha').setup(dashboard.config)
-      end)
     '';
 
     custom-autocmds = ''

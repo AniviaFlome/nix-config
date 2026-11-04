@@ -12,11 +12,8 @@
     anitr-cli
     antimicrox
     anup
-    atuin
-    audacity
     bats
     bedrock-on-linux
-    better-control
     bolt-launcher
     brightnessctl
     btrfs-progs
@@ -34,7 +31,9 @@
     exiftool
     eza
     fastfetch
+    faugus-launcher
     ffmpeg-full
+    flake-checker
     flameshot
     fluent-reader
     fzf
@@ -76,6 +75,7 @@
     man
     mangohud
     manix
+    master.spotifast
     micro
     motrix-beta
     mousam
@@ -93,14 +93,16 @@
     normcap
     ntfs3g
     nurl
+    nuvio
     nvd
-    onlyoffice-desktopeditors
+    stable.onlyoffice-desktopeditors
     openrct2
     optnix
     osu-beatmap-manager
     osu-lazer
     packwiz
     pdfarranger
+    pixelorama
     prismlauncher
     proton-vpn
     proton-vpn-cli
@@ -122,13 +124,17 @@
     smassh
     songrec
     spotdl
-    spotifast
     spotify-player
+    stable.better-control
+    stable.hydralauncher
+    stable.kdePackages.kdenlive
+    stable.mindustry-wayland
+    stable.openutau
+    stable.zotero
     starship
     statix
     syncthing
     tealdeer
-    telegram-desktop
     television
     textpieces
     thunderbird

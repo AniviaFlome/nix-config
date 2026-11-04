@@ -9,18 +9,22 @@ in
   programs.opencode = {
     enable = true;
     enableMcpIntegration = true;
-    commands = aiCommon.commands // {
-      impeccable = "${pkgs.impeccable}/share/opencode-commands/impeccable.md";
-    };
-    skills = aiCommon.skills // {
-      impeccable = "${pkgs.impeccable}/share/skills/impeccable";
+    mutableSettings = false;
+    inherit (aiCommon) commands skills;
+    cli = {
+      prompt = {
+        editor = true;
+      };
     };
     settings = {
+      autoupdate = false;
       plugins = [
         "opencode-tps-meter"
         "opencode-wakelock"
-        "opencode-goal-plugin"
       ];
+      experimental = {
+        background_compaction = true;
+      };
     };
   };
 }

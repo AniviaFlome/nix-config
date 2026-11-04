@@ -64,11 +64,6 @@
     open = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
-    moduleParams = {
-      nvidia = {
-        NVreg_EnableGpuFirmware = 0;
-      };
-    };
   };
 
   hardware.nvidia-container-toolkit = {
@@ -76,7 +71,7 @@
   };
 
   hardware.openrazer = {
-    enable = true;
+    enable = false;
     users = [
       username
     ];

@@ -12,12 +12,12 @@
         "neo-tree"
         "alpha"
         "dashboard"
+        "snacks_dashboard"
         "toggleterm"
       ];
     };
 
     statusline.lualine.enable = true;
-    telescope.enable = true;
     autopairs.nvim-autopairs.enable = true;
     comments.comment-nvim.enable = true;
     filetree.neo-tree.enable = true;
@@ -44,6 +44,85 @@
           bufdelete.enabled = true;
           terminal.enabled = true;
           picker.enabled = true;
+          explorer = {
+            enabled = true;
+            replace_netrw = true;
+          };
+          dashboard = {
+            enabled = true;
+            preset.keys = [
+              {
+                icon = " ";
+                key = "f";
+                desc = "Find File";
+                action = ":lua Snacks.dashboard.pick('files')";
+              }
+              {
+                icon = " ";
+                key = "n";
+                desc = "New File";
+                action = ":ene | startinsert";
+              }
+              {
+                icon = " ";
+                key = "r";
+                desc = "Recent Files";
+                action = ":lua Snacks.dashboard.pick('oldfiles')";
+              }
+              {
+                icon = " ";
+                key = "g";
+                desc = "Find Text";
+                action = ":lua Snacks.dashboard.pick('live_grep')";
+              }
+              {
+                icon = " ";
+                key = "e";
+                desc = "Explorer";
+                action = ":lua Snacks.explorer()";
+              }
+              {
+                icon = " ";
+                key = "p";
+                desc = "Open Project";
+                action = ":lua Snacks.picker.projects()";
+              }
+              {
+                icon = " ";
+                key = "s";
+                desc = "Restore Session";
+                action = ":lua require('persistence').load()";
+              }
+              {
+                icon = " ";
+                key = "q";
+                desc = "Quit";
+                action = ":qa";
+              }
+            ];
+            sections = [
+              { section = "header"; }
+              {
+                section = "keys";
+                gap = 1;
+                padding = 1;
+              }
+              {
+                icon = " ";
+                title = "Recent Files";
+                section = "recent_files";
+                indent = 2;
+                padding = 1;
+              }
+              {
+                icon = " ";
+                title = "Projects";
+                section = "projects";
+                indent = 2;
+                padding = 1;
+              }
+            ];
+          };
         };
       };
     };
@@ -71,11 +150,6 @@
       colorizer.enable = true;
       noice.enable = true;
       nvim-ufo.enable = true;
-    };
-
-    dashboard.alpha = {
-      enable = true;
-      theme = "dashboard";
     };
 
     git = {
@@ -136,6 +210,10 @@
       };
       opencode = {
         package = opencode-nvim;
+      };
+      persistence = {
+        package = persistence-nvim;
+        setup = "require('persistence').setup {}";
       };
       smear-cursor = {
         package = smear-cursor-nvim;

@@ -1,14 +1,16 @@
 #!/usr/bin/env dash
 # npp — Nix Package Provider
-# Add/remove nixpkgs (unstable + stable) and Flatpak packages from this flake.
+# Add/remove nixpkgs (unstable + stable.xxx) and Flatpak packages from this flake.
+# Single-file model: unstable = bare attrs, stable = stable.xxx in pkgs.nix.
 #
-#   npp n a [s] [FILE]   add nixpkgs package(s), Tab = multi-select
-#   npp n r [s] [FILE]   remove nixpkgs package(s), Tab = multi-select
-#   npp f a [FILE]       add a Flatpak package (prompts for origin)
-#   npp f r [FILE]       remove Flatpak package(s), Tab = multi-select
+#   npp n a [s] [--refresh] [FILE]   add nixpkgs, Tab=multi (s = stable.xxx)
+#   npp n r [s] [FILE]               remove nixpkgs, Tab=multi (s = stable only)
+#   npp f a [--origin=X] [--refresh] [FILE]  add Flatpak (prompts for origin)
+#   npp f r [FILE]                   remove Flatpak(s), Tab = multi-select
 #
 # Global flags: -y / --yes (skip confirm), -h / --help.
-# Env: NPP_FLAKE_ROOT overrides flake-root detection, NO_COLOR disables color.
+# Env: NH_FLAKE overrides flake-root detection, NPP_REFRESH=1 forces
+# re-index, NO_COLOR disables color.
 
 set -eu
 
@@ -18,13 +20,13 @@ set -eu
 DEFAULT_DIR="${HOME}/nix-config"
 BACKUP_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/npp-backups"
 MAX_BACKUPS=14
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/npp"
+FLATPAK_CACHE="$CACHE_DIR/flatpaks.list"
+FLATPAK_TTL=86400
 
 ASSUME_YES=false
 
-NIX_UNSTABLE_PREFIX="pkgs"
-NIX_STABLE_PREFIX="pkgs.stable"
-NIX_UNSTABLE_FILE="pkgs.nix"
-NIX_STABLE_FILE="pkgs-stable.nix"
+NIX_FILE="pkgs.nix"
 FLATPAK_FILE="flatpak.nix"
 
 # ============================================================================
@@ -131,7 +133,7 @@ confirm_and_apply() {
     cp "$original" "$backup_path"
     # Keep newest MAX_BACKUPS per file.
     find "$BACKUP_DIR" -maxdepth 1 -name "${base}.*.backup" -printf "%T@ %p\n" |
-      sort -rn | tail -n +"$((MAX_BACKUPS + 1))" | cut -d' ' -f2- |
+      sort -rn | tail -n "+$((MAX_BACKUPS + 1))" | cut -d' ' -f2- |
       while IFS= read -r old_backup; do
         [ -n "$old_backup" ] && rm -f "$old_backup"
       done
@@ -162,9 +164,17 @@ find_flake_root() {
 }
 
 resolve_root() {
-  local root=""
-  if [ -n "${NPP_FLAKE_ROOT:-}" ] && [ -d "$NPP_FLAKE_ROOT" ]; then
-    echo "$NPP_FLAKE_ROOT"
+  local root="" flake_ref=""
+  flake_ref="${NH_FLAKE:-}"
+  case "$flake_ref" in
+  *\#*) flake_ref="${flake_ref%%#*}" ;;
+  esac
+  if [ -n "$flake_ref" ] && [ -d "$flake_ref" ]; then
+    echo "$flake_ref"
+    return 0
+  fi
+  if [ -n "$flake_ref" ] && [ -f "$flake_ref" ]; then
+    echo "$(dirname "$flake_ref")"
     return 0
   fi
   if root="$(find_flake_root 2>/dev/null)"; then
@@ -176,7 +186,7 @@ resolve_root() {
     return 0
   fi
   msg_error "flake.nix not found in parent paths and $DEFAULT_DIR is missing."
-  msg_error "Set NPP_FLAKE_ROOT or pass FILE explicitly."
+  msg_error "Set NH_FLAKE or pass FILE explicitly."
   exit 1
 }
 
@@ -197,27 +207,32 @@ find_one() {
 }
 
 resolve_nix_file() {
-  local explicit="${1:-}" stable="${2:-false}" root fname
+  local explicit="${1:-}" root candidate
   if [ -n "$explicit" ]; then
     echo "$explicit"
     return 0
   fi
   root="$(resolve_root)"
-  if [ "$stable" = true ]; then
-    fname="$NIX_STABLE_FILE"
-  else
-    fname="$NIX_UNSTABLE_FILE"
+  candidate="$root/modules/packages/$NIX_FILE"
+  if [ -f "$candidate" ]; then
+    echo "$candidate"
+    return 0
   fi
-  find_one "$root" "$fname"
+  find_one "$root" "$NIX_FILE"
 }
 
 resolve_flatpak_file() {
-  local explicit="${1:-}" root
+  local explicit="${1:-}" root candidate
   if [ -n "$explicit" ]; then
     echo "$explicit"
     return 0
   fi
   root="$(resolve_root)"
+  candidate="$root/modules/packages/$FLATPAK_FILE"
+  if [ -f "$candidate" ]; then
+    echo "$candidate"
+    return 0
+  fi
   find_one "$root" "$FLATPAK_FILE"
 }
 
@@ -239,54 +254,73 @@ check_config_file() {
 # ============================================================================
 extract_nix_packages() {
   local file="$1"
-  awk -v stable_prefix="$NIX_STABLE_PREFIX" '
-    function bare(s,   p, rx) {
+  awk '
+    function qual(s,   p) {
       p = s
       sub(/#.*$/, "", p)
       gsub(/^[ \t]+|[ \t]+$/, "", p)
       sub(/;.*$/, "", p)
-      rx = "^" stable_prefix "\\."
-      if (p ~ rx) sub(rx, "", p)
+      gsub(/^[ \t]+|[ \t]+$/, "", p)
+      if (p ~ /^pkgs\.stable\./) sub(/^pkgs\.stable\./, "stable.", p)
+      else if (p ~ /^stable\./) { }
       else sub(/^pkgs\./, "", p)
-      sub(/;.*$/, "", p)
       gsub(/^[ \t]+|[ \t]+$/, "", p)
       return p
     }
+    function bdepth(line,   t, o, c) {
+      t = line
+      sub(/#.*$/, "", t)
+      o = gsub(/\[/, "[", t)
+      c = gsub(/\]/, "]", t)
+      return o - c
+    }
+    BEGIN { in_env = 0; depth = 0 }
     /environment\.systemPackages/ { in_env = 1 }
-    in_env && !in_list && index($0, "[") > 0 { in_list = 1; next }
-    in_env && !in_list { next }
-    in_list {
+    in_env {
+      d = bdepth($0)
+      prev = depth
+      depth += d
+      if (prev == 0 && depth >= 1) next
+      if (depth == 0 && prev > 0) exit
+      if (depth != 1) next
       t = $0
       gsub(/^[ \t]+/, "", t)
       gsub(/[ \t]+$/, "", t)
-      if (t ~ /^\]/) exit
+      if (t ~ /^\]/) next
       if (t == "" || t ~ /^#/ || index(t, "[") > 0) next
-      b = bare($0)
+      b = qual($0)
       if (b != "") print b
     }
   ' "$file"
 }
 
-# nix_insert_batch src addfile prefix  — stdout is the new file content.
+# nix_insert_batch src addfile — stdout is the new file content.
+# addfile already contains qualified entries (stable.xxx or xxx), sorted case-insensitively, deduped exactly.
 nix_insert_batch() {
-  local src="$1" addfile="$2" prefix="$3"
-  awk -v stable_prefix="$NIX_STABLE_PREFIX" -v prefix="$prefix" -v addfile="$addfile" '
-    function bare(s,   p, rx) {
+  local src="$1" addfile="$2"
+  awk -v addfile="$addfile" '
+    function qual(s,   p) {
       p = s
       sub(/#.*$/, "", p)
       gsub(/^[ \t]+|[ \t]+$/, "", p)
       sub(/;.*$/, "", p)
-      rx = "^" stable_prefix "\\."
-      if (p ~ rx) sub(rx, "", p)
+      gsub(/^[ \t]+|[ \t]+$/, "", p)
+      if (p ~ /^pkgs\.stable\./) sub(/^pkgs\.stable\./, "stable.", p)
+      else if (p ~ /^stable\./) { }
       else sub(/^pkgs\./, "", p)
-      sub(/;.*$/, "", p)
       gsub(/^[ \t]+|[ \t]+$/, "", p)
       return p
     }
-    function emit(b,   it) {
+    function bdepth(line,   t, o, c) {
+      t = line
+      sub(/#.*$/, "", t)
+      o = gsub(/\[/, "[", t)
+      c = gsub(/\]/, "]", t)
+      return o - c
+    }
+    function emit(q) {
       if (indent == "") indent = "    "
-      it = (use_bare ? b : prefix "." b)
-      print indent it
+      print indent q
     }
     BEGIN {
       n = 0
@@ -295,80 +329,91 @@ nix_insert_batch() {
         if (l != "") want[++n] = l
       }
       close(addfile)
-      wi = 1; in_env = 0; in_list = 0; use_bare = 0; indent = ""
+      wi = 1; in_env = 0; depth = 0; indent = ""
     }
-    /environment\.systemPackages/ {
-      in_env = 1
-      if ($0 ~ /with[ \t]+pkgs\.stable[ \t]*;/ || $0 ~ /with[ \t]+pkgs[ \t]*;/) use_bare = 1
-      print
-      if (index($0, "[") > 0) in_list = 1
-      next
-    }
-    in_env && !in_list {
-      if ($0 ~ /with[ \t]+pkgs\.stable[ \t]*;/ || $0 ~ /with[ \t]+pkgs[ \t]*;/) use_bare = 1
-      print
-      if (index($0, "[") > 0) in_list = 1
-      next
-    }
-    in_list {
+    /environment\.systemPackages/ { in_env = 1 }
+    in_env {
+      d = bdepth($0)
+      prev = depth
+      depth += d
       line = $0; s = line
       gsub(/^[ \t]+/, "", s); gsub(/[ \t]+$/, "", s)
+      if (prev == 0 && depth >= 1) { print line; next }
+      if (depth == 0 && prev > 0) {
+        while (wi <= n) { emit(want[wi]); wi++ }
+        print line; in_env = 0; next
+      }
+      if (depth != 1) { print line; next }
       if (index(s, "# keep-" "sorted end") > 0) {
         while (wi <= n) { emit(want[wi]); wi++ }
         print line; next
       }
-      if (s ~ /^\]/) {
-        while (wi <= n) { emit(want[wi]); wi++ }
-        print line; in_list = 0; in_env = 0; next
-      }
+      # NOTE: no flush on lines starting with ] here — at depth 1 those are
+      # nested-list closers (e.g. ])) ), not the outer list end. Outer end is
+      # handled by the depth==0 branch above.
       if (s == "" || s ~ /^#/ || index(s, "[") > 0) { print line; next }
       if (indent == "") {
         if (match(line, /^[ \t]+/)) indent = substr(line, RSTART, RLENGTH)
         else indent = "    "
       }
-      cur = bare(line)
+      cur = qual(line)
       while (wi <= n && tolower(want[wi]) < tolower(cur)) { emit(want[wi]); wi++ }
-      if (wi <= n && tolower(want[wi]) == tolower(cur)) wi++
+      if (wi <= n && want[wi] == cur) wi++
       print line; next
     }
     { print }
-    END { if (in_list) while (wi <= n) emit(want[wi]) }
+    END { if (depth > 0) while (wi <= n) emit(want[wi]) }
   ' "$src"
 }
 
 # nix_remove_batch src rmfile — stdout is the new file content.
+# Both file entries and rmfile are qualified (stable.xxx or xxx).
+# Legacy pkgs.stable.xxx lines qualify to stable.xxx, so they still match.
+# Match is exact (case-sensitive); ordering irrelevant.
 nix_remove_batch() {
   local src="$1" rmfile="$2"
-  awk -v stable_prefix="$NIX_STABLE_PREFIX" -v rmfile="$rmfile" '
-    function bare(s,   p, rx) {
+  awk -v rmfile="$rmfile" '
+    function qual(s,   p) {
       p = s
       sub(/#.*$/, "", p)
       gsub(/^[ \t]+|[ \t]+$/, "", p)
       sub(/;.*$/, "", p)
-      rx = "^" stable_prefix "\\."
-      if (p ~ rx) sub(rx, "", p)
+      gsub(/^[ \t]+|[ \t]+$/, "", p)
+      if (p ~ /^pkgs\.stable\./) sub(/^pkgs\.stable\./, "stable.", p)
+      else if (p ~ /^stable\./) { }
       else sub(/^pkgs\./, "", p)
-      sub(/;.*$/, "", p)
       gsub(/^[ \t]+|[ \t]+$/, "", p)
       return p
+    }
+    function bdepth(line,   t, o, c) {
+      t = line
+      sub(/#.*$/, "", t)
+      o = gsub(/\[/, "[", t)
+      c = gsub(/\]/, "]", t)
+      return o - c
     }
     BEGIN {
       while ((getline l < rmfile) > 0) {
         gsub(/^[ \t\r\n]+|[ \t\r\n]+$/, "", l)
-        if (l != "") kill[tolower(l)] = 1
+        if (l != "") kill[l] = 1
       }
       close(rmfile)
-      in_env = 0; in_list = 0
+      in_env = 0; depth = 0
     }
-    /environment\.systemPackages/ { in_env = 1; print; if (index($0, "[") > 0) in_list = 1; next }
-    in_env && !in_list { print; if (index($0, "[") > 0) in_list = 1; next }
-    in_list {
+    /environment\.systemPackages/ { in_env = 1 }
+    in_env {
+      d = bdepth($0)
+      prev = depth
+      depth += d
       line = $0; s = line
       gsub(/^[ \t]+/, "", s); gsub(/[ \t]+$/, "", s)
-      if (s ~ /^\]/) { print line; in_list = 0; in_env = 0; next }
+      if (prev == 0 && depth >= 1) { print line; next }
+      if (depth == 0 && prev > 0) { print line; in_env = 0; next }
+      if (depth != 1) { print line; next }
+      if (s ~ /^\]/) { print line; next }
       if (s == "" || s ~ /^#/ || index(s, "[") > 0) { print line; next }
-      cur = bare(line)
-      if (cur != "" && (tolower(cur) in kill)) next
+      cur = qual(line)
+      if (cur != "" && (cur in kill)) next
       print line; next
     }
     { print }
@@ -396,27 +441,41 @@ normalize_nix_attrs() {
   }'
 }
 
+# Print nix-search-tv index, offline-first for speed (online re-index takes ~25s).
+# Usage: nix_search_print <index> [refresh(true/false)]. NPP_REFRESH=1 forces refresh.
+nix_search_print() {
+  local index="$1" refresh="${2:-false}"
+  if [ "${NPP_REFRESH:-0}" = "1" ]; then refresh=true; fi
+  if [ "$refresh" = true ]; then
+    nix-search-tv print --indexes "$index" 2>/dev/null
+  else
+    nix-search-tv print --offline --indexes "$index" 2>/dev/null || nix-search-tv print --indexes "$index" 2>/dev/null
+  fi
+}
+
 pick_nix_add() {
-  local stable="${1:-false}" fzf_output="" fzf_code=0 query="" selected_lines=""
+  local stable="${1:-false}" refresh="${2:-false}" fzf_output="" fzf_code=0 query="" selected_lines=""
   need_cmd fzf
   need_cmd nix-search-tv
+  if [ "${NPP_REFRESH:-0}" = "1" ]; then refresh=true; fi
 
   # shellcheck disable=SC2016
   # fzf expands {} at preview time; the $() runs inside fzf, not here.
+  # NOTE: no sort -u before fzf on purpose — sort buffers the whole 150k-line
+  # index and blocks the UI. awk dedup streams, so fzf opens instantly and a
+  # typed name + Enter works without waiting for the list (via --print-query).
   fzf_output="$(
     {
-      (nix-search-tv print --indexes nixpkgs 2>/dev/null ||
-        nix-search-tv print --offline --indexes nixpkgs 2>/dev/null) |
-        sed 's|^|nixpkgs/ |'
-      (nix-search-tv print --indexes nur 2>/dev/null ||
-        nix-search-tv print --offline --indexes nur 2>/dev/null) |
-        sed 's|^|nur/ |'
+      nix_search_print nixpkgs "$refresh" | sed 's|^|nixpkgs/ |'
+      if [ "$stable" != true ]; then
+        nix_search_print nur "$refresh" | sed 's|^|nur/ |'
+      fi
     } |
       grep -E "^(nixpkgs|nur)/[[:space:]]+[[:alnum:]_.+-]+$" |
-      sort -u |
+      awk '!seen[$0]++' |
       fzf \
         --print-query \
-        --prompt='Search Nix package (Tab=select, Enter=confirm) > ' \
+        --prompt='Search Nix package (type name + Enter works instantly, Tab=multi) > ' \
         --preview 'nix-search-tv preview --indexes nixpkgs --indexes nur "$(printf "%s" {} | tr -d " " | sed -e "s|^nixpkgs/||" -e "s|^nur/nur\\.|nur.|")"' \
         --delimiter='[[:space:]]+' \
         --freeze-left=1 \
@@ -452,15 +511,25 @@ pick_nix_add() {
 }
 
 pick_nix_remove() {
-  local file="$1"
+  local file="$1" stable="${2:-false}"
   need_cmd fzf
-  extract_nix_packages "$file" | sort -f -u |
-    fzf \
-      --prompt='Select package(s) to remove (Tab=multi) > ' \
-      --border --reverse --ansi \
-      --exact \
-      --multi \
-      --tiebreak=begin,length
+  if [ "$stable" = true ]; then
+    extract_nix_packages "$file" | grep -E "^stable\." | sort -f | uniq |
+      fzf \
+        --prompt='Select stable package(s) to remove (Tab=multi) > ' \
+        --border --reverse --ansi \
+        --exact \
+        --multi \
+        --tiebreak=begin,length
+  else
+    extract_nix_packages "$file" | grep -Ev "^stable\." | sort -f | uniq |
+      fzf \
+        --prompt='Select package(s) to remove (Tab=multi) > ' \
+        --border --reverse --ansi \
+        --exact \
+        --multi \
+        --tiebreak=begin,length
+  fi
 }
 
 # ============================================================================
@@ -523,7 +592,7 @@ extract_flatpak_remotes() {
 flatpak_exists() {
   local file="$1" target="$2"
   extract_flatpak_packages "$file" | awk -F'\t' -v t="$target" '
-    tolower($1) == tolower(t) { found = 1; exit }
+    $1 == t { found = 1; exit }
     END { exit !found }
   '
 }
@@ -646,13 +715,14 @@ flatpak_insert_block() {
 }
 
 # flatpak_remove_batch src rmfile — stdout is the new content.
+# Match is exact (case-sensitive).
 flatpak_remove_batch() {
   local src="$1" rmfile="$2"
   awk -v rmfile="$rmfile" '
     BEGIN {
       while ((getline l < rmfile) > 0) {
         gsub(/^[ \t\r\n]+|[ \t\r\n]+$/, "", l)
-        if (l != "") kill[tolower(l)] = 1
+        if (l != "") kill[l] = 1
       }
       close(rmfile)
       in_pkg = 0; in_list = 0; in_block = 0; buf = ""
@@ -672,7 +742,7 @@ flatpak_remove_batch() {
             e = substr(bl[i], RSTART, RLENGTH); sub(/^[^"]*"/, "", e); sub(/".*/, "", e); existing = e; break
           }
         }
-        if (!(existing != "" && (tolower(existing) in kill))) printf "%s", buf
+        if (!(existing != "" && (existing in kill))) printf "%s", buf
         buf = ""
       }
       next
@@ -688,14 +758,14 @@ flatpak_remove_batch() {
           if (match(line, /appId[ \t]*=[ \t]*"[^"]+"/)) {
             e = substr(line, RSTART, RLENGTH); sub(/^[^"]*"/, "", e); sub(/".*/, "", e); existing = e
           }
-          if (existing != "" && (tolower(existing) in kill)) next
+          if (existing != "" && (existing in kill)) next
           print line; next
         }
         in_block = 1; buf = line "\n"; next
       }
       if (s ~ /^"/) {
         cur = s; gsub(/"/, "", cur); sub(/[ \t,;]*$/, "", cur)
-        if (tolower(cur) in kill) next
+        if (cur in kill) next
         print line; next
       }
       print line; next
@@ -704,25 +774,78 @@ flatpak_remove_batch() {
   ' "$src"
 }
 
+# Print "application<TAB>name<TAB>description" lines, cached (flatpak search takes ~45s).
+# Usage: flatpak_list_cached [refresh(true/false)]. NPP_REFRESH=1 forces refresh.
+flatpak_list_cached() {
+  local refresh="${1:-false}"
+  if [ "${NPP_REFRESH:-0}" = "1" ]; then refresh=true; fi
+  mkdir -p "$CACHE_DIR"
+  if [ "$refresh" != true ] && [ -s "$FLATPAK_CACHE" ]; then
+    if [ -n "$(find "$FLATPAK_CACHE" -mmin -$((FLATPAK_TTL / 60 + 1)) -print 2>/dev/null)" ]; then
+      cat "$FLATPAK_CACHE"
+      return 0
+    fi
+  fi
+  msg_info "Refreshing Flatpak list (slow first run, cached for 24h)..."
+  if flatpak search "" --columns=application,name,description 2>/dev/null >"$FLATPAK_CACHE.tmp"; then
+    mv "$FLATPAK_CACHE.tmp" "$FLATPAK_CACHE"
+    cat "$FLATPAK_CACHE"
+  else
+    rm -f "$FLATPAK_CACHE.tmp"
+    if [ -s "$FLATPAK_CACHE" ]; then
+      msg_warn "Flatpak search failed, using stale cache."
+      cat "$FLATPAK_CACHE"
+    else
+      return 1
+    fi
+  fi
+}
+
 pick_flatpak_add() {
-  local selected="" app_id=""
+  local refresh="${1:-false}" fzf_output="" fzf_code=0 query="" selected_lines="" selected="" app_id=""
   need_cmd fzf
   need_cmd flatpak
+  if [ "${NPP_REFRESH:-0}" = "1" ]; then refresh=true; fi
 
-  selected="$(flatpak search "" --columns=application,name,description |
-    awk -F'\t' '{printf "%s | %s - %s\n", $1, $2, $3}' |
-    fzf --prompt='Search Flatpak > ' \
-      --border --reverse --ansi \
-      --exact \
-      --tiebreak=begin,length \
-      --with-nth=2.. \
-      --delimiter='\|')" || return 1
+  fzf_output="$(
+    flatpak_list_cached "$refresh" |
+      awk -F'\t' '{printf "%s | %s - %s\n", $1, $2, $3}' |
+      fzf --print-query --prompt='Search Flatpak (type ID + Enter works instantly) > ' \
+        --border --reverse --ansi \
+        --exact \
+        --tiebreak=begin,length \
+        --with-nth=2.. \
+        --delimiter='\|'
+  )" || fzf_code=$?
+
+  if [ "$fzf_code" -eq 130 ]; then
+    return 1
+  fi
+  if [ "$fzf_code" -ne 0 ] && [ -z "$fzf_output" ]; then
+    return 1
+  fi
+  if [ -z "$fzf_output" ]; then
+    return 1
+  fi
+
+  query="$(printf "%s\n" "$fzf_output" | head -n1)"
+  selected_lines="$(printf "%s\n" "$fzf_output" | tail -n +2)"
+
+  if [ -z "$selected_lines" ]; then
+    selected="$query"
+  else
+    selected="$(printf "%s\n" "$selected_lines" | head -n1)"
+  fi
 
   if [ -z "$selected" ]; then
     return 1
   fi
 
-  app_id="${selected%%|*}"
+  # Manual entry (no pipe) or "id | name - desc" line.
+  case "$selected" in
+  *\|*) app_id="${selected%%|*}" ;;
+  *) app_id="$selected" ;;
+  esac
   app_id="$(printf "%s" "$app_id" | tr -d '[:space:]')"
 
   if [ -z "$app_id" ]; then
@@ -749,7 +872,7 @@ pick_flatpak_add() {
 pick_flatpak_remove() {
   local file="$1"
   need_cmd fzf
-  extract_flatpak_packages "$file" | sort -f |
+  extract_flatpak_packages "$file" | sort -f | uniq |
     awk -F'\t' '{printf "%s (%s)\n", $1, $2}' |
     fzf \
       --prompt='Select Flatpak(s) to remove (Tab=multi) > ' \
@@ -790,10 +913,11 @@ choose_flatpak_origin() {
 # Commands
 # ============================================================================
 cmd_nix_add() {
-  local stable=false file="" prefix picks tmp_new tmp_exist tmp_add tmp_out p
+  local stable=false refresh=false file="" picks tmp_new tmp_exist tmp_add tmp_out p
   while [ $# -gt 0 ]; do
     case "$1" in
     s | stable) stable=true ;;
+    --refresh) refresh=true ;;
     -y | --yes) ASSUME_YES=true ;;
     -h | --help)
       show_usage
@@ -813,19 +937,16 @@ cmd_nix_add() {
     shift
   done
 
-  if [ "$stable" = true ]; then prefix="$NIX_STABLE_PREFIX"; else prefix="$NIX_UNSTABLE_PREFIX"; fi
-  file="$(resolve_nix_file "$file" "$stable")"
+  file="$(resolve_nix_file "$file")"
   if [ -z "$file" ]; then
-    if [ "$stable" = true ]; then
-      die "No $NIX_STABLE_FILE found under flake root."
-    else die "No $NIX_UNSTABLE_FILE found under flake root."; fi
+    die "No $NIX_FILE found under flake root ($(resolve_root)). npp manages nix-config only; run from ~/nix-config, pass FILE explicitly, or set NH_FLAKE."
   fi
   check_config_file "$file"
   if ! grep -q "environment\.systemPackages" "$file"; then
     die "systemPackages block missing in $file — abort."
   fi
 
-  if ! picks="$(pick_nix_add "$stable")"; then
+  if ! picks="$(pick_nix_add "$stable" "$refresh")"; then
     msg_warn "No package selected."
     exit 0
   fi
@@ -836,19 +957,35 @@ cmd_nix_add() {
 
   if [ "$stable" = true ]; then
     if printf "%s\n" "$picks" | grep -q "^nur\."; then
-      die "NUR packages cannot go into $NIX_STABLE_FILE (pkgs.stable has no NUR scope)."
+      die "NUR packages cannot go into stable (stable has no NUR scope)."
     fi
   fi
 
   tmp_new="$(mktemp)"
   tmp_exist="$(mktemp)"
   tmp_add="$(mktemp)"
-  printf "%s\n" "$picks" | sort -f -u >"$tmp_new"
-  extract_nix_packages "$file" | sort -f -u >"$tmp_exist" || true
+  tmp_out=""
+  # shellcheck disable=SC2064
+  trap 'rm -f "$tmp_new" "$tmp_exist" "$tmp_add" $tmp_out' EXIT INT TERM HUP
+  printf "%s\n" "$picks" |
+    awk -v st="$stable" '
+      {
+        gsub(/^[ \t]+|[ \t]+$/, "", $0)
+        if ($0 == "") next
+        b = $0
+        sub(/^pkgs\.stable\./, "", b)
+        sub(/^stable\./, "", b)
+        sub(/^pkgs\./, "", b)
+        gsub(/^[ \t]+|[ \t]+$/, "", b)
+        if (b == "") next
+        if (st == "true") print "stable." b
+        else print b
+      }' | sort -f | uniq >"$tmp_new"
+  extract_nix_packages "$file" | sort -f | uniq >"$tmp_exist" || true
   : >"$tmp_add"
   while IFS= read -r p; do
     if [ -z "$p" ]; then continue; fi
-    if grep -qixF "$p" "$tmp_exist" 2>/dev/null; then
+    if grep -qxF "$p" "$tmp_exist" 2>/dev/null; then
       msg_warn "Already exists: $p"
     else
       printf "%s\n" "$p" >>"$tmp_add"
@@ -861,9 +998,10 @@ cmd_nix_add() {
   fi
 
   tmp_out="$(mktemp)"
-  nix_insert_batch "$file" "$tmp_add" "$prefix" >"$tmp_out"
+  nix_insert_batch "$file" "$tmp_add" >"$tmp_out"
   rm -f "$tmp_new" "$tmp_exist" "$tmp_add"
   confirm_and_apply "$file" "$tmp_out"
+  trap - EXIT INT TERM HUP
 }
 
 cmd_nix_remove() {
@@ -890,33 +1028,35 @@ cmd_nix_remove() {
     shift
   done
 
-  file="$(resolve_nix_file "$file" "$stable")"
+  file="$(resolve_nix_file "$file")"
   if [ -z "$file" ]; then
-    if [ "$stable" = true ]; then
-      die "No $NIX_STABLE_FILE found under flake root."
-    else die "No $NIX_UNSTABLE_FILE found under flake root."; fi
+    die "No $NIX_FILE found under flake root ($(resolve_root)). npp manages nix-config only; run from ~/nix-config, pass FILE explicitly, or set NH_FLAKE."
   fi
   check_config_file "$file"
   if ! grep -q "environment\.systemPackages" "$file"; then
     die "systemPackages block missing in $file — abort."
   fi
 
-  picks="$(pick_nix_remove "$file" || true)"
+  picks="$(pick_nix_remove "$file" "$stable" || true)"
   if [ -z "$picks" ]; then
     msg_warn "No package selected."
     exit 0
   fi
 
   tmp_rm="$(mktemp)"
-  printf "%s\n" "$picks" | sort -f -u >"$tmp_rm"
+  tmp_out=""
+  # shellcheck disable=SC2064
+  trap 'rm -f "$tmp_rm" $tmp_out' EXIT INT TERM HUP
+  printf "%s\n" "$picks" | sort -f | uniq >"$tmp_rm"
   tmp_out="$(mktemp)"
   nix_remove_batch "$file" "$tmp_rm" >"$tmp_out"
   rm -f "$tmp_rm"
   confirm_and_apply "$file" "$tmp_out"
+  trap - EXIT INT TERM HUP
 }
 
 cmd_flatpak_add() {
-  local file="" origin="" app_id remotes tmp_out
+  local file="" origin="" refresh=false app_id remotes tmp_out
   while [ $# -gt 0 ]; do
     case "$1" in
     --origin=*) origin="${1#--origin=}" ;;
@@ -925,6 +1065,7 @@ cmd_flatpak_add() {
       if [ $# -eq 0 ]; then die "Missing value for --origin"; fi
       origin="$1"
       ;;
+    --refresh) refresh=true ;;
     -y | --yes) ASSUME_YES=true ;;
     -h | --help)
       show_usage
@@ -946,11 +1087,11 @@ cmd_flatpak_add() {
 
   file="$(resolve_flatpak_file "$file")"
   if [ -z "$file" ]; then
-    die "No $FLATPAK_FILE found under flake root."
+    die "No $FLATPAK_FILE found under flake root ($(resolve_root)). npp manages nix-config only; run from ~/nix-config, pass FILE explicitly, or set NH_FLAKE."
   fi
   check_config_file "$file"
 
-  if ! app_id="$(pick_flatpak_add)"; then
+  if ! app_id="$(pick_flatpak_add "$refresh")"; then
     msg_warn "No flatpak selected."
     exit 0
   fi
@@ -970,16 +1111,20 @@ cmd_flatpak_add() {
   fi
 
   tmp_out="$(mktemp)"
+  # shellcheck disable=SC2064
+  trap 'rm -f $tmp_out' EXIT INT TERM HUP
   if [ "$origin" = "flathub" ]; then
     flatpak_insert_string "$file" "$app_id" >"$tmp_out"
   else
     if ! grep -q "++" "$file"; then
       rm -f "$tmp_out"
+      trap - EXIT INT TERM HUP
       die "No '++ [...]' attrset block found in $file for origin '$origin'."
     fi
     flatpak_insert_block "$file" "$app_id" "$origin" >"$tmp_out"
   fi
   confirm_and_apply "$file" "$tmp_out"
+  trap - EXIT INT TERM HUP
 }
 
 cmd_flatpak_remove() {
@@ -1007,7 +1152,7 @@ cmd_flatpak_remove() {
 
   file="$(resolve_flatpak_file "$file")"
   if [ -z "$file" ]; then
-    die "No $FLATPAK_FILE found under flake root."
+    die "No $FLATPAK_FILE found under flake root ($(resolve_root)). npp manages nix-config only; run from ~/nix-config, pass FILE explicitly, or set NH_FLAKE."
   fi
   check_config_file "$file"
 
@@ -1018,11 +1163,15 @@ cmd_flatpak_remove() {
   fi
 
   tmp_rm="$(mktemp)"
-  printf "%s\n" "$picks" | sort -f -u >"$tmp_rm"
+  tmp_out=""
+  # shellcheck disable=SC2064
+  trap 'rm -f "$tmp_rm" $tmp_out' EXIT INT TERM HUP
+  printf "%s\n" "$picks" | sort -f | uniq >"$tmp_rm"
   tmp_out="$(mktemp)"
   flatpak_remove_batch "$file" "$tmp_rm" >"$tmp_out"
   rm -f "$tmp_rm"
   confirm_and_apply "$file" "$tmp_out"
+  trap - EXIT INT TERM HUP
 }
 
 # ============================================================================
@@ -1031,20 +1180,21 @@ cmd_flatpak_remove() {
 show_usage() {
   printf "%b%s%b — Nix Package Provider\n\n" "${BOLD}" "npp" "${NC}"
   echo "Usage:"
-  echo "  npp n a [s] [FILE]          Add nixpkgs package(s) (Tab = multi-select)"
-  echo "  npp n r [s] [FILE]          Remove nixpkgs package(s) (Tab = multi-select)"
-  echo "  npp n s a [FILE]            Same as 'n a s' (stable)"
-  echo "  npp n s r [FILE]            Same as 'n r s' (stable)"
+  echo "  npp n a [s] [--refresh] [FILE]  Add nixpkgs (Tab=multi, s=stable.xxx, type+Enter=instant)"
+  echo "  npp n r [s] [FILE]              Remove nixpkgs (Tab=multi, s=stable only)"
+  echo "  npp n s a [FILE]                Same as 'n a s' (stable)"
+  echo "  npp n s r [FILE]                Same as 'n r s' (stable)"
   echo ""
-  echo "  npp f a [--origin=X] [FILE] Add a Flatpak package (prompts for origin)"
-  echo "  npp f r [FILE]              Remove Flatpak package(s) (Tab = multi-select)"
+  echo "  npp f a [--origin=X] [--refresh] [FILE] Add Flatpak (type ID+Enter=instant)"
+  echo "  npp f r [FILE]                  Remove Flatpak package(s) (Tab = multi-select)"
   echo ""
   echo "Aliases: n/nix, f/flatpak, a/add, r/remove, s/stable."
-  echo "Flags: -y/--yes (skip confirm), -h/--help. Env: NPP_FLAKE_ROOT, NO_COLOR."
+  echo "Flags: -y/--yes (skip confirm), -h/--help, --refresh (re-index, slow)."
+  echo "Env: NH_FLAKE, NPP_REFRESH=1, NO_COLOR."
   echo ""
   echo "Examples:"
-  echo "  npp n a               # pick unstable nixpkgs packages"
-  echo "  npp n a s             # pick stable nixpkgs packages"
+  echo "  npp n a               # pick unstable nixpkgs packages (bare attrs)"
+  echo "  npp n a s             # pick stable nixpkgs packages (stable.xxx)"
   echo "  npp f a --origin=cordial"
 }
 

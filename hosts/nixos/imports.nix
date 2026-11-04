@@ -1,9 +1,9 @@
 {
   imports = [
     # Desktop
-    ../../modules/desktop/hyprland.nix
     ../../modules/desktop/plasma.nix
     ../../modules/desktop/niri.nix
+    ../../modules/desktop/mango.nix
     # Gaming
     ../../modules/gaming/gamescope.nix
     ../../modules/gaming/gamemode.nix
@@ -11,7 +11,6 @@
     # Packages
     ../../modules/packages/flatpak.nix
     ../../modules/packages/multiverse.nix
-    ../../modules/packages/pkgs-stable.nix
     ../../modules/packages/pkgs.nix
     # Programs
     ../../modules/programs/docker.nix
@@ -26,8 +25,9 @@
     ../../modules/programs/uinput.nix
     ../../modules/programs/virtualization.nix
     ../../modules/programs/waydroid-nvidia.nix
-    ../../modules/programs/zapret.nix
+    # ../../modules/programs/zapret.nix
     # Security
+    ../../modules/security/apparmor.nix
     ../../modules/security/fail2ban.nix
     ../../modules/security/firewall.nix
     # Server
@@ -37,6 +37,7 @@
     ../../modules/system/battery.nix
     ../../modules/system/bluetooth.nix
     ../../modules/system/bootloader.nix
+    ../../modules/system/bpftune.nix
     ../../modules/system/cachy.nix
     ../../modules/system/display-manager.nix
     ../../modules/system/documentation.nix
@@ -50,6 +51,7 @@
     ../../modules/system/home-manager.nix
     ../../modules/system/nix-ld.nix
     ../../modules/system/pipewire.nix
+    ../../modules/system/resolv.nix
     ../../modules/system/shell.nix
     ../../modules/system/sops-nix.nix
     ../../modules/system/sudo-rs.nix

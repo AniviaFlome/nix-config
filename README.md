@@ -4,7 +4,7 @@ My Nixos config
 
 ### Todo:
 
-- Hyprland config.
+- None
 
 ## License
 

@@ -37,11 +37,6 @@
           store = "heroic";
           path = "${config.home.homeDirectory}/.config/heroic";
         }
-        {
-          store = "lutris";
-          path = "${config.home.homeDirectory}/.local/share/lutris";
-          database = "${config.home.homeDirectory}/.local/share/lutris/pga.db";
-        }
       ];
     };
   };

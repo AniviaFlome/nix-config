@@ -34,7 +34,6 @@ in
   programs.antigravity-cli = {
     enable = true;
     enableMcpIntegration = true;
-    inherit (aiCommon) commands;
     inherit (aiCommon) skills;
     settings = {
 

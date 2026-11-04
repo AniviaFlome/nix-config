@@ -3,8 +3,8 @@
     # Options
     ../../hm-modules/options
     # Desktop
-    ../../hm-modules/desktop/hyprland
     ../../hm-modules/desktop/niri
+    ../../hm-modules/desktop/mango
     ../../hm-modules/desktop/plasma
     # Misc
     ../../hm-modules/misc/common/ai-packages.nix
@@ -15,7 +15,6 @@
     ../../hm-modules/misc/variables.nix
     ../../hm-modules/misc/xdg.nix
     # Programs
-    ../../hm-modules/programs/antigravity.nix
     ../../hm-modules/programs/atuin.nix
     ../../hm-modules/programs/bash.nix
     ../../hm-modules/programs/bat.nix
@@ -27,12 +26,12 @@
     ../../hm-modules/programs/fish.nix
     ../../hm-modules/programs/git.nix
     ../../hm-modules/programs/herdr.nix
+    ../../hm-modules/programs/helix.nix
     ../../hm-modules/programs/kate.nix
     ../../hm-modules/programs/kitty.nix
     ../../hm-modules/programs/konsole.nix
     ../../hm-modules/programs/kopuz.nix
     ../../hm-modules/programs/ludusavi.nix
-    ../../hm-modules/programs/lutris.nix
     ../../hm-modules/programs/mcp.nix
     ../../hm-modules/programs/mergiraf.nix
     ../../hm-modules/programs/micro.nix
@@ -53,6 +52,7 @@
     ../../hm-modules/programs/spicetify.nix
     ../../hm-modules/programs/spotify-player.nix
     ../../hm-modules/programs/starship.nix
+    ../../hm-modules/programs/steam.nix
     ../../hm-modules/programs/thunderbird.nix
     ../../hm-modules/programs/weston.nix
     ../../hm-modules/programs/zed.nix

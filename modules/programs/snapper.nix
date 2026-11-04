@@ -17,7 +17,7 @@
       };
       home = {
         SUBVOLUME = "/home";
-        TIMELINE_CREATE = true;
+        TIMELINE_CREATE = false;
         TIMELINE_CLEANUP = true;
         TIMELINE_LIMIT_HOURLY = 0;
         TIMELINE_LIMIT_DAILY = 7;

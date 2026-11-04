@@ -17,6 +17,7 @@
     bat.enable = true;
     fish.enable = true;
     gtk.icon.enable = false;
+    helix.enable = true;
     hyprlock.enable = false;
     kitty.enable = true;
     kvantum.enable = false;
@@ -26,6 +27,10 @@
     micro.enable = true;
     mpv.enable = true;
     nvim.enable = true;
+    # catppuccin/nix still writes programs.opencode.tui (tui.json),
+    # which OpenCode 2 ignores in favor of cli.json.
+    # Theme is managed via programs.opencode.cli in programs/opencode.nix.
+    opencode.enable = false;
     qutebrowser.enable = true;
     obs.enable = true;
     starship.enable = true;
